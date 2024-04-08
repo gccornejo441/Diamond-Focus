@@ -1,13 +1,15 @@
 import styles from './OptionsPanel.module.css';
 
 interface OptionsPanelProps {
+    setIsReset: React.Dispatch<React.SetStateAction<boolean>>;
     setTimer: React.Dispatch<React.SetStateAction<boolean>>;
     timer: boolean;
 }
 
-const OptionsPanel = ({ setTimer, timer }: OptionsPanelProps) => {
+const OptionsPanel = ({ setIsReset, setTimer, timer }: OptionsPanelProps) => {
     const toggleTimer = () => {
         setTimer(!timer);
+        setIsReset(true)
     };
     return (
         <div className={styles.optionsPanelContainer}>
