@@ -1,8 +1,8 @@
 import React from 'react';
 import { ReactComponent as PlayButton } from './assets/playButton.svg';
+import { ReactComponent as PauseButton } from './assets/pauseButton.svg';
 import { ReactComponent as ResetButton } from './assets/resetButton.svg';
-import { ReactComponent as PausedButton } from './assets/pauseButton.svg';
-
+import { Tooltip } from 'react-tooltip'
 import styles from './ButtonPanel.module.css';
 
 const svgStyle = { 
@@ -14,52 +14,48 @@ const svgStyle = {
 interface ButtonPanelProps {
     setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
     setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
-    // setIsStopped: React.Dispatch<React.SetStateAction<boolean>>;
-    // setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
     setIsReset: React.Dispatch<React.SetStateAction<boolean>>;
-    // setIsStarted: React.Dispatch<React.SetStateAction<boolean>>;
-    // setMinutes: React.Dispatch<React.SetStateAction<number>>;
-    // setSeconds: React.Dispatch<React.SetStateAction<number>>;
-    // minutes: number;
-    // seconds: number;
-    // isActive: boolean;
-    // isPaused: boolean;
-    // isStopped: boolean;
-    // isCompleted: boolean;
+    isActive: boolean;
 }
 
-const ButtonPanel = ({ 
-    setIsReset,
-    setIsActive, 
-    setIsPaused }: ButtonPanelProps) => {
-    const handlePlay = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        setIsActive(true);
+const ButtonPanel = ({ setIsReset, setIsActive, setIsPaused, isActive }: ButtonPanelProps) => {
+    const handlePlayPause = () => {
+        if (!isActive) {
+            setIsActive(true);
+            setIsPaused(false);
+        } else {
+            setIsPaused(true);
+            setIsActive(false);
+        }
     };
-    
-    const handlePause = () => {
-        setIsPaused(true);
-
-        setIsActive(false);
-    }
 
     const handleReset = () => {
         setIsReset(true);
-
         setIsActive(false);
+        setIsPaused(false);
     };
 
     return (
         <div className={styles.buttonPanel}>
-            <a href="#play" onClick={handlePlay}>
-                <PlayButton style={svgStyle} />
+            <a href="#$$$"    
+                data-tooltip-id="panelTooltip"
+                data-tooltip-place='bottom'
+                data-tooltip-content={isActive ? 'Pause' : 'Play'}
+                onClick={handlePlayPause}>
+                {isActive ? 
+                <PauseButton 
+                style={svgStyle} /> : 
+                <PlayButton 
+                style={svgStyle} />}
             </a>
-            <a href="#reset" onClick={handleReset}>
+            <a href="#$$$"
+            data-tooltip-id="panelTooltip"
+            data-tooltip-content="Reset"
+            data-tooltip-place='bottom'
+            onClick={handleReset}>
                 <ResetButton style={svgStyle} />
             </a>
-            <a href="#stop" onClick={handlePause}>
-                <PausedButton style={svgStyle} />
-            </a>
+            <Tooltip id="panelTooltip" />
         </div>
     );
 };
