@@ -7,7 +7,6 @@ const Timer = () => {
     const [seconds, setSeconds] = useState(0);
     const [isActive, setIsActive] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
-    const [isStopped, setIsStopped] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
     const [isReset, setIsReset] = useState(false);
     const [isStarted, setIsStarted] = useState(false);
@@ -16,11 +15,13 @@ const Timer = () => {
     useEffect(() => {
         let interval: any = null;
 
-        if (isActive && !isPaused && !isStopped && !isCompleted && !isReset && !isStarted) {
+        if (isActive && !isPaused && !isCompleted && !isReset && !isStarted) {
             interval = setInterval(() => {
+
                 if (seconds > 0) {
                     setSeconds(seconds - 1);
                 }
+
                 if (seconds === 0) {
                     if (minutes === 0) {
                         clearInterval(interval);
@@ -30,24 +31,37 @@ const Timer = () => {
                         setSeconds(59);
                     }
                 }
+
             }, 1000);
+        }
+        
+        if (isReset) {
+            setMinutes(25);
+            setSeconds(0);
+            setIsReset(false);
+            setIsActive(false);
+            setIsPaused(false);
+            setIsCompleted(false);
         }
 
         return () => clearInterval(interval);
-
-    })
+    }, [isActive, isPaused, isCompleted, isReset, isStarted, minutes, seconds]);
 
     return (
-        <div className="col-lg-12 text-center p-2">
-            <div className="timer-time timer-container">
+        <div className={styles.timerContainer}>
+            <div className={styles.timerBox}>
                 <div className={`${styles.timerBox} ${styles.timerFont}`}>
-                    <span id="minutesValue" style={{ top: "0em" }}>{minutes}</span>
+                    <span id="minutesValue" className={`${styles.timerFont}`}>{minutes}</span>
                     <span>:</span>
-                    <span id="secondsValue" style={{ top: "0em" }}>{seconds}</span>
+                    <span id="secondsValue" style={{ top: "0em" }}>{seconds === 0 ? "00" : seconds}</span>
                 </div>
             </div>
-            <div>
-                <ButtonPanel />
+            <div className={styles.buttonPanel}>
+                <ButtonPanel
+                    setIsReset={setIsReset}
+                    setIsPaused={setIsPaused}
+                    setIsActive={setIsActive}
+                />
             </div>
         </div>
     );

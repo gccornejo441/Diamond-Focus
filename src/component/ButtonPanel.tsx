@@ -1,33 +1,64 @@
 import React from 'react';
 import { ReactComponent as PlayButton } from './assets/playButton.svg';
 import { ReactComponent as ResetButton } from './assets/resetButton.svg';
-import { ReactComponent as StopButton } from './assets/stopButton.svg';
+import { ReactComponent as PausedButton } from './assets/pauseButton.svg';
 
-const svgStyle = { width: '24px', height: '24px', fill: 'currentColor' };
+import styles from './ButtonPanel.module.css';
 
-const ButtonPanel = () => {
-    const handlePlay = () => {
-        console.log('Play');
+const svgStyle = { 
+    width: '50px', 
+    height: '50px', 
+    fill: 'currentColor' 
+};
+
+interface ButtonPanelProps {
+    setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
+    // setIsStopped: React.Dispatch<React.SetStateAction<boolean>>;
+    // setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsReset: React.Dispatch<React.SetStateAction<boolean>>;
+    // setIsStarted: React.Dispatch<React.SetStateAction<boolean>>;
+    // setMinutes: React.Dispatch<React.SetStateAction<number>>;
+    // setSeconds: React.Dispatch<React.SetStateAction<number>>;
+    // minutes: number;
+    // seconds: number;
+    // isActive: boolean;
+    // isPaused: boolean;
+    // isStopped: boolean;
+    // isCompleted: boolean;
+}
+
+const ButtonPanel = ({ 
+    setIsReset,
+    setIsActive, 
+    setIsPaused }: ButtonPanelProps) => {
+    const handlePlay = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        setIsActive(true);
     };
+    
+    const handlePause = () => {
+        setIsPaused(true);
+
+        setIsActive(false);
+    }
 
     const handleReset = () => {
-        console.log('Reset');
-    };
+        setIsReset(true);
 
-    const handleStop = () => {
-        console.log('Stop');
+        setIsActive(false);
     };
 
     return (
-        <div className="col-lg-12 text-center">
-            <a href="#play" onClick={(e) => {e.preventDefault(); handlePlay();}}>
+        <div className={styles.buttonPanel}>
+            <a href="#play" onClick={handlePlay}>
                 <PlayButton style={svgStyle} />
             </a>
-            <a href="#reset" onClick={(e) => {e.preventDefault(); handleReset();}}>
+            <a href="#reset" onClick={handleReset}>
                 <ResetButton style={svgStyle} />
             </a>
-            <a href="#stop" onClick={(e) => {e.preventDefault(); handleStop();}}>
-                <StopButton style={svgStyle} />
+            <a href="#stop" onClick={handlePause}>
+                <PausedButton style={svgStyle} />
             </a>
         </div>
     );

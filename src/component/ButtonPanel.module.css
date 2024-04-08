@@ -1,0 +1,38 @@
+.buttonPanel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border: #ffa900 dashed 4px;
+}
+
+.buttonPanel a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonPanel a:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: 0.5s;
+    color: #ffa900;
+    text-decoration: none;
+    text-shadow: 0 0 10px #ffa900, 0 0 20px #ffa900, 0 0 30px #ffa900, 0 0 40px #ffa900, 0 0 50px #ffa900, 0 0 60px #ffa900, 0 0 70px #ffa900;
+}
+
+.buttonPanel a:active {
+    transform: scale(0.9);
+    transition: 0.5s;
+    color: #ffede5;
+    text-shadow: 0 0 10px #ffede5, 0 0 20px #ffede5, 0 0 30px #ffede5, 0 0 40px #ffede5, 0 0 50px #ffede5, 0 0 60px #ffede5, 0 0 70px #ffede5;
+    text-decoration: none;
+}
+
+.buttonPanel a:focus {
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-shadow: 0 0 10px #ffa900, 0 0 20px #ffa900, 0 0 30px #ffa900, 0 0 40px #ffa900, 0 0 50px #ffa900, 0 0 60px #ffa900, 0 0 70px #ffa900;
+    color: #ffa900;
+}

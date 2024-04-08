@@ -11,9 +11,12 @@
 }
 
 .timerContainer {
-    height: 1em;
-    overflow: hidden;
-    position: relative;
+    height: 100%;
+    border: #ffa900 dashed 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .timerTime {
@@ -24,12 +27,6 @@
     color: #ffede5;
     border: none;
     margin: auto;
-}
-
-.timerBox {
-    height: 1em;
-    margin: auto;
-    position: relative;
 }
 
 a:hover {
@@ -51,6 +48,15 @@ a:hover {
 }
 
 .timerFont {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 4rem;
     font-weight: 900;
+    color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.buttonPanel {
+    width: 100%;
+    height: fit-content;
+    padding: 2%;
+    color: #fff;
 }
