@@ -25,7 +25,7 @@ const TimerModule = ({ minutes, seconds }: TimerModuleProps) => {
 const DynamicHelmet = ({ isActive, isPaused, isCompleted, timer, minutes, seconds }: { isActive: boolean, isPaused: boolean, isCompleted: boolean, timer: boolean, minutes: number, seconds: number }) => {
     const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
     const titleSuffix = isCompleted ? " - Completed" : isPaused ? " - Paused" : isActive ? " - Active" : " - Ready";
-    const faviconName = timer ? "/greenFavicon.ico" : "/favicon.ico";
+    const faviconName = timer ? "/greenFavicon.ico?v=2" : "/favicon.ico";
     const titleText = timer ? `${(minutes - 20)}:${formattedSeconds} Break ${titleSuffix}` : `${minutes}:${formattedSeconds} Timer ${titleSuffix}`;
 
     return (
