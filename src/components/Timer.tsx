@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../component/Timer.module.css';
+import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
 import OptionsPanel from './OptionsPanel';
-
+import useDocumentHead from '../hooks/useDocumentHead';
 
 interface TimerModuleProps {
     minutes: number;
@@ -22,19 +22,6 @@ const TimerModule = ({ minutes, seconds }: TimerModuleProps) => {
     )
 }
 
-const DynamicHelmet = ({ isActive, isPaused, isCompleted, timer, minutes, seconds }: { isActive: boolean, isPaused: boolean, isCompleted: boolean, timer: boolean, minutes: number, seconds: number }) => {
-    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-    const titleSuffix = isCompleted ? " - Completed" : isPaused ? " - Paused" : isActive ? " - Active" : " - Ready";
-    const faviconName = timer ? "/greenFavicon.ico?v=2" : "/favicon.ico";
-    const titleText = timer ? `${(minutes - 20)}:${formattedSeconds} Break ${titleSuffix}` : `${minutes}:${formattedSeconds} Timer ${titleSuffix}`;
-
-    return (
-        <Helmet>
-            <link rel="icon" href={faviconName} />
-            <title>{titleText}</title>
-        </Helmet>
-    );
-}
 
 const Timer = () => {
     const [minutes, setMinutes] = useState(25);
@@ -48,6 +35,12 @@ const Timer = () => {
     const [timer, setTimer] = useState<boolean>(false);
     const [breakMinutes, setBreakMinutes] = useState(5);
     const [breakSeconds, setBreakSeconds] = useState(0);
+
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    const titleSuffix = isCompleted ? " - Completed" : isPaused ? " - Paused" : isActive ? " - Active" : " - Ready";
+    const faviconName = timer ? "/greenFavicon.ico?v=2" : "/favicon.ico";
+    const titleText = timer ? `${(minutes - 20)}:${formattedSeconds} Break ${titleSuffix}` : `${minutes}:${formattedSeconds} Timer ${titleSuffix}`;
+    useDocumentHead(titleText, faviconName);
 
     useEffect(() => {
         let interval: any = null;
@@ -87,7 +80,6 @@ const Timer = () => {
 
     return (
         <>
-        <DynamicHelmet isActive={isActive} isPaused={isPaused} isCompleted={isCompleted} timer={timer} minutes={minutes} seconds={seconds} />
             <div className={styles.timerContainer}>
                 <OptionsPanel
                     setTimer={setTimer}
