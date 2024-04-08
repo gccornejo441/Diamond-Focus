@@ -22,6 +22,20 @@ const TimerModule = ({ minutes, seconds }: TimerModuleProps) => {
     )
 }
 
+const DynamicHelmet = ({ isActive, isPaused, isCompleted, timer, minutes, seconds }: { isActive: boolean, isPaused: boolean, isCompleted: boolean, timer: boolean, minutes: number, seconds: number }) => {
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    const titleSuffix = isCompleted ? " - Completed" : isPaused ? " - Paused" : isActive ? " - Active" : " - Ready";
+    const faviconName = timer ? "/greenFavicon.ico" : "/favicon.ico";
+    const titleText = timer ? `${(minutes - 20)}:${formattedSeconds} Break ${titleSuffix}` : `${minutes}:${formattedSeconds} Timer ${titleSuffix}`;
+
+    return (
+        <Helmet>
+            <link rel="icon" href={faviconName} />
+            <title>{titleText}</title>
+        </Helmet>
+    );
+}
+
 const Timer = () => {
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
@@ -70,20 +84,10 @@ const Timer = () => {
         return () => clearInterval(interval);
     }, [isActive, isPaused, isCompleted, isReset, isStarted, minutes, seconds, breakMinutes, breakSeconds]);
 
-    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-    const titleSuffix = isCompleted ? " - Completed" : isPaused ? " - Paused" : isActive ? " - Active" : " - Ready";
 
     return (
         <>
-            <Helmet>
-                <meta charSet="utf-8" />
-                {timer ? (
-                    <title>{`Break: ${(minutes - 20)}:${formattedSeconds}${titleSuffix}`}</title>
-                ) : 
-                (
-                    <title>{`Timer: ${minutes}:${formattedSeconds}${titleSuffix}`}</title>
-                )}
-            </Helmet>
+        <DynamicHelmet isActive={isActive} isPaused={isPaused} isCompleted={isCompleted} timer={timer} minutes={minutes} seconds={seconds} />
             <div className={styles.timerContainer}>
                 <OptionsPanel
                     setTimer={setTimer}
