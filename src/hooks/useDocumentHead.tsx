@@ -1,22 +1,17 @@
 import { useEffect } from "react";
 
-const useDocumentHead = (title: string, faviconUrl?: string) => {
+const useDocumentHead = (title: string, faviconUrl: string) => {
     useEffect(() => {
-        if (title) {
-            document.title = title
-        }
+        document.title = title;
 
-        if (faviconUrl) {
-            const link = document.createElement("link");
-            link.rel = "icon";
-            link.href = faviconUrl;
-            document.head.appendChild(link);
-            const head = document.getElementsByTagName('head')[0];
-            const existingIcons = document.querySelectorAll("link[rel*='icon']");
-            existingIcons.forEach(icon => head.removeChild(icon));
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.href = faviconUrl;
+        document.head.appendChild(link);
 
-            head.appendChild(link);
-        }
+        return () => {
+            document.head.removeChild(link);
+        };
     }, [title, faviconUrl]);
 }
 
