@@ -1,5 +1,5 @@
 .App {
   text-align: center;
-  background-color: rgb(118, 154, 255);
+  background-color: var(--background-color);
   height: 100vh;
 }

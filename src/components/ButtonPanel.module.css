@@ -1,3 +1,11 @@
+.settingPanel {
+    background-color: #0056b3;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #ffa900;
+    color: #ffa900;
+}
+
 .buttonPanel {
     display: flex;
     justify-content: center;

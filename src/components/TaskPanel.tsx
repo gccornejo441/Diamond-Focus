@@ -86,12 +86,12 @@ const TaskPanel = () => {
                 {tasks.map((task) => (
                     <li key={task.id} className={styles.taskItem}>
                         <div className={styles.checkboxwrapper15}>
-                            <input className={styles.inpCbx} 
-                            id={`cbx-${task.id}`} 
-                            type="checkbox" 
-                            style={{ display: 'none' }} 
-                            checked={task.completed} 
-                            onChange={() => toggleTaskCompletion(task.id)}/>
+                            <input className={styles.inpCbx}
+                                id={`cbx-${task.id}`}
+                                type="checkbox"
+                                style={{ display: 'none' }}
+                                checked={task.completed}
+                                onChange={() => toggleTaskCompletion(task.id)} />
                             <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
                                 <span>
                                     <svg width="12px" height="9px" viewBox="0 0 12 9">
@@ -102,8 +102,8 @@ const TaskPanel = () => {
                             </label>
                         </div>
                         <div>
-                        <button onClick={() => startEdit(task)} className={styles.editButton}>Edit</button>
-                        <button onClick={() => deleteTask(task.id)} className={styles.deleteButton}>Delete</button>
+                            <button onClick={() => startEdit(task)} className={styles.editButton}>Edit</button>
+                            <button onClick={() => deleteTask(task.id)} className={styles.deleteButton}>Delete</button>
                         </div>
                     </li>
                 ))}
