@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
 
+interface Task {
+    id: number;
+    text: string;
+}
+
 const TaskPanel = () => {
-    const [task, setTask] = useState('');
-    const [tasks, setTasks] = useState<string[]>(() => {
+    const [task, setTask] = useState<string>('');
+    const [tasks, setTasks] = useState<Task[]>(() => {
         const savedTasks = localStorage.getItem('tasks');
         return savedTasks ? JSON.parse(savedTasks) : [];
     });
+
+    const [editId, setEditId] = useState<number | null>(null);
+    const [editText, setEditText] = useState('');
 
     useEffect(() => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -14,33 +22,76 @@ const TaskPanel = () => {
 
     const addTask = () => {
         if (task !== '') {
-            setTasks([...tasks, task]);
+            setTasks([...tasks, { id: Date.now(), text: task }]);
             setTask('');
         }
     };
 
-    const handleKeyPress = (event: React.KeyboardEvent) => {
+    const deleteTask = (id: number) => {
+        setTasks(tasks.filter(task => task.id !== id));
+    };
+
+    const startEdit = (task: Task) => {
+        setEditId(task.id);
+        setEditText(task.text);
+    };
+
+    const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEditText(e.target.value);
+    };
+
+    const saveEdit = (id: number) => {
+        const updatedTasks = tasks.map(task => task.id === id ? { ...task, text: editText } : task);
+        setTasks(updatedTasks);
+        setEditId(null);
+        setEditText('');
+    };
+
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            addTask();
+            if (editId) {
+                saveEdit(editId);
+            } else {
+                addTask();
+            }
         }
     };
 
     return (
         <div className={styles.container}>
             <div className={styles.inputArea}>
-                <input 
-                    type="text" 
-                    placeholder="Add a task" 
-                    value={task}
-                    onChange={(e) => setTask(e.target.value)}
+                <input
+                    type="text"
+                    placeholder={editId ? "Edit task" : "Add a task"}
+                    value={editId ? editText : task}
+                    onChange={editId ? handleEditChange : (e) => setTask(e.target.value)}
                     onKeyPress={handleKeyPress}
                     className={styles.input}
                 />
-                <button onClick={addTask} className={styles.button}>Add Task</button>
+                <button 
+                onClick={editId ? () => saveEdit(editId) : addTask} 
+                className={styles.button}>
+                    {editId ? "Save" : "Add Task"}
+                </button>
             </div>
             <ul className={styles.taskList}>
-                {tasks.map((task, index) => (
-                    <li key={index} className={styles.taskItem}>{task}</li>
+                {tasks.map((task) => (
+                    <li key={task.id} className={styles.taskItem}>
+                        {editId === task.id ? (
+                            <input
+                                type="text"
+                                value={editText}
+                                onChange={handleEditChange}
+                                className={styles.editInput}
+                            />
+                        ) : (
+                            <span>{task.text}</span>
+                        )}
+                        <div>
+                            <button onClick={() => startEdit(task)} className={styles.editButton}>Edit</button>
+                            <button onClick={() => deleteTask(task.id)} className={styles.deleteButton}>Delete</button>
+                        </div>
+                    </li>
                 ))}
             </ul>
         </div>
