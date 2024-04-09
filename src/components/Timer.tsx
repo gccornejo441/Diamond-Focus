@@ -6,7 +6,7 @@ import OptionsPanel from './OptionsPanel';
 
 interface TimerModuleProps {
     minutes: number;
-    seconds: number;
+    seconds: number | string;
 }
 
 const TimerModule = ({ minutes, seconds }: TimerModuleProps) => {
@@ -83,7 +83,8 @@ const Timer = () => {
         return () => clearInterval(interval);
     }, [isActive, isPaused, isCompleted, isReset, isStarted, minutes, seconds, breakMinutes, breakSeconds]);
 
-
+    const formattedSecond = seconds < 10 ? `0${seconds}` : seconds;
+    
     return (
         <>
         <DynamicHelmet isActive={isActive} isPaused={isPaused} isCompleted={isCompleted} timer={timer} minutes={minutes} seconds={seconds} />
@@ -95,7 +96,7 @@ const Timer = () => {
                 />
                 <TimerModule
                     minutes={timer ? (minutes - 20) : minutes}
-                    seconds={seconds} 
+                    seconds={formattedSecond} 
                     />
                 <div className={styles.buttonPanel}>
                     <ButtonPanel

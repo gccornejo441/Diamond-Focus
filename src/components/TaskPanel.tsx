@@ -4,6 +4,7 @@ import styles from './TaskPanel.module.css';
 interface Task {
     id: number;
     text: string;
+    completed: boolean;
 }
 
 const TaskPanel = () => {
@@ -22,7 +23,7 @@ const TaskPanel = () => {
 
     const addTask = () => {
         if (task !== '') {
-            setTasks([...tasks, { id: Date.now(), text: task }]);
+            setTasks([...tasks, { id: Date.now(), text: task, completed: false }]);
             setTask('');
         }
     };
@@ -57,6 +58,13 @@ const TaskPanel = () => {
         }
     };
 
+    const toggleTaskCompletion = (id: number) => {
+        const updatedTasks = tasks.map(task =>
+            task.id === id ? { ...task, completed: !task.completed } : task
+        );
+        setTasks(updatedTasks);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.inputArea}>
@@ -68,32 +76,39 @@ const TaskPanel = () => {
                     onKeyPress={handleKeyPress}
                     className={styles.input}
                 />
-                <button 
-                onClick={editId ? () => saveEdit(editId) : addTask} 
-                className={styles.button}>
+                <button
+                    onClick={editId ? () => saveEdit(editId) : addTask}
+                    className={styles.button}>
                     {editId ? "Save" : "Add Task"}
                 </button>
             </div>
             <ul className={styles.taskList}>
                 {tasks.map((task) => (
                     <li key={task.id} className={styles.taskItem}>
-                        {editId === task.id ? (
-                            <input
-                                type="text"
-                                value={editText}
-                                onChange={handleEditChange}
-                                className={styles.editInput}
-                            />
-                        ) : (
-                            <span>{task.text}</span>
-                        )}
+                        <div className={styles.checkboxwrapper15}>
+                            <input className={styles.inpCbx} 
+                            id={`cbx-${task.id}`} 
+                            type="checkbox" 
+                            style={{ display: 'none' }} 
+                            checked={task.completed} 
+                            onChange={() => toggleTaskCompletion(task.id)}/>
+                            <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
+                                <span>
+                                    <svg width="12px" height="9px" viewBox="0 0 12 9">
+                                        <polyline points="1 5 4 8 11 1"></polyline>
+                                    </svg>
+                                </span>
+                                <span>{task.text}</span>
+                            </label>
+                        </div>
                         <div>
-                            <button onClick={() => startEdit(task)} className={styles.editButton}>Edit</button>
-                            <button onClick={() => deleteTask(task.id)} className={styles.deleteButton}>Delete</button>
+                        <button onClick={() => startEdit(task)} className={styles.editButton}>Edit</button>
+                        <button onClick={() => deleteTask(task.id)} className={styles.deleteButton}>Delete</button>
                         </div>
                     </li>
                 ))}
             </ul>
+
         </div>
     );
 }
