@@ -36,3 +36,33 @@
     text-shadow: 0 0 10px #ffa900, 0 0 20px #ffa900, 0 0 30px #ffa900, 0 0 40px #ffa900, 0 0 50px #ffa900, 0 0 60px #ffa900, 0 0 70px #ffa900;
     color: #ffa900;
 }
+
+.buttonMenu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    outline: none;
+}
+
+.buttonMenu:hover, .buttonMenu:focus {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.icon {
+    fill: currentColor; 
+}
+
+.settingButtonPanel {
+    display: flex;
+    justify-content: right;
+    padding: 8px 16px;
+}

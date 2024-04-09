@@ -3,7 +3,6 @@ import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
 import OptionsPanel from './OptionsPanel';
-import useDocumentHead from '../hooks/useDocumentHead';
 
 interface TimerModuleProps {
     minutes: number;

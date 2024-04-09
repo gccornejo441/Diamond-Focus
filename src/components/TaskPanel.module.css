@@ -1,0 +1,34 @@
+/* TaskPanel.module.css */
+.container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.inputArea {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.inputArea input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.inputArea button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 5px;
+}
