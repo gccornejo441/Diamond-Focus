@@ -10,7 +10,6 @@
 }
 
 .timerContainer {
-    border: #ffa900 dashed 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,28 +33,17 @@ a:hover {
 
 .timerBox {
     color: #fff;
-    border: #ffa900 dashed 4px;
-    width: 100%;
-}
-
-.todoBackground {
-    background-color: #ffa900;
-    padding: 2%;
-}
-
-.workFlow {
-    width: 100%;
+    /* border: #ffa900 dashed 4px; */
 }
 
 .timerFont {
     font-size: 5rem;
     font-weight: 900;
-    color: #fff;
+    color: var(--white);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .buttonPanel {
     width: 100%;
     height: fit-content;
-    color: #fff;
 }

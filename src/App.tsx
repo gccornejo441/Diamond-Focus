@@ -31,18 +31,18 @@ function App() {
 
   return (
     <div className="App">
-      <div className={styles.settingButtonPanel}>
+      {/* <div className={styles.settingButtonPanel}>
         <MenuButton onclick={handleClick} />
       </div>
       <PopupSetting
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}>
-        <div className={styles.settingPanel}>
           <SettingPanel />
-        </div>
-      </PopupSetting>
-      <Timer />
-      <TaskPanel />
+      </PopupSetting> */}
+      <div>
+        <Timer />
+        <TaskPanel />
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@
     padding: 20px;
     max-width: 600px;
     margin: auto;
+    /* border: var(--indigo-800) dashed 4px; */
 }
 
 .inputArea {
@@ -32,16 +33,30 @@ li {
 }
 
 .taskItem {
+    color: #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    background-color: #f4f4f4d0;
+}
 
+.taskItem:hover {
+    cursor: pointer;
+    background-color: #f4f4f4;
+    transition: 0.2s;
 }
 
 .inputArea button {
   appearance: button;
   backface-visibility: hidden;
-  background-color: #405cf5;
+  background-color: var(--indigo-600);
   border-radius: 6px;
   border-width: 0;
   box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
@@ -105,11 +120,13 @@ li {
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
 }
+
 .checkboxwrapper15 .cbx span {
   display: inline-block;
   vertical-align: middle;
   transform: translate3d(0, 0, 0);
 }
+
 .checkboxwrapper15 .cbx span:first-child {
   position: relative;
   width: 24px;
@@ -120,6 +137,7 @@ li {
   border: 1px solid #B9B8C3;
   transition: all 0.2s ease;
 }
+
 .checkboxwrapper15 .cbx span:first-child svg {
   position: absolute;
   z-index: 1;
@@ -136,6 +154,7 @@ li {
   transition-delay: 0.1s;
   transform: translate3d(0, 0, 0);
 }
+
 .checkboxwrapper15 .cbx span:first-child:before {
   content: "";
   width: 100%;
@@ -147,37 +166,43 @@ li {
   border-radius: 50%;
   transition-delay: 0.2s;
 }
+
 .checkboxwrapper15 .cbx span:last-child {
   margin-left: 8px;
 }
+
 .checkboxwrapper15 .cbx span:last-child:after {
   content: "";
   position: absolute;
-  top: 8px;
+  top: 12px;
   left: 0;
   height: 1px;
   width: 100%;
-  background: #B9B8C3;
+  background: var(--indigo-100);
   transform-origin: 0 0;
   transform: scaleX(0);
 }
+
 .checkboxwrapper15 .cbx:hover span:first-child {
   border-color: #3c53c7;
 }
 
 .checkboxwrapper15 .inpCbx:checked + .cbx span:first-child {
   border-color: #3c53c7;
-  background: #3c53c7;
+  background: var(--indigo-600);
   animation: check-15 0.6s ease;
 }
+
 .checkboxwrapper15 .inpCbx:checked + .cbx span:first-child svg {
   stroke-dashoffset: 0;
 }
+
 .checkboxwrapper15 .inpCbx:checked + .cbx span:first-child:before {
   transform: scale(2.2);
   opacity: 0;
   transition: all 0.6s ease;
 }
+
 .checkboxwrapper15 .inpCbx:checked + .cbx span:last-child {
   color: #B9B8C3;
   transition: all 0.3s ease;
@@ -191,4 +216,12 @@ li {
   50% {
     transform: scale(1.2);
   }
+}
+
+.deleteItem {
+  --contexify-activeItem-bgColor: var(--indigo-500);
+}
+
+.editItem {
+  --contexify-activeItem-bgColor: var(--indigo-500);
 }

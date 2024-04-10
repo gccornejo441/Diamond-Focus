@@ -1,19 +1,22 @@
+import styles from './Setting.module.css'
 
 const SettingPanel = () => {
     const changeTheme = (color: string) => {
-        document.documentElement.style.setProperty('--background-color', color);
+        const formattedColor = color.startsWith('--') ? `var(${color})` : color;
+        document.documentElement.style.setProperty('--background-color', formattedColor);
     }
 
     return (
-        <div>
-            <button>Menu</button>
+        <div className={styles.settingPanelContainer}>
             <div>
-            <button onClick={() => changeTheme('--indigo-800')}>Indigo Dark</button>
-            <button onClick={() => changeTheme('#333333')}>Dark</button>
-            <button onClick={() => changeTheme('#FFD700')}>Gold</button>
-        </div>
+                <button onClick={() => changeTheme('--indigo-800')}>Indigo Dark</button>
+                <button onClick={() => changeTheme('#333333')}>Dark</button>
+                <button onClick={() => changeTheme('#FFD700')}>Gold</button>
+            </div>
         </div>
     )
 }
 
 export default SettingPanel;
+
+

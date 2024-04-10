@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
+import { Menu, Item, Separator, useContextMenu, RightSlot } from 'react-contexify';
+import 'react-contexify/ReactContexify.css';
+const MENU_ID = 'task-context-menu';
 
 interface Task {
     id: number;
@@ -8,33 +11,47 @@ interface Task {
 }
 
 const TaskPanel = () => {
+    const { show } = useContextMenu({ id: MENU_ID });
     const [task, setTask] = useState<string>('');
     const [tasks, setTasks] = useState<Task[]>(() => {
         const savedTasks = localStorage.getItem('tasks');
         return savedTasks ? JSON.parse(savedTasks) : [];
     });
 
+    const [currentTask, setCurrentTask] = useState<Task | null>(null);
     const [editId, setEditId] = useState<number | null>(null);
     const [editText, setEditText] = useState('');
 
+    const handleContextMenu = (event: React.MouseEvent, task: Task) => {
+        event.preventDefault();
+        setCurrentTask(task);
+        show({
+            id: MENU_ID,
+            event: event,
+            props: {
+                task
+            }
+        });
+    };
+    
     useEffect(() => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
 
     const addTask = () => {
-        if (task !== '') {
+        if (task.trim() !== '') {
             setTasks([...tasks, { id: Date.now(), text: task, completed: false }]);
             setTask('');
         }
     };
 
     const deleteTask = (id: number) => {
-        setTasks(tasks.filter(task => task.id !== id));
+        setTasks(tasks.filter(t => t.id !== id));
     };
 
-    const startEdit = (task: Task) => {
-        setEditId(task.id);
-        setEditText(task.text);
+    const startEdit = (task: Task | null) => {
+        setEditId(task!.id);
+        setEditText(task!.text);
     };
 
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +59,7 @@ const TaskPanel = () => {
     };
 
     const saveEdit = (id: number) => {
-        const updatedTasks = tasks.map(task => task.id === id ? { ...task, text: editText } : task);
+        const updatedTasks = tasks.map(t => t.id === id ? { ...t, text: editText } : t);
         setTasks(updatedTasks);
         setEditId(null);
         setEditText('');
@@ -50,20 +67,19 @@ const TaskPanel = () => {
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            if (editId) {
-                saveEdit(editId);
-            } else {
-                addTask();
-            }
+            editId ? saveEdit(editId) : addTask();
         }
     };
 
-    const toggleTaskCompletion = (id: number) => {
-        const updatedTasks = tasks.map(task =>
-            task.id === id ? { ...task, completed: !task.completed } : task
-        );
-        setTasks(updatedTasks);
+    const toggleTaskCompletion = (id: number) : void => {
+        setTasks(tasks.map(t =>
+            t.id === id ? { ...t, completed: !t.completed } : t
+        ));
     };
+
+    const handleTaskDeleteShortcut = (event: KeyboardEvent) : boolean => {
+        return event.ctrlKey && event.key === 'd';
+    }
 
     return (
         <div className={styles.container}>
@@ -83,8 +99,8 @@ const TaskPanel = () => {
                 </button>
             </div>
             <ul className={styles.taskList}>
-                {tasks.map((task) => (
-                    <li key={task.id} className={styles.taskItem}>
+                {tasks.map(task => (
+                    <li key={task.id} className={styles.taskItem} onContextMenu={(e) => handleContextMenu(e, task)}>
                         <div className={styles.checkboxwrapper15}>
                             <input className={styles.inpCbx}
                                 id={`cbx-${task.id}`}
@@ -101,16 +117,27 @@ const TaskPanel = () => {
                                 <span>{task.text}</span>
                             </label>
                         </div>
-                        <div>
-                            <button onClick={() => startEdit(task)} className={styles.editButton}>Edit</button>
-                            <button onClick={() => deleteTask(task.id)} className={styles.deleteButton}>Delete</button>
-                        </div>
                     </li>
                 ))}
             </ul>
 
+            <Menu id={MENU_ID}>
+                <Item 
+                className={styles.editItem}
+                onClick={() => startEdit(currentTask)}>Edit</Item>
+                <Item 
+                className={styles.deleteItem}
+                keyMatcher={handleTaskDeleteShortcut} 
+                onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+            </Menu>
         </div>
     );
 }
 
 export default TaskPanel;
+
+
+
+
+
+

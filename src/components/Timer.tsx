@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
@@ -88,7 +88,6 @@ const Timer = () => {
     return (
         <>
         <DynamicHelmet isActive={isActive} isPaused={isPaused} isCompleted={isCompleted} timer={timer} minutes={minutes} seconds={seconds} />
-            <div className={styles.timerContainer}>
                 <OptionsPanel
                     setTimer={setTimer}
                     timer={timer}
@@ -106,7 +105,7 @@ const Timer = () => {
                         isActive={isActive}
                     />
                 </div>
-            </div>
+            
         </>
     );
 }
