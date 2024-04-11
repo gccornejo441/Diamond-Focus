@@ -1,113 +1,101 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
-import { Helmet } from 'react-helmet';
 import OptionsPanel from './OptionsPanel';
 
 interface TimerModuleProps {
-    minutes: number;
-    seconds: number | string;
+  minutes: number;
+  seconds: string;
 }
 
-const TimerModule = ({ minutes, seconds }: TimerModuleProps) => {
-    return (
-        <div className={styles.timerBox}>
-            <div className={styles.timerFont}>
-                <span className={`${styles.timerFont}`}>{minutes}</span>
-                <span>:</span>
-                <span style={{ top: "0em" }}>{seconds === 0 ? "00" : seconds}</span>
-            </div>
-        </div>
-    )
-}
+const TimerModule = ({ minutes, seconds }:TimerModuleProps) => (
+  <div className={styles.timerBox}>
+    <div className={styles.timerFont}>
+      <span className={styles.timerFont}>{minutes}</span>
+      <span>:</span>
+      <span style={{ top: "0em" }}>{seconds}</span>
+    </div>
+  </div>
+);
 
 const DynamicHelmet = ({ isActive, isPaused, isCompleted, timer, minutes, seconds }: { isActive: boolean, isPaused: boolean, isCompleted: boolean, timer: boolean, minutes: number, seconds: number }) => {
     const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
     const titleSuffix = isCompleted ? " - Completed" : isPaused ? " - Paused" : isActive ? " - Active" : " - Ready";
-    const faviconName = timer ? "/greenTomatoIcon.ico" : "/redTomatoIcon.ico";
-    const titleText = timer ? `${(minutes - 20)}:${formattedSeconds} Break ${titleSuffix}` : `${minutes}:${formattedSeconds} Timer ${titleSuffix}`;
-
+    const faviconName = timer ? "/redTomatoIcon.ico" : "/greenTomatoIcon.ico";
+    const titleText = timer ? `${minutes}:${formattedSeconds} Break ${titleSuffix}` : `${minutes}:${formattedSeconds} Timer ${titleSuffix}`;
+  
     return (
-        <Helmet>
-            <link type="image/x-icon" rel="icon" href={faviconName} />
-            <title>{titleText}</title>
-        </Helmet>
+      <Helmet>
+        <link type="image/x-icon" rel="icon" href={faviconName} />
+        <title>{titleText}</title>
+      </Helmet>
     );
-}
+  }
 
 const Timer = () => {
-    const [minutes, setMinutes] = useState(25);
-    const [seconds, setSeconds] = useState(0);
-    const [isActive, setIsActive] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
-    const [isCompleted, setIsCompleted] = useState(false);
-    const [isReset, setIsReset] = useState(false);
-    const [isStarted, setIsStarted] = useState(false);
+  const initialTime = 25 * 60;
+  const [secondsLeft, setSecondsLeft] = useState(initialTime);
+  const [isActive, setIsActive] = useState(false);
+  const [isReset, setIsReset] = useState(false);
 
-    const [timer, setTimer] = useState<boolean>(false);
-    const [breakMinutes, setBreakMinutes] = useState(5);
-    const [breakSeconds, setBreakSeconds] = useState(0);
-    
-    useEffect(() => {
-        let interval: any = null;
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
 
-        if (isActive && !isPaused && !isCompleted && !isReset && !isStarted) {
-            interval = setInterval(() => {
+    if (isActive) {
+      intervalId = setInterval(() => {
+        setSecondsLeft(seconds => seconds > 0 ? seconds - 1 : seconds);
+      }, 1000);
+    } else if (isReset) {
+      setSecondsLeft(initialTime);
+      setIsReset(false);
+    }
 
-                if (seconds > 0) {
-                    setSeconds(seconds - 1);
-                }
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [isActive, isReset, initialTime]);
 
-                if (seconds === 0) {
-                    if (minutes === 0) {
-                        clearInterval(interval);
-                        setIsCompleted(true);
-                    } else {
-                        setMinutes(minutes - 1);
-                        setSeconds(59);
-                    }
-                }
+  useEffect(() => {
+    if (secondsLeft === 0) {
+      setIsActive(false);
+      alert('Timer completed!');
+    }
+  }, [secondsLeft]);
 
-            }, 1000);
-        }
+  useEffect(() => {
+    const minutes = Math.floor(secondsLeft / 60);
+    const seconds = secondsLeft % 60;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
+    document.title =  isActive ? `${minutes}:${formattedSeconds} Break - Active` : `${minutes}:${formattedSeconds} Timer - Active`;
+  }, [secondsLeft]);
 
-        if (isReset) {
-            setMinutes(25);
-            setSeconds(0);
-            setIsReset(false);
-            setIsActive(false);
-            setIsPaused(false);
-            setIsCompleted(false);
-        }
+  const minutes = Math.floor(secondsLeft / 60);
+  const seconds = secondsLeft % 60;
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
-        return () => clearInterval(interval);
-    }, [isActive, isPaused, isCompleted, isReset, isStarted, minutes, seconds, breakMinutes, breakSeconds]);
-
-    const formattedSecond = seconds < 10 ? `0${seconds}` : seconds;
-    
-    return (
-        <>
-        <DynamicHelmet isActive={isActive} isPaused={isPaused} isCompleted={isCompleted} timer={timer} minutes={minutes} seconds={seconds} />
-                <OptionsPanel
-                    setTimer={setTimer}
-                    timer={timer}
-                    setIsReset={setIsReset}
-                />
-                <TimerModule
-                    minutes={timer ? (minutes - 20) : minutes}
-                    seconds={formattedSecond} 
-                    />
-                <div className={styles.buttonPanel}>
-                    <ButtonPanel
-                        setIsReset={setIsReset}
-                        setIsPaused={setIsPaused}
-                        setIsActive={setIsActive}
-                        isActive={isActive}
-                    />
-                </div>
-            
-        </>
-    );
+  return (
+    <>
+      <DynamicHelmet isActive={isActive} isPaused={false} isCompleted={false} timer={true} minutes={minutes} seconds={seconds} />
+      <OptionsPanel
+        setTimer={setIsActive}
+        timer={isActive}
+        setIsReset={setIsReset}
+      />
+      <TimerModule
+        minutes={minutes}
+        seconds={formattedSeconds}
+      />
+      <div className={styles.buttonPanel}>
+        <ButtonPanel
+          setIsReset={() => setIsReset(true)}
+          setIsPaused={() => setIsActive(!isActive)}
+          setIsActive={() => setIsActive(!isActive)}
+          isActive={isActive}
+        />
+      </div>
+    </>
+  );
 }
 
 export default Timer;
