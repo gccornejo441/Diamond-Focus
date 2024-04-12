@@ -37,7 +37,7 @@ const ButtonPanel = ({ setIsReset, setIsActive, setIsPaused, isActive }: ButtonP
 
     return (
         <div className={styles.buttonPanel}>
-            <a href="#$$$"    
+            <a href="#$$$"   
                 data-tooltip-id="panelTooltip"
                 data-tooltip-place='bottom'
                 data-tooltip-content={isActive ? 'Pause' : 'Play'}

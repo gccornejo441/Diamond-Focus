@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
 import { Menu, Item, Separator, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
+import Timer from './Timer';
 const MENU_ID = 'task-context-menu';
 
 interface Task {
@@ -33,7 +34,7 @@ const TaskPanel = () => {
             }
         });
     };
-    
+
     useEffect(() => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
@@ -71,18 +72,19 @@ const TaskPanel = () => {
         }
     };
 
-    const toggleTaskCompletion = (id: number) : void => {
+    const toggleTaskCompletion = (id: number): void => {
         setTasks(tasks.map(t =>
             t.id === id ? { ...t, completed: !t.completed } : t
         ));
     };
 
-    const handleTaskDeleteShortcut = (event: KeyboardEvent) : boolean => {
+    const handleTaskDeleteShortcut = (event: KeyboardEvent): boolean => {
         return event.ctrlKey && event.key === 'd';
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.taskPanel}>
+            <Timer />
             <div className={styles.inputArea}>
                 <input
                     type="text"
@@ -120,15 +122,14 @@ const TaskPanel = () => {
                     </li>
                 ))}
             </ul>
-
             <Menu id={MENU_ID}>
-                <Item 
-                className={styles.editItem}
-                onClick={() => startEdit(currentTask)}>Edit</Item>
-                <Item 
-                className={styles.deleteItem}
-                keyMatcher={handleTaskDeleteShortcut} 
-                onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+                <Item
+                    className={styles.editItem}
+                    onClick={() => startEdit(currentTask)}>Edit</Item>
+                <Item
+                    className={styles.deleteItem}
+                    keyMatcher={handleTaskDeleteShortcut}
+                    onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
             </Menu>
         </div>
     );

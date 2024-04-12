@@ -39,10 +39,9 @@ function App() {
         onClose={() => setModalOpen(false)}>
           <SettingPanel />
       </PopupSetting> */}
-      <div>
-        <Timer />
+      
         <TaskPanel />
-      </div>
+
     </div>
   );
 }
