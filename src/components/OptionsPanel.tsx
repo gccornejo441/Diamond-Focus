@@ -15,7 +15,11 @@ interface OptionsPanelProps {
   isActive: boolean;
 }
 
-const OptionsPanel = ({ setIsReset, setIsTimerOrBreak, isTimerOrBreak, isActive }: OptionsPanelProps) => {
+const OptionsPanel = ({ 
+  setIsTimerOrBreak, 
+  setIsReset, 
+  isTimerOrBreak, 
+  isActive }: OptionsPanelProps) => {
   const toggleTimerOrBreak = () => {
     if (!isTimerOrBreak || !isActive) {
       setIsTimerOrBreak(!isTimerOrBreak);
@@ -24,14 +28,12 @@ const OptionsPanel = ({ setIsReset, setIsTimerOrBreak, isTimerOrBreak, isActive 
   }
 
   return (
-    <div className={styles.optionsPanelContainer}>
-      <button
+    <button
         className={isTimerOrBreak ? styles.buttonBreak : styles.buttonTimer}
         onClick={toggleTimerOrBreak}
       >
         {isTimerOrBreak ? <CouchButton style={svgStyle} aria-label="Couch" /> : <TimerButton style={svgStyle} aria-label="Timer" />}
       </button>
-    </div>
   );
 }
 

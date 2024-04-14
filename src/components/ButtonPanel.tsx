@@ -5,6 +5,7 @@ import { ReactComponent as ResetButton } from './assets/resetButton.svg';
 
 import { Tooltip } from 'react-tooltip';
 import styles from './ButtonPanel.module.css';
+import OptionsPanel from './OptionsPanel';
 
 const svgStyle = {
     width: '20px',
@@ -17,9 +18,12 @@ interface ButtonPanelProps {
     setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
     setIsReset: React.Dispatch<React.SetStateAction<boolean>>;
     isActive: boolean;
+    setIsTimerOrBreak: React.Dispatch<React.SetStateAction<boolean>>;
+    isTimerOrBreak: boolean;
 }
 
-const ButtonPanel: React.FC<ButtonPanelProps> = ({ setIsReset, setIsActive, setIsPaused, isActive }) => {
+const ButtonPanel: React.FC<ButtonPanelProps> = ({
+    setIsReset, setIsActive, setIsPaused, isActive, setIsTimerOrBreak, isTimerOrBreak }) => {
     const togglePlayPause = () => {
         setIsActive(!isActive);
         setIsPaused(isActive);
@@ -43,6 +47,11 @@ const ButtonPanel: React.FC<ButtonPanelProps> = ({ setIsReset, setIsActive, setI
             <button onClick={reset} className={styles.controlButton}>
                 <ResetButton style={svgStyle} aria-label="Reset" />
             </button>
+            <OptionsPanel
+                setIsReset={setIsReset}
+                setIsTimerOrBreak={setIsTimerOrBreak}
+                isTimerOrBreak={isTimerOrBreak}
+                isActive={isActive} />
             <Tooltip id="panelTooltip" />
         </div>
     );

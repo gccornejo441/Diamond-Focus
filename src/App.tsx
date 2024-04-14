@@ -5,6 +5,7 @@ import PopupSetting from './components/theme/PopupSetting';
 import styles from './components/ButtonPanel.module.css';
 import TaskPanel from './components/TaskPanel';
 import SettingPanel from './components/theme/SettingPanel';
+import settingStyles from './components/theme/Setting.module.css';
 
 interface ButtonProps {
   onclick: () => void;
@@ -12,7 +13,7 @@ interface ButtonProps {
 
 const MenuButton = ({ onclick }: ButtonProps) => {
   return (
-    <button onClick={onclick} className={styles.buttonMenu}>
+    <button onClick={onclick} className={settingStyles.buttonMenu}>
       <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" className={styles.icon}>
         <path fill="currentColor" d="M 2 5 L 2 7 L 22 7 L 22 5 L 2 5 z M 2 11 L 2 13 L 22 13 L 22 11 L 2 11 z M 2 17 L 2 19 L 22 19 L 22 17 L 2 17 z" />
       </svg>
@@ -31,17 +32,16 @@ function App() {
 
   return (
     <div className="App">
-      {/* <div className={styles.settingButtonPanel}>
-        <MenuButton onclick={handleClick} />
-      </div>
       <PopupSetting
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}>
-          <SettingPanel />
-      </PopupSetting> */}
-        <Timer />
-        <TaskPanel />
-
+        <SettingPanel />
+      </PopupSetting>
+      <Timer />
+      <TaskPanel />
+      <div className={settingStyles.settingButtonPanel}>
+        <MenuButton onclick={handleClick} />
+      </div>
     </div>
   );
 }

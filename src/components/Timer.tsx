@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
-import OptionsPanel from './OptionsPanel';
 
 interface TimerModuleProps {
   minutes: number;
@@ -24,21 +23,6 @@ const TimerModule = ({ minutes, formattedSeconds, isTimerOrBreak }: TimerModuleP
   );
 
 }
-
-const DynamicHelmet = ({ isActive, isPaused, isCompleted, timer, minutes, seconds }: { isActive: boolean, isPaused: boolean, isCompleted: boolean, timer: boolean, minutes: number, seconds: number }) => {
-  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-  const titleSuffix = isCompleted ? " - Completed" : isPaused ? " - Paused" : isActive ? " - Active" : " - Ready";
-  const faviconName = timer ? "/greenTomatoIcon.ico" : "/redTomatoIcon.ico";
-  const titleText = timer ? `${(minutes - 20)}:${formattedSeconds} Break ${titleSuffix}` : `${minutes}:${formattedSeconds} Timer ${titleSuffix}`;
-
-  return (
-    <Helmet>
-      <link type="image/x-icon" rel="icon" href={faviconName} />
-      <title>{titleText}</title>
-    </Helmet>
-  );
-}
-
 
 const Timer = () => {
   const [initialTitle, setInitialTitle] = useState<boolean>(true);
@@ -110,12 +94,9 @@ const Timer = () => {
         formattedSeconds={formattedSeconds}
         isTimerOrBreak={isTimerOrBreak} />
       <div className={styles.controlContainer}>
-        <OptionsPanel
-          setIsReset={setIsReset}
-          setIsTimerOrBreak={setIsTimerOrBreak}
-          isTimerOrBreak={isTimerOrBreak}
-          isActive={isActive} />
         <ButtonPanel
+        setIsTimerOrBreak={setIsTimerOrBreak}
+        isTimerOrBreak={isTimerOrBreak}
           setIsReset={setIsReset}
           setIsPaused={setIsPaused}
           setIsActive={setIsActive}

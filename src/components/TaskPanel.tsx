@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
-import { Menu, Item, Separator, useContextMenu, RightSlot } from 'react-contexify';
+import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
-import Timer from './Timer';
 const MENU_ID = 'task-context-menu';
 
 interface Task {
