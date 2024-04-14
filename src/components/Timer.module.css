@@ -11,21 +11,13 @@
 
 .timerContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
-  padding: 10px;
-  padding: 50px 12px;
+  padding: 5px 12px;
   max-width: 620px;
   margin: auto;
-}
-
-.timerTime {
-  line-height: 1em;
-  font-weight: 900;
-  background-color: transparent;
-  color: #ffede5;
-  border: none;
-  margin: auto;
+  border: 2px solid var(--indigo-500);
+  justify-content: space-between;
 }
 
 a:hover {
@@ -37,13 +29,12 @@ a:hover {
 }
 
 .timerFont {
-  font-size: 6rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 500;
   color: var(--white);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.buttonPanel {
-  width: 100%;
-  height: fit-content;
+.controlContainer {
+  border: 2px solid var(--indigo-500);
 }

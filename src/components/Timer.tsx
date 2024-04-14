@@ -100,11 +100,21 @@ const Timer = () => {
   return (
     <div className={styles.timerContainer}>
       <Helmet>
-        <link type="image/x-icon" rel="icon" href={isTimerOrBreak ? "/redTomatoIcon.ico" : "/greenTomatoIcon.ico"} />
+        <link
+          type="image/x-icon"
+          rel="icon"
+          href={isTimerOrBreak ? "/redTomatoIcon.ico" : "/greenTomatoIcon.ico"} />
       </Helmet>
-      <OptionsPanel setIsReset={setIsReset} setIsTimerOrBreak={setIsTimerOrBreak} isTimerOrBreak={isTimerOrBreak} isActive={isActive} />
-      <TimerModule minutes={minutes} formattedSeconds={formattedSeconds} isTimerOrBreak={isTimerOrBreak} />
-      <div className={styles.buttonPanel}>
+      <TimerModule
+        minutes={minutes}
+        formattedSeconds={formattedSeconds}
+        isTimerOrBreak={isTimerOrBreak} />
+      <div className={styles.controlContainer}>
+        <OptionsPanel
+          setIsReset={setIsReset}
+          setIsTimerOrBreak={setIsTimerOrBreak}
+          isTimerOrBreak={isTimerOrBreak}
+          isActive={isActive} />
         <ButtonPanel
           setIsReset={setIsReset}
           setIsPaused={setIsPaused}

@@ -1,32 +1,38 @@
 import styles from './OptionsPanel.module.css';
+import { ReactComponent as CouchButton } from './assets/couchButton.svg';
+import { ReactComponent as TimerButton } from './assets/timerButton.svg';
+
+const svgStyle = {
+  width: '20px',
+  height: '20px',
+  fill: 'currentColor'
+};
 
 interface OptionsPanelProps {
-    setIsReset: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsTimerOrBreak: React.Dispatch<React.SetStateAction<boolean>>;
-    isTimerOrBreak: boolean;
-    isActive: boolean;
+  setIsReset: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTimerOrBreak: React.Dispatch<React.SetStateAction<boolean>>;
+  isTimerOrBreak: boolean;
+  isActive: boolean;
 }
 
 const OptionsPanel = ({ setIsReset, setIsTimerOrBreak, isTimerOrBreak, isActive }: OptionsPanelProps) => {
-    const handleTimerOrBreakChange = () => {
-        if (isTimerOrBreak) {
-          setIsTimerOrBreak(false);
-          setIsReset(true);
-        }
-        else if (!isTimerOrBreak && !isActive) {
-          setIsTimerOrBreak(!isTimerOrBreak);
-          setIsReset(true);
-        }
-      }
+  const toggleTimerOrBreak = () => {
+    if (!isTimerOrBreak || !isActive) {
+      setIsTimerOrBreak(!isTimerOrBreak);
+      setIsReset(true);
+    }
+  }
 
-      
-    return (
-        <div className={styles.optionsPanelContainer}>
-            {isTimerOrBreak
-                ? <button className={styles.buttonBreak} onClick={handleTimerOrBreakChange}>Break</button>
-                : <button className={styles.buttonTimer} onClick={handleTimerOrBreakChange}>Timer</button>}
-        </div>
-    );
+  return (
+    <div className={styles.optionsPanelContainer}>
+      <button
+        className={isTimerOrBreak ? styles.buttonBreak : styles.buttonTimer}
+        onClick={toggleTimerOrBreak}
+      >
+        {isTimerOrBreak ? <CouchButton style={svgStyle} aria-label="Couch" /> : <TimerButton style={svgStyle} aria-label="Timer" />}
+      </button>
+    </div>
+  );
 }
 
 export default OptionsPanel;

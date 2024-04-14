@@ -84,7 +84,35 @@ const TaskPanel = () => {
 
     return (
         <div className={styles.taskPanel}>
-            <Timer />
+            
+            <ul className={styles.taskList}>
+                {tasks.map(task => (
+                    <li key={task.id} className={styles.taskItem} onContextMenu={(e) => handleContextMenu(e, task)}>
+                        <div className={styles.checkboxwrapper15}>
+                            <input className={styles.inpCbx}
+                                id={`cbx-${task.id}`}
+                                type="checkbox"
+                                style={{ display: 'none' }}
+                                checked={task.completed}
+                                onChange={() => toggleTaskCompletion(task.id)} />
+                            <label 
+                            className={styles.cbx} 
+                            htmlFor={`cbx-${task.id}`}>
+                                <span>
+                                    <svg width="12px" height="9px" viewBox="0 0 12 9">
+                                        <polyline points="1 5 4 8 11 1"></polyline>
+                                    </svg>
+                                </span>
+                        </label>
+                                <p id={`text-${task.id}`} // Ensure unique IDs for each task text
+                            className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
+                            {task.text}
+                        </p>                            
+                        </div>
+                    </li>
+                ))}
+            </ul>
+
             <div className={styles.inputArea}>
                 <input
                     type="text"
@@ -100,28 +128,7 @@ const TaskPanel = () => {
                     {editId ? "Save" : "Add Task"}
                 </button>
             </div>
-            <ul className={styles.taskList}>
-                {tasks.map(task => (
-                    <li key={task.id} className={styles.taskItem} onContextMenu={(e) => handleContextMenu(e, task)}>
-                        <div className={styles.checkboxwrapper15}>
-                            <input className={styles.inpCbx}
-                                id={`cbx-${task.id}`}
-                                type="checkbox"
-                                style={{ display: 'none' }}
-                                checked={task.completed}
-                                onChange={() => toggleTaskCompletion(task.id)} />
-                            <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
-                                <span>
-                                    <svg width="12px" height="9px" viewBox="0 0 12 9">
-                                        <polyline points="1 5 4 8 11 1"></polyline>
-                                    </svg>
-                                </span>
-                                <span>{task.text}</span>
-                            </label>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+            
             <Menu id={MENU_ID}>
                 <Item
                     className={styles.editItem}

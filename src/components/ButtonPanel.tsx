@@ -2,13 +2,14 @@ import React from 'react';
 import { ReactComponent as PlayButton } from './assets/playButton.svg';
 import { ReactComponent as PauseButton } from './assets/pauseButton.svg';
 import { ReactComponent as ResetButton } from './assets/resetButton.svg';
-import { Tooltip } from 'react-tooltip'
+
+import { Tooltip } from 'react-tooltip';
 import styles from './ButtonPanel.module.css';
 
-const svgStyle = { 
-    width: '50px', 
-    height: '50px', 
-    fill: 'currentColor' 
+const svgStyle = {
+    width: '20px',
+    height: '20px',
+    fill: 'currentColor'
 };
 
 interface ButtonPanelProps {
@@ -18,18 +19,13 @@ interface ButtonPanelProps {
     isActive: boolean;
 }
 
-const ButtonPanel = ({ setIsReset, setIsActive, setIsPaused, isActive }: ButtonPanelProps) => {
-    const handlePlayPause = () => {
-        if (!isActive) {
-            setIsActive(true);
-            setIsPaused(false);
-        } else {
-            setIsPaused(true);
-            setIsActive(false);
-        }
+const ButtonPanel: React.FC<ButtonPanelProps> = ({ setIsReset, setIsActive, setIsPaused, isActive }) => {
+    const togglePlayPause = () => {
+        setIsActive(!isActive);
+        setIsPaused(isActive);
     };
 
-    const handleReset = () => {
+    const reset = () => {
         setIsReset(true);
         setIsActive(false);
         setIsPaused(false);
@@ -37,24 +33,16 @@ const ButtonPanel = ({ setIsReset, setIsActive, setIsPaused, isActive }: ButtonP
 
     return (
         <div className={styles.buttonPanel}>
-            <a href="#$$$"   
-                data-tooltip-id="panelTooltip"
-                data-tooltip-place='bottom'
-                data-tooltip-content={isActive ? 'Pause' : 'Play'}
-                onClick={handlePlayPause}>
-                {isActive ? 
-                <PauseButton 
-                style={svgStyle} /> : 
-                <PlayButton 
-                style={svgStyle} />}
-            </a>
-            <a href="#$$$"
-            data-tooltip-id="panelTooltip"
-            data-tooltip-content="Reset"
-            data-tooltip-place='bottom'
-            onClick={handleReset}>
-                <ResetButton style={svgStyle} />
-            </a>
+            <button onClick={togglePlayPause} className={styles.controlButton}>
+                {isActive ? (
+                    <PauseButton style={svgStyle} aria-label="Pause" />
+                ) : (
+                    <PlayButton style={svgStyle} aria-label="Play" />
+                )}
+            </button>
+            <button onClick={reset} className={styles.controlButton}>
+                <ResetButton style={svgStyle} aria-label="Reset" />
+            </button>
             <Tooltip id="panelTooltip" />
         </div>
     );
