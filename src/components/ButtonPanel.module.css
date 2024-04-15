@@ -41,17 +41,17 @@
     justify-content: center;
     padding: 8px 16px;
     border: none;
-    background-color: var(--indigo-700);
     color: white;
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     outline: none;
+    background-color: inherit;
 }
 
 .buttonMenu:hover, .buttonMenu:focus {
-    background-color: var(--indigo-500);
+    background-color: var(--button-hover-color);
     transform: scale(1.05);
 }
 
@@ -68,7 +68,7 @@
 .controlButton {
     appearance: button;
     backface-visibility: hidden;
-    background-color: var(--indigo-600);
+    background-color: var(--button-background);
     border-radius: 6px;
     border-width: 0;
     box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,

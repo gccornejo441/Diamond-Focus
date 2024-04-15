@@ -275,16 +275,28 @@
 	--blue-grey-700: #455a64;
 	--blue-grey-800: #37474f;
 	--blue-grey-900: #263238;
+
+    --background-color: var(--blue-200);
+    --text-color: var(--blue-800);
+
+    --button-background: var(--blue-500);
+    --button-text: var(--blue-50);
+
+	--panel-background: var(--blue-600);
+	--panel-background-hover: var(--blue-300);
+	--panel-text: var(--blue-50);
+	--panel-text-hover: var(--blue-300);
 }
 
 body {
-  background-color: var(--indigo-300);
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+   background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
@@ -292,3 +304,82 @@ code {
     monospace;
 }
 
+[data-theme="dark"] {
+    --background-color: var(--grey-900);
+    --text-color: var(--blue-grey-100);
+
+    --button-background: var(--blue-grey-900);
+	--button-background-hover: var(--blue-grey-500);
+	--button-hover-text: var(--blue-grey-100);
+    --button-text: var(--blue-grey-50);
+
+	--panel-background: var(--blue-grey-800);
+	--panel-background-hover: var(--blue-grey-700);
+	--panel-text: var(--blue-grey-100);
+	--panel-text-hover: var(--blue-grey-50);
+}
+
+[data-theme="red-theme"] {
+    --background-color: var(--red-100);
+    --text-color: var(--red-900);
+
+    --button-background: var(--red-500);
+	--button-background-hover: var(--red-700);
+    --button-text: var(--red-50);
+
+    --panel-background: var(--red-200);
+    --panel-background-hover: var(--red-300);
+    --panel-text: var(--red-900);
+    --panel-text-hover: var(--red-50);
+}
+
+[data-theme="green-theme"] {
+    --background-color: var(--green-100);
+    --text-color: var(--green-900);
+
+    --button-background: var(--green-500);
+	--button-background-hover: var(--green-700);
+    --button-text: var(--green-50);
+
+    --panel-background: var(--green-200);
+    --panel-background-hover: var(--green-300);
+    --panel-text: var(--green-900);
+    --panel-text-hover: var(--green-50);
+}
+
+[data-theme="indigo-theme"] {
+	--background-color: var(--indigo-100);
+	--text-color: var(--indigo-900);
+
+	--button-background: var(--indigo-500);
+	--button-background-hover: var(--indigo-700);
+	--button-text: var(--indigo-50);
+
+	--panel-background: var(--indigo-200);
+	--panel-background-hover: var(--indigo-300);
+	--panel-text: var(--indigo-900);
+	--panel-text-hover: var(--indigo-50);
+}
+
+[data-theme="deep-orange-theme"] {
+    --background-color: var(--deep-orange-100);
+    --text-color: var(--deep-orange-900);
+
+    --button-background: var(--deep-orange-500);
+	--button-background-hover: var(--deep-orange-700);
+    --button-text: var(--deep-orange-50);
+
+    --panel-background: var(--deep-orange-200);
+    --panel-background-hover: var(--deep-orange-300);
+    --panel-text: var(--deep-orange-900);
+    --panel-text-hover: var(--deep-orange-50);
+}
+
+button {
+    background-color: var(--button-background);
+    color: var(--button-text);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

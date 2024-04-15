@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
 import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
+import { ReactComponent as TaskButton } from './assets/taskButton.svg';
+
+const svgStyle = {
+    width: '20px',
+    height: '20px',
+    fill: 'currentColor'
+};
+
 const MENU_ID = 'task-context-menu';
 
 interface Task {
@@ -124,7 +132,7 @@ const TaskPanel = () => {
                 <button
                     onClick={editId ? () => saveEdit(editId) : addTask}
                     className={styles.button}>
-                    {editId ? "Save" : "Add Task"}
+                    {editId ? "Save" : <TaskButton style={svgStyle} />}
                 </button>
             </div>
             
