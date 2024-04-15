@@ -32,6 +32,9 @@ function App() {
 
   return (
     <div className="App">
+      <div className={settingStyles.settingButtonPanel}>
+        <MenuButton onclick={handleClick} />
+      </div>
       <PopupSetting
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}>
@@ -39,9 +42,6 @@ function App() {
       </PopupSetting>
       <Timer />
       <TaskPanel />
-      <div className={settingStyles.settingButtonPanel}>
-        <MenuButton onclick={handleClick} />
-      </div>
     </div>
   );
 }

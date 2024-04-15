@@ -1,7 +1,6 @@
 .settingButtonPanel {
-  position: absolute;
-  right: 10px;
-  bottom: 15px;
+  padding: 5px;
+  align-self: flex-start;
 }
 
 .buttonMenu {
