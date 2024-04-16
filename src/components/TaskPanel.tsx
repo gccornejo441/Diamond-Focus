@@ -111,7 +111,7 @@ const TaskPanel = () => {
                                     </svg>
                                 </span>
                         </label>
-                                <p id={`text-${task.id}`} // Ensure unique IDs for each task text
+                                <p id={`text-${task.id}`}
                             className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
                             {task.text}
                         </p>                            

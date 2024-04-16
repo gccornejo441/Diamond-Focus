@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
+import Collapsible from './Collapsible';
 
 interface TimerModuleProps {
   minutes: number;
@@ -93,16 +94,14 @@ const Timer = () => {
         minutes={minutes}
         formattedSeconds={formattedSeconds}
         isTimerOrBreak={isTimerOrBreak} />
-      <div className={styles.controlContainer}>
-        <ButtonPanel
+      <ButtonPanel
         setIsTimerOrBreak={setIsTimerOrBreak}
         isTimerOrBreak={isTimerOrBreak}
-          setIsReset={setIsReset}
-          setIsPaused={setIsPaused}
-          setIsActive={setIsActive}
-          isActive={isActive}
-        />
-      </div>
+        setIsReset={setIsReset}
+        setIsPaused={setIsPaused}
+        setIsActive={setIsActive}
+        isActive={isActive}
+      />
     </div>
   );
 }
