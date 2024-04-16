@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './TaskPanel.module.css';
 import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
@@ -25,12 +25,11 @@ const TaskPanel = () => {
         const savedTasks = localStorage.getItem('tasks');
         return savedTasks ? JSON.parse(savedTasks) : [];
     });
-
     const [currentTask, setCurrentTask] = useState<Task | null>(null);
     const [editId, setEditId] = useState<number | null>(null);
     const [editText, setEditText] = useState('');
 
-    const handleContextMenu = (event: React.MouseEvent, task: Task) => {
+    const handleContextMenu = (event: React.MouseEvent | React.TouchEvent, task: Task) => {
         event.preventDefault();
         setCurrentTask(task);
         show({
@@ -40,6 +39,21 @@ const TaskPanel = () => {
                 task
             }
         });
+    };
+
+    const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+    const handleTouchStart = (event: React.TouchEvent, task: Task) => {
+        longPressTimerRef.current = setTimeout(() => {
+            handleContextMenu(event, task);
+        }, 800); // Trigger after 800 ms
+    };
+
+    const handleTouchEnd = () => {
+        if (longPressTimerRef.current) {
+            clearTimeout(longPressTimerRef.current);
+            longPressTimerRef.current = null;
+        }
     };
 
     useEffect(() => {
@@ -85,16 +99,15 @@ const TaskPanel = () => {
         ));
     };
 
-    const handleTaskDeleteShortcut = (event: KeyboardEvent): boolean => {
-        return event.ctrlKey && event.key === 'd';
-    }
-
     return (
         <div className={styles.taskPanel}>
-            
             <ul className={styles.taskList}>
                 {tasks.map(task => (
-                    <li key={task.id} className={styles.taskItem} onContextMenu={(e) => handleContextMenu(e, task)}>
+                    <li key={task.id}
+                        className={styles.taskItem}
+                        onContextMenu={(e) => handleContextMenu(e, task)}
+                        onTouchStart={(e) => handleTouchStart(e, task)}
+                        onTouchEnd={handleTouchEnd}>
                         <div className={styles.checkboxwrapper15}>
                             <input className={styles.inpCbx}
                                 id={`cbx-${task.id}`}
@@ -102,19 +115,17 @@ const TaskPanel = () => {
                                 style={{ display: 'none' }}
                                 checked={task.completed}
                                 onChange={() => toggleTaskCompletion(task.id)} />
-                            <label 
-                            className={styles.cbx} 
-                            htmlFor={`cbx-${task.id}`}>
+                            <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
                                 <span>
                                     <svg width="12px" height="9px" viewBox="0 0 12 9">
                                         <polyline points="1 5 4 8 11 1"></polyline>
                                     </svg>
                                 </span>
-                        </label>
-                                <p id={`text-${task.id}`}
-                            className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
-                            {task.text}
-                        </p>                            
+                            </label>
+                            <p id={`text-${task.id}`}
+                                className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
+                                {task.text}
+                            </p>
                         </div>
                     </li>
                 ))}
@@ -142,7 +153,6 @@ const TaskPanel = () => {
                     onClick={() => startEdit(currentTask)}>Edit</Item>
                 <Item
                     className={styles.deleteItem}
-                    keyMatcher={handleTaskDeleteShortcut}
                     onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
             </Menu>
         </div>
@@ -150,9 +160,3 @@ const TaskPanel = () => {
 }
 
 export default TaskPanel;
-
-
-
-
-
-
