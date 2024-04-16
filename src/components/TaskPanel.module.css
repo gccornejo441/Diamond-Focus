@@ -240,7 +240,7 @@ li {
 }
 
 .taskPanel {
-  max-width: 620px;
+  /* max-width: 620px; */
   display: flex;
   flex-direction: column;
   /* justify-content: space-between; */
