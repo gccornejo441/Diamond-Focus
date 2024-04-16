@@ -14,7 +14,6 @@
   flex-direction: row;
   width: 100%;
   max-width: 620px;
-  margin: auto;
   justify-content: space-between;
 }
 
