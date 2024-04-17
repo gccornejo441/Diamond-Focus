@@ -22,8 +22,8 @@ interface ButtonPanelProps {
     isTimerOrBreak: boolean;
 }
 
-const ButtonPanel: React.FC<ButtonPanelProps> = ({
-    setIsReset, setIsActive, setIsPaused, isActive, setIsTimerOrBreak, isTimerOrBreak }) => {
+const ButtonPanel = ({ setIsReset, setIsActive, setIsPaused, isActive, setIsTimerOrBreak, isTimerOrBreak }: ButtonPanelProps) => {
+
     const togglePlayPause = () => {
         setIsActive(!isActive);
         setIsPaused(isActive);

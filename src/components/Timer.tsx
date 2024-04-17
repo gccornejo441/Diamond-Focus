@@ -22,11 +22,9 @@ const TimerModule = ({ minutes, formattedSeconds, isTimerOrBreak }: TimerModuleP
       </div>
     </div>
   );
-
 }
 
 const Timer = () => {
-  const [initialTitle, setInitialTitle] = useState<boolean>(true);
   const initialTime = 25 * 60;
   const [secondsLeft, setSecondsLeft] = useState(initialTime);
   const [isActive, setIsActive] = useState(false);
@@ -58,25 +56,21 @@ const Timer = () => {
     }
   }, [secondsLeft, isTimerOrBreak]);
 
-
   useEffect(() => {
     const minutes = Math.floor(secondsLeft / 60);
     const seconds = secondsLeft % 60;
     const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
-    if (initialTitle) {
+    if (!isActive) {
       document.title = 'Pomodoro Cherry - Ready';
-      setInitialTitle(false);
     } else {
-      if (isTimerOrBreak) {
-        document.title = !isActive ? `${minutes}:${formattedSeconds} ⏰ Active` : `${minutes}:${formattedSeconds} ⏸️ Paused`;
-      } else {
-        document.title = !isActive ? `${minutes - 20}:${formattedSeconds} ⏰ Active` : `${minutes - 20}:${formattedSeconds} ⏸️ Paused`;
-      }
+      document.title = `${minutes - 20}:${formattedSeconds} ${isActive ? (isPaused ? '⏸️ Paused' : '⏰ Active') : ''}`;
     }
 
-  }, [secondsLeft, isActive, initialTitle, isTimerOrBreak]);
-
+    if (isPaused) {
+      document.title = `${minutes - 20}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
+    }
+  }, [secondsLeft, isActive, isPaused]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
