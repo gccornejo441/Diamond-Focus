@@ -1,6 +1,9 @@
 .settingButtonPanel {
-  padding: 5px;
-  align-self: flex-start;
+  max-width: 620px;
+  width: 100%;
+  min-width: 360px;
+  display: flex;
+  
 }
 
 .buttonMenu {

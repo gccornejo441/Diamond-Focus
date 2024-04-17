@@ -21,10 +21,15 @@ const MenuButton = ({ onclick }: ButtonProps) => {
   )
 }
 
-
-
 function App() {
   const [isModalOpen, setModalOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.body.setAttribute('data-theme', savedTheme);
+    }
+  }, []);
 
   const handleClick = () => {
     setModalOpen(true);

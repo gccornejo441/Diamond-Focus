@@ -1,9 +1,18 @@
+import { useEffect } from 'react';
 import styles from './Setting.module.css'
 
 const SettingPanel = () => {
     const changeTheme = (themeName: string) => {
         document.body.setAttribute('data-theme', themeName);
+        localStorage.setItem('theme', themeName);
     }
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        }
+    }, []);
 
     return (
         <div className={`${styles.card} ${styles.centeredText} ${styles.inheritedStylesForExportedElement}`}>
