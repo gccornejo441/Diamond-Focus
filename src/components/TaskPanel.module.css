@@ -147,7 +147,7 @@ li {
   border-radius: 50%;
   transform: scale(1);
   vertical-align: middle;
-  border: 1px solid #b9b8c3;
+  border: 1px solid var(--text-color);
   transition: all 0.2s ease;
 }
 
@@ -245,6 +245,7 @@ li {
   flex-direction: column;
   /* justify-content: space-between; */
   height: 100%;
+  width: 100%;
   min-width: 370px;
 }
 

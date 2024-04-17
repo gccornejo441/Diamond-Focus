@@ -23,11 +23,15 @@ const MenuButton = ({ onclick }: ButtonProps) => {
 
 function App() {
   const [isModalOpen, setModalOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.body.setAttribute('data-theme', savedTheme);
+      setTimeout(() => setIsLoading(false), 100); 
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -35,6 +39,9 @@ function App() {
     setModalOpen(true);
   }
 
+  if (isLoading) {
+    return <div>Loading...</div>; 
+  }
   return (
     <div className="App">
       <div className={settingStyles.settingButtonPanel}>

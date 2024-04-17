@@ -29,31 +29,16 @@ const TaskPanel = () => {
     const [editId, setEditId] = useState<number | null>(null);
     const [editText, setEditText] = useState('');
 
-    const handleContextMenu = (event: React.MouseEvent | React.TouchEvent, task: Task) => {
-        event.preventDefault();
-        setCurrentTask(task);
+    const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
+        event.preventDefault(); 
+        setCurrentTask(task); 
         show({
             id: MENU_ID,
-            event: event,
+            event: event as unknown as MouseEvent,
             props: {
                 task
             }
         });
-    };
-
-    const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-    const handleTouchStart = (event: React.TouchEvent, task: Task) => {
-        longPressTimerRef.current = setTimeout(() => {
-            handleContextMenu(event, task);
-        }, 800); // Trigger after 800 ms
-    };
-
-    const handleTouchEnd = () => {
-        if (longPressTimerRef.current) {
-            clearTimeout(longPressTimerRef.current);
-            longPressTimerRef.current = null;
-        }
     };
 
     useEffect(() => {
@@ -104,11 +89,10 @@ const TaskPanel = () => {
             <ul className={styles.taskList}>
                 {tasks.map(task => (
                     <li key={task.id}
-                        className={styles.taskItem}
-                        onContextMenu={(e) => handleContextMenu(e, task)}
-                        onTouchStart={(e) => handleTouchStart(e, task)}
-                        onTouchEnd={handleTouchEnd}>
-                        <div className={styles.checkboxwrapper15}>
+                    className={styles.taskItem}
+                    onContextMenu={(e) => handleDoubleClick(e, task)}
+                    onDoubleClick={(e) => handleDoubleClick(e, task)}>
+                    <div className={styles.checkboxwrapper15}>
                             <input className={styles.inpCbx}
                                 id={`cbx-${task.id}`}
                                 type="checkbox"
