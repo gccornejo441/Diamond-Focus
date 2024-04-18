@@ -1,11 +1,12 @@
 import * as React from 'react';
-import './App.css';
+import stylesApp from './App.module.css';
 import Timer from './components/Timer';
 import PopupSetting from './components/theme/PopupSetting';
 import styles from './components/ButtonPanel.module.css';
 import TaskPanel from './components/TaskPanel';
 import SettingPanel from './components/theme/SettingPanel';
 import settingStyles from './components/theme/Setting.module.css';
+import { ReactComponent as CherryIcon } from './components/assets/cherryIcon.svg';
 
 interface ButtonProps {
   onclick: () => void;
@@ -29,7 +30,7 @@ function App() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.body.setAttribute('data-theme', savedTheme);
-      setTimeout(() => setIsLoading(false), 100); 
+      setTimeout(() => setIsLoading(false), 100);
     } else {
       setIsLoading(false);
     }
@@ -40,20 +41,32 @@ function App() {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
+
   return (
-    <div className="App">
+    <div className={stylesApp.App}>
       <div className={settingStyles.settingButtonPanel}>
-        <MenuButton onclick={handleClick} />
+        <div className={settingStyles.settingHeaderContainer}>
+          <h1>
+            <a href="/" className={settingStyles.title}><CherryIcon aria-label="Cherry Icon" className={settingStyles.icon} /></a>
+          </h1>
+          <MenuButton onclick={handleClick} />
+        </div>
       </div>
-      <PopupSetting
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}>
-        <SettingPanel />
-      </PopupSetting>
-      <Timer />
-      <TaskPanel />
+
+      <div className={stylesApp.bodyContainer}>
+        <div className={stylesApp.bodyInnerContainer}>
+          <PopupSetting
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}>
+            <SettingPanel />
+          </PopupSetting>
+          <Timer />
+          <TaskPanel />
+        </div>
+      </div>
+
     </div>
   );
 }

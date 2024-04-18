@@ -1,9 +1,30 @@
 .settingButtonPanel {
+  padding: 0px 12px;
   max-width: 620px;
+  margin: auto;
+}
+
+.settingHeaderContainer {
+  background-color: inherit;
   width: 100%;
-  min-width: 360px;
+  height: 60px;
   display: flex;
-  
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settingHeaderContainer h1 {
+  display: inline-block;
+  color: white;
+  margin: 0px;
+  padding: 10px 0px;
+  font-size: 20px;
+}
+
+.icon {
+  fill: currentColor;
+  width: 30px;
+  height: 30px;
 }
 
 .buttonMenu {

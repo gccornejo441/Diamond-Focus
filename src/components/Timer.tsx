@@ -64,13 +64,18 @@ const Timer = () => {
     if (!isActive) {
       document.title = 'Pomodoro Cherry - Ready';
     } else {
-      document.title = `${minutes - 20}:${formattedSeconds} ${isActive ? (isPaused ? '⏸️ Paused' : '⏰ Active') : ''}`;
+      document.title = `${minutes}:${formattedSeconds} ${isActive ? (isPaused ? '⏸️ Paused' : '⏰ Active') : ''}`;
     }
 
     if (isPaused) {
+      document.title = `${minutes}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
+    }
+
+    if (!isTimerOrBreak) {
       document.title = `${minutes - 20}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
     }
-  }, [secondsLeft, isActive, isPaused]);
+
+  }, [secondsLeft, isActive, isPaused, isTimerOrBreak]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
