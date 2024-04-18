@@ -54,25 +54,6 @@
   touch-action: manipulation;
 }
 
-.card {
-  flex-direction: column;
-  display: inline-flex;
-  background: white;
-  border-radius: 15px;
-  box-shadow: rgba(255, 255, 255, 0.1) 0 0 0 1px inset;
-  padding: 10px;
-  margin: 15px;
-}
-
-.centeredText {
-  text-align: center;
-}
-
-.inheritedStylesForExportedElement {
-  font-size: 18px;
-  color: #000000;
-}
-
 .cardIllustration {
   height: auto;
   min-height: 150px;
@@ -81,6 +62,7 @@
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px inset;
   padding: 10px 0;
+  margin-bottom: 10px;
 }
 
 .colorPalette {
@@ -117,4 +99,98 @@
 
 .bigger {
   font-size: 24px;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-container img {
+  width: 100%;
+  display: block;
+}
+
+.cardMain {
+  background-color: (0, 0, 0, 0.4);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100vh;
+  z-index: 2147483647;
+  pointer-events: auto;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  transition: all 0.2s ease-in 0s;
+  overflow: hidden scroll;
+  padding: 48px 0px 58px;
+  box-sizing: border-box;
+}
+.cancelButton {
+  position: absolute;
+  top: 17px;
+  right: 18px;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  fill: black;
+  z-index: 2147483647;
+  fill: currentColor;
+}
+
+.settingCard {
+  color: rgb(34, 34, 34);
+  border-radius: 8px;
+  background-color: white;
+  position: relative;
+  max-width: 400px;
+  width: 95%;
+  z-index: 2147483647;
+  border-top: 1px solid rgb(239, 239, 239);
+  border-bottom: 1px solid rgb(239, 239, 239);
+  transition: all 0.2s ease-in 0s;
+  transform: translateY(20px);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+  overflow: hidden;
+  margin: auto;
+  display: block;
+}
+
+.cardTitle {
+  font-size: 15px;
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 15px 15px;
+  border-bottom: 1px solid rgb(238, 238, 238);
+  text-align: center;
+}
+
+.settingCardBody {
+  padding: 0px 10px;
+}
+
+.settingCardItem {
+  position: relative;
+  max-width: 780px;
+  margin: auto;
+}
+
+.settingCardItemTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-color);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
 }

@@ -60,7 +60,9 @@ function App() {
           <PopupSetting
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}>
-            <SettingPanel />
+            <SettingPanel 
+            onClose={() => setModalOpen(false)}
+            />
           </PopupSetting>
           <Timer />
           <TaskPanel />
