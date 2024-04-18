@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import stylesApp from './App.module.css';
 import Timer from './components/Timer';
 import PopupSetting from './components/theme/PopupSetting';
@@ -6,7 +6,7 @@ import styles from './components/ButtonPanel.module.css';
 import TaskPanel from './components/TaskPanel';
 import SettingPanel from './components/theme/SettingPanel';
 import settingStyles from './components/theme/Setting.module.css';
-import { ReactComponent as CherryIcon } from './components/assets/cherryIcon.svg';
+import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
 
 interface ButtonProps {
   onclick: () => void;
@@ -23,10 +23,11 @@ const MenuButton = ({ onclick }: ButtonProps) => {
 }
 
 function App() {
-  const [isModalOpen, setModalOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [pomodoroTime, setPomodoroTime] = useState(25);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
+useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.body.setAttribute('data-theme', savedTheme);
@@ -35,6 +36,12 @@ function App() {
       setIsLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    //localStorage.setItem('pomodoroTime', String(pomodoroTime));
+
+    //alert(`${pomodoroTime} minutes updated!`);
+  }, [pomodoroTime]);
 
   const handleClick = () => {
     setModalOpen(true);
@@ -49,7 +56,7 @@ function App() {
       <div className={settingStyles.settingButtonPanel}>
         <div className={settingStyles.settingHeaderContainer}>
           <h1>
-            <a href="/" className={settingStyles.title}><CherryIcon aria-label="Cherry Icon" className={settingStyles.icon} /></a>
+            <a href="/" className={settingStyles.title}><GemIcon aria-label="Gem Icon" className={settingStyles.icon} /></a>
           </h1>
           <MenuButton onclick={handleClick} />
         </div>
@@ -60,11 +67,13 @@ function App() {
           <PopupSetting
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}>
-            <SettingPanel 
-            onClose={() => setModalOpen(false)}
+            <SettingPanel
+              pomodoroTime={pomodoroTime}
+              setPomodoroTime={setPomodoroTime}
+              onClose={() => setModalOpen(false)}
             />
           </PopupSetting>
-          <Timer />
+          <Timer pomodoroTime={pomodoroTime} />
           <TaskPanel />
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
-import Collapsible from './Collapsible';
+import SciFiAlarm from './assets/sciFiAlarm.mp3';
 
 interface TimerModuleProps {
   minutes: number;
@@ -24,8 +24,12 @@ const TimerModule = ({ minutes, formattedSeconds, isTimerOrBreak }: TimerModuleP
   );
 }
 
-const Timer = () => {
-  const initialTime = 25 * 60;
+interface TimerProps {
+  pomodoroTime: number;
+}
+
+const Timer = ({ pomodoroTime }: TimerProps) => {
+  const initialTime = pomodoroTime * 60;
   const [secondsLeft, setSecondsLeft] = useState(initialTime);
   const [isActive, setIsActive] = useState(false);
   const [isReset, setIsReset] = useState(false);
@@ -52,30 +56,35 @@ const Timer = () => {
   useEffect(() => {
     if (secondsLeft === 0) {
       setIsActive(false);
-      alert(`${isTimerOrBreak ? 'Timer' : 'Break'} completed!`);
+      const audio = new Audio(SciFiAlarm);
+      audio.play();
     }
   }, [secondsLeft, isTimerOrBreak]);
 
   useEffect(() => {
-    const minutes = Math.floor(secondsLeft / 60);
-    const seconds = secondsLeft % 60;
-    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
+    const titleMinutes = Math.floor(secondsLeft / 60);
+    const titleSeconds = secondsLeft % 60;
+    const formattedSeconds = titleSeconds < 10 ? `0${titleSeconds}` : titleSeconds.toString();
 
     if (!isActive) {
-      document.title = 'Pomodoro Cherry - Ready';
+      document.title = 'Diamond Focus - Ready';
     } else {
-      document.title = `${minutes}:${formattedSeconds} ${isActive ? (isPaused ? '⏸️ Paused' : '⏰ Active') : ''}`;
+      document.title = `${titleMinutes}:${formattedSeconds} ${isActive ? (isPaused ? '⏸️ Paused' : '⏰ Active') : ''}`;
     }
 
     if (isPaused) {
-      document.title = `${minutes}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
+      document.title = `${titleMinutes}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
     }
 
     if (!isTimerOrBreak) {
-      document.title = `${minutes - 20}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
+      document.title = `${titleMinutes - 20}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
     }
 
   }, [secondsLeft, isActive, isPaused, isTimerOrBreak]);
+
+  useEffect(() => {
+    setSecondsLeft(initialTime)
+  }, [pomodoroTime]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
@@ -85,9 +94,9 @@ const Timer = () => {
     <div className={styles.timerContainer}>
       <Helmet>
         <link
-          type="image/x-icon"
+          type="image/svg+xml"
           rel="icon"
-          href={isTimerOrBreak ? "/redTomatoIcon.ico" : "/greenTomatoIcon.ico"} />
+          href={isTimerOrBreak ? "/favicon.svg" : "/favicon.svg"} />
       </Helmet>
       <TimerModule
         minutes={minutes}

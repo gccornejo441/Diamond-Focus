@@ -30,8 +30,8 @@ const TaskPanel = () => {
     const [editText, setEditText] = useState('');
 
     const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
-        event.preventDefault(); 
-        setCurrentTask(task); 
+        event.preventDefault();
+        setCurrentTask(task);
         show({
             id: MENU_ID,
             event: event as unknown as MouseEvent,
@@ -86,13 +86,28 @@ const TaskPanel = () => {
 
     return (
         <div className={styles.taskPanel}>
+            <div className={styles.inputArea}>
+                <input
+                    type="text"
+                    placeholder={editId ? "Edit task" : "Add a task"}
+                    value={editId ? editText : task}
+                    onChange={editId ? handleEditChange : (e) => setTask(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    className={styles.input}
+                />
+                <button
+                    onClick={editId ? () => saveEdit(editId) : addTask}
+                    className={styles.button}>
+                    {editId ? "Save" : <TaskButton style={svgStyle} />}
+                </button>
+            </div>
             <ul className={styles.taskList}>
                 {tasks.map(task => (
                     <li key={task.id}
-                    className={styles.taskItem}
-                    onContextMenu={(e) => handleDoubleClick(e, task)}
-                    onDoubleClick={(e) => handleDoubleClick(e, task)}>
-                    <div className={styles.checkboxwrapper15}>
+                        className={styles.taskItem}
+                        onContextMenu={(e) => handleDoubleClick(e, task)}
+                        onDoubleClick={(e) => handleDoubleClick(e, task)}>
+                        <div className={styles.checkboxwrapper15}>
                             <input className={styles.inpCbx}
                                 id={`cbx-${task.id}`}
                                 type="checkbox"
@@ -114,23 +129,6 @@ const TaskPanel = () => {
                     </li>
                 ))}
             </ul>
-
-            <div className={styles.inputArea}>
-                <input
-                    type="text"
-                    placeholder={editId ? "Edit task" : "Add a task"}
-                    value={editId ? editText : task}
-                    onChange={editId ? handleEditChange : (e) => setTask(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className={styles.input}
-                />
-                <button
-                    onClick={editId ? () => saveEdit(editId) : addTask}
-                    className={styles.button}>
-                    {editId ? "Save" : <TaskButton style={svgStyle} />}
-                </button>
-            </div>
-            
             <Menu id={MENU_ID}>
                 <Item
                     className={styles.editItem}
