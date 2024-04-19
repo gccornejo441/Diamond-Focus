@@ -6,14 +6,19 @@ interface SettingPanelProps {
     onClose: () => void;
     pomodoroTime: number;
     setPomodoroTime: React.Dispatch<React.SetStateAction<number>>;
+    breakTime: number;
+    setBreakTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SettingPanel = ({ onClose, pomodoroTime, setPomodoroTime }: SettingPanelProps) => {
+const SettingPanel = ({ onClose, pomodoroTime, setPomodoroTime, breakTime, setBreakTime }: SettingPanelProps) => {
     const [tempPomodoroTime, setTempPomodoroTime] = useState(pomodoroTime);
-
+    const [tempBreakTime, setTempBreakTime] = useState(breakTime);
 
     const saveSettings = () => {
         setPomodoroTime(tempPomodoroTime);
+        setBreakTime(tempBreakTime);
+        localStorage.setItem('pomodoroTime', tempPomodoroTime.toString());
+        localStorage.setItem('breakTime', tempBreakTime.toString());
         onClose();
     };
 
@@ -22,12 +27,34 @@ const SettingPanel = ({ onClose, pomodoroTime, setPomodoroTime }: SettingPanelPr
         localStorage.setItem('theme', themeName);
     };
 
+    const resetSettings = () => {
+        const defaultPomodoroTime = 25;
+        const defaultBreakTime = 5;
+        setPomodoroTime(defaultPomodoroTime);
+        setBreakTime(defaultBreakTime);
+        setTempPomodoroTime(defaultPomodoroTime);
+        setTempBreakTime(defaultBreakTime);
+        localStorage.setItem('pomodoroTime', defaultPomodoroTime.toString());
+        localStorage.setItem('breakTime', defaultBreakTime.toString());
+
+        changeTheme('default');
+        onClose();
+    };
+
     useEffect(() => {
+
+        if (tempPomodoroTime < 1) {
+            setTempPomodoroTime(1);
+        } else if (tempPomodoroTime > 99) {
+            setTempPomodoroTime(99);
+        }
+
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             document.body.setAttribute('data-theme', savedTheme);
         }
-    }, []);
+
+    }, [tempPomodoroTime]);
 
     return (
         <div className={styles.cardMain}>
@@ -42,8 +69,20 @@ const SettingPanel = ({ onClose, pomodoroTime, setPomodoroTime }: SettingPanelPr
                                 type="number"
                                 min="1"
                                 step="1"
+                                max="99"
+                                pattern='[1-9]*'
                                 value={tempPomodoroTime}
                                 onChange={e => setTempPomodoroTime(Number(e.target.value))}
+                            />
+                            <span className={styles.settingCardItemTitle}>Break Time (minutes)</span>
+                            <input
+                                type="number"
+                                min="1"
+                                step="1"
+                                max="99"
+                                pattern='[1-9]*'
+                                value={tempBreakTime}
+                                onChange={e => setTempBreakTime(Number(e.target.value))}
                             />
                         </div>
                         <div className={styles.settingCardItem}>
@@ -62,6 +101,7 @@ const SettingPanel = ({ onClose, pomodoroTime, setPomodoroTime }: SettingPanelPr
                         <div className={styles.settingCardCommitBtn}>
                             <button onClick={saveSettings} className={styles.saveButton}>Save</button>
                             <button onClick={onClose} className={styles.saveButton}>Cancel</button>
+                            <button onClick={resetSettings} className={styles.saveButton}>Reset</button>
                         </div>
                     </div>
                 </div>

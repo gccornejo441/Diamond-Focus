@@ -24,10 +24,11 @@ const MenuButton = ({ onclick }: ButtonProps) => {
 
 function App() {
   const [pomodoroTime, setPomodoroTime] = useState(25);
+  const [breakTime, setBreakTime] = useState(5);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-useEffect(() => {
+  useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.body.setAttribute('data-theme', savedTheme);
@@ -38,10 +39,10 @@ useEffect(() => {
   }, []);
 
   useEffect(() => {
-    //localStorage.setItem('pomodoroTime', String(pomodoroTime));
+    setPomodoroTime(Number(localStorage.getItem('pomodoroTime')));
+    setBreakTime(Number(localStorage.getItem('breakTime')));
 
-    //alert(`${pomodoroTime} minutes updated!`);
-  }, [pomodoroTime]);
+  }, [pomodoroTime, setPomodoroTime, breakTime, setBreakTime]);
 
   const handleClick = () => {
     setModalOpen(true);
@@ -56,7 +57,9 @@ useEffect(() => {
       <div className={settingStyles.settingButtonPanel}>
         <div className={settingStyles.settingHeaderContainer}>
           <h1>
-            <a href="/" className={settingStyles.title}><GemIcon aria-label="Gem Icon" className={settingStyles.icon} /></a>
+            <a href="/" className={settingStyles.title}>
+              <GemIcon aria-label="Gem Icon" className={settingStyles.icon} />
+            </a>
           </h1>
           <MenuButton onclick={handleClick} />
         </div>
@@ -68,12 +71,16 @@ useEffect(() => {
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}>
             <SettingPanel
+              breakTime={breakTime}
+              setBreakTime={setBreakTime}
               pomodoroTime={pomodoroTime}
               setPomodoroTime={setPomodoroTime}
               onClose={() => setModalOpen(false)}
             />
           </PopupSetting>
-          <Timer pomodoroTime={pomodoroTime} />
+          <Timer
+            breakTime={breakTime}
+            pomodoroTime={pomodoroTime} />
           <TaskPanel />
         </div>
       </div>

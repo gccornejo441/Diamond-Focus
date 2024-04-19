@@ -275,17 +275,27 @@
   --blue-grey-700: #455a64;
   --blue-grey-800: #37474f;
   --blue-grey-900: #263238;
+  --b1: #000E3D;
+  --b2: #234CDA;
+  
+  --b25: #587bfd;
+  --b3: #6B8AFB;
+  --b4: #A6B8F8;
+  --b5: #D2DBFD;
+  --b6: #E7ECFF;
+  
+  --background-color: var(--b4);
+  --text-color: var(--b2);
 
-  --background-color: var(--blue-200);
-  --text-color: var(--blue-800);
+  --button-background: var(--b3);
+  --button-background-hover: var(--b2);
+  --button-hover-text: var(--b4);
+  --button-text: var(--b5);
 
-  --button-background: var(--blue-500);
-  --button-text: var(--blue-50);
-
-  --panel-background: var(--blue-600);
-  --panel-background-hover: var(--blue-300);
-  --panel-text: var(--blue-50);
-  --panel-text-hover: var(--blue-300);
+  --panel-background: var(--b25);
+  --panel-background-hover: var(--b3);
+  --panel-text: var(--b1);
+  --panel-text-hover: var(--b2);
 }
 
 body {
@@ -342,6 +352,21 @@ a {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+[data-theme="default"] {
+  --background-color: var(--blue-200);
+  --text-color: var(--blue-800);
+
+  --button-background: var(--blue-900);
+  --button-background-hover: var(--blue-500);
+  --button-hover-text: var(--blue-100);
+  --button-text: var(--blue-grey-50);
+
+  --panel-background: var(--blue-600);
+  --panel-background-hover: var(--blue-300);
+  --panel-text: var(--blue-50);
+  --panel-text-hover: var(--blue-300);
 }
 
 [data-theme="dark"] {

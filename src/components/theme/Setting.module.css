@@ -11,6 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 16px;
 }
 
 .settingHeaderContainer h1 {
@@ -18,7 +19,6 @@
   color: white;
   margin: 0px;
   padding: 10px 0px;
-  font-size: 20px;
 }
 
 .icon {
@@ -92,15 +92,6 @@
   margin-top: 1em;
 }
 
-.cardTitle {
-  font-weight: 600;
-  margin-bottom: 1em;
-}
-
-.bigger {
-  font-size: 24px;
-}
-
 .image-container {
   position: relative;
   display: inline-block;
@@ -127,6 +118,7 @@
   align-items: center;
   padding: 48px 0px 58px;
   box-sizing: border-box;
+  font-size: 14px;
 }
 
 .cancelButton {
@@ -160,7 +152,7 @@
 }
 
 .cardTitle {
-  font-size: 15px;
+  margin-bottom: 1em;
   color: var(--text-color);
   text-transform: uppercase;
   font-weight: bold;
@@ -179,7 +171,6 @@
 }
 
 .settingCardItemTitle {
-  font-size: 15px;
   color: var(--text-color);
   text-transform: uppercase;
   font-weight: bold;
@@ -200,7 +191,6 @@
   cursor: pointer;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transition: all 0.2s ease-in 0s;

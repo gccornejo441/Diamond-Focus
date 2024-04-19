@@ -1,38 +1,37 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
 import SciFiAlarm from './assets/sciFiAlarm.mp3';
 
 interface TimerModuleProps {
-  minutes: number;
-  formattedSeconds: string;
   isTimerOrBreak: boolean;
+  seconds: number;
 }
 
-const TimerModule = ({ minutes, formattedSeconds, isTimerOrBreak }: TimerModuleProps) => {
-  return (
-    <div className={styles.timerBox}>
-      <div className={styles.timerFont}>
-        {isTimerOrBreak ? (
-          <><span>{minutes}</span>:<span>{formattedSeconds}</span></>
-        ) : (
-          <><span>{minutes - 20}</span>:<span>{formattedSeconds}</span></>
-        )}
-      </div>
+const formatTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds.toString();
+  return `${minutes}:${formattedSeconds}`;
+};
+
+const TimerModule = ({ isTimerOrBreak, seconds }: TimerModuleProps) => (
+  <div className={styles.timerBox}>
+    <div className={styles.timerFont}>
+      <span>{formatTime(seconds)}</span>
     </div>
-  );
-}
+  </div>
+);
 
 interface TimerProps {
   pomodoroTime: number;
+  breakTime: number;
 }
 
-const Timer = ({ pomodoroTime }: TimerProps) => {
-  const initialTime = pomodoroTime * 60;
-  const [secondsLeft, setSecondsLeft] = useState(initialTime);
+const Timer = ({ pomodoroTime, breakTime }: TimerProps) => {
+  const [secondsLeft, setSecondsLeft] = useState(pomodoroTime * 60);
   const [isActive, setIsActive] = useState(false);
-  const [isReset, setIsReset] = useState(false);
   const [isTimerOrBreak, setIsTimerOrBreak] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -41,74 +40,50 @@ const Timer = ({ pomodoroTime }: TimerProps) => {
 
     if (isActive && !isPaused) {
       intervalId = setInterval(() => {
-        setSecondsLeft(seconds => seconds > 0 ? seconds - 1 : 0);
+        setSecondsLeft(prevSeconds => prevSeconds > 0 ? prevSeconds - 1 : 0);
       }, 1000);
-    } else if (isReset) {
-      setSecondsLeft(initialTime);
-      setIsReset(false);
+    } else if (!isActive && (secondsLeft === 0)) {
+      const audio = new Audio(SciFiAlarm);
+      audio.play();
+      setIsTimerOrBreak(!isTimerOrBreak);
+      setSecondsLeft(isTimerOrBreak ? breakTime * 60 : pomodoroTime * 60);
+      setIsActive(true);
     }
 
     return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [isActive, isReset, initialTime, isPaused]);
-
-  useEffect(() => {
-    if (secondsLeft === 0) {
-      setIsActive(false);
-      const audio = new Audio(SciFiAlarm);
-      audio.play();
+      intervalId && clearInterval(intervalId);
     }
-  }, [secondsLeft, isTimerOrBreak]);
+  }, [isActive, isPaused, secondsLeft, isTimerOrBreak, pomodoroTime, breakTime]);
 
   useEffect(() => {
-    const titleMinutes = Math.floor(secondsLeft / 60);
-    const titleSeconds = secondsLeft % 60;
-    const formattedSeconds = titleSeconds < 10 ? `0${titleSeconds}` : titleSeconds.toString();
 
+    const documentTitle = (isActive ? (isPaused ? formatTime(secondsLeft) + ' ⏸️ Paused' : formatTime(secondsLeft) + ' ⏰ Active') : 'Diamond Focus - Ready');
+    document.title = documentTitle;
+  }, [secondsLeft, isActive, isPaused]);
+
+  useEffect(() => {
     if (!isActive) {
-      document.title = 'Diamond Focus - Ready';
-    } else {
-      document.title = `${titleMinutes}:${formattedSeconds} ${isActive ? (isPaused ? '⏸️ Paused' : '⏰ Active') : ''}`;
+      setSecondsLeft(isTimerOrBreak ? pomodoroTime * 60 : breakTime * 60);
     }
-
-    if (isPaused) {
-      document.title = `${titleMinutes}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
-    }
-
-    if (!isTimerOrBreak) {
-      document.title = `${titleMinutes - 20}:${formattedSeconds} ${isPaused ? '⏸️ Paused' : '⏰ Active'}`;
-    }
-
-  }, [secondsLeft, isActive, isPaused, isTimerOrBreak]);
-
-  useEffect(() => {
-    setSecondsLeft(initialTime)
-  }, [pomodoroTime]);
-
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
-  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
+  }, [isActive, isTimerOrBreak, pomodoroTime, breakTime]);
 
   return (
     <div className={styles.timerContainer}>
       <Helmet>
-        <link
-          type="image/svg+xml"
-          rel="icon"
-          href={isTimerOrBreak ? "/favicon.svg" : "/favicon.svg"} />
+        <link type="image/svg+xml" rel="icon" href="/favicon.svg" />
       </Helmet>
-      <TimerModule
-        minutes={minutes}
-        formattedSeconds={formattedSeconds}
-        isTimerOrBreak={isTimerOrBreak} />
+      <TimerModule isTimerOrBreak={isTimerOrBreak} seconds={secondsLeft} />
       <ButtonPanel
         setIsTimerOrBreak={setIsTimerOrBreak}
         isTimerOrBreak={isTimerOrBreak}
-        setIsReset={setIsReset}
+        setIsReset={() => {
+          setIsActive(false);
+          setSecondsLeft(isTimerOrBreak ? pomodoroTime * 60 : breakTime * 60);
+        }}
         setIsPaused={setIsPaused}
         setIsActive={setIsActive}
         isActive={isActive}
+        isPaused={isPaused}
       />
     </div>
   );

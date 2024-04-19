@@ -20,13 +20,21 @@ interface ButtonPanelProps {
     isActive: boolean;
     setIsTimerOrBreak: React.Dispatch<React.SetStateAction<boolean>>;
     isTimerOrBreak: boolean;
+    isPaused: boolean;
 }
 
-const ButtonPanel = ({ setIsReset, setIsActive, setIsPaused, isActive, setIsTimerOrBreak, isTimerOrBreak }: ButtonPanelProps) => {
+const ButtonPanel = ({ setIsReset, isPaused, setIsActive, setIsPaused, isActive, setIsTimerOrBreak, isTimerOrBreak }: ButtonPanelProps) => {
 
     const togglePlayPause = () => {
-        setIsActive(!isActive);
-        setIsPaused(isActive);
+        if (isActive && !isPaused) {
+            setIsPaused(true);
+        } else if (isActive && isPaused) {
+            setIsPaused(false);
+            setIsActive(true);
+        } else {
+            setIsActive(true);
+            setIsPaused(false);
+        }
     };
 
     const reset = () => {
@@ -38,7 +46,7 @@ const ButtonPanel = ({ setIsReset, setIsActive, setIsPaused, isActive, setIsTime
     return (
         <div className={styles.buttonPanel}>
             <button onClick={togglePlayPause} className={styles.controlButton}>
-                {isActive ? (
+                {isPaused ? (
                     <PauseButton style={svgStyle} aria-label="Pause" />
                 ) : (
                     <PlayButton style={svgStyle} aria-label="Play" />
