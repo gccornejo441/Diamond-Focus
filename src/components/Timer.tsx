@@ -34,6 +34,7 @@ const Timer = ({ pomodoroTime, breakTime }: TimerProps) => {
   const [isActive, setIsActive] = useState(false);
   const [isTimerOrBreak, setIsTimerOrBreak] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [initialState, setInitialState] = useState(true);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
@@ -42,6 +43,7 @@ const Timer = ({ pomodoroTime, breakTime }: TimerProps) => {
       intervalId = setInterval(() => {
         setSecondsLeft(prevSeconds => prevSeconds > 0 ? prevSeconds - 1 : 0);
       }, 1000);
+      
     } else if (!isActive && (secondsLeft === 0)) {
       const audio = new Audio(SciFiAlarm);
       audio.play();
@@ -56,7 +58,7 @@ const Timer = ({ pomodoroTime, breakTime }: TimerProps) => {
   }, [isActive, isPaused, secondsLeft, isTimerOrBreak, pomodoroTime, breakTime]);
 
   useEffect(() => {
-
+    
     const documentTitle = (isActive ? (isPaused ? formatTime(secondsLeft) + ' ⏸️ Paused' : formatTime(secondsLeft) + ' ⏰ Active') : 'Diamond Focus - Ready');
     document.title = documentTitle;
   }, [secondsLeft, isActive, isPaused]);
@@ -80,6 +82,8 @@ const Timer = ({ pomodoroTime, breakTime }: TimerProps) => {
           setIsActive(false);
           setSecondsLeft(isTimerOrBreak ? pomodoroTime * 60 : breakTime * 60);
         }}
+        setInitialState={setInitialState}
+        intialState={initialState}
         setIsPaused={setIsPaused}
         setIsActive={setIsActive}
         isActive={isActive}

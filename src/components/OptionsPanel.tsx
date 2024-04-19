@@ -15,25 +15,31 @@ interface OptionsPanelProps {
   isActive: boolean;
 }
 
-const OptionsPanel = ({ 
-  setIsTimerOrBreak, 
-  setIsReset, 
-  isTimerOrBreak, 
+const OptionsPanel = ({
+  setIsTimerOrBreak,
+  setIsReset,
+  isTimerOrBreak,
   isActive }: OptionsPanelProps) => {
   const toggleTimerOrBreak = () => {
+    
     if (!isTimerOrBreak || !isActive) {
       setIsTimerOrBreak(!isTimerOrBreak);
       setIsReset(true);
+    } else {
+      setIsTimerOrBreak(!isTimerOrBreak);
     }
   }
 
   return (
     <button
-        className={isTimerOrBreak ? styles.buttonBreak : styles.buttonTimer}
-        onClick={toggleTimerOrBreak}
-      >
-        {isTimerOrBreak ? <CouchButton style={svgStyle} aria-label="Couch" /> : <TimerButton style={svgStyle} aria-label="Timer" />}
-      </button>
+      data-tooltip-id="panelTooltip"
+      data-tooltip-place='bottom'
+      data-tooltip-content={isActive ? 'Break' : 'Timer'}
+      className={isTimerOrBreak ? styles.buttonBreak : styles.buttonTimer}
+      onClick={toggleTimerOrBreak}
+    >
+      {isTimerOrBreak ? <CouchButton style={svgStyle} aria-label="Couch" /> : <TimerButton style={svgStyle} aria-label="Timer" />}
+    </button>
   );
 }
 

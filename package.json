@@ -1,8 +1,8 @@
 {
-  "name": "cherry-pomodoro",
-  "description": "A pomodoro timer built with React",
+  "name": "diamond-focus",
+  "description": "A timer for diamond focus built building stronger brains under pressure.",
   "author": "Gabe Cornejo",
-  "version": "0.1.1",
+  "version": "0.1.42",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

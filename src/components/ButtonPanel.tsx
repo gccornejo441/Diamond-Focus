@@ -21,19 +21,26 @@ interface ButtonPanelProps {
     setIsTimerOrBreak: React.Dispatch<React.SetStateAction<boolean>>;
     isTimerOrBreak: boolean;
     isPaused: boolean;
+    setInitialState: React.Dispatch<React.SetStateAction<boolean>>;
+    intialState: boolean;
 }
 
-const ButtonPanel = ({ setIsReset, isPaused, setIsActive, setIsPaused, isActive, setIsTimerOrBreak, isTimerOrBreak }: ButtonPanelProps) => {
+const ButtonPanel = ({ setIsReset, isPaused, setIsActive, setIsPaused, isActive, setIsTimerOrBreak, isTimerOrBreak, setInitialState, intialState }: ButtonPanelProps) => {
 
     const togglePlayPause = () => {
+
+        if (intialState) {
+            setIsActive(true);
+            setInitialState(false);
+        }
+
         if (isActive && !isPaused) {
             setIsPaused(true);
         } else if (isActive && isPaused) {
-            setIsPaused(false);
             setIsActive(true);
+            setIsPaused(false);
         } else {
             setIsActive(true);
-            setIsPaused(false);
         }
     };
 
@@ -45,14 +52,23 @@ const ButtonPanel = ({ setIsReset, isPaused, setIsActive, setIsPaused, isActive,
 
     return (
         <div className={styles.buttonPanel}>
-            <button onClick={togglePlayPause} className={styles.controlButton}>
-                {isPaused ? (
-                    <PauseButton style={svgStyle} aria-label="Pause" />
-                ) : (
+            <button
+                data-tooltip-id="panelTooltip"
+                data-tooltip-place='bottom'
+                data-tooltip-content={isActive ? 'Play' : 'Pause'}
+                onClick={togglePlayPause}
+                className={styles.controlButton}>
+                {intialState ? <PlayButton style={svgStyle} aria-label="Play" /> : <>{isPaused ? (
                     <PlayButton style={svgStyle} aria-label="Play" />
-                )}
+                ) : (
+                    <PauseButton style={svgStyle} aria-label="Pause" />
+                )}</>}
             </button>
-            <button onClick={reset} className={styles.controlButton}>
+            <button
+                data-tooltip-id="panelTooltip"
+                data-tooltip-place='bottom'
+                data-tooltip-content='Reset'
+                onClick={reset} className={styles.controlButton}>
                 <ResetButton style={svgStyle} aria-label="Reset" />
             </button>
             <OptionsPanel
@@ -60,7 +76,7 @@ const ButtonPanel = ({ setIsReset, isPaused, setIsActive, setIsPaused, isActive,
                 setIsTimerOrBreak={setIsTimerOrBreak}
                 isTimerOrBreak={isTimerOrBreak}
                 isActive={isActive} />
-            <Tooltip id="panelTooltip" />
+            <Tooltip className='tootipStyles' id="panelTooltip" />
         </div>
     );
 };
