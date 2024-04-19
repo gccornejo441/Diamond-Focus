@@ -81,7 +81,10 @@ li {
 }
 
 .inputArea button:disabled {
-  cursor: default;
+  opacity: 0.5;
+  cursor: not-allowed;
+  transition: opacity 0.2s, box-shadow 0.08s ease-in;
+
 }
 
 .inputArea button:focus {
@@ -232,18 +235,19 @@ li {
 }
 
 .deleteItem {
-  --contexify-activeItem-bgColor: var(--background-color);
+  --contexify-activeItem-bgColor: var(--panel-background-hover);
+  --contexify-activeItem-color: var(--panel-text-hover);
 }
 
 .editItem {
-  --contexify-activeItem-bgColor: var(--background-color);
+  --contexify-activeItem-bgColor: var(--panel-background-hover);
+  --contexify-activeItem-color: var(--panel-text-hover);
 }
 
 .taskPanel {
   max-width: 620px;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   height: 100%;
   width: 100%;
   min-width: 370px;

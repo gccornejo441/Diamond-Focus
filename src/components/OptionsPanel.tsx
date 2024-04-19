@@ -34,7 +34,7 @@ const OptionsPanel = ({
     <button
       data-tooltip-id="panelTooltip"
       data-tooltip-place='bottom'
-      data-tooltip-content={isActive ? 'Break' : 'Timer'}
+      data-tooltip-content={isTimerOrBreak ? 'Break' : 'Timer'}
       className={isTimerOrBreak ? styles.buttonBreak : styles.buttonTimer}
       onClick={toggleTimerOrBreak}
     >

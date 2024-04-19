@@ -74,15 +74,13 @@ const TaskPanel = () => {
     };
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && (editId ? editText.trim() !== '' : task.trim() !== '')) {
             editId ? saveEdit(editId) : addTask();
         }
     };
 
-    const toggleTaskCompletion = (id: number): void => {
-        setTasks(tasks.map(t =>
-            t.id === id ? { ...t, completed: !t.completed } : t
-        ));
+    const toggleTaskCompletion = (id: number) => {
+        setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
     };
 
     return (
@@ -98,7 +96,8 @@ const TaskPanel = () => {
                 />
                 <button
                     onClick={editId ? () => saveEdit(editId) : addTask}
-                    className={styles.button}>
+                    className={editId ? styles.button : styles.button}
+                    disabled={editId ? editText.trim() === '' : task.trim() === ''}>
                     {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
                 </button>
             </div>
