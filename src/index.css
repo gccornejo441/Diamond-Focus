@@ -275,15 +275,15 @@
   --blue-grey-700: #455a64;
   --blue-grey-800: #37474f;
   --blue-grey-900: #263238;
-  --b1: #000E3D;
-  --b2: #234CDA;
-  
+  --b1: #000e3d;
+  --b2: #234cda;
+
   --b25: #587bfd;
-  --b3: #6B8AFB;
-  --b4: #A6B8F8;
-  --b5: #D2DBFD;
-  --b6: #E7ECFF;
-  
+  --b3: #6b8afb;
+  --b4: #a6b8f8;
+  --b5: #d2dbfd;
+  --b6: #e7ecff;
+
   --background-color: var(--b4);
   --text-color: var(--b2);
 
@@ -355,18 +355,18 @@ code {
 }
 
 [data-theme="default"] {
-  --background-color: var(--blue-200);
-  --text-color: var(--blue-800);
+  --background-color: var(--b4);
+  --text-color: var(--b2);
 
-  --button-background: var(--blue-900);
-  --button-background-hover: var(--blue-500);
-  --button-hover-text: var(--blue-100);
-  --button-text: var(--blue-grey-50);
+  --button-background: var(--b3);
+  --button-background-hover: var(--b2);
+  --button-hover-text: var(--b4);
+  --button-text: var(--b5);
 
-  --panel-background: var(--blue-600);
-  --panel-background-hover: var(--blue-300);
-  --panel-text: var(--blue-50);
-  --panel-text-hover: var(--blue-300);
+  --panel-background: var(--b25);
+  --panel-background-hover: var(--b3);
+  --panel-text: var(--b1);
+  --panel-text-hover: var(--b2);
 }
 
 [data-theme="dark"] {
@@ -438,6 +438,20 @@ code {
   --panel-background-hover: var(--deep-orange-300);
   --panel-text: var(--deep-orange-900);
   --panel-text-hover: var(--deep-orange-50);
+}
+
+[data-theme="teal-theme"] {
+  --background-color: var(--teal-100);
+  --text-color: var(--teal-900);
+
+  --button-background: var(--teal-500);
+  --button-background-hover: var(--teal-700);
+  --button-text: var(--teal-50);
+
+  --panel-background: var(--teal-200);
+  --panel-background-hover: var(--teal-300);
+  --panel-text: var(--teal-900);
+  --panel-text-hover: var(--teal-50);
 }
 
 button {

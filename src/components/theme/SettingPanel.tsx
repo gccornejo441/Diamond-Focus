@@ -95,6 +95,7 @@ const SettingPanel = ({ onClose, pomodoroTime, setPomodoroTime, breakTime, setBr
                                     <li onClick={() => changeTheme('green-theme')} style={{ backgroundColor: 'var(--green-100)' }}></li>
                                     <li onClick={() => changeTheme('indigo-theme')} style={{ backgroundColor: 'var(--indigo-100)' }}></li>
                                     <li onClick={() => changeTheme('deep-orange-theme')} style={{ backgroundColor: 'var(--deep-orange-100)' }}></li>
+                                    <li onClick={() => changeTheme('teal-theme')} style={{ backgroundColor: 'var(--teal-100)' }}></li>
                                 </ul>
                             </div>
                         </div>
