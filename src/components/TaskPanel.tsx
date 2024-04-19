@@ -3,6 +3,7 @@ import styles from './TaskPanel.module.css';
 import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 import { ReactComponent as TaskButton } from './assets/taskButton.svg';
+import { ReactComponent as SaveButton } from './assets/saveButton.svg';
 
 const svgStyle = {
     width: '20px',
@@ -98,7 +99,7 @@ const TaskPanel = () => {
                 <button
                     onClick={editId ? () => saveEdit(editId) : addTask}
                     className={styles.button}>
-                    {editId ? "Save" : <TaskButton style={svgStyle} />}
+                    {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
                 </button>
             </div>
             <ul className={styles.taskList}>
