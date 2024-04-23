@@ -3,18 +3,12 @@ import styles from './Timer.module.css';
 import ButtonPanel from './ButtonPanel';
 import { Helmet } from 'react-helmet';
 import SciFiAlarm from './assets/sciFiAlarm.mp3';
+import { formatTime } from '../utils';
 
 interface TimerModuleProps {
   isTimerOrBreak: boolean;
   seconds: number;
 }
-
-const formatTime = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds.toString();
-  return `${minutes}:${formattedSeconds}`;
-};
 
 const TimerModule = ({ isTimerOrBreak, seconds }: TimerModuleProps) => (
   <div className={styles.timerBox}>
@@ -58,7 +52,6 @@ const Timer = ({ pomodoroTime, breakTime }: TimerProps) => {
   }, [isActive, isPaused, secondsLeft, isTimerOrBreak, pomodoroTime, breakTime]);
 
   useEffect(() => {
-    
     const documentTitle = (isActive ? (isPaused ? formatTime(secondsLeft) + ' ⏸️ Paused' : formatTime(secondsLeft) + ' ⏰ Active') : 'Diamond Focus - Ready');
     document.title = documentTitle;
   }, [secondsLeft, isActive, isPaused]);

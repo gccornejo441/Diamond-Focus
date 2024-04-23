@@ -7,6 +7,7 @@ import TaskPanel from './components/TaskPanel';
 import SettingPanel from './components/theme/SettingPanel';
 import settingStyles from './components/theme/Setting.module.css';
 import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
+import CountDownTimer from './components/CountDownTimer';
 
 interface ButtonProps {
   onclick: () => void;
@@ -61,13 +62,15 @@ function App() {
               <GemIcon aria-label="Gem Icon" className={settingStyles.icon} />
             </a>
           </h1>
-          <MenuButton onclick={handleClick} />
+          <MenuButton  onclick={handleClick} />
         </div>
       </div>
 
       <div className={stylesApp.bodyContainer}>
         <div className={stylesApp.bodyInnerContainer}>
-          <PopupSetting
+        <CountDownTimer isModalOpen={isModalOpen} setModalOpen={setModalOpen}  />
+
+          {/* <PopupSetting
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}>
             <SettingPanel
@@ -81,7 +84,7 @@ function App() {
           <Timer
             breakTime={breakTime}
             pomodoroTime={pomodoroTime} />
-          <TaskPanel />
+          <TaskPanel /> */}
         </div>
       </div>
 
