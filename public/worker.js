@@ -22,19 +22,12 @@ const updateTimer = () => {
   return timeRemaining; 
 };
 
-const pad = (num) => {
-  return num < 10 ? `0${num}` : num;
-};
-
 const startTimer = () => {
   if (!timerID) { 
     startTimerInterval = new Date().getTime() - (count - timeRemaining) * 1000; 
     timerID = setInterval(() => {
       const remainingSeconds = updateTimer();
-      const seconds = pad(remainingSeconds % 60);
-      const minutes = pad(Math.floor(remainingSeconds / 60) % 60);
-      const formattedTime = `${minutes}:${seconds}`;
-      self.postMessage(formattedTime);
+      self.postMessage(remainingSeconds);
     }, 1000);
   }
 };
@@ -63,7 +56,12 @@ self.addEventListener("message", (e) => {
       break;
     case "change":
       initSeconds(seconds);
-      startTimer(); 
+      startTimer();
+      break; 
+    case "reset":
+      pauseTimer();
+      initSeconds(seconds);
+      break;
     default:
       break;
   }

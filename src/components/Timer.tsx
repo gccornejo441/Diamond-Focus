@@ -1,96 +1,145 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Timer.module.css';
-import ButtonPanel from './ButtonPanel';
-import { Helmet } from 'react-helmet';
+import { formatTime } from '../utils';
+import Setting from './theme/Setting';
 import SciFiAlarm from './assets/sciFiAlarm.mp3';
+import ButtonPanel from './ButtonPanel';
 
 interface TimerModuleProps {
-  isTimerOrBreak: boolean;
-  seconds: number;
+    count: number;
+    breakDuration: number;
+    isBreak: boolean;
 }
 
-const formatTime = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds.toString();
-  return `${minutes}:${formattedSeconds}`;
-};
-
-const TimerModule = ({ isTimerOrBreak, seconds }: TimerModuleProps) => (
-  <div className={styles.timerBox}>
-    <div className={styles.timerFont}>
-      <span>{formatTime(seconds)}</span>
+const TimerModule = ({ count, breakDuration, isBreak }: TimerModuleProps) => (
+    <div className={styles.timerBox}>
+        <div className={styles.timerFont}>
+            <span>{isBreak ? formatTime(breakDuration) : formatTime(count)}</span>
+        </div>
+        <div>
+            <span>{isBreak ? 'Break' : 'Timer'}</span>
+        </div>
     </div>
-  </div>
 );
 
-interface TimerProps {
-  pomodoroTime: number;
-  breakTime: number;
-}
+const Timer = ({ isModalOpen, setModalOpen }: { isModalOpen: boolean, setModalOpen: (value: boolean) => void }) => {
+    const [count, setCount] = useState(parseInt(localStorage.getItem('count') || '1500'));
+    const [breakDuration, setBreakDuration] = useState(parseInt(localStorage.getItem('breakDuration') || '300'));
+    const [isRunning, setIsRunning] = useState(false);
+    const [worker, setWorker] = useState<Worker | null>(null);
+    const [isBreak, setIsBreak] = useState(false);
+    const [initialState, setInitialState] = useState(true);
 
-const Timer = ({ pomodoroTime, breakTime }: TimerProps) => {
-  const [secondsLeft, setSecondsLeft] = useState(pomodoroTime * 60);
-  const [isActive, setIsActive] = useState(false);
-  const [isTimerOrBreak, setIsTimerOrBreak] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
-  const [initialState, setInitialState] = useState(true);
+    useEffect(() => {
+        const timerWorker = new Worker('worker.js');
+        setWorker(timerWorker);
 
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
+        timerWorker.onmessage = (event) => {
+            const currentTime = event.data;
 
-    if (isActive && !isPaused) {
-      intervalId = setInterval(() => {
-        setSecondsLeft(prevSeconds => prevSeconds > 0 ? prevSeconds - 1 : 0);
-      }, 1000);
-      
-    } else if (!isActive && (secondsLeft === 0)) {
-      const audio = new Audio(SciFiAlarm);
-      audio.play();
-      setIsTimerOrBreak(!isTimerOrBreak);
-      setSecondsLeft(isTimerOrBreak ? breakTime * 60 : pomodoroTime * 60);
-      setIsActive(true);
+            if (isRunning && !isBreak) {
+                setCount(currentTime);
+            }
+            if (isRunning && isBreak) {
+                setBreakDuration(currentTime);
+            }
+        };
+
+        return () => timerWorker.terminate();
+    }, [isRunning, isBreak]);
+
+
+    useEffect(() => {
+        if (isRunning) {
+            const seconds = isBreak ? breakDuration : count;
+            worker?.postMessage({ command: 'start', seconds: seconds });
+        } else {
+            worker?.postMessage({ command: 'pause' });
+        }
+
+        if (count === 0 || breakDuration === 0) {
+            completeReset();
+            const audio = new Audio(SciFiAlarm);
+            audio.play();
+        }
+
+    }, [isRunning, worker, count, isBreak, breakDuration]);
+
+    useEffect(() => {
+        let title = "Diamond Focus - Ready";
+
+        if (isRunning && !initialState) {
+            const timeLeft = isBreak ? formatTime(breakDuration) : formatTime(count);
+            title = `${timeLeft} - ${isBreak ? "☕ Break Time" : "⏰ Focus Time"}`;
+        } else if (!initialState) {
+            title = `${isBreak ? formatTime(breakDuration) : formatTime(count)} - ⏸️ Paused`;
+        } else {
+            document.title = title;
+            setInitialState(false);
+        }
+
+        document.title = title;
+    }, [isRunning, isBreak, count, breakDuration]);
+
+
+    const completeReset = () => {
+        const initialCount = parseInt(localStorage.getItem('count') || '1500');
+        const initialBreakDuration = parseInt(localStorage.getItem('breakDuration') || '300');
+
+        if (isBreak) {
+            setBreakDuration(initialBreakDuration);
+            worker?.postMessage({ command: 'reset', seconds: initialBreakDuration });
+        } else {
+            setCount(initialCount);
+            worker?.postMessage({ command: 'reset', seconds: initialCount });
+        }
+
+        setIsRunning(false)
+    };
+
+    const handleReset = () => {
+        const initialCount = parseInt(localStorage.getItem('count') || '1500');
+        setCount(initialCount);
+
+        const initialBreakDuration = parseInt(localStorage.getItem('breakDuration') || '300');
+        setBreakDuration(initialBreakDuration);
+
+        if (isBreak) {
+            worker?.postMessage({ command: 'reset', seconds: initialBreakDuration });
+        } else {
+            worker?.postMessage({ command: 'reset', seconds: initialCount });
+        }
+    };
+
+    const changeIsBreak = () => {
+        if (isBreak) {
+            setIsBreak(false);
+            setCount(parseInt(localStorage.getItem('count') || '1500'));
+        } else {
+            setIsBreak(true);
+            setBreakDuration(parseInt(localStorage.getItem('breakDuration') || '300'));
+        }
     }
 
-    return () => {
-      intervalId && clearInterval(intervalId);
-    }
-  }, [isActive, isPaused, secondsLeft, isTimerOrBreak, pomodoroTime, breakTime]);
-
-  useEffect(() => {
-    
-    const documentTitle = (isActive ? (isPaused ? formatTime(secondsLeft) + ' ⏸️ Paused' : formatTime(secondsLeft) + ' ⏰ Active') : 'Diamond Focus - Ready');
-    document.title = documentTitle;
-  }, [secondsLeft, isActive, isPaused]);
-
-  useEffect(() => {
-    if (!isActive) {
-      setSecondsLeft(isTimerOrBreak ? pomodoroTime * 60 : breakTime * 60);
-    }
-  }, [isActive, isTimerOrBreak, pomodoroTime, breakTime]);
-
-  return (
-    <div className={styles.timerContainer}>
-      <Helmet>
-        <link type="image/svg+xml" rel="icon" href="/favicon.svg" />
-      </Helmet>
-      <TimerModule isTimerOrBreak={isTimerOrBreak} seconds={secondsLeft} />
-      <ButtonPanel
-        setIsTimerOrBreak={setIsTimerOrBreak}
-        isTimerOrBreak={isTimerOrBreak}
-        setIsReset={() => {
-          setIsActive(false);
-          setSecondsLeft(isTimerOrBreak ? pomodoroTime * 60 : breakTime * 60);
-        }}
-        setInitialState={setInitialState}
-        intialState={initialState}
-        setIsPaused={setIsPaused}
-        setIsActive={setIsActive}
-        isActive={isActive}
-        isPaused={isPaused}
-      />
-    </div>
-  );
-}
+    return (
+        <div className={styles.timerContainer}>
+            <TimerModule isBreak={isBreak} breakDuration={breakDuration} count={count} />
+            <ButtonPanel
+                isBreak={isBreak}
+                isRunning={isRunning}
+                handlePlayPause={() => setIsRunning(!isRunning)}
+                changeIsBreak={changeIsBreak}
+                onReset={handleReset} />
+            {isModalOpen && (
+                <Setting
+                    setBreakDuration={setBreakDuration}
+                    breakDuration={breakDuration}
+                    count={count}
+                    setCount={setCount}
+                    onClose={() => setModalOpen(false)} />
+            )}
+        </div>
+    );
+};
 
 export default Timer;
