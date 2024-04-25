@@ -6,6 +6,7 @@ import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
 import stylesApp from './App.module.css';
 import styles from './components/ButtonPanel.module.css';
 import settingStyles from './components/theme/Setting.module.css';
+import Sidebar from './components/Sidebar';
 
 interface ButtonProps {
   onclick: () => void;
@@ -24,6 +25,8 @@ const MenuButton = ({ onclick }: ButtonProps) => {
 function App() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [askedForTask, setAskedForTask] = useState<string>("");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -44,6 +47,10 @@ function App() {
     return <div>Loading...</div>;
   }
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  }
+
   return (
     <div className={stylesApp.App}>
       <div className={settingStyles.settingButtonPanel}>
@@ -60,10 +67,13 @@ function App() {
       <div className={stylesApp.bodyContainer}>
         <div className={stylesApp.bodyInnerContainer}>
           <Timer isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
-          <TaskPanel />
+          <TaskPanel setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
         </div>
       </div>
-
+      <Sidebar
+      taskDescription={askedForTask} 
+      isOpen={isSidebarOpen} 
+      toggleSidebar={toggleSidebar} />
     </div>
   );
 }

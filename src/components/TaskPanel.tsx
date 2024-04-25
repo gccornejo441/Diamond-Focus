@@ -19,7 +19,12 @@ interface Task {
     completed: boolean;
 }
 
-const TaskPanel = () => {
+interface TaskPanelProps {
+    setAskedForTask: React.Dispatch<React.SetStateAction<string>>;
+    onClick: () => void;
+}
+
+const TaskPanel = ({ onClick, setAskedForTask } : TaskPanelProps ) => {
     const { show } = useContextMenu({ id: MENU_ID });
     const [task, setTask] = useState<string>('');
     const [tasks, setTasks] = useState<Task[]>(() => {
@@ -83,6 +88,11 @@ const TaskPanel = () => {
         setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
     };
 
+    const handleClickOnTask = (event: React.MouseEvent, task: Task) => {
+        onClick();
+        setAskedForTask(task.text);
+    }
+
     return (
         <div className={styles.taskPanel}>
             <div className={styles.inputArea}>
@@ -104,6 +114,7 @@ const TaskPanel = () => {
             <ul className={styles.taskList}>
                 {tasks.map(task => (
                     <li key={task.id}
+                        onClick={(e) => handleClickOnTask(e, task)}
                         className={styles.taskItem}
                         onContextMenu={(e) => handleDoubleClick(e, task)}
                         onDoubleClick={(e) => handleDoubleClick(e, task)}>
