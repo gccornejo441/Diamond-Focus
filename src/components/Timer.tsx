@@ -16,9 +16,6 @@ const TimerModule = ({ count, breakDuration, isBreak }: TimerModuleProps) => (
         <div className={styles.timerFont}>
             <span>{isBreak ? formatTime(breakDuration) : formatTime(count)}</span>
         </div>
-        <div>
-            <span>{isBreak ? 'Break' : 'Timer'}</span>
-        </div>
     </div>
 );
 
