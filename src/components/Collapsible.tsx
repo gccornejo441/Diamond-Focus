@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, CSSProperties } from 'react';
 import { Menu, Item, useContextMenu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
-// Correctly typed styles
 const styles = {
   collapsible: {
     backgroundColor: '#777',

@@ -10,7 +10,7 @@ interface SettingPanelProps {
     setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const CountDownSetting = ({ onClose, count, setCount, breakDuration, setBreakDuration }: SettingPanelProps) => {
+const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration }: SettingPanelProps) => {
     const [tempCount, setTempCount] = useState<number>(0);
     const [tempBreak, setTempBreak] = useState<number>(0);
 
@@ -98,4 +98,4 @@ const CountDownSetting = ({ onClose, count, setCount, breakDuration, setBreakDur
     );
 }
 
-export default CountDownSetting;
+export default Setting;

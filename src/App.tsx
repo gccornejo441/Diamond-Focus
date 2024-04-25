@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import stylesApp from './App.module.css';
-import Timer from './components/Timer';
-import PopupSetting from './components/theme/PopupSetting';
-import styles from './components/ButtonPanel.module.css';
 import TaskPanel from './components/TaskPanel';
-import SettingPanel from './components/theme/SettingPanel';
-import settingStyles from './components/theme/Setting.module.css';
+import Timer from './components/Timer';
 import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
-import CountDownTimer from './components/CountDownTimer';
+
+import stylesApp from './App.module.css';
+import styles from './components/ButtonPanel.module.css';
+import settingStyles from './components/theme/Setting.module.css';
 
 interface ButtonProps {
   onclick: () => void;
@@ -24,8 +22,6 @@ const MenuButton = ({ onclick }: ButtonProps) => {
 }
 
 function App() {
-  const [pomodoroTime, setPomodoroTime] = useState(25);
-  const [breakTime, setBreakTime] = useState(5);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -39,11 +35,6 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    setPomodoroTime(Number(localStorage.getItem('pomodoroTime')));
-    setBreakTime(Number(localStorage.getItem('breakTime')));
-
-  }, [pomodoroTime, setPomodoroTime, breakTime, setBreakTime]);
 
   const handleClick = () => {
     setModalOpen(true);
@@ -62,29 +53,14 @@ function App() {
               <GemIcon aria-label="Gem Icon" className={settingStyles.icon} />
             </a>
           </h1>
-          <MenuButton  onclick={handleClick} />
+          <MenuButton onclick={handleClick} />
         </div>
       </div>
 
       <div className={stylesApp.bodyContainer}>
         <div className={stylesApp.bodyInnerContainer}>
-        <CountDownTimer isModalOpen={isModalOpen} setModalOpen={setModalOpen}  />
-
-          {/* <PopupSetting
-            isOpen={isModalOpen}
-            onClose={() => setModalOpen(false)}>
-            <SettingPanel
-              breakTime={breakTime}
-              setBreakTime={setBreakTime}
-              pomodoroTime={pomodoroTime}
-              setPomodoroTime={setPomodoroTime}
-              onClose={() => setModalOpen(false)}
-            />
-          </PopupSetting>
-          <Timer
-            breakTime={breakTime}
-            pomodoroTime={pomodoroTime} />
-          <TaskPanel /> */}
+          <Timer isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+          <TaskPanel />
         </div>
       </div>
 
