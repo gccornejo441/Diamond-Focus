@@ -5,7 +5,7 @@ import 'react-contexify/dist/ReactContexify.css';
 import { ReactComponent as TaskButton } from './assets/taskButton.svg';
 import { ReactComponent as SaveButton } from './assets/saveButton.svg';
 import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates  } from '@dnd-kit/sortable';
-import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier } from '@dnd-kit/core';
+import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier, MouseSensor } from '@dnd-kit/core';
 import TaskItem from './TaskItem';
 
 const svgStyle = {
@@ -108,13 +108,19 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
         useSensor(PointerSensor),
         useSensor(TouchSensor, {
             activationConstraint: {
-                delay: 100,
-                distance: 5,
-            },               
-        }),
-        useSensor(KeyboardSensor, {
+              delay: 300,
+              tolerance: 8,
+            },
+          }),
+          useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
-        })
+          })
+          ,
+          useSensor(MouseSensor, {
+            activationConstraint: {
+                distance: 8,
+              },        
+          })
     );
 
     const getCurrentTaskPosition = (id: UniqueIdentifier | undefined) => tasks.findIndex((task) => task.id === id);

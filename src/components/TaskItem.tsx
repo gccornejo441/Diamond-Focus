@@ -16,6 +16,7 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
     const style = {
         transition,
         transform: CSS.Transform.toString(transform),
+        touchAction: 'none',
     };
 
     return (
