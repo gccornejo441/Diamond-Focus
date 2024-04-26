@@ -284,3 +284,6 @@ li {
   text-decoration: line-through;
 }
 
+.favoriteTask {
+  border-left: 5px solid var(--text-color);
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
 import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
@@ -17,6 +17,7 @@ interface Task {
     id: number;
     text: string;
     completed: boolean;
+    favorite: boolean;
 }
 
 interface TaskPanelProps {
@@ -24,7 +25,7 @@ interface TaskPanelProps {
     onClick: () => void;
 }
 
-const TaskPanel = ({ onClick, setAskedForTask } : TaskPanelProps ) => {
+const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
     const { show } = useContextMenu({ id: MENU_ID });
     const [task, setTask] = useState<string>('');
     const [tasks, setTasks] = useState<Task[]>(() => {
@@ -53,7 +54,7 @@ const TaskPanel = ({ onClick, setAskedForTask } : TaskPanelProps ) => {
 
     const addTask = () => {
         if (task.trim() !== '') {
-            setTasks([...tasks, { id: Date.now(), text: task, completed: false }]);
+            setTasks([...tasks, { id: Date.now(), text: task, completed: false, favorite: false }]);
             setTask('');
         }
     };
@@ -88,10 +89,17 @@ const TaskPanel = ({ onClick, setAskedForTask } : TaskPanelProps ) => {
         setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
     };
 
-    const handleClickOnTask = (event: React.MouseEvent, task: Task) => {
+    const handleClickOnTask =  (task: Task | null) => {
         onClick();
-        setAskedForTask(task.text);
+        setAskedForTask(task!.text);
     }
+
+    const setAsFavorite = (id: number) => {
+        const updatedTasks = tasks.map(task =>
+            task.id === id ? { ...task, favorite: !task.favorite } : task
+        );
+        setTasks(updatedTasks);
+    };
 
     return (
         <div className={styles.taskPanel}>
@@ -114,8 +122,7 @@ const TaskPanel = ({ onClick, setAskedForTask } : TaskPanelProps ) => {
             <ul className={styles.taskList}>
                 {tasks.map(task => (
                     <li key={task.id}
-                        onClick={(e) => handleClickOnTask(e, task)}
-                        className={styles.taskItem}
+                        className={`${styles.taskItem} ${task.favorite ? styles.favoriteTask : ''}`}
                         onContextMenu={(e) => handleDoubleClick(e, task)}
                         onDoubleClick={(e) => handleDoubleClick(e, task)}>
                         <div className={styles.checkboxwrapper15}>
@@ -141,12 +148,17 @@ const TaskPanel = ({ onClick, setAskedForTask } : TaskPanelProps ) => {
                 ))}
             </ul>
             <Menu id={MENU_ID}>
+                <Item className={styles.editItem}
+                    onClick={() => handleClickOnTask(currentTask)}>View</Item>
                 <Item
                     className={styles.editItem}
                     onClick={() => startEdit(currentTask)}>Edit</Item>
                 <Item
                     className={styles.deleteItem}
                     onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+                <Item className={styles.editItem}
+                    onClick={() => currentTask && toggleTaskCompletion(currentTask.id)}>Mark as {currentTask?.completed ? 'active' : 'completed'}</Item>
+                <Item onClick={() => currentTask && setAsFavorite(currentTask.id)}>Set as favorite<RightSlot>⭐</RightSlot></Item>
             </Menu>
         </div>
     );
