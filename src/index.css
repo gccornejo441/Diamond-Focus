@@ -296,6 +296,8 @@
   --panel-background-hover: var(--b3);
   --panel-text: var(--b1);
   --panel-text-hover: var(--b2);
+
+  --alert: var(--b1);
 }
 
 body {
@@ -367,6 +369,8 @@ code {
   --panel-background-hover: var(--b3);
   --panel-text: var(--b1);
   --panel-text-hover: var(--b2);
+
+  --alert: var(--b1);
 }
 
 [data-theme="dark"] {
@@ -382,6 +386,8 @@ code {
   --panel-background-hover: var(--blue-grey-700);
   --panel-text: var(--blue-grey-100);
   --panel-text-hover: var(--blue-grey-50);
+
+  --alert: var(--blue-grey-50);
 }
 
 [data-theme="red-theme"] {
@@ -396,6 +402,8 @@ code {
   --panel-background-hover: var(--red-300);
   --panel-text: var(--red-900);
   --panel-text-hover: var(--red-50);
+
+  --alert: var(--red-700);
 }
 
 [data-theme="green-theme"] {
@@ -410,6 +418,8 @@ code {
   --panel-background-hover: var(--green-300);
   --panel-text: var(--green-900);
   --panel-text-hover: var(--green-50);
+
+  --alert: var(--green-700);
 }
 
 [data-theme="indigo-theme"] {
@@ -424,6 +434,8 @@ code {
   --panel-background-hover: var(--indigo-300);
   --panel-text: var(--indigo-900);
   --panel-text-hover: var(--indigo-50);
+
+  --alert: var(--indigo-700);
 }
 
 [data-theme="deep-orange-theme"] {
@@ -438,6 +450,8 @@ code {
   --panel-background-hover: var(--deep-orange-300);
   --panel-text: var(--deep-orange-900);
   --panel-text-hover: var(--deep-orange-50);
+
+  --alert: var(--deep-orange-700);
 }
 
 [data-theme="teal-theme"] {
@@ -452,6 +466,8 @@ code {
   --panel-background-hover: var(--teal-300);
   --panel-text: var(--teal-900);
   --panel-text-hover: var(--teal-50);
+
+  --alert: var(--teal-700);
 }
 
 button {
@@ -462,7 +478,6 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
-
 
 .tootipStyles {
   background-color: var(--panel-background);

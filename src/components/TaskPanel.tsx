@@ -4,6 +4,10 @@ import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 import { ReactComponent as TaskButton } from './assets/taskButton.svg';
 import { ReactComponent as SaveButton } from './assets/saveButton.svg';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier } from '@dnd-kit/core';
+import { arrayMove as shiftItems, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import TaskItem from './TaskItem';
 
 const svgStyle = {
     width: '20px',
@@ -13,7 +17,7 @@ const svgStyle = {
 
 const MENU_ID = 'task-context-menu';
 
-interface Task {
+export interface Task {
     id: number;
     text: string;
     completed: boolean;
@@ -89,7 +93,7 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
         setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
     };
 
-    const handleClickOnTask =  (task: Task | null) => {
+    const handleClickOnTask = (task: Task | null) => {
         onClick();
         setAskedForTask(task!.text);
     }
@@ -101,66 +105,69 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
         setTasks(updatedTasks);
     };
 
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
+
+    const getCurrentTaskPosition = (id: UniqueIdentifier | undefined) => tasks.findIndex((task) => task.id === id);
+
+    const handleOnDragEnd = (event: DragOverEvent) => {
+        const { active, over } = event;
+
+        if (active.id === over?.id) return;
+
+        setTasks((tasks) => {
+            const firstPosition = getCurrentTaskPosition(active.id);
+            const newPosition = getCurrentTaskPosition(over?.id);
+
+            return shiftItems(tasks, firstPosition, newPosition);
+        });
+    };
+
     return (
-        <div className={styles.taskPanel}>
-            <div className={styles.inputArea}>
-                <input
-                    type="text"
-                    placeholder={editId ? "Edit task" : "Add a task"}
-                    value={editId ? editText : task}
-                    onChange={editId ? handleEditChange : (e) => setTask(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className={styles.input}
-                />
-                <button
-                    onClick={editId ? () => saveEdit(editId) : addTask}
-                    className={editId ? styles.button : styles.button}
-                    disabled={editId ? editText.trim() === '' : task.trim() === ''}>
-                    {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
-                </button>
+        <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
+            <div className={styles.taskPanel}>
+                <div className={styles.inputArea}>
+                    <input
+                        type="text"
+                        placeholder={editId ? "Edit task" : "Add a task"}
+                        value={editId ? editText : task}
+                        onChange={editId ? handleEditChange : (e) => setTask(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        className={styles.input}
+                    />
+                    <button
+                        onClick={editId ? () => saveEdit(editId) : addTask}
+                        className={editId ? styles.button : styles.button}
+                        disabled={editId ? editText.trim() === '' : task.trim() === ''}>
+                        {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
+                    </button>
+                </div>
+                <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+                    <ul className={styles.taskList}>
+                        {tasks.map(task => (
+                            <TaskItem key={task.id} task={task} toggleTaskCompletion={toggleTaskCompletion} handleDoubleClick={handleDoubleClick} />
+                        ))}
+                    </ul>
+                </SortableContext>
+                <Menu id={MENU_ID}>
+                    <Item className={styles.contextMenuButton}
+                        onClick={() => handleClickOnTask(currentTask)}>View</Item>
+                    <Item
+                        className={styles.contextMenuButton}
+                        onClick={() => startEdit(currentTask)}>Edit</Item>
+                    <Item className={styles.contextMenuButton}
+                        onClick={() => currentTask && toggleTaskCompletion(currentTask.id)}>Set as {currentTask?.completed ? 'active' : 'completed'}</Item>
+                    <Item className={styles.contextMenuButton} onClick={() => currentTask && setAsFavorite(currentTask.id)}>Set as important<RightSlot>⭐</RightSlot></Item>
+                    <Item
+                        className={styles.contextMenuButton}
+                        onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+                </Menu>
             </div>
-            <ul className={styles.taskList}>
-                {tasks.map(task => (
-                    <li key={task.id}
-                        className={`${styles.taskItem} ${task.favorite ? styles.favoriteTask : ''}`}
-                        onContextMenu={(e) => handleDoubleClick(e, task)}
-                        onDoubleClick={(e) => handleDoubleClick(e, task)}>
-                        <div className={styles.checkboxwrapper15}>
-                            <input className={styles.inpCbx}
-                                id={`cbx-${task.id}`}
-                                type="checkbox"
-                                style={{ display: 'none' }}
-                                checked={task.completed}
-                                onChange={() => toggleTaskCompletion(task.id)} />
-                            <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
-                                <span>
-                                    <svg width="12px" height="9px" viewBox="0 0 12 9">
-                                        <polyline points="1 5 4 8 11 1"></polyline>
-                                    </svg>
-                                </span>
-                            </label>
-                            <p id={`text-${task.id}`}
-                                className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
-                                {task.text}
-                            </p>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            <Menu id={MENU_ID}>
-                <Item className={styles.editItem}
-                    onClick={() => handleClickOnTask(currentTask)}>View</Item>
-                <Item
-                    className={styles.editItem}
-                    onClick={() => startEdit(currentTask)}>Edit</Item>
-                <Item
-                    className={styles.deleteItem}
-                    onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
-                <Item className={styles.editItem}
-                    onClick={() => currentTask && toggleTaskCompletion(currentTask.id)}>Mark as {currentTask?.completed ? 'active' : 'completed'}</Item>
-                <Item onClick={() => currentTask && setAsFavorite(currentTask.id)}>Set as favorite<RightSlot>⭐</RightSlot></Item>
-            </Menu>
-        </div>
+        </DndContext>
     );
 }
 

@@ -223,3 +223,66 @@ input[type="number"] {
   display: flex;
   justify-content: space-between;
 }
+
+.checkboxWrapper2 .linearToggle {
+  appearance: none;
+  background-color: #dfe1e4;
+  border-radius: 72px;
+  border-style: none;
+  flex-shrink: 0;
+  height: 20px;
+  margin: 0;
+  position: relative;
+  width: 30px;
+}
+
+.checkboxWrapper2 .linearToggle::before {
+  bottom: -6px;
+  content: "";
+  left: -6px;
+  position: absolute;
+  right: -6px;
+  top: -6px;
+}
+
+.checkboxWrapper2 .linearToggle,
+.checkboxWrapper2 .linearToggle::after {
+  transition: all 100ms ease-out;
+}
+
+.checkboxWrapper2 .linearToggle::after {
+  background-color: #fff;
+  border-radius: 50%;
+  content: "";
+  height: 14px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  width: 14px;
+}
+
+.checkboxWrapper2 input[type="checkbox"] {
+  cursor: default;
+}
+
+.checkboxWrapper2 .linearToggle:hover {
+  background-color: #c9cbcd;
+  transition-duration: 0s;
+}
+
+.checkboxWrapper2 .linearToggle:checked {
+  background-color: var(--button-background);
+}
+
+.checkboxWrapper2 .linearToggle:checked::after {
+  background-color: #fff;
+  left: 13px;
+}
+
+.checkboxWrapper2 :focus:not(.focus-visible) {
+  outline: 0;
+}
+
+.checkboxWrapper2 .linearToggle:checked:hover {
+  background-color: var(--button-background-hover);
+}
