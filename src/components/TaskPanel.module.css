@@ -43,6 +43,7 @@ li {
   border-radius: 4px;
   outline: none;
   max-height: 170px;
+  touch-action: manipulation; /* Disables pinch-zoom and pan, not double-tap zoom */
 }
 
 .taskItem:hover {

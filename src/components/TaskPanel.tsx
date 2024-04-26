@@ -4,9 +4,8 @@ import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 import { ReactComponent as TaskButton } from './assets/taskButton.svg';
 import { ReactComponent as SaveButton } from './assets/saveButton.svg';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier } from '@dnd-kit/core';
-import { arrayMove as shiftItems, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates  } from '@dnd-kit/sortable';
+import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier } from '@dnd-kit/core';
 import TaskItem from './TaskItem';
 
 const svgStyle = {
@@ -107,6 +106,12 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
 
     const sensors = useSensors(
         useSensor(PointerSensor),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 100,
+                distance: 5,
+            },               
+        }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         })
@@ -123,7 +128,7 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
             const firstPosition = getCurrentTaskPosition(active.id);
             const newPosition = getCurrentTaskPosition(over?.id);
 
-            return shiftItems(tasks, firstPosition, newPosition);
+            return arrayMove(tasks, firstPosition, newPosition);
         });
     };
 
