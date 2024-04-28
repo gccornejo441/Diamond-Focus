@@ -1,25 +1,37 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
+import deleteCardStyles from './DeleteCard.module.css';
 import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 import { ReactComponent as TaskButton } from './assets/taskButton.svg';
 import { ReactComponent as SaveButton } from './assets/saveButton.svg';
+import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier, MouseSensor } from '@dnd-kit/core';
+import TaskItem from './TaskItem';
+import PopupSetting from './theme/PopupSetting';
 
 const svgStyle = {
+    cursor: 'pointer',
+    fill: 'white',
     width: '20px',
     height: '20px',
-    fill: 'currentColor'
-};
-
+    transition: 'fill 0.2s',
+}
 const MENU_ID = 'task-context-menu';
 
-interface Task {
+export interface Task {
     id: number;
     text: string;
     completed: boolean;
+    favorite: boolean;
 }
 
-const TaskPanel = () => {
+interface TaskPanelProps {
+    setAskedForTask: React.Dispatch<React.SetStateAction<string>>;
+    onClick: () => void;
+}
+
+const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
     const { show } = useContextMenu({ id: MENU_ID });
     const [task, setTask] = useState<string>('');
     const [tasks, setTasks] = useState<Task[]>(() => {
@@ -29,6 +41,7 @@ const TaskPanel = () => {
     const [currentTask, setCurrentTask] = useState<Task | null>(null);
     const [editId, setEditId] = useState<number | null>(null);
     const [editText, setEditText] = useState('');
+    const [openTask, setOpenTask] = useState(false);
 
     const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
         event.preventDefault();
@@ -48,7 +61,7 @@ const TaskPanel = () => {
 
     const addTask = () => {
         if (task.trim() !== '') {
-            setTasks([...tasks, { id: Date.now(), text: task, completed: false }]);
+            setTasks([...tasks, { id: Date.now(), text: task, completed: false, favorite: false }]);
             setTask('');
         }
     };
@@ -83,61 +96,122 @@ const TaskPanel = () => {
         setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
     };
 
+    const handleClickOnTask = (task: Task | null) => {
+        onClick();
+        setAskedForTask(task!.text);
+    }
+
+    const setAsFavorite = (id: number) => {
+        const updatedTasks = tasks.map(task =>
+            task.id === id ? { ...task, favorite: !task.favorite } : task
+        );
+        setTasks(updatedTasks);
+    };
+
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 300,
+                tolerance: 8,
+            },
+        }),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+        ,
+        useSensor(MouseSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        })
+    );
+
+    const getCurrentTaskPosition = (id: UniqueIdentifier | undefined) => tasks.findIndex((task) => task.id === id);
+
+    const handleOnDragEnd = (event: DragOverEvent) => {
+        const { active, over } = event;
+
+        if (active.id === over?.id) return;
+
+        setTasks((tasks) => {
+            const firstPosition = getCurrentTaskPosition(active.id);
+            const newPosition = getCurrentTaskPosition(over?.id);
+
+            return arrayMove(tasks, firstPosition, newPosition);
+        });
+    };
+
+    const handleOnDeleteTask = (removeTask: boolean) => {
+        setOpenTask(true);
+
+        if (removeTask) {
+            if (currentTask && currentTask.id) {
+                deleteTask(currentTask.id);
+                setOpenTask(false);
+            }
+        } else {
+            setOpenTask(true);
+        }
+
+        // onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+    }
+
     return (
-        <div className={styles.taskPanel}>
-            <div className={styles.inputArea}>
-                <input
-                    type="text"
-                    placeholder={editId ? "Edit task" : "Add a task"}
-                    value={editId ? editText : task}
-                    onChange={editId ? handleEditChange : (e) => setTask(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className={styles.input}
-                />
-                <button
-                    onClick={editId ? () => saveEdit(editId) : addTask}
-                    className={editId ? styles.button : styles.button}
-                    disabled={editId ? editText.trim() === '' : task.trim() === ''}>
-                    {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
-                </button>
+        <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
+            <PopupSetting onClose={() => setOpenTask(false)} isOpen={openTask} >
+                <div className={deleteCardStyles.deleteCard}>
+                    <div className={deleteCardStyles.deleteCardHeader}>
+                        <h5>Confirm Deletion</h5>
+                    </div>
+                    <div className={deleteCardStyles.deleteCardBody}>
+                        <p>Are you sure you want to delete this item?</p>
+                    </div>
+                    <div className={deleteCardStyles.deleteCardFooter}>
+                        <button className={deleteCardStyles.btnDanger} id="confirm-delete" onClick={() => handleOnDeleteTask(true)}>Yes</button>
+                        <button className={deleteCardStyles.btnSecondary} id="cancel-delete" onClick={() => setOpenTask(false)}>Cancel</button>
+                    </div>
+                </div>
+            </PopupSetting>
+            <div className={styles.taskPanel}>
+                <div className={styles.inputArea}>
+                    <input
+                        type="text"
+                        placeholder={editId ? "Edit task" : "Add a task"}
+                        value={editId ? editText : task}
+                        onChange={editId ? handleEditChange : (e) => setTask(e.target.value)}
+                        onKeyPress={handleKeyPress}
+                        className={styles.input}
+                    />
+                    <button
+                        onClick={editId ? () => saveEdit(editId) : addTask}
+                        className={editId ? styles.button : styles.button}
+                        disabled={editId ? editText.trim() === '' : task.trim() === ''}>
+                        {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
+                    </button>
+                </div>
+                <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+                    <ul className={styles.taskList}>
+                        {tasks.map(task => (
+                            <TaskItem key={task.id} task={task} toggleTaskCompletion={toggleTaskCompletion} handleDoubleClick={handleDoubleClick} />
+                        ))}
+                    </ul>
+                </SortableContext>
+                <Menu id={MENU_ID}>
+                    <Item className={styles.contextMenuButton}
+                        onClick={() => handleClickOnTask(currentTask)}>View</Item>
+                    <Item
+                        className={styles.contextMenuButton}
+                        onClick={() => startEdit(currentTask)}>Edit</Item>
+                    <Item className={styles.contextMenuButton}
+                        onClick={() => currentTask && toggleTaskCompletion(currentTask.id)}>Set as {currentTask?.completed ? 'active' : 'completed'}</Item>
+                    <Item className={styles.contextMenuButton} onClick={() => currentTask && setAsFavorite(currentTask.id)}>Set as important<RightSlot>⭐</RightSlot></Item>
+                    <Item
+                        className={styles.contextMenuButton}
+                        onClick={() => handleOnDeleteTask(false)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+                </Menu>
             </div>
-            <ul className={styles.taskList}>
-                {tasks.map(task => (
-                    <li key={task.id}
-                        className={styles.taskItem}
-                        onContextMenu={(e) => handleDoubleClick(e, task)}
-                        onDoubleClick={(e) => handleDoubleClick(e, task)}>
-                        <div className={styles.checkboxwrapper15}>
-                            <input className={styles.inpCbx}
-                                id={`cbx-${task.id}`}
-                                type="checkbox"
-                                style={{ display: 'none' }}
-                                checked={task.completed}
-                                onChange={() => toggleTaskCompletion(task.id)} />
-                            <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
-                                <span>
-                                    <svg width="12px" height="9px" viewBox="0 0 12 9">
-                                        <polyline points="1 5 4 8 11 1"></polyline>
-                                    </svg>
-                                </span>
-                            </label>
-                            <p id={`text-${task.id}`}
-                                className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
-                                {task.text}
-                            </p>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            <Menu id={MENU_ID}>
-                <Item
-                    className={styles.editItem}
-                    onClick={() => startEdit(currentTask)}>Edit</Item>
-                <Item
-                    className={styles.deleteItem}
-                    onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
-            </Menu>
-        </div>
+        </DndContext>
     );
 }
 
