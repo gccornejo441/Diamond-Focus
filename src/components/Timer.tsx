@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './Timer.module.css';
-import { formatTime } from '../utils';
+import { TimePadder } from '../utils';
 import Setting from './theme/Setting';
 import SciFiAlarm from './assets/sciFiAlarm.mp3';
 import ButtonPanel from './ButtonPanel';
@@ -14,10 +14,7 @@ interface TimerModuleProps {
 const TimerModule = ({ count, breakDuration, isBreak }: TimerModuleProps) => (
     <div className={styles.timerBox}>
         <div className={styles.timerFont}>
-            <span>{isBreak ? formatTime(breakDuration) : formatTime(count)}</span>
-        </div>
-        <div>
-            <span>{isBreak ? 'Break' : 'Timer'}</span>
+            <span>{isBreak ? TimePadder(breakDuration) : TimePadder(count)}</span>
         </div>
     </div>
 );
@@ -69,10 +66,10 @@ const Timer = ({ isModalOpen, setModalOpen }: { isModalOpen: boolean, setModalOp
         let title = "Diamond Focus - Ready";
 
         if (isRunning && !initialState) {
-            const timeLeft = isBreak ? formatTime(breakDuration) : formatTime(count);
+            const timeLeft = isBreak ? TimePadder(breakDuration) : TimePadder(count);
             title = `${timeLeft} - ${isBreak ? "☕ Break Time" : "⏰ Focus Time"}`;
         } else if (!initialState) {
-            title = `${isBreak ? formatTime(breakDuration) : formatTime(count)} - ⏸️ Paused`;
+            title = `${isBreak ? TimePadder(breakDuration) : TimePadder(count)} - ⏸️ Paused`;
         } else {
             document.title = title;
             setInitialState(false);
