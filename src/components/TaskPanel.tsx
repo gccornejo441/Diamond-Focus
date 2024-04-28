@@ -162,21 +162,18 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
             <PopupSetting onClose={() => setOpenTask(false)} isOpen={openTask} >
                 <div className={deleteCardStyles.deleteCard}>
                     <div className={deleteCardStyles.deleteCardHeader}>
-                        <h5>Confirm Deletion</h5>
+                        <h5 className={deleteCardStyles.deleteCardTitle}>Are you sure you want to delete 
+                        <br/> <span>"{currentTask?.text}"?</span></h5>
                     </div>
                     <div className={deleteCardStyles.deleteCardBody}>
-                        <p>Are you sure you want to delete this item?</p>
+                        <p>This item will be deleted permanently. This action cannot be undone.</p>
                     </div>
                     <div className={deleteCardStyles.deleteCardFooter}>
-                        <button className={deleteCardStyles.btnDanger} id="confirm-delete" onClick={() => handleOnDeleteTask(true)}>Yes</button>
+                        <button className={deleteCardStyles.btnDanger} id="confirm-delete" onClick={() => handleOnDeleteTask(true)}>Delete</button>
                         <button className={deleteCardStyles.btnSecondary} id="cancel-delete" onClick={() => setOpenTask(false)}>Cancel</button>
                     </div>
                 </div>
             </PopupSetting>
-
-    return (
-        <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
-
             <div className={styles.taskPanel}>
                 <div className={styles.inputArea}>
                     <input

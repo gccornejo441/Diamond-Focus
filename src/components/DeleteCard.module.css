@@ -1,55 +1,63 @@
 .deleteCard {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    width: 300px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 8px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .deleteCardHeader {
-    margin-bottom: 10px;
-    text-align: center;
+  text-align: center;
+  width: 300px;
+  font-size: 1.3rem;
+}
+
+.deleteCardTitle {
+  width: calc(100%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .deleteCardBody {
-    margin-bottom: 20px;
-    text-align: center;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .deleteCardFooter {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .btnDanger {
-    background-color: #e53e3e;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btnDanger:hover {
-    background-color: #c53030;
+  background-color: #c53030;
 }
 
 .btnSecondary {
-    background-color: #cbd5e0;
-    color: #2d3748;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background-color: #cbd5e0;
+  color: #2d3748;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btnSecondary:hover {
-    background-color: #b2becd;
+  background-color: #b2becd;
 }

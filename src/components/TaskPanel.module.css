@@ -206,7 +206,7 @@ li {
 
 .contextMenuButton {
   --contexify-activeItem-bgColor: var(--panel-background-hover);
-  --contexify-activeItem-color: var(--panel-text-hover);
+  --contexify-activeItem-color: var(--white);
 }
 
 .taskPanel {
