@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TaskPanel.module.css';
+import deleteCardStyles from './DeleteCard.module.css';
 import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 import { ReactComponent as TaskButton } from './assets/taskButton.svg';
 import { ReactComponent as SaveButton } from './assets/saveButton.svg';
-import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates  } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier, MouseSensor } from '@dnd-kit/core';
 import TaskItem from './TaskItem';
+import PopupSetting from './theme/PopupSetting';
 
 const svgStyle = {
+    cursor: 'pointer',
+    fill: 'white',
     width: '20px',
     height: '20px',
-    fill: 'currentColor'
-};
-
+    transition: 'fill 0.2s',
+}
 const MENU_ID = 'task-context-menu';
 
 export interface Task {
@@ -38,6 +41,7 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
     const [currentTask, setCurrentTask] = useState<Task | null>(null);
     const [editId, setEditId] = useState<number | null>(null);
     const [editText, setEditText] = useState('');
+    const [openTask, setOpenTask] = useState(false);
 
     const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
         event.preventDefault();
@@ -108,19 +112,19 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
         useSensor(PointerSensor),
         useSensor(TouchSensor, {
             activationConstraint: {
-              delay: 300,
-              tolerance: 8,
+                delay: 300,
+                tolerance: 8,
             },
-          }),
-          useSensor(KeyboardSensor, {
+        }),
+        useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
-          })
-          ,
-          useSensor(MouseSensor, {
+        })
+        ,
+        useSensor(MouseSensor, {
             activationConstraint: {
                 distance: 8,
-              },        
-          })
+            },
+        })
     );
 
     const getCurrentTaskPosition = (id: UniqueIdentifier | undefined) => tasks.findIndex((task) => task.id === id);
@@ -138,8 +142,41 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
         });
     };
 
+    const handleOnDeleteTask = (removeTask: boolean) => {
+        setOpenTask(true);
+
+        if (removeTask) {
+            if (currentTask && currentTask.id) {
+                deleteTask(currentTask.id);
+                setOpenTask(false);
+            }
+        } else {
+            setOpenTask(true);
+        }
+
+        // onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+    }
+
     return (
         <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
+            <PopupSetting onClose={() => setOpenTask(false)} isOpen={openTask} >
+                <div className={deleteCardStyles.deleteCard}>
+                    <div className={deleteCardStyles.deleteCardHeader}>
+                        <h5>Confirm Deletion</h5>
+                    </div>
+                    <div className={deleteCardStyles.deleteCardBody}>
+                        <p>Are you sure you want to delete this item?</p>
+                    </div>
+                    <div className={deleteCardStyles.deleteCardFooter}>
+                        <button className={deleteCardStyles.btnDanger} id="confirm-delete" onClick={() => handleOnDeleteTask(true)}>Yes</button>
+                        <button className={deleteCardStyles.btnSecondary} id="cancel-delete" onClick={() => setOpenTask(false)}>Cancel</button>
+                    </div>
+                </div>
+            </PopupSetting>
+
+    return (
+        <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
+
             <div className={styles.taskPanel}>
                 <div className={styles.inputArea}>
                     <input
@@ -175,7 +212,7 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
                     <Item className={styles.contextMenuButton} onClick={() => currentTask && setAsFavorite(currentTask.id)}>Set as important<RightSlot>⭐</RightSlot></Item>
                     <Item
                         className={styles.contextMenuButton}
-                        onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+                        onClick={() => handleOnDeleteTask(false)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
                 </Menu>
             </div>
         </DndContext>

@@ -292,8 +292,8 @@
   --button-hover-text: var(--b4);
   --button-text: var(--b5);
 
-  --panel-background: var(--b2);
-  --panel-background-hover: var(--b3);
+  --panel-background: var(--b3);
+  --panel-background-hover: var(--b5);
   --panel-text: var(--b1);
   --panel-text-hover: var(--b2);
 
@@ -361,11 +361,11 @@ code {
   --text-color: var(--b2);
 
   --button-background: var(--b3);
-  --button-background-hover: var(--b2);
+  --button-background-hover: var(--b5);
   --button-hover-text: var(--b4);
   --button-text: var(--b5);
 
-  --panel-background: var(--b2);
+  --panel-background: var(--b3);
   --panel-background-hover: var(--b3);
   --panel-text: var(--b1);
   --panel-text-hover: var(--b2);
