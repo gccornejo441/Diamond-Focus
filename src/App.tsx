@@ -27,6 +27,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [askedForTask, setAskedForTask] = useState<string>("");
+  
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');

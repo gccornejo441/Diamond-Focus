@@ -292,7 +292,7 @@
   --button-hover-text: var(--b4);
   --button-text: var(--b5);
 
-  --panel-background: var(--b25);
+  --panel-background: var(--b2);
   --panel-background-hover: var(--b3);
   --panel-text: var(--b1);
   --panel-text-hover: var(--b2);
@@ -365,7 +365,7 @@ code {
   --button-hover-text: var(--b4);
   --button-text: var(--b5);
 
-  --panel-background: var(--b25);
+  --panel-background: var(--b2);
   --panel-background-hover: var(--b3);
   --panel-text: var(--b1);
   --panel-text-hover: var(--b2);
@@ -468,6 +468,70 @@ code {
   --panel-text-hover: var(--teal-50);
 
   --alert: var(--teal-700);
+}
+
+[data-theme="purple-theme"] {
+  --background-color: var(--purple-100);
+  --text-color: var(--purple-900);
+
+  --button-background: var(--purple-500);
+  --button-background-hover: var(--purple-700);
+  --button-text: var(--purple-50);
+
+  --panel-background: var(--purple-200);
+  --panel-background-hover: var(--purple-300);
+  --panel-text: var(--purple-900);
+  --panel-text-hover: var(--purple-50);
+
+  --alert: var(--purple-700);
+}
+
+[data-theme="pink-theme"] {
+  --background-color: var(--pink-100);
+  --text-color: var(--pink-900);
+
+  --button-background: var(--pink-500);
+  --button-background-hover: var(--pink-700);
+  --button-text: var(--pink-50);
+
+  --panel-background: var(--pink-200);
+  --panel-background-hover: var(--pink-300);
+  --panel-text: var(--pink-900);
+  --panel-text-hover: var(--pink-50);
+
+  --alert: var(--pink-700);
+}
+
+[data-theme='blue-theme'] {
+  --background-color: var(--blue-100);
+  --text-color: var(--blue-900);
+
+  --button-background: var(--blue-500);
+  --button-background-hover: var(--blue-700);
+  --button-text: var(--blue-50);
+
+  --panel-background: var(--blue-200);
+  --panel-background-hover: var(--blue-300);
+  --panel-text: var(--blue-900);
+  --panel-text-hover: var(--blue-50);
+
+  --alert: var(--blue-700);
+}
+
+[data-theme='orange-theme'] {
+  --background-color: var(--orange-100);
+  --text-color: var(--orange-900);
+
+  --button-background: var(--orange-500);
+  --button-background-hover: var(--orange-700);
+  --button-text: var(--orange-50);
+
+  --panel-background: var(--orange-200);
+  --panel-background-hover: var(--orange-300);
+  --panel-text: var(--orange-900);
+  --panel-text-hover: var(--orange-50);
+
+  --alert: var(--orange-700);
 }
 
 button {
