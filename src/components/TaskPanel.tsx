@@ -173,6 +173,10 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
                     </div>
                 </div>
             </PopupSetting>
+
+    return (
+        <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
+
             <div className={styles.taskPanel}>
                 <div className={styles.inputArea}>
                     <input
