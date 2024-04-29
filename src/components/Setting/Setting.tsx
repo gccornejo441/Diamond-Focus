@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Setting.module.css';
 import { ReactComponent as CancelButton } from '../assets/cancelButton.svg';
+import SettingUpload from './SettingUpload';
 
 interface SettingPanelProps {
     onClose: () => void;
@@ -8,12 +9,13 @@ interface SettingPanelProps {
     setCount: React.Dispatch<React.SetStateAction<number>>;
     breakDuration: number;
     setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
+    isAlertOn: boolean;
+    setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration }: SettingPanelProps) => {
+const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn }: SettingPanelProps) => {
     const [tempCount, setTempCount] = useState<number>(0);
     const [tempBreak, setTempBreak] = useState<number>(0);
-    const [isAlertOn, setIsAlertOn] = useState<boolean>(true);
     const [alertName, setAlertName] = useState<string>('');
 
     useEffect(() => {
@@ -77,35 +79,45 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration }: 
                     <div className={styles.cardHeader}>
                         <div className={styles.cardTitle}>Theme Settings</div>
                         <div className={styles.settingCardBody}>
-                            <div className={styles.settingCardItem}>
-                                <label className={styles.settingCardItemTitle}>Timer (minutes)</label>
-                                <input
-                                    type="number"
-                                    name="count"
-                                    className={styles.input}
-                                    min="1"
-                                    max="60"
-                                    step="1"
-                                    value={tempCount}
-                                    onChange={e => setTempCount(Math.max(1, Math.min(60, parseInt(e.target.value))))}
-                                />
+                            <div className={styles.settingTimeBlock}>
+                                <div className={styles.settingCardItem}>
+                                    <label className={styles.settingCardItemTitle}>Timer (minutes)</label>
+                                    <input
+                                        type="number"
+                                        name="count"
+                                        className={styles.input}
+                                        min="1"
+                                        max="60"
+                                        step="1"
+                                        value={tempCount}
+                                        onChange={e => setTempCount(Math.max(1, Math.min(60, parseInt(e.target.value))))}
+                                    />
+                                </div>
+                                <div className={styles.settingCardItem}>
+                                    <label className={styles.settingCardItemTitle}>Break (minutes)</label>
+                                    <input
+                                        type="number"
+                                        name="break"
+                                        className={styles.input}
+                                        min="1"
+                                        max="60"
+                                        step="1"
+                                        value={tempBreak}
+                                        onChange={e => setTempBreak(Math.max(1, Math.min(60, parseInt(e.target.value))))}
+                                    />
+                                </div>
                             </div>
-                            <div className={styles.settingCardItem}>
-                                <label className={styles.settingCardItemTitle}>Break (minutes)</label>
-                                <input
-                                    type="number"
-                                    name="break"
-                                    className={styles.input}
-                                    min="1"
-                                    max="60"
-                                    step="1"
-                                    value={tempBreak}
-                                    onChange={e => setTempBreak(Math.max(1, Math.min(60, parseInt(e.target.value))))}
-                                />
-                            </div>
-                            <div>
-                                <label className={styles.settingCardItemTitle}>Sound</label>
-                                <div className={styles.settingCardItemSound}>
+                            <div className={styles.settingTimeBlock}>
+                                <div className={styles.settingCardItem}>
+                                    <label className={styles.settingCardItemTitle}>Notification</label>
+                                    <select
+                                        className={styles.settingSelect}
+                                        onChange={e => setAlertName(e.target.value)} >
+                                        <option value="1">SciFi Alert</option>
+                                    </select>
+                                </div>
+                                <div className={styles.settingCardItem}>
+                                    <label className={styles.settingCardItemTitle}>Sound</label>
                                     <div className={styles.checkboxWrapper2}>
                                         <label>
                                             <input
@@ -119,14 +131,6 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration }: 
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <label className={styles.settingCardItemTitle}>Notification</label>
-                                <select
-                                    className={styles.settingSelect}
-                                    onChange={e => setAlertName(e.target.value)} >
-                                    <option value="1">SciFi Alert</option>
-                                </select>
-                            </div>
                             <div className={styles.settingCardItem}>
                                 <div className={styles.settingCardItemTitle}>Theme</div>
                                 <div className={styles.cardIllustration}>
@@ -138,13 +142,14 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration }: 
                                         <li onClick={() => changeTheme('purple-theme')} style={{ backgroundColor: 'var(--purple-100)' }}></li>
                                         <li onClick={() => changeTheme('green-theme')} style={{ backgroundColor: 'var(--green-100)' }}></li>
                                         <li onClick={() => changeTheme('teal-theme')} style={{ backgroundColor: 'var(--teal-100)' }}></li>
-                                        <li onClick={() => changeTheme('pink-theme')} style={{ backgroundColor: 'var(--pink-100)' }}></li>            
+                                        <li onClick={() => changeTheme('pink-theme')} style={{ backgroundColor: 'var(--pink-100)' }}></li>
                                         <li onClick={() => changeTheme('red-theme')} style={{ backgroundColor: 'var(--red-100)' }}></li>
                                         <li onClick={() => changeTheme('orange-theme')} style={{ backgroundColor: 'var(--orange-100)' }}></li>
                                         <li onClick={() => changeTheme('deep-orange-theme')} style={{ backgroundColor: 'var(--deep-orange-100)' }}></li>
                                     </ul>
                                 </div>
                             </div>
+                            {/* <SettingUpload /> */}
                             <div className={styles.settingCardCommitBtn}>
                                 <button type="submit" className={styles.settingButton}>Save</button>
                                 <button type="button" onClick={resetSettings} className={styles.settingButton}>Reset</button>

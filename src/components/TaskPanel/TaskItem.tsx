@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import styles from './TaskPanel.module.css';
 import { Task } from './TaskPanel';
+import styles from './TaskPanel.module.css';
 
 interface TaskComponentProps {
     task: Task;

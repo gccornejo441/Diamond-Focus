@@ -1,4 +1,4 @@
-.deleteCard {
+.deleteModal {
   background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -11,25 +11,25 @@
   flex-direction: column;
 }
 
-.deleteCardHeader {
+.deleteModalHeader {
   text-align: center;
   width: 300px;
   font-size: 1.3rem;
 }
 
-.deleteCardTitle {
+.DeleteModalTitle {
   width: calc(100%);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.deleteCardBody {
+.deleteModalBody {
   margin-bottom: 20px;
   text-align: center;
 }
 
-.deleteCardFooter {
+.deleteModalFooter {
   display: flex;
   justify-content: space-around;
 }

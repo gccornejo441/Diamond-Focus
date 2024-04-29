@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './Sidebar.module.css';
-import settingStyles from './theme/Setting.module.css';
-import { ReactComponent as CancelButton } from './assets/cancelButton.svg';
-import { ReactComponent as GemIcon } from './assets/gemIcon.svg';
+import settingStyles from '../Setting/Setting.module.css';
+import { ReactComponent as CancelButton } from '../assets/cancelButton.svg';
+import { ReactComponent as GemIcon } from '../assets/gemIcon.svg';
 
 interface SidebarProps {
     taskDescription: string;

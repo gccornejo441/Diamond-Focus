@@ -1,13 +1,13 @@
 import React from 'react';
 import style from './Popup.module.css';
 
-interface PopupSettingProps {
+interface PopupProps {
     isOpen: boolean;
     onClose: () => void;
     children: React.ReactNode;
 }
 
-const PopupSetting = ({ isOpen, onClose, children }: PopupSettingProps) => {
+const Popup = ({ isOpen, onClose, children }: PopupProps) => {
     if (!isOpen) return null;
 
     return (
@@ -20,4 +20,4 @@ const PopupSetting = ({ isOpen, onClose, children }: PopupSettingProps) => {
     );
 };
 
-export default PopupSetting;
+export default Popup;

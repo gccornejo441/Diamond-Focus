@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import styles from './Timer.module.css';
-import { TimePadder } from '../utils';
-import Setting from './theme/Setting';
-import SciFiAlarm from './assets/sciFiAlarm.mp3';
-import ButtonPanel from './ButtonPanel';
+import { TimePadder } from '../../utils';
+import Setting from '../Setting';
+import ButtonPanel from '../ButtonPanel/ButtonPanel';
+import SciFiAlarm from '../assets/sciFiAlarm.mp3';
 
 interface TimerModuleProps {
     count: number;
@@ -19,7 +19,14 @@ const TimerModule = ({ count, breakDuration, isBreak }: TimerModuleProps) => (
     </div>
 );
 
-const Timer = ({ isModalOpen, setModalOpen }: { isModalOpen: boolean, setModalOpen: (value: boolean) => void }) => {
+interface TimerProps {
+    isModalOpen: boolean;
+    setModalOpen: (value: boolean) => void;
+    isAlertOn: boolean;
+    setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn }: TimerProps) => {
     const [count, setCount] = useState(parseInt(localStorage.getItem('count') || '1500'));
     const [breakDuration, setBreakDuration] = useState(parseInt(localStorage.getItem('breakDuration') || '300'));
     const [isRunning, setIsRunning] = useState(false);
@@ -57,7 +64,12 @@ const Timer = ({ isModalOpen, setModalOpen }: { isModalOpen: boolean, setModalOp
         if (count === 0 || breakDuration === 0) {
             completeReset();
             const audio = new Audio(SciFiAlarm);
-            audio.play();
+
+            if (isAlertOn) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
         }
 
     }, [isRunning, worker, count, isBreak, breakDuration]);
@@ -129,6 +141,8 @@ const Timer = ({ isModalOpen, setModalOpen }: { isModalOpen: boolean, setModalOp
                 onReset={handleReset} />
             {isModalOpen && (
                 <Setting
+                    isAlertOn={isAlertOn}
+                    setIsAlertOn={setIsAlertOn}
                     setBreakDuration={setBreakDuration}
                     breakDuration={breakDuration}
                     count={count}

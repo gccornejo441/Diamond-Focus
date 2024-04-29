@@ -56,52 +56,49 @@
     transform: scale(1.05);
 }
 
-.icon {
-    fill: currentColor; 
-}
-
-.svgStyle { 
-    width: '20px'; 
-    height: '20px';
-    fill: 'currentColor'; 
-}
-
-.controlButton {
-    appearance: button;
-    backface-visibility: hidden;
-    background-color: var(--button-background);
-    border-radius: 6px;
-    border-width: 0;
-    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-      rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
-      Ubuntu, sans-serif;
-    font-size: 100%;
-    outline: none;
-    overflow: hidden;
-    padding: 8px 10px 4px 10px;
+.dropdown {
     position: relative;
-    text-align: center;
-    text-transform: none;
-    transform: translateZ(0);
-    transition: all 0.2s, box-shadow 0.08s ease-in;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+    margin: 16px;
+    width: auto;
+    display: inline-block;
   }
   
-  .controlButton:hover {
-    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-      rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0;
-    transform: translateY(-2px);
+  .button {
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
   }
   
-  .controlButton:active {
-    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-      rgba(50, 50, 93, 0.2) 0 3px 3px 0, rgba(0, 0, 0, 0.1) 0 1px 3px 0;
-    transform: translateY(2px);
+  .button:hover {
+    background-color: #e0e0e0;
+  }
+  
+
+  /* DropDownCard.module.css */
+  .dropdownCard {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 100%;
+    position: absolute;
+    background: white;
+    z-index: 1000;
+  }
+  
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+  
+  .listItem {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+  
+  .listItem:hover {
+    background-color: #f0f0f0;
+    color: white;
   }
   

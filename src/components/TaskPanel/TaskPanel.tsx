@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import styles from './TaskPanel.module.css';
-import deleteCardStyles from './DeleteCard.module.css';
+import styles from '../TaskPanel/TaskPanel.module.css';
 import { Menu, Item, useContextMenu, RightSlot } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
-import { ReactComponent as TaskButton } from './assets/taskButton.svg';
-import { ReactComponent as SaveButton } from './assets/saveButton.svg';
+import { ReactComponent as TaskButton } from '../assets/taskButton.svg';
+import { ReactComponent as SaveButton } from '../assets/saveButton.svg';
 import { SortableContext, verticalListSortingStrategy, arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, closestCorners, DragOverEvent, UniqueIdentifier, MouseSensor } from '@dnd-kit/core';
 import TaskItem from './TaskItem';
-import PopupSetting from './theme/PopupSetting';
+import DeleteModal from '../DeleteModal';
+import Popup from '../Popup/Popup';
 
 const svgStyle = {
     cursor: 'pointer',
@@ -30,6 +30,7 @@ interface TaskPanelProps {
     setAskedForTask: React.Dispatch<React.SetStateAction<string>>;
     onClick: () => void;
 }
+
 
 const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
     const { show } = useContextMenu({ id: MENU_ID });
@@ -144,7 +145,6 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
 
     const handleOnDeleteTask = (removeTask: boolean) => {
         setOpenTask(true);
-
         if (removeTask) {
             if (currentTask && currentTask.id) {
                 deleteTask(currentTask.id);
@@ -153,27 +153,16 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
         } else {
             setOpenTask(true);
         }
-
-        // onClick={() => currentTask && deleteTask(currentTask.id)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
     }
 
     return (
         <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
-            <PopupSetting onClose={() => setOpenTask(false)} isOpen={openTask} >
-                <div className={deleteCardStyles.deleteCard}>
-                    <div className={deleteCardStyles.deleteCardHeader}>
-                        <h5 className={deleteCardStyles.deleteCardTitle}>Are you sure you want to delete 
-                        <br/> <span>"{currentTask?.text}"?</span></h5>
-                    </div>
-                    <div className={deleteCardStyles.deleteCardBody}>
-                        <p>This item will be deleted permanently. This action cannot be undone.</p>
-                    </div>
-                    <div className={deleteCardStyles.deleteCardFooter}>
-                        <button className={deleteCardStyles.btnDanger} id="confirm-delete" onClick={() => handleOnDeleteTask(true)}>Delete</button>
-                        <button className={deleteCardStyles.btnSecondary} id="cancel-delete" onClick={() => setOpenTask(false)}>Cancel</button>
-                    </div>
-                </div>
-            </PopupSetting>
+            <Popup onClose={() => setOpenTask(false)} isOpen={openTask} >
+                <DeleteModal
+                    handleDelete={() => handleOnDeleteTask(true)}
+                    handleCancel={() => setOpenTask(false)}
+                    item={currentTask?.text || 'unknown'} />
+            </Popup>
             <div className={styles.taskPanel}>
                 <div className={styles.inputArea}>
                     <input
