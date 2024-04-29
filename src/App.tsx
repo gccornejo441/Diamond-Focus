@@ -32,6 +32,12 @@ function App() {
     setSidebarOpen(!isSidebarOpen);
   }
 
+  const svgStyle = {
+    width: '20px',
+    height: '20px',
+    fill: 'currentColor'
+}
+
   return (
     <div className={styles.App}>
       <div className={styles.settingButtonPanel}>
@@ -42,7 +48,7 @@ function App() {
             </a>
           </h1>
           <button onClick={() => setModalOpen(true)} className="controlButton">
-            <SettingButton aria-label="Setting Button" />
+            <SettingButton style={svgStyle}  aria-label="Setting Button" />
           </button>
         </div>
       </div>

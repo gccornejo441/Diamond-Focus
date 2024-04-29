@@ -47,7 +47,7 @@
 }
 
 .cardMain {
-  background-color: (0, 0, 0, 0.4);
+  background-color: rgba(25, 25, 29, 0.95);
   position: fixed;
   top: 0px;
   left: 0px;

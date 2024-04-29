@@ -3,8 +3,8 @@ import buttonStyles from './ButtonPanel.module.css';
 import { ReactComponent as PlayButton } from '../assets/playButton.svg';
 import { ReactComponent as PauseButton } from '../assets/pauseButton.svg';
 import { ReactComponent as ResetButton } from '../assets/resetButton.svg';
-import { ReactComponent as CouchButton } from '../assets/couchButton.svg';
-import { ReactComponent as TimerButton } from '../assets/timerButton.svg';
+import { ReactComponent as CouchButton } from '../assets/couchIcon.svg';
+import { ReactComponent as TimerButton } from '../assets/timerIcon.svg';
 
 import { Tooltip } from 'react-tooltip';
 
@@ -16,6 +16,11 @@ interface ButtonPanelProps {
     isRunning: boolean;
 }
 
+const svgStyle = {
+    width: '20px',
+    height: '20px',
+    fill: '#fff',
+}
 
 const ButtonPanel = ({ onReset, handlePlayPause, isBreak, changeIsBreak, isRunning }: ButtonPanelProps) => (
     <div className={buttonStyles.buttonPanel}>
@@ -26,9 +31,9 @@ const ButtonPanel = ({ onReset, handlePlayPause, isBreak, changeIsBreak, isRunni
             onClick={handlePlayPause} 
             className="controlButton">
             {<>{!isRunning ? (
-                <PlayButton aria-label="Play" />
+                <PlayButton style={svgStyle} aria-label="Play" />
             ) : (
-                <PauseButton aria-label="Pause" />
+                <PauseButton style={svgStyle} aria-label="Pause" />
             )}</>}</button>
         <button
             data-tooltip-id="panelTooltip"
@@ -36,7 +41,7 @@ const ButtonPanel = ({ onReset, handlePlayPause, isBreak, changeIsBreak, isRunni
             data-tooltip-content='Reset'
             className="controlButton"
             onClick={onReset}>
-            <ResetButton aria-label="Reset" />
+            <ResetButton style={svgStyle}  aria-label="Reset" />
         </button>
         <button
             data-tooltip-id="panelTooltip"
@@ -44,7 +49,7 @@ const ButtonPanel = ({ onReset, handlePlayPause, isBreak, changeIsBreak, isRunni
             data-tooltip-content={isBreak ? 'Break' : 'Timer'}
             onClick={changeIsBreak}
             className="controlButton">
-            {isBreak ? <CouchButton  aria-label="Couch" /> : <TimerButton aria-label="Timer" />}
+            {isBreak ? <TimerButton style={svgStyle} aria-label="Timer" /> : <CouchButton style={svgStyle} aria-label="Break" />}
         </button>
         <Tooltip className='tootipStyles' id="panelTooltip" />
     </div>

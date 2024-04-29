@@ -17,11 +17,17 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
     const [tempCount, setTempCount] = useState<number>(0);
     const [tempBreak, setTempBreak] = useState<number>(0);
     const [alertName, setAlertName] = useState<string>('');
+    const [bgImg, setBgImg] = useState<string>('');
 
     useEffect(() => {
         setIsAlertOn(localStorage.getItem('isAlertOn') === 'true' ? true : false);
         setTempCount(Math.floor(parseInt(localStorage.getItem('count') || String(count)) / 60));
         setTempBreak(Math.floor(parseInt(localStorage.getItem('breakDuration') || String(breakDuration)) / 60));
+        const savedBgImg = localStorage.getItem('bgImg') || '';
+        setBgImg(savedBgImg);
+        if (savedBgImg) {
+          document.body.style.backgroundImage = `url('${savedBgImg}')`;
+        }
     }, [count, breakDuration]);
 
     const saveSettings = (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,41 +36,51 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
         const newCount = formData.get('count') as string;
         const newBreakDuration = formData.get('break') as string;
         const newIsAlertOn = formData.has('isAlertOn');
-
+    
         if (newCount && newBreakDuration) {
-            const countInSeconds = parseInt(newCount) * 60;
-            const breakInSeconds = parseInt(newBreakDuration) * 60;
-
-            setCount(countInSeconds);
-            setBreakDuration(breakInSeconds);
-
-            localStorage.setItem('count', countInSeconds.toString());
-            localStorage.setItem('breakDuration', breakInSeconds.toString());
+          const countInSeconds = parseInt(newCount) * 60;
+          const breakInSeconds = parseInt(newBreakDuration) * 60;
+    
+          setCount(countInSeconds);
+          setBreakDuration(breakInSeconds);
+    
+          localStorage.setItem('count', countInSeconds.toString());
+          localStorage.setItem('breakDuration', breakInSeconds.toString());
         }
-
+    
         setIsAlertOn(newIsAlertOn);
         localStorage.setItem('isAlertOn', String(newIsAlertOn));
-
+        
+        if (bgImg) {
+          document.body.style.backgroundImage = `url('${bgImg}')`;
+          localStorage.setItem('bgImg', bgImg);
+        }
+    
         onClose();
-    };
+      };
+    
 
     const resetSettings = () => {
         const defaultCount = 1500;
         const defaultBreak = 300;
         const defaultAlert = true;
         const defaultTheme = 'default';
-
+    
         setCount(defaultCount);
         setBreakDuration(defaultBreak);
         setIsAlertOn(defaultAlert);
+        setBgImg('');
+        document.body.style.backgroundImage = '';
         document.body.setAttribute('data-theme', defaultTheme);
-
+    
         localStorage.setItem('count', (defaultCount).toString());
         localStorage.setItem('breakDuration', (defaultBreak).toString());
         localStorage.setItem('isAlertOn', String(defaultAlert));
         localStorage.setItem('theme', defaultTheme);
+        localStorage.removeItem('bgImg');
         onClose();
-    };
+      };
+    
 
     const changeTheme = (themeName: string) => {
         document.body.setAttribute('data-theme', themeName);
@@ -149,7 +165,7 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
                                     </ul>
                                 </div>
                             </div>
-                            {/* <SettingUpload /> */}
+                            {/* <SettingUpload setBgImg={setBgImg} /> */}
                             <div className={styles.settingCardCommitBtn}>
                                 <button type="submit" className={styles.settingButton}>Save</button>
                                 <button type="button" onClick={resetSettings} className={styles.settingButton}>Reset</button>
