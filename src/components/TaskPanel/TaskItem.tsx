@@ -21,7 +21,7 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
 
     return (
         <li key={task.id}
-            className={styles.taskItem}
+            className={`${styles.taskItem} ${task.favorite ? styles.favoriteTask : ''}`}
             onContextMenu={(e) => handleDoubleClick(e, task)}
             onDoubleClick={(e) => handleDoubleClick(e, task)}>
             <div className={styles.checkboxwrapper15}>
