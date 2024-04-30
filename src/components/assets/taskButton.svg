@@ -1,1 +1,5 @@
-<svg viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style>.cls-1{fill:none;stroke:#ffffff;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><polyline class="cls-1" points="22.5 15.84 22.5 22.52 1.5 22.52 1.5 15.84"></polyline><line class="cls-1" x1="12" y1="3.43" x2="12" y2="19.66"></line><polyline class="cls-1" points="5.32 9.16 12 2.48 18.68 9.16"></polyline></g></svg>
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" stroke="#FFF">
+  <g stroke-width="0"/>
+  <g stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 4v16m0 0-6-6m6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

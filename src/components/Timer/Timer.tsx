@@ -24,9 +24,10 @@ interface TimerProps {
     setModalOpen: (value: boolean) => void;
     isAlertOn: boolean;
     setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
+    handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
 }
 
-const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn }: TimerProps) => {
+const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDeleteAll }: TimerProps) => {
     const [count, setCount] = useState(parseInt(localStorage.getItem('count') || '1500'));
     const [breakDuration, setBreakDuration] = useState(parseInt(localStorage.getItem('breakDuration') || '300'));
     const [isRunning, setIsRunning] = useState(false);
@@ -62,9 +63,9 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn }: TimerProp
         }
 
         if (count === 0 || breakDuration === 0) {
-            completeReset();
             const audio = new Audio(SciFiAlarm);
-
+            
+            completeReset();
             if (isAlertOn) {
                 audio.play();
             } else {
@@ -134,6 +135,7 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn }: TimerProp
         <div className={styles.timerContainer}>
             <TimerModule isBreak={isBreak} breakDuration={breakDuration} count={count} />
             <ButtonPanel
+                handleDeleteAll={handleDeleteAll}
                 isBreak={isBreak}
                 isRunning={isRunning}
                 handlePlayPause={() => setIsRunning(!isRunning)}

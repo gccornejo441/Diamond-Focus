@@ -29,20 +29,22 @@ export interface Task {
 interface TaskPanelProps {
     setAskedForTask: React.Dispatch<React.SetStateAction<string>>;
     onClick: () => void;
+    tasks: Task[];
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+    openTask: boolean;
+    setOpenTask: React.Dispatch<React.SetStateAction<boolean>>
+    setCurrentTask: React.Dispatch<React.SetStateAction<Task | null>>;
+    currentTask: Task | null;
+    handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
+    isMassDelete: boolean;
 }
 
-
-const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
+const TaskPanel = 
+({ isMassDelete, handleDeleteAll,currentTask, setCurrentTask, onClick, setAskedForTask, tasks, setTasks, openTask, setOpenTask }: TaskPanelProps) => {
     const { show } = useContextMenu({ id: MENU_ID });
     const [task, setTask] = useState<string>('');
-    const [tasks, setTasks] = useState<Task[]>(() => {
-        const savedTasks = localStorage.getItem('tasks');
-        return savedTasks ? JSON.parse(savedTasks) : [];
-    });
-    const [currentTask, setCurrentTask] = useState<Task | null>(null);
     const [editId, setEditId] = useState<number | null>(null);
     const [editText, setEditText] = useState('');
-    const [openTask, setOpenTask] = useState(false);
 
     const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
         event.preventDefault();
@@ -65,10 +67,6 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
             setTasks([...tasks, { id: Date.now(), text: task, completed: false, favorite: false }]);
             setTask('');
         }
-    };
-
-    const deleteTask = (id: number) => {
-        setTasks(tasks.filter(t => t.id !== id));
     };
 
     const startEdit = (task: Task | null) => {
@@ -143,23 +141,12 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
         });
     };
 
-    const handleOnDeleteTask = (removeTask: boolean) => {
-        setOpenTask(true);
-        if (removeTask) {
-            if (currentTask && currentTask.id) {
-                deleteTask(currentTask.id);
-                setOpenTask(false);
-            }
-        } else {
-            setOpenTask(true);
-        }
-    }
-
     return (
         <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
             <Popup onClose={() => setOpenTask(false)} isOpen={openTask} >
                 <DeleteModal
-                    handleDelete={() => handleOnDeleteTask(true)}
+                    isMassDelete={isMassDelete}
+                    handleDelete={() => handleDeleteAll(true, isMassDelete)}
                     handleCancel={() => setOpenTask(false)}
                     item={currentTask?.text || 'unknown'} />
             </Popup>
@@ -198,7 +185,7 @@ const TaskPanel = ({ onClick, setAskedForTask }: TaskPanelProps) => {
                     <Item className={styles.contextMenuButton} onClick={() => currentTask && setAsFavorite(currentTask.id)}>Set as important<RightSlot>⭐</RightSlot></Item>
                     <Item
                         className={styles.contextMenuButton}
-                        onClick={() => handleOnDeleteTask(false)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
+                        onClick={() => handleDeleteAll(false, false)}>Delete<RightSlot>CTRL + D</RightSlot></Item>
                 </Menu>
             </div>
         </DndContext>
