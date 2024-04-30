@@ -247,3 +247,8 @@ input[type="number"], .settingSelect  {
   border-color: var(--button-background);
   box-shadow: 0 0 0 3px var(--button-background);
 }
+
+.icon {
+  height: 30px;
+  width: 30px;
+}
