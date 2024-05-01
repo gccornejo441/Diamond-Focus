@@ -11,7 +11,7 @@ interface TaskComponentProps {
 }
 
 const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskComponentProps) => {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.id });
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.id, });
 
     const style = {
         transition,
@@ -19,8 +19,14 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
         touchAction: 'none',
     };
 
+
     return (
         <li key={task.id}
+            style={style}
+            ref={setNodeRef}
+            {...attributes}
+            {...listeners}
+            id={`task-${task.id}`}
             className={`${styles.taskItem} ${task.favorite ? styles.favoriteTask : ''}`}
             onContextMenu={(e) => handleDoubleClick(e, task)}
             onDoubleClick={(e) => handleDoubleClick(e, task)}>
@@ -28,8 +34,8 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
                 <input className={styles.inpCbx}
                     id={`cbx-${task.id}`}
                     type="checkbox"
-                    style={{ display: 'none' }}
                     checked={task.completed}
+                    style={{ display: 'none' }}
                     onChange={() => toggleTaskCompletion(task.id)} />
                 <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
                     <span>

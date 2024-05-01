@@ -4,6 +4,7 @@ import { TimePadder } from '../../utils';
 import Setting from '../Setting';
 import ButtonPanel from '../ButtonPanel/ButtonPanel';
 import SciFiAlarm from '../assets/sciFiAlarm.mp3';
+import useTimerEffect from '../../hooks/useTimerEffect';
 
 interface TimerModuleProps {
     count: number;
@@ -53,27 +54,6 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
         return () => timerWorker.terminate();
     }, [isRunning, isBreak]);
 
-
-    useEffect(() => {
-        if (isRunning) {
-            const seconds = isBreak ? breakDuration : count;
-            worker?.postMessage({ command: 'start', seconds: seconds });
-        } else {
-            worker?.postMessage({ command: 'pause' });
-        }
-
-        if (count === 0 || breakDuration === 0) {
-            const audio = new Audio(SciFiAlarm);
-            
-            completeReset();
-            if (isAlertOn) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        }
-
-    }, [isRunning, worker, count, isBreak, breakDuration]);
 
     useEffect(() => {
         let title = "Diamond Focus - Ready";
@@ -130,6 +110,8 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
             setBreakDuration(parseInt(localStorage.getItem('breakDuration') || '300'));
         }
     }
+
+    useTimerEffect({ isRunning, worker, count, isBreak, breakDuration, isAlertOn, completeReset, SciFiAlarm: SciFiAlarm });
 
     return (
         <div className={styles.timerContainer}>

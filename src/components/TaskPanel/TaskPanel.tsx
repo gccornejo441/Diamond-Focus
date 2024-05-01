@@ -108,8 +108,12 @@ const TaskPanel =
     };
 
     const sensors = useSensors(
-        useSensor(PointerSensor),
-        useSensor(TouchSensor, {
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 5,
+            },
+          }),        
+          useSensor(TouchSensor, {
             activationConstraint: {
                 delay: 300,
                 tolerance: 8,
