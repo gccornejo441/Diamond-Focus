@@ -1,5 +1,5 @@
-<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" stroke="#FFF">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#FFF">
   <g stroke-width="0"/>
   <g stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12 4v16m0 0-6-6m6 6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 5v14m0-14-6 6m6-6 6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

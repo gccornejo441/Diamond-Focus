@@ -276,6 +276,7 @@
   --blue-grey-800: #37474f;
   --blue-grey-900: #263238;
   --b1: #000e3d;
+  --b15: #0b276d;
   --b2: #234cda;
 
   --b25: #587bfd;
@@ -283,21 +284,6 @@
   --b4: #a6b8f8;
   --b5: #d2dbfd;
   --b6: #e7ecff;
-
-  --background-color: var(--b4);
-  --text-color: var(--b2);
-
-  --button-background: var(--b3);
-  --button-background-hover: var(--b2);
-  --button-hover-text: var(--b4);
-  --button-text: var(--b5);
-
-  --panel-background: var(--b3);
-  --panel-background-hover: var(--b5);
-  --panel-text: var(--b1);
-  --panel-text-hover: var(--b2);
-
-  --alert: var(--b1);
 }
 
 body {
@@ -305,11 +291,9 @@ body {
   color: var(--text-color);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   position: relative;
   min-height: 100vh;
   flex-direction: column;
@@ -358,7 +342,7 @@ code {
 
 [data-theme="default"] {
   --background-color: var(--b4);
-  --text-color: var(--b2);
+  --text-color: var(--b15);
 
   --button-background: var(--b3);
   --button-background-hover: var(--b5);
@@ -366,8 +350,9 @@ code {
   --button-text: var(--b5);
 
   --panel-background: var(--b3);
-  --panel-background-hover: var(--b3);
-  --panel-text: var(--b1);
+  --panel-background-hover: var(--b25);
+  --panel-text: var(--b15);
+  --panel-text-faint: var(--b4);
   --panel-text-hover: var(--b2);
 
   --alert: var(--b1);
@@ -385,6 +370,7 @@ code {
   --panel-background: var(--blue-grey-800);
   --panel-background-hover: var(--blue-grey-700);
   --panel-text: var(--blue-grey-100);
+  --panel-text-faint: var(--blue-grey-600);
   --panel-text-hover: var(--blue-grey-50);
 
   --alert: var(--blue-grey-50);
@@ -398,9 +384,10 @@ code {
   --button-background-hover: var(--red-700);
   --button-text: var(--red-50);
 
-  --panel-background: var(--red-200);
-  --panel-background-hover: var(--red-300);
+  --panel-background: var(--red-50);
+  --panel-background-hover: var(--red-200);
   --panel-text: var(--red-900);
+  --panel-text-faint: var(--red-300);
   --panel-text-hover: var(--red-50);
 
   --alert: var(--red-700);
@@ -417,6 +404,7 @@ code {
   --panel-background: var(--green-200);
   --panel-background-hover: var(--green-300);
   --panel-text: var(--green-900);
+  --panel-text-faint: var(--green-600);
   --panel-text-hover: var(--green-50);
 
   --alert: var(--green-700);
@@ -433,6 +421,7 @@ code {
   --panel-background: var(--indigo-200);
   --panel-background-hover: var(--indigo-300);
   --panel-text: var(--indigo-900);
+  --panel-text-faint: var(--indigo-400);
   --panel-text-hover: var(--indigo-50);
 
   --alert: var(--indigo-700);
@@ -449,6 +438,7 @@ code {
   --panel-background: var(--deep-orange-200);
   --panel-background-hover: var(--deep-orange-300);
   --panel-text: var(--deep-orange-900);
+  --panel-text-faint: var(--deep-orange-50);
   --panel-text-hover: var(--deep-orange-50);
 
   --alert: var(--deep-orange-700);
@@ -465,6 +455,7 @@ code {
   --panel-background: var(--teal-200);
   --panel-background-hover: var(--teal-300);
   --panel-text: var(--teal-900);
+  --panel-text-faint: var(--teal-700);
   --panel-text-hover: var(--teal-50);
 
   --alert: var(--teal-700);
@@ -481,6 +472,7 @@ code {
   --panel-background: var(--purple-200);
   --panel-background-hover: var(--purple-300);
   --panel-text: var(--purple-900);
+  --panel-text-faint: var(--purple-600);
   --panel-text-hover: var(--purple-50);
 
   --alert: var(--purple-700);
@@ -497,6 +489,7 @@ code {
   --panel-background: var(--pink-200);
   --panel-background-hover: var(--pink-300);
   --panel-text: var(--pink-900);
+  --panel-text-faint: var(--pink-600);
   --panel-text-hover: var(--pink-50);
 
   --alert: var(--pink-700);
@@ -513,6 +506,7 @@ code {
   --panel-background: var(--blue-200);
   --panel-background-hover: var(--blue-300);
   --panel-text: var(--blue-900);
+  --panel-text-faint: var(--blue-600);
   --panel-text-hover: var(--blue-50);
 
   --alert: var(--blue-700);
@@ -526,12 +520,30 @@ code {
   --button-background-hover: var(--orange-700);
   --button-text: var(--orange-50);
 
-  --panel-background: var(--orange-200);
-  --panel-background-hover: var(--orange-300);
+  --panel-background: var(--orange-50);
+  --panel-background-hover: var(--orange-200);
   --panel-text: var(--orange-900);
+  --panel-text-faint: var(--orange-800);
   --panel-text-hover: var(--orange-50);
 
   --alert: var(--orange-700);
+}
+
+[data-theme="brown-theme"] {
+  --background-color: var(--brown-100);
+  --text-color: var(--brown-900);
+
+  --button-background: var(--brown-500);
+  --button-background-hover: var(--brown-700);
+  --button-text: var(--brown-50);
+
+  --panel-background: var(--brown-200);
+  --panel-background-hover: var(--brown-300);
+  --panel-text: var(--brown-900);
+  --panel-text-faint: var(--brown-600);
+  --panel-text-hover: var(--brown-50);
+
+  --alert: var(--brown-700);
 }
 
 button {

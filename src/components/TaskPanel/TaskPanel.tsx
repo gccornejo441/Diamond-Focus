@@ -24,6 +24,7 @@ export interface Task {
     text: string;
     completed: boolean;
     favorite: boolean;
+    createdAt: Date;
 }
 
 interface TaskPanelProps {
@@ -64,7 +65,7 @@ const TaskPanel =
 
     const addTask = () => {
         if (task.trim() !== '') {
-            setTasks([...tasks, { id: Date.now(), text: task, completed: false, favorite: false }]);
+            setTasks([...tasks, { id: Date.now(), text: task, completed: false, favorite: false, createdAt: new Date() }]);
             setTask('');
         }
     };

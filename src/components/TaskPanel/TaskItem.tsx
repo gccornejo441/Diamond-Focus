@@ -3,6 +3,10 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Task } from './TaskPanel';
 import styles from './TaskPanel.module.css';
+import { formatDistanceToNowStrict  } from 'date-fns';
+import type { FormatDistanceToNowOptions } from "date-fns";
+
+
 
 interface TaskComponentProps {
     task: Task;
@@ -12,6 +16,12 @@ interface TaskComponentProps {
 
 const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskComponentProps) => {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.id, });
+    const relativeTime = formatDistanceToNowStrict(
+        task.createdAt || new Date(),
+        {   addSuffix: true,
+            includeSeconds: true,
+        } as FormatDistanceToNowOptions
+      )
 
     const style = {
         transition,
@@ -47,6 +57,8 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
                 <p id={`text-${task.id}`}
                     className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
                     {task.text}
+                    <p className={styles.timeStamp}>{relativeTime}</p>
+
                 </p>
             </div>
         </li>

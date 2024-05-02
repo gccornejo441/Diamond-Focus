@@ -22,6 +22,18 @@ function App() {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
+    const savedBgImg = localStorage.getItem('bgImg');
+    
+    if (savedBgImg) {
+      document.body.style.backgroundImage = `url('${savedBgImg}')`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundRepeat = 'no-repeat';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundColor = 'linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.75) 100%)';
+      document.body.style.backdropFilter = 'blur(5px) brightness(0.8)';
+      setTimeout(() => setIsLoading(false), 100);
+    }
+    
     if (savedTheme) {
       document.body.setAttribute('data-theme', savedTheme);
       setTimeout(() => setIsLoading(false), 100);
@@ -45,7 +57,7 @@ function App() {
 
   const handleDeleteAll = (removeTask: boolean, massDelete: boolean) => {
     setIsMassDelete(massDelete)
-    debugger;
+  
     if (massDelete) {
       setOpenTask(true);
       if (removeTask) {

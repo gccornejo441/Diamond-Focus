@@ -53,9 +53,6 @@ li {
   transition: 0.2s;
 }
 
-.taskItem > input:hover {
-  border: red solid 1px;
-}
 
 .inputArea button {
   appearance: button;
@@ -233,11 +230,10 @@ li {
 }
 
 .taskText {
-  margin-left: 10px;
+  margin: 5px 10px 5px 10px;
   color: var(--panel-text);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-align: justify;
   padding: 0px 10px 0px 0px;
   white-space: nowrap;
@@ -252,4 +248,25 @@ li {
 
 .favoriteTask {
   border-left: 5px solid var(--alert);
+}
+
+.timeStampContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 5px;
+  
+  width: fit-content;
+  white-space: nowrap; 
+}
+
+.timeStamp {
+  font-size: 12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;  
+  font-weight: 500;
+  margin: 0px;
+  line-height: 13px;
+  color: var(--panel-text-faint);
 }

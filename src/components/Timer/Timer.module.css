@@ -28,6 +28,5 @@ a:hover {
 .timerFont {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--panel-text);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--text-color);
 }
