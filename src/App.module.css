@@ -46,7 +46,7 @@
   padding-top: 10px;
 }
 
-.innerContainer {
+[data-theme="default"] .innerContainer {
   margin: 0px auto;
   border-radius: 6px;
   border: 1px solid #ffffff4a;
