@@ -5,6 +5,8 @@ import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
 import { ReactComponent as SettingButton } from './components/assets/settingButton.svg';
 import styles from './App.module.css';
 import Sidebar from './components/Sidebar/Sidebar';
+import { Foo } from './components/Modal/FooModal';
+import { ApplyBodyStyles } from './utils';
 
 function App() {
   const [openTask, setOpenTask] = useState(false);
@@ -21,27 +23,11 @@ function App() {
   });
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const savedBgImg = localStorage.getItem('bgImg');
-    
-    if (savedBgImg) {
-      document.body.style.backgroundImage = `url('${savedBgImg}')`;
-      document.body.style.backgroundSize = 'cover';
-      document.body.style.backgroundRepeat = 'no-repeat';
-      document.body.style.backgroundPosition = 'center';
-      document.body.style.backgroundColor = 'linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.75) 100%)';
-      document.body.style.backdropFilter = 'blur(5px) brightness(0.8)';
-      setTimeout(() => setIsLoading(false), 100);
-    }
-    
-    if (savedTheme) {
-      document.body.setAttribute('data-theme', savedTheme);
-      setTimeout(() => setIsLoading(false), 100);
-    } else {
-      setIsLoading(false);
-    }
+    const savedTheme = localStorage.getItem('theme') || 'default';
+    const savedBgImg = localStorage.getItem('bgImg') || '';
+    ApplyBodyStyles(savedBgImg, savedTheme);
+    setTimeout(() => setIsLoading(false), 100);
   }, []);
-
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -57,7 +43,7 @@ function App() {
 
   const handleDeleteAll = (removeTask: boolean, massDelete: boolean) => {
     setIsMassDelete(massDelete)
-  
+
     if (massDelete) {
       setOpenTask(true);
       if (removeTask) {
@@ -79,28 +65,32 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <div className={styles.settingButtonPanel}>
-        <div className={styles.settingHeaderContainer}>
-          <h1>
-            <a href="/" className={styles.title}>
-              <GemIcon aria-label="Gem Icon" className={styles.icon} />
-            </a>
-          </h1>
-          <button onClick={() => setModalOpen(true)} className="controlButton">
-            <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
-          </button>
+      <div className={styles.container}></div>
+        <div className={styles.innerContainer}>
+          <div className={styles.settingButtonPanel}>
+            <div className={styles.settingHeaderContainer}>
+              <h1>
+                <a href="/" className={styles.title}>
+                  <GemIcon aria-label="Gem Icon" className={styles.icon} />
+                </a>
+              </h1>
+              <button onClick={() => setModalOpen(true)} className="controlButton">
+                <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
+              </button>
+            </div>
+          </div>
+          <div className={styles.bodyContainer}>
+            <div className={styles.bodyInnerContainer}>
+              <Timer handleDeleteAll={handleDeleteAll} setIsAlertOn={setIsAlertOn} isAlertOn={isAlertOn} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+              <TaskPanel isMassDelete={isMassDelete} handleDeleteAll={handleDeleteAll} currentTask={currentTask} setCurrentTask={setCurrentTask} openTask={openTask} setOpenTask={setOpenTask} tasks={tasks} setTasks={setTasks} setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className={styles.bodyContainer}>
-        <div className={styles.bodyInnerContainer}>
-          <Timer handleDeleteAll={handleDeleteAll} setIsAlertOn={setIsAlertOn} isAlertOn={isAlertOn} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
-          <TaskPanel isMassDelete={isMassDelete} handleDeleteAll={handleDeleteAll} currentTask={currentTask} setCurrentTask={setCurrentTask} openTask={openTask} setOpenTask={setOpenTask} tasks={tasks} setTasks={setTasks} setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
-        </div>
-      </div>
       <Sidebar
         taskDescription={askedForTask}
         isOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar} />
+      {/* <Foo/> */}
     </div>
   );
 }

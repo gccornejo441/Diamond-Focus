@@ -3,7 +3,6 @@
   transition: background-color 0.5 ease-in-out 0s;
   min-height: 100vh;
   width: 100%;
-  padding-bottom: 12px;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top);
 }
@@ -41,4 +40,37 @@
 .icon {
   height: 30px;
   width: 30px;
+}
+
+.container {
+  padding-top: 10px;
+}
+
+.innerContainer {
+  margin: 0px auto;
+  border-radius: 6px;
+  border: 1px solid #ffffff4a;
+  background-color: inherit;
+  width: 100%;
+  max-width: 670px;
+  background-color: #ffffff4a;
+  transition: background-color 0.5 ease-in-out 0s;
+}
+
+[data-theme="dark"] .innerContainer {
+  background-color: transparent;
+  border: 0px;
+}
+
+@media screen and (max-width: 500px) {
+  .innerContainer {
+    max-width: 100%;
+    margin: 0px ;
+    border-radius: 0px;
+    border: 0px;
+  }
+  
+  .container {
+    padding: 0px;
+  }
 }

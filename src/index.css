@@ -342,7 +342,7 @@ code {
 
 [data-theme="default"] {
   --background-color: var(--b4);
-  --text-color: var(--b15);
+  --text-color: var(--b1);
 
   --button-background: var(--b3);
   --button-background-hover: var(--b5);
@@ -350,8 +350,8 @@ code {
   --button-text: var(--b5);
 
   --panel-background: var(--b3);
-  --panel-background-hover: var(--b25);
-  --panel-text: var(--b15);
+  --panel-background-hover: var(--b2);
+  --panel-text: var(--b5);
   --panel-text-faint: var(--b4);
   --panel-text-hover: var(--b2);
 
@@ -360,7 +360,7 @@ code {
 
 [data-theme="dark"] {
   --background-color: var(--grey-900);
-  --text-color: var(--blue-grey-700);
+  --text-color: var(--blue-grey-100);
 
   --button-background: var(--blue-grey-900);
   --button-background-hover: var(--blue-grey-500);
@@ -562,7 +562,6 @@ button {
   box-shadow: 0 0 0 1px var(--panel-background-hover);
   z-index: 9999;
 }
-
 
 .controlButton {
   appearance: button;

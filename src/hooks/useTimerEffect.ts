@@ -31,8 +31,9 @@ const useTimerEffect = ({
             }
             completeReset();
         }
+    
+    }, [isRunning, worker, count, isBreak, breakDuration, isAlertOn, completeReset, SciFiAlarm]);    
 
-    }, [isRunning, worker, count, isBreak, breakDuration, isAlertOn, completeReset, SciFiAlarm]);
 };
 
 export default useTimerEffect;

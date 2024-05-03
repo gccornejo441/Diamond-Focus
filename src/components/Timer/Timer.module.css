@@ -28,5 +28,8 @@ a:hover {
 .timerFont {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-color);
+  color: var(--panel-text);
+  border-radius: 5px;
+  padding: 0px 15px;
+  background-color: var(--panel-background);
 }

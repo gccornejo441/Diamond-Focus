@@ -77,28 +77,16 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
         const initialBreakDuration = parseInt(localStorage.getItem('breakDuration') || '300');
 
         if (isBreak) {
+            setIsBreak(false);
             setBreakDuration(initialBreakDuration);
             worker?.postMessage({ command: 'reset', seconds: initialBreakDuration });
         } else {
+            setIsBreak(true);
             setCount(initialCount);
             worker?.postMessage({ command: 'reset', seconds: initialCount });
         }
 
         setIsRunning(false)
-    };
-
-    const handleReset = () => {
-        const initialCount = parseInt(localStorage.getItem('count') || '1500');
-        setCount(initialCount);
-
-        const initialBreakDuration = parseInt(localStorage.getItem('breakDuration') || '300');
-        setBreakDuration(initialBreakDuration);
-
-        if (isBreak) {
-            worker?.postMessage({ command: 'reset', seconds: initialBreakDuration });
-        } else {
-            worker?.postMessage({ command: 'reset', seconds: initialCount });
-        }
     };
 
     const changeIsBreak = () => {
@@ -122,7 +110,7 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
                 isRunning={isRunning}
                 handlePlayPause={() => setIsRunning(!isRunning)}
                 changeIsBreak={changeIsBreak}
-                onReset={handleReset} />
+                onReset={completeReset} />
             {isModalOpen && (
                 <Setting
                     isAlertOn={isAlertOn}

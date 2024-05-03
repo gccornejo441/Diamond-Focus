@@ -3,6 +3,7 @@ import styles from './Setting.module.css';
 import { ReactComponent as CancelButton } from '../assets/cancelButton.svg';
 import SettingUpload from './SettingUpload';
 import ThemeSelector from './ThemeSelector';
+import { ApplyBodyStyles } from '../../utils';
 
 interface SettingPanelProps {
     onClose: () => void;
@@ -13,46 +14,6 @@ interface SettingPanelProps {
     isAlertOn: boolean;
     setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-const applyBodyStyles = (bgImg: string, theme: string) => {
-    const existingOverlay = document.getElementById('background-overlay');
-
-    if (bgImg) {
-        if (!existingOverlay) {
-            const overlay = document.createElement('div');
-            overlay.id = 'background-overlay';
-            overlay.style.position = 'fixed';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-            overlay.style.zIndex = '-1'; 
-            document.body.appendChild(overlay);
-        }
-
-        document.body.style.backgroundImage = `url('${bgImg}')`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundRepeat = 'no-repeat';
-        document.body.style.backgroundPosition = 'center';
-        document.body.style.backdropFilter = 'brightness(0.8)';
-
-        if (existingOverlay) {
-            existingOverlay.style.display = 'block';
-        }
-    } else {
-        document.body.style.background = '';
-        if (existingOverlay) {
-            existingOverlay.style.display = 'none';
-        }
-    }
-
-    if (theme) {
-        document.body.setAttribute('data-theme', theme);
-    } else {
-        document.body.removeAttribute('data-theme');
-    }
-};
 
 const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn }: SettingPanelProps) => {
     const [tempCount, setTempCount] = useState<number>(0);
@@ -93,7 +54,7 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
         setIsAlertOn(newIsAlertOn);
         localStorage.setItem('isAlertOn', String(newIsAlertOn));
 
-        applyBodyStyles(newBgImg, newTheme);
+        ApplyBodyStyles(newBgImg, newTheme);
 
         if (newBgImg) {
             localStorage.setItem('bgImg', newBgImg);
