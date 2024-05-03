@@ -13,17 +13,21 @@ interface SettingPanelProps {
     setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
     isAlertOn: boolean;
     setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
+    isAutoSwitchOn: boolean;
+    setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn }: SettingPanelProps) => {
+const Setting = ({ 
+    onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn, isAutoSwitchOn, setAutoSwitchOn }: SettingPanelProps) => {
     const [tempCount, setTempCount] = useState<number>(0);
     const [tempBreak, setTempBreak] = useState<number>(0);
     const [alertName, setAlertName] = useState<string>('');
     const [bgImg, setBgImg] = useState<string>('');
-    const [theme, setTheme] = useState('default');  // Default theme
+    const [theme, setTheme] = useState('default'); 
 
     useEffect(() => {
         setIsAlertOn(localStorage.getItem('isAlertOn') === 'true' ? true : false);
+        setAutoSwitchOn(localStorage.getItem('isAutoSwitchOn') === 'true' ? true : false);
         setTempCount(Math.floor(parseInt(localStorage.getItem('count') || String(count)) / 60));
         setTempBreak(Math.floor(parseInt(localStorage.getItem('breakDuration') || String(breakDuration)) / 60));
         const savedBgImg = localStorage.getItem('bgImg') || '';
@@ -38,21 +42,26 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
         const formData = new FormData(e.currentTarget);
         const newCount = formData.get('count') as string;
         const newBreakDuration = formData.get('break') as string;
-        const newIsAlertOn = formData.has('isAlertOn');
         const newTheme = formData.get('theme') as string;
         const newBgImg = formData.get('bgImg') as string;
+        
+        const newIsAlertOn = formData.has('isAlertOn');
+        const newAutoSwitchOn = formData.has('isAutoSwitchOn');
 
         if (newCount && newBreakDuration) {
             const countInSeconds = parseInt(newCount) * 60;
             const breakInSeconds = parseInt(newBreakDuration) * 60;
             setCount(countInSeconds);
             setBreakDuration(breakInSeconds);
+
             localStorage.setItem('count', countInSeconds.toString());
             localStorage.setItem('breakDuration', breakInSeconds.toString());
         }
 
         setIsAlertOn(newIsAlertOn);
         localStorage.setItem('isAlertOn', String(newIsAlertOn));
+        setAutoSwitchOn(newAutoSwitchOn);
+        localStorage.setItem('isAutoSwitchOn', String(newAutoSwitchOn));
 
         ApplyBodyStyles(newBgImg, newTheme);
 
@@ -80,12 +89,15 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
         const defaultCount = 1500;
         const defaultBreak = 300;
         const defaultAlert = true;
+        const defaultAutoSwitch = true;
         const defaultTheme = 'default';
+        const defaultBgImg = '';
 
         setCount(defaultCount);
         setBreakDuration(defaultBreak);
         setIsAlertOn(defaultAlert);
-        setBgImg('');
+        setAutoSwitchOn(defaultAutoSwitch);
+        setBgImg(defaultBgImg);
         document.body.style.backgroundImage = '';
         document.body.setAttribute('data-theme', defaultTheme);
 
@@ -93,6 +105,7 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
         localStorage.setItem('breakDuration', (defaultBreak).toString());
         localStorage.setItem('isAlertOn', String(defaultAlert));
         localStorage.setItem('theme', defaultTheme);
+        localStorage.setItem('isAutoSwitchOn', String(defaultAutoSwitch));
         localStorage.removeItem('bgImg');
         onClose();
     };
@@ -156,6 +169,17 @@ const Setting = ({ onClose, count, setCount, breakDuration, setBreakDuration, is
                                                 type="checkbox"
                                                 name="isAlertOn"
                                                 checked={isAlertOn}
+                                                className={styles.linearToggle}
+                                            />
+                                        </div>
+                                        <label htmlFor="timerAutoSwitch" className={styles.settingCardItemTitle}>Timer Auto Switch</label>
+                                        <div className={styles.checkboxWrapper2}>
+                                            <input
+                                                id="timerAutoSwitch"
+                                                onChange={e => setAutoSwitchOn(e.target.checked)}
+                                                type="checkbox"
+                                                name="isAutoSwitchOn"
+                                                checked={isAutoSwitchOn}
                                                 className={styles.linearToggle}
                                             />
                                         </div>

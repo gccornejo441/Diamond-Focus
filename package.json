@@ -2,7 +2,7 @@
   "name": "diamond-focus",
   "description": "A timer for diamond focus built building stronger brains under pressure.",
   "author": "Gabe Cornejo",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "private": false,
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",

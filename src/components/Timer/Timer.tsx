@@ -26,9 +26,11 @@ interface TimerProps {
     isAlertOn: boolean;
     setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
     handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
+    isAutoSwitchOn: boolean;
+    setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDeleteAll }: TimerProps) => {
+const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDeleteAll, isAutoSwitchOn, setAutoSwitchOn }: TimerProps) => {
     const [count, setCount] = useState(parseInt(localStorage.getItem('count') || '1500'));
     const [breakDuration, setBreakDuration] = useState(parseInt(localStorage.getItem('breakDuration') || '300'));
     const [isRunning, setIsRunning] = useState(false);
@@ -77,15 +79,14 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
         const initialBreakDuration = parseInt(localStorage.getItem('breakDuration') || '300');
 
         if (isBreak) {
-            setIsBreak(false);
+            if (isAutoSwitchOn) setIsBreak(false);
             setBreakDuration(initialBreakDuration);
             worker?.postMessage({ command: 'reset', seconds: initialBreakDuration });
         } else {
-            setIsBreak(true);
+            if (isAutoSwitchOn) setIsBreak(true);
             setCount(initialCount);
             worker?.postMessage({ command: 'reset', seconds: initialCount });
         }
-
         setIsRunning(false)
     };
 
@@ -113,6 +114,8 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
                 onReset={completeReset} />
             {isModalOpen && (
                 <Setting
+                    isAutoSwitchOn={isAutoSwitchOn}
+                    setAutoSwitchOn={setAutoSwitchOn}
                     isAlertOn={isAlertOn}
                     setIsAlertOn={setIsAlertOn}
                     setBreakDuration={setBreakDuration}

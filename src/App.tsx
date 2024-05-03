@@ -5,7 +5,6 @@ import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
 import { ReactComponent as SettingButton } from './components/assets/settingButton.svg';
 import styles from './App.module.css';
 import Sidebar from './components/Sidebar/Sidebar';
-import { Foo } from './components/Modal/FooModal';
 import { ApplyBodyStyles } from './utils';
 
 function App() {
@@ -15,6 +14,7 @@ function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [askedForTask, setAskedForTask] = useState<string>("");
   const [isAlertOn, setIsAlertOn] = useState<boolean>(true);
+  const [isAutoSwitchOn, setAutoSwitchOn] = useState<boolean>(true);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
   const [isMassDelete, setIsMassDelete] = useState<boolean>(false);
   const [tasks, setTasks] = useState<Task[]>(() => {
@@ -81,7 +81,7 @@ function App() {
           </div>
           <div className={styles.bodyContainer}>
             <div className={styles.bodyInnerContainer}>
-              <Timer handleDeleteAll={handleDeleteAll} setIsAlertOn={setIsAlertOn} isAlertOn={isAlertOn} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+              <Timer isAutoSwitchOn={isAutoSwitchOn} setAutoSwitchOn={setAutoSwitchOn} handleDeleteAll={handleDeleteAll} setIsAlertOn={setIsAlertOn} isAlertOn={isAlertOn} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
               <TaskPanel isMassDelete={isMassDelete} handleDeleteAll={handleDeleteAll} currentTask={currentTask} setCurrentTask={setCurrentTask} openTask={openTask} setOpenTask={setOpenTask} tasks={tasks} setTasks={setTasks} setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
             </div>
           </div>
