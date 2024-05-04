@@ -26,11 +26,6 @@ ul {
   padding: 0;
 }
 
-li {
-  padding: 10px;
-  margin-bottom: 5px;
-}
-
 .taskItem {
   background-color: var(--panel-background);
   display: flex;
@@ -44,6 +39,7 @@ li {
   outline: none;
   max-height: 170px;
   touch-action: manipulation;
+  margin-bottom: 10px;
 }
 
 .taskItem:hover {
@@ -52,7 +48,6 @@ li {
   color: var(--panel-text-hover);
   transition: 0.2s;
 }
-
 
 .inputArea button {
   appearance: button;

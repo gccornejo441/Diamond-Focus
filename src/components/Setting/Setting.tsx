@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Setting.module.css';
-import { ReactComponent as CancelButton } from '../assets/cancelButton.svg';
+import { ReactComponent as CancelButton } from '../assets/cancelIcon.svg';
 import SettingUpload from './SettingUpload';
 import ThemeSelector from './ThemeSelector';
 import { ApplyBodyStyles } from '../../utils';
@@ -17,13 +17,13 @@ interface SettingPanelProps {
     setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Setting = ({ 
+const Setting = ({
     onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn, isAutoSwitchOn, setAutoSwitchOn }: SettingPanelProps) => {
     const [tempCount, setTempCount] = useState<number>(0);
     const [tempBreak, setTempBreak] = useState<number>(0);
     const [alertName, setAlertName] = useState<string>('');
     const [bgImg, setBgImg] = useState<string>('');
-    const [theme, setTheme] = useState('default'); 
+    const [theme, setTheme] = useState('default');
 
     useEffect(() => {
         setIsAlertOn(localStorage.getItem('isAlertOn') === 'true' ? true : false);
@@ -44,7 +44,7 @@ const Setting = ({
         const newBreakDuration = formData.get('break') as string;
         const newTheme = formData.get('theme') as string;
         const newBgImg = formData.get('bgImg') as string;
-        
+
         const newIsAlertOn = formData.has('isAlertOn');
         const newAutoSwitchOn = formData.has('isAutoSwitchOn');
 
@@ -70,7 +70,7 @@ const Setting = ({
         } else {
             localStorage.removeItem('bgImg');
         }
-    
+
         if (newTheme) {
             localStorage.setItem('theme', newTheme);
         } else {
@@ -185,11 +185,8 @@ const Setting = ({
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.settingCardItem}>
-                                    <div className={styles.settingCardItemTitle}>Theme</div>
-                                    <ThemeSelector selectedTheme={theme} onChangeTheme={handleThemeChange} />
-                                </div>
-                                <SettingUpload setBgImg={setBgImg} />
+                                <ThemeSelector selectedTheme={theme} onChangeTheme={handleThemeChange} />
+                                <SettingUpload bgImg={bgImg} setBgImg={setBgImg} />
                                 <div className={styles.settingCardCommitBtn}>
                                     <button type="submit" className={styles.settingButton}>Save</button>
                                     <button type="button" onClick={resetSettings} className={styles.settingButton}>Reset</button>

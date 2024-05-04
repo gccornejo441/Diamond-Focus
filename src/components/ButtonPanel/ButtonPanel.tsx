@@ -1,8 +1,8 @@
 import buttonStyles from './ButtonPanel.module.css';
 
-import { ReactComponent as PlayButton } from '../assets/playButton.svg';
-import { ReactComponent as PauseButton } from '../assets/pauseButton.svg';
-import { ReactComponent as ResetButton } from '../assets/resetButton.svg';
+import { ReactComponent as PlayButton } from '../assets/playIcon.svg';
+import { ReactComponent as PauseButton } from '../assets/pauseIcon.svg';
+import { ReactComponent as ResetButton } from '../assets/resetIcon.svg';
 import { ReactComponent as CouchButton } from '../assets/couchIcon.svg';
 import { ReactComponent as TimerButton } from '../assets/timerIcon.svg';
 import { ReactComponent as DeleteButton } from '../assets/deleteIcon.svg';

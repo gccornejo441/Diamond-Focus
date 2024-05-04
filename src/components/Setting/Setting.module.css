@@ -1,8 +1,7 @@
 .cardIllustration {
-  padding: 0.1rem;
-  background-color: #fff;
+  padding: 0.3rem;
   border-radius: 8px;
-  background-color: rgba(25, 25, 29, 0.95);
+  background-color: rgba(255, 255, 255, 0.95);
 }
 
 .colorPalette {
@@ -15,9 +14,7 @@
 }
 
 .colorPalette li {
-  color: transparent;
-  margin: 0.1rem;
-  border-radius: 50%;
+  border-radius: 100%;
   width: 40px;
   height: 40px;
   display: flex;
@@ -117,6 +114,12 @@
   margin: auto;
   display: block;
 }
+[data-theme="high-contrast"] .cardTitle, 
+[data-theme="high-contrast"] .settingCardItemTitle,
+[data-theme="dark"] .cardTitle,
+[data-theme="dark"] .settingCardItemTitle {
+  color: var(--button-background);
+}
 
 .cardTitle {
   margin-bottom: 1em;
@@ -142,7 +145,6 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;  
-
 }
 
 .settingCardItemTitle {
@@ -186,6 +188,7 @@
 .settingCardCommitBtn {
   display: flex;
   justify-content: space-between;
+  margin: 10px 0px;
 }
 
 .checkboxWrapper2 .linearToggle {
@@ -262,6 +265,7 @@ input[type="number"], .settingSelect  {
   box-sizing: border-box;
   font-size: 16px;
   appearance: none;
+  color: var(--text-color);
   background-color: #fff;
 }
 
@@ -287,6 +291,7 @@ input[type="number"], .settingSelect  {
   resize: none;
   width: 100%;
   color: var(--text-color);
+  margin-right: 5px;
 }
 
 .inputWrapper {
@@ -299,7 +304,13 @@ input[type="number"], .settingSelect  {
   font-size: 14px;
   height: 28px;
   line-height: 20px;
-  padding: 3px 6px;
-  position: relative;
   width: 100%;
+}
+
+.colorLabel {
+  display: flex;
+}
+
+.colorItem {
+  padding: 5px;
 }

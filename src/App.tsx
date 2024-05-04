@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import TaskPanel, { Task } from './components/TaskPanel/TaskPanel';
 import Timer from './components/Timer/Timer';
 import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
-import { ReactComponent as SettingButton } from './components/assets/settingButton.svg';
+import { ReactComponent as SettingButton } from './components/assets/settingIcon.svg';
 import styles from './App.module.css';
 import Sidebar from './components/Sidebar/Sidebar';
 import { ApplyBodyStyles } from './utils';

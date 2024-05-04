@@ -546,6 +546,41 @@ code {
   --alert: var(--brown-700);
 }
 
+[data-theme="grey-theme"] {
+  --background-color: var(--grey-100);
+  --text-color: var(--grey-900);
+
+  --button-background: var(--grey-500);
+  --button-background-hover: var(--grey-700);
+  --button-text: var(--grey-50);
+
+  --panel-background: var(--grey-300);
+  --panel-background-hover: var(--grey-400);
+  --panel-text: var(--grey-900);
+  --panel-text-faint: var(--grey-600);
+  --panel-text-hover: var(--grey-50);
+
+  --alert: var(--grey-700);
+}
+
+[data-theme="high-contrast"] {
+  --background-color: #000000; 
+  --text-color: #FFFFFF;       
+
+  --button-background: #1A73E8;     
+  --button-background-hover: #1669C2; 
+  --button-text: #FFFFFF;             
+
+  --panel-background: #333333;        
+  --panel-background-hover: #474747;   
+  --panel-text: #FFFFFF; 
+  --panel-text-faint: #BBBBBB;     
+  --panel-text-hover: #000000;         
+
+  --alert: #FF0000;
+}
+  
+
 button {
   background-color: var(--button-background);
   color: var(--button-text);
@@ -560,6 +595,12 @@ button {
   color: var(--panel-text);
   border: 1px solid var(--panel-background-hover);
   box-shadow: 0 0 0 1px var(--panel-background-hover);
+  z-index: 9999;
+}
+
+.themeTooltipStyles {
+  background-color: var(--black);
+  color: var(--white);
   z-index: 9999;
 }
 
