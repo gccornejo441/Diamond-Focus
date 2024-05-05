@@ -66,31 +66,30 @@ function App() {
   return (
     <div className={styles.App}>
       <div className={styles.container}></div>
-        <div className={styles.innerContainer}>
-          <div className={styles.settingButtonPanel}>
-            <div className={styles.settingHeaderContainer}>
-              <h1>
-                <a href="/" className={styles.title}>
-                  <GemIcon aria-label="Gem Icon" className={styles.icon} />
-                </a>
-              </h1>
-              <button onClick={() => setModalOpen(true)} className="controlButton">
-                <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
-              </button>
-            </div>
-          </div>
-          <div className={styles.bodyContainer}>
-            <div className={styles.bodyInnerContainer}>
-              <Timer isAutoSwitchOn={isAutoSwitchOn} setAutoSwitchOn={setAutoSwitchOn} handleDeleteAll={handleDeleteAll} setIsAlertOn={setIsAlertOn} isAlertOn={isAlertOn} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
-              <TaskPanel isMassDelete={isMassDelete} handleDeleteAll={handleDeleteAll} currentTask={currentTask} setCurrentTask={setCurrentTask} openTask={openTask} setOpenTask={setOpenTask} tasks={tasks} setTasks={setTasks} setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
-            </div>
+      <div className={styles.innerContainer}>
+        <div className={styles.settingButtonPanel}>
+          <div className={styles.settingHeaderContainer}>
+            <h1>
+              <a href="/" className={styles.title}>
+                <GemIcon aria-label="Gem Icon" className={styles.icon} />
+              </a>
+            </h1>
+            <button onClick={() => setModalOpen(true)} className="controlButton">
+              <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
+            </button>
           </div>
         </div>
+        <div className={styles.bodyContainer}>
+          <div className={styles.bodyInnerContainer}>
+            <Timer isAutoSwitchOn={isAutoSwitchOn} setAutoSwitchOn={setAutoSwitchOn} handleDeleteAll={handleDeleteAll} setIsAlertOn={setIsAlertOn} isAlertOn={isAlertOn} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
+            <TaskPanel isMassDelete={isMassDelete} handleDeleteAll={handleDeleteAll} currentTask={currentTask} setCurrentTask={setCurrentTask} openTask={openTask} setOpenTask={setOpenTask} tasks={tasks} setTasks={setTasks} setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
+          </div>
+        </div>
+      </div>
       <Sidebar
         taskDescription={askedForTask}
         isOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar} />
-      {/* <Foo/> */}
     </div>
   );
 }

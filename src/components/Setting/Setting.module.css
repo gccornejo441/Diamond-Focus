@@ -1,7 +1,7 @@
 .cardIllustration {
   padding: 0.3rem;
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(24, 24, 24, 0.95);
 }
 
 .colorPalette {
@@ -114,6 +114,7 @@
   margin: auto;
   display: block;
 }
+
 [data-theme="high-contrast"] .cardTitle, 
 [data-theme="high-contrast"] .settingCardItemTitle,
 [data-theme="dark"] .cardTitle,
@@ -254,7 +255,6 @@
   background-color: var(--button-background-hover);
 }
 
-
 input[type="number"], .settingSelect  {
   width: 100%;
   padding: 8px;
@@ -273,6 +273,10 @@ input[type="number"], .settingSelect  {
   outline: none;
   border-color: var(--button-background);
   box-shadow: 0 0 0 3px var(--button-background);
+}
+
+[data-theme="dark"] input[type="number"], .settingSelect {
+  color: var(--button-background);
 }
 
 .icon {

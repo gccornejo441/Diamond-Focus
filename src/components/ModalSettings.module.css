@@ -1,0 +1,277 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Darker overlay for better focus on the modal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 786px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  overflow: hidden; 
+}
+
+.sidebar {
+  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menuItem, .activeMenuItem {
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.activeMenuItem {
+  background-color: #aaaaaa;
+  color: white;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    flex-basis: 30%;
+  }
+
+  .content {
+    flex-basis: 70%;
+  }
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.875rem; /* 14px */
+  font-weight: medium;
+  opacity: 0.7;
+}
+
+.descriptionText {
+  font-size: 0.75rem; /* 12px */
+  color: #666;
+}
+
+.flexItemCenter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accentColorListWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.colorButtonWrap {
+  display: inline-flex;
+}
+
+.uiButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.uiButton:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.colorIndicator {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+
+.timerSettings {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.timerSetting {
+  margin-bottom: 10px;
+}
+
+.timerInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+.toggleInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleLabel {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.toggleLabel:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.toggleInput:checked + .toggleLabel {
+  background-color: #2196F3;
+}
+
+.toggleInput:checked + .toggleLabel:before {
+  transform: translateX(14px);
+}
+
+.toggleInput:focus + .toggleLabel {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  box-sizing: border-box;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+.settingItem {
+  margin-top: 20px;
+}
+
+.toggleInput {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.selectInput {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.selectInput:disabled {
+  background-color: #f3f3f3;
+  cursor: not-allowed;
+}
