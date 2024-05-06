@@ -176,10 +176,10 @@ const Setting = ({
                                         <div className={styles.checkboxWrapper2}>
                                             <input
                                                 id="timerAutoSwitch"
-                                                onChange={e => setAutoSwitchOn(e.target.checked)}
                                                 type="checkbox"
                                                 name="isAutoSwitchOn"
                                                 checked={isAutoSwitchOn}
+                                                onChange={e => setAutoSwitchOn(e.target.checked)}
                                                 className={styles.linearToggle}
                                             />
                                         </div>

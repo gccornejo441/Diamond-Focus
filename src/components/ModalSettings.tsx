@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ModalSettings.module.css';
 import SettingUpload from './Setting/SettingUpload';
+import { ApplyBodyStyles } from '../utils';
+import ThemeSelector from './Setting/ThemeSelector';
 export const SettingIcon = ({ cls = styles.settingsIcon }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -26,16 +28,121 @@ export const SettingIcon = ({ cls = styles.settingsIcon }) => (
   </svg>
 );
 
-const ModalSettings = () => {
-  const [focusTime, setFocusTime] = useState(25);
-  const [breakTime, setBreakTime] = useState(5);
-  const [autoSwitch, setAutoSwitch] = useState(true);
-  const [backgroundImage, setBackgroundImage] = useState('');
-  const [alarmEnabled, setAlarmEnabled] = useState(false);
-  const [alarmSound, setAlarmSound] = useState('SciFi Alert');
+
+interface SettingPanelProps {
+  onClose: () => void;
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+  breakDuration: number;
+  setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
+  isAlertOn: boolean;
+  setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
+  isAutoSwitchOn: boolean;
+  setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ModalSettings = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn, isAutoSwitchOn, setAutoSwitchOn }: SettingPanelProps) => {
+  const [tempCount, setTempCount] = useState<number>(0);
+  const [tempBreak, setTempBreak] = useState<number>(0);
+  const [alertName, setAlertName] = useState<string>('');
+  const [bgImg, setBgImg] = useState<string>('');
+  const [theme, setTheme] = useState('default');
+  
+
+  useEffect(() => {
+    setIsAlertOn(localStorage.getItem('isAlertOn') === 'true' ? true : false);
+    setAutoSwitchOn(localStorage.getItem('isAutoSwitchOn') === 'true' ? true : false);
+    setTempCount(Math.floor(parseInt(localStorage.getItem('count') || String(count)) / 60));
+    setTempBreak(Math.floor(parseInt(localStorage.getItem('breakDuration') || String(breakDuration)) / 60));
+    const savedBgImg = localStorage.getItem('bgImg') || '';
+    setBgImg(savedBgImg);
+    if (savedBgImg) {
+      document.body.style.backgroundImage = `url('${savedBgImg}')`;
+    }
+  }, [count, breakDuration]);
+
+  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const newCount = formData.get('focusTimer') as string;
+    const newBreakDuration = formData.get('breakTimer') as string;
+    const newTheme = formData.get('theme') as string;
+    const newBgImg = formData.get('bgImg') as string;
+
+    const newIsAlertOn = formData.has('alarmSound');
+    const newAutoSwitchOn = formData.has('alarmToggle');
+
+    if (newCount && newBreakDuration) {
+      const countInSeconds = parseInt(newCount) * 60;
+      const breakInSeconds = parseInt(newBreakDuration) * 60;
+      setCount(countInSeconds);
+      setBreakDuration(breakInSeconds);
+
+      localStorage.setItem('count', countInSeconds.toString());
+      localStorage.setItem('breakDuration', breakInSeconds.toString());
+    }
+
+    setIsAlertOn(newIsAlertOn);
+    localStorage.setItem('isAlertOn', String(newIsAlertOn));
+    setAutoSwitchOn(newAutoSwitchOn);
+    localStorage.setItem('isAutoSwitchOn', String(newAutoSwitchOn));
+
+    ApplyBodyStyles(newBgImg, newTheme);
+
+    if (newBgImg) {
+      localStorage.setItem('bgImg', newBgImg);
+    } else {
+      localStorage.removeItem('bgImg');
+    }
+
+    if (newTheme) {
+      localStorage.setItem('theme', newTheme);
+    } else {
+      localStorage.removeItem('theme');
+    }
+
+    onClose();
+  };
+
+  const handleThemeChange = (themeName: string) => {
+    setTheme(themeName);
+  }
+
+  const handleReset = () => {
+    const defaultCount = 1500;
+    const defaultBreak = 300;
+    const defaultAlert = true;
+    const defaultAutoSwitch = true;
+    const defaultTheme = 'default';
+    const defaultBgImg = '';
+
+    setCount(defaultCount);
+    setBreakDuration(defaultBreak);
+    setIsAlertOn(defaultAlert);
+    setAutoSwitchOn(defaultAutoSwitch);
+    setBgImg(defaultBgImg);
+    document.body.style.backgroundImage = '';
+    document.body.setAttribute('data-theme', defaultTheme);
+
+    localStorage.setItem('count', (defaultCount).toString());
+    localStorage.setItem('breakDuration', (defaultBreak).toString());
+    localStorage.setItem('isAlertOn', String(defaultAlert));
+    localStorage.setItem('theme', defaultTheme);
+    localStorage.setItem('isAutoSwitchOn', String(defaultAutoSwitch));
+    localStorage.removeItem('bgImg');
+    onClose();
+  };
+
+  const clearWebImageUrl = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setBgImg('');
+  }
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
+        <form method="post" onSubmit={handleSave}>
         <a className={styles.modalClose} aria-label="Close">
           {/* SVG Close Icon */}
           <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" className={styles.icon}>
@@ -49,100 +156,124 @@ const ModalSettings = () => {
           <ul className={styles.menu}>
             <li className={styles.activeMenuItem}>
               <a className={styles.menuLink}>
-                <SettingIcon />
-                <strong>General</strong>
+                <span className={styles.menuIcon}><SettingIcon /></span>
+                <strong className={styles.menuText}>General</strong>
               </a>
             </li>
           </ul>
         </aside>
 
-        <div className={styles.content}>
-          <h2>General Settings</h2>
-          <div className={styles.timerSettings}>
-            <div className={styles.timerSetting}>
-              <label htmlFor="focusTimer">Focus Time (minutes):</label>
-              <input
-                type="number"
-                id="focusTimer"
-                value={focusTime}
-                onChange={e => setFocusTime(Number(e.target.value))}
-                className={styles.timerInput}
-              />
-            </div>
-            <div className={styles.timerSetting}>
-              <label htmlFor="breakTimer">Break Time (minutes):</label>
-              <input
-                type="number"
-                id="breakTimer"
-                value={breakTime}
-                onChange={e => setBreakTime(Number(e.target.value))}
-                className={styles.timerInput}
-              />
-            </div>
-          </div>
-          <SettingUpload setBgImg={setBackgroundImage} bgImg={backgroundImage} />
-          <div className={styles.timerSetting}>
-            <label htmlFor="autoSwitch">Auto-Switch on Completion:</label>
-            <div className={styles.toggleSwitch}>
-              <input
-                type="checkbox"
-                id="autoSwitch"
-                checked={autoSwitch}
-                onChange={() => setAutoSwitch(!autoSwitch)}
-                className={styles.toggleInput}
-              />
-              <label htmlFor="autoSwitch" className={styles.toggleLabel}></label>
-            </div>
-          </div>
-
-          <div className={styles.timerSetting}>
-          <label htmlFor="alarmToggle">Enable Alarm:</label>
-            <div className={styles.toggleSwitch}>
-              <input
-                type="checkbox"
-                id="alarmToggle"
-                checked={alarmEnabled}
-                onChange={() => setAlarmEnabled(!alarmEnabled)}
-                className={styles.toggleInput}
-              />
-              <label htmlFor="alarmToggle" className={styles.toggleLabel}></label>
-            </div>
-          </div>
-          <div className={styles.settingItem}>
-            <label htmlFor="alarmSound">Alarm Sound:</label>
-            <select
-              id="alarmSound"
-              value={alarmSound}
-              onChange={e => setAlarmSound(e.target.value)}
-              className={styles.selectInput}
-              disabled={!alarmEnabled}
-            >
-              <option value="SciFi Alert">SciFi Alert</option>
-            </select>
-          </div>
-        <div className={styles.gridContainer}>
-          <div className={styles.flexColumn}>
-            <label className={styles.label} htmlFor="toggle_radix_theme">
-              Accent color
-            </label>
-            <div className={styles.descriptionText}>
-              Choosing an accent color may override any theme you have selected.
-            </div>
-          </div>
-          <div className={styles.flexItemCenter}>
-            <div className={styles.accentColorListWrap}>
-              
-              <div className={styles.colorButtonWrap}>
-                <button className={styles.uiButton} style={{ backgroundColor: "red" }}>
-                  <strong className={styles.colorIndicator} style={{ backgroundColor: "red" }}></strong>
-                </button>
+          <div className={styles.content}>
+            <h2>General Settings</h2>
+            <div className={styles.timerSettings}>
+              <div className={styles.timerSetting}>
+                <label htmlFor="focusTimer">Focus Time (minutes):</label>
+                <input
+                  type="number"
+                  id="focusTimer"
+                  name='focusTimer'
+                  min="1"
+                  max="60"
+                  step="1"
+                  value={tempCount}
+                  onChange={e => setTempCount(Math.max(1, Math.min(60, parseInt(e.target.value))))}
+                  className={styles.timerInput}
+                />
               </div>
 
+              <div className={styles.timerSetting}>
+                <label htmlFor="breakTimer">Break Time (minutes):</label>
+                <input
+                  type="number"
+                  id="breakTimer"
+                  name='breakTimer'
+                  min="1"
+                  max="60"
+                  step="1"
+                  value={tempBreak}
+                  className={styles.timerInput}
+                  onChange={e => setTempBreak(Math.max(1, Math.min(60, parseInt(e.target.value))))}
+                />
+              </div>
+
+              <div className={styles.timerSetting}>
+                <label htmlFor="autoSwitch">Auto Switch:</label>
+                <div className={styles.toggleSwitch}>
+                  <input
+                    type="checkbox"
+                    id="autoSwitch"
+                    name='autoSwitch'
+                    checked={isAutoSwitchOn}
+                    onChange={e => setAutoSwitchOn(e.target.checked)}
+                    className={styles.toggleInput}
+                  />
+                  <label htmlFor="autoSwitch" className={styles.toggleLabel}></label>
+                </div>
+              </div>
+
+              <div className={styles.timerSetting}>
+                <label htmlFor="alarmToggle">Enable Alarm:</label>
+                <div className={styles.toggleSwitch}>
+                  <input
+                    type="checkbox"
+                    id="alarmToggle"
+                    name='alarmToggle'
+                    checked={isAlertOn}
+                    onChange={e => setIsAlertOn(e.target.checked)}
+                    className={styles.toggleInput}
+                  />
+                  <label htmlFor="alarmToggle" className={styles.toggleLabel}></label>
+                </div>
+              </div>
+
+              <div className={styles.timerSetting}>
+                <label htmlFor="alarmSound">Alarm Sound:</label>
+                <select
+                  id="alarmSound"
+                  value={alertName}
+                  name='alarmSound'
+                  onChange={e => setAlertName(e.target.value)}
+                  className={styles.textInput}
+                  disabled={!isAlertOn}
+                >
+                  <option value="SciFi Alert">SciFi Alert</option>
+                </select>
+              </div>
+
+              <div className={styles.timerSetting}>
+                <label htmlFor="alarmSound">Alarm Sound:</label>
+                <div className={styles.inputWithClear}>
+                  <input
+                    type="url"
+                    value={bgImg}
+                    name='bgImg'
+                    onChange={(e) => setBgImg(e.target.value)}
+                    className={styles.textInput}
+                    placeholder="Enter image URL"
+                  />
+                  {bgImg && (
+                    <button onClick={clearWebImageUrl} className={styles.clearButton} aria-label="Clear image URL">
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </div>
+
+
+              <div className={styles.timerSetting}>
+                <label htmlFor="themeSelector">Theme:</label>
+                <ThemeSelector selectedTheme={theme} onChangeTheme={handleThemeChange} />
+              </div>
+            </div>
+
+            <div className={styles.buttonGroup}>
+              <button type="submit" className={styles.saveButton}>Save</button>
+              <button onClick={handleReset} className={styles.resetButton}>Reset</button>
+              <button onClick={onClose} className={styles.cancelButton}>Cancel</button>
             </div>
           </div>
-        </div>
-        </div>
 
+        </form>
       </div>
     </div>
   );

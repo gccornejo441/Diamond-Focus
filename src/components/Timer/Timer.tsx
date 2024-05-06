@@ -5,6 +5,7 @@ import Setting from '../Setting';
 import ButtonPanel from '../ButtonPanel/ButtonPanel';
 import SciFiAlarm from '../assets/sciFiAlarm.mp3';
 import useTimerEffect from '../../hooks/useTimerEffect';
+import ModalSettings from '../ModalSettings';
 
 interface TimerModuleProps {
     count: number;
@@ -123,6 +124,16 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
                     count={count}
                     setCount={setCount}
                     onClose={() => setModalOpen(false)} />
+                // <ModalSettings
+                // isAutoSwitchOn={isAutoSwitchOn}
+                // setAutoSwitchOn={setAutoSwitchOn}
+                // isAlertOn={isAlertOn}
+                // setIsAlertOn={setIsAlertOn}
+                // setBreakDuration={setBreakDuration}
+                // breakDuration={breakDuration}
+                // count={count}
+                // setCount={setCount}
+                // onClose={() => setModalOpen(false)} />
             )}
         </div>
     );
