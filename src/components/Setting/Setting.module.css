@@ -1,3 +1,380 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 866px;
+  background: white;
+  color: #343132;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  min-height: 60dvh;
+  max-height: 80dvh;
+}
+
+.sidebar {
+  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menuItem,
+.activeMenuItem {
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.activeMenuItem {
+  background-color: var(--panel-background);
+  color: var(--panel-text);
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.menuText {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+  padding-left: 5px;
+}
+
+.menuIcon {
+  display: inline-block;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    flex-basis: 30%;
+  }
+
+  .content {
+    flex-basis: 70%;
+  }
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.875rem; /* 14px */
+  font-weight: medium;
+  opacity: 0.7;
+}
+
+.descriptionText {
+  font-size: 0.75rem; /* 12px */
+  color: #666;
+}
+
+.flexItemCenter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accentColorListWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.colorButtonWrap {
+  display: inline-flex;
+}
+
+.uiButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.uiButton:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.colorIndicator {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+
+.timerSettings {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.timerSetting {
+  margin-bottom: 10px;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  font-size: 14px;
+}
+
+@media (max-width: 786px) {
+  .timerSetting {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.timerInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+.toggleInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleLabel {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggleLabel:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggleInput:checked + .toggleLabel {
+  background-color: var(--button-background);
+}
+
+.toggleInput:checked + .toggleLabel:before {
+  transform: translateX(14px);
+}
+
+.toggleInput:focus + .toggleLabel {
+  box-shadow: 0 0 1px var(--button-background-hover);
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.settingItem {
+  margin-top: 20px;
+}
+
+.toggleInput {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+
+.inputWithClear {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.textInput {
+  width: 100%;
+  padding: 8px 12px;
+  padding-right: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.textInput:disabled {
+  background-color: #f3f3f3;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.clearButton {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 18px;
+}
+
+.clearButton:hover {
+  color: #666;
+}
+
+.timerInput {
+  background-color: hsl(var(--background));
+  border-color: var(--lx-gray-07, var(--rx-gray-07));
+  border-radius: .25rem;
+  border-width: 1px;
+  display: block;
+  padding-left: .5rem;
+  width: 100%;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.saveButton, .resetButton, .cancelButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+}
+
+.saveButton, .resetButton, .cancelButton {
+  background-color: var(--button-background);
+  color: white;
+}
+
+.saveButton:hover, .resetButton:hover, .cancelButton:hover {
+  opacity: 0.8;
+}
+
+.saveButton:focus, .resetButton:focus, .cancelButton:focus {
+  box-shadow: 0 0 0 3px var(--button-background-hover);
+}
+
+[data-theme="dark"] input[type="number"], 
+[data-theme="dark"] .textInput, 
+[data-theme="dark"] .timerInput,
+[data-theme="high-contrast"] input[type="number"], 
+[data-theme="high-contrast"] .textInput, 
+[data-theme="high-contrast"] .timerInput {
+  color: var(--button-background);
+}
+
+.settingCardItem {
+  position: relative;
+  max-width: 780px;
+  margin: auto;
+}
+
 .cardIllustration {
   padding: 0.3rem;
   border-radius: 8px;
@@ -52,269 +429,10 @@
   box-shadow: 0 0 0 3px white, 0 0 0 6px black;
 }
 
-.cardText {
-  margin-top: 1em;
-}
-
-.image-container {
-  position: relative;
-  display: inline-block;
-}
-
-.image-container img {
-  width: 100%;
-  display: block;
-}
-
-.cardMain {
-  background-color: rgba(25, 25, 29, 0.95);
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100vh;
-  z-index: 2147483647;
-  pointer-events: auto;
-  display: flex;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 48px 0px 58px;
-  box-sizing: border-box;
-  font-size: 11px;
-}
-
-.cancelButton {
-  position: absolute;
-  top: 17px;
-  right: 18px;
-  cursor: pointer;
-  width: 15px;
-  height: 15px;
-  fill: black;
-  z-index: 2147483647;
-  fill: currentColor;
-}
-
-.settingCard {
-  color: rgb(34, 34, 34);
-  border-radius: 8px;
-  background-color: white;
-  position: relative;
-  max-width: 400px;
-  width: 95%;
-  z-index: 2147483647;
-  border-top: 1px solid rgb(239, 239, 239);
-  border-bottom: 1px solid rgb(239, 239, 239);
-  transition: all 0.2s ease-in 0s;
-  transform: translateY(20px);
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
-  overflow: hidden;
-  margin: auto;
-  display: block;
-}
-
-[data-theme="high-contrast"] .cardTitle, 
-[data-theme="high-contrast"] .settingCardItemTitle,
-[data-theme="dark"] .cardTitle,
-[data-theme="dark"] .settingCardItemTitle {
-  color: var(--button-background);
-}
-
-.cardTitle {
-  margin-bottom: 1em;
-  color: var(--text-color);
-  text-transform: uppercase;
-  font-weight: bold;
-  padding: 10px 10px 0px 10px;
-  text-align: left;
-}
-
-.settingCardBody {
-  padding: 10px 10px;
-}
-
-.settingCardItem {
-  position: relative;
-  max-width: 780px;
-  margin: auto;
-}
-
-.settingTimeBlock {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;  
-}
-
-.settingCardItemTitle {
-  color: var(--text-color);
-  text-transform: uppercase;
-  font-weight: bold;
-  text-align: left;
-  letter-spacing: 0.5px;
-  padding: 10px 0px;
-  display: flex;
-}
-
-.settingButton { 
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  background-color: var(--button-background);
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 0.2s ease-in 0s;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
-  overflow: hidden;
-  margin: auto;
-  display: block;
-  text-align: center;
-  margin: 5px;
-}
-
-.settingButton:hover {
-  background-color: var(--button-background-hover);
-  color: white;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
-}
-
-.settingCardCommitBtn {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0px;
-}
-
-.checkboxWrapper2 .linearToggle {
-  appearance: none;
-  background-color: #dfe1e4;
-  border-radius: 72px;
-  border-style: none;
-  flex-shrink: 0;
-  height: 20px;
-  margin: 0;
-  position: relative;
-  width: 30px;
-}
-
-.checkboxWrapper2 .linearToggle::before {
-  bottom: -6px;
-  content: "";
-  left: -6px;
-  position: absolute;
-  right: -6px;
-  top: -6px;
-}
-
-.checkboxWrapper2 .linearToggle,
-.checkboxWrapper2 .linearToggle::after {
-  transition: all 100ms ease-out;
-}
-
-.checkboxWrapper2 .linearToggle::after {
-  background-color: #fff;
-  border-radius: 50%;
-  content: "";
-  height: 14px;
-  left: 3px;
-  position: absolute;
-  top: 3px;
-  width: 14px;
-}
-
-.checkboxWrapper2 input[type="checkbox"] {
-  cursor: default;
-}
-
-.checkboxWrapper2 .linearToggle:hover {
-  background-color: #c9cbcd;
-  transition-duration: 0s;
-}
-
-.checkboxWrapper2 .linearToggle:checked {
-  background-color: var(--button-background);
-}
-
-.checkboxWrapper2 .linearToggle:checked::after {
-  background-color: #fff;
-  left: 13px;
-}
-
-.checkboxWrapper2 :focus:not(.focus-visible) {
-  outline: 0;
-}
-
-.checkboxWrapper2 .linearToggle:checked:hover {
-  background-color: var(--button-background-hover);
-}
-
-input[type="number"], .settingSelect  {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 14px;
-  appearance: none;
-  color: var(--text-color);
-  background-color: #fff;
-}
-
-.settingSelect:focus, input[type="number"]:focus {
-  outline: none;
-  border-color: var(--button-background);
-  box-shadow: 0 0 0 3px var(--button-background);
-}
-
-[data-theme="dark"] input[type="number"], .settingSelect {
-  color: var(--button-background);
-}
-
-.icon {
-  height: 30px;
-  width: 30px;
-}
-
-.bgInput {
-  background: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;  
-  display: block;
-  font-size: inherit;
-  line-height: inherit;
-  padding: 2px;
-  resize: none;
-  width: 100%;
-  color: var(--text-color);
-  margin-right: 5px;
-}
-
-.inputWrapper {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.055);
-  border-radius: 4px;
-  box-shadow: rgba(255, 255, 255, 0.075) 0 0 0 1px inset;
-  cursor: text;
-  display: flex;
-  font-size: 14px;
-  height: 28px;
-  line-height: 20px;
-  width: 100%;
+.colorItem {
+  padding: 5px;
 }
 
 .colorLabel {
   display: flex;
-}
-
-.colorItem {
-  padding: 5px;
 }

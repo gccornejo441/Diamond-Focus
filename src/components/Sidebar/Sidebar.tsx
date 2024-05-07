@@ -33,7 +33,7 @@ const NavigationItem = ({ label, children }: NavigationItemProps) => {
 const Sidebar = ({ isOpen, toggleSidebar, taskDescription }: SidebarProps) => {
     return (
         <div className={isOpen ? `${styles.sidebar} ${styles.open}` : `${styles.sidebar} ${styles.closed}`}>
-            <CancelButton className={settingStyles.cancelButton} onClick={toggleSidebar} />
+            <CancelButton className={styles.cancelButton} onClick={toggleSidebar} />
             <nav>
                     <GemIcon aria-label="Gem Icon" className={settingStyles.icon} />
                 <h2 className={styles.sideBarTitle}>Diamond Focus</h2>

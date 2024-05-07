@@ -6,7 +6,6 @@
 
 .inputArea {
   display: flex;
-  margin-top: 15px;
   color: var(--text-color);
 }
 
@@ -87,7 +86,6 @@ ul {
   opacity: 0.5;
   cursor: not-allowed;
   transition: opacity 0.2s, box-shadow 0.08s ease-in;
-
 }
 
 .inputArea button:focus {
@@ -206,12 +204,41 @@ ul {
 }
 
 .taskPanel {
+  margin-top: 15px;
   max-width: 620px;
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
-  min-width: 370px;
+  height: 80vh;
+  overflow-y: auto;
+}
+
+.taskPanel::-webkit-scrollbar {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-track {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-button {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-corner {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-resizer {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-track-piece {
+  display: none;
 }
 
 @media screen and (min-width: 360px) {
@@ -237,9 +264,9 @@ ul {
   text-align: justify;
   padding: 0px 10px 0px 0px;
   white-space: nowrap;
-  width: fit-content; 
+  width: fit-content;
   overflow: hidden;
-  text-overflow: ellipsis
+  text-overflow: ellipsis;
 }
 
 .strikethrough {
@@ -257,14 +284,14 @@ ul {
   border-radius: 5px;
   margin-left: 10px;
   padding: 5px;
-  
+
   width: fit-content;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .timeStamp {
   font-size: 12px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;  
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   margin: 0px;
   line-height: 13px;

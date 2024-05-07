@@ -7,7 +7,6 @@ import { formatDistanceToNowStrict  } from 'date-fns';
 import type { FormatDistanceToNowOptions } from "date-fns";
 
 
-
 interface TaskComponentProps {
     task: Task;
     toggleTaskCompletion: (id: number) => void;
@@ -28,7 +27,6 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
         transform: CSS.Transform.toString(transform),
         touchAction: 'none',
     };
-
 
     return (
         <li key={task.id}
@@ -58,7 +56,6 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
                     className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
                     {task.text}
                     <p className={styles.timeStamp}>{relativeTime}</p>
-
                 </p>
             </div>
         </li>

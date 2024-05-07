@@ -4,7 +4,7 @@ import { TimePadder } from '../../utils';
 import ButtonPanel from '../ButtonPanel/ButtonPanel';
 import SciFiAlarm from '../assets/sciFiAlarm.mp3';
 import useTimerEffect from '../../hooks/useTimerEffect';
-import ModalSettings from '../ModalSettings';
+import Settings from '../Setting/Setting';
 
 interface TimerModuleProps {
     count: number;
@@ -113,7 +113,7 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
                 changeIsBreak={changeIsBreak}
                 onReset={completeReset} />
             {isModalOpen && (
-                <ModalSettings
+                <Settings
                 isAutoSwitchOn={isAutoSwitchOn}
                 setAutoSwitchOn={setAutoSwitchOn}
                 isAlertOn={isAlertOn}
