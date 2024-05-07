@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './Timer.module.css';
 import { TimePadder } from '../../utils';
-import Setting from '../Setting';
 import ButtonPanel from '../ButtonPanel/ButtonPanel';
 import SciFiAlarm from '../assets/sciFiAlarm.mp3';
 import useTimerEffect from '../../hooks/useTimerEffect';
@@ -114,26 +113,16 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
                 changeIsBreak={changeIsBreak}
                 onReset={completeReset} />
             {isModalOpen && (
-                <Setting
-                    isAutoSwitchOn={isAutoSwitchOn}
-                    setAutoSwitchOn={setAutoSwitchOn}
-                    isAlertOn={isAlertOn}
-                    setIsAlertOn={setIsAlertOn}
-                    setBreakDuration={setBreakDuration}
-                    breakDuration={breakDuration}
-                    count={count}
-                    setCount={setCount}
-                    onClose={() => setModalOpen(false)} />
-                // <ModalSettings
-                // isAutoSwitchOn={isAutoSwitchOn}
-                // setAutoSwitchOn={setAutoSwitchOn}
-                // isAlertOn={isAlertOn}
-                // setIsAlertOn={setIsAlertOn}
-                // setBreakDuration={setBreakDuration}
-                // breakDuration={breakDuration}
-                // count={count}
-                // setCount={setCount}
-                // onClose={() => setModalOpen(false)} />
+                <ModalSettings
+                isAutoSwitchOn={isAutoSwitchOn}
+                setAutoSwitchOn={setAutoSwitchOn}
+                isAlertOn={isAlertOn}
+                setIsAlertOn={setIsAlertOn}
+                setBreakDuration={setBreakDuration}
+                breakDuration={breakDuration}
+                count={count}
+                setCount={setCount}
+                onClose={() => setModalOpen(false)} />
             )}
         </div>
     );

@@ -22,6 +22,8 @@ const themes = [
   { name: 'Grey', value: 'grey-theme', color: 'var(--grey-100)' },
   { name: 'Dark', value: 'dark', color: 'var(--grey-900)' },
   { name: 'High Contrast', value: 'high-contrast', color: 'black' },
+  { name: 'Slate', value: 'slate-theme', color: 'var(--slate-100)'},
+  { name: 'rose', value: 'rose-theme', color: 'var(--rose-100)'}
 ];
 
 const ThemeSelector = ({ selectedTheme, onChangeTheme }: ThemeSelectorProps) => {
@@ -32,7 +34,6 @@ const ThemeSelector = ({ selectedTheme, onChangeTheme }: ThemeSelectorProps) => 
 
   return (
     <div className={styles.settingCardItem}>
-      <div className={styles.settingCardItemTitle}>Theme</div>
       <div className={styles.cardIllustration}>
         <ul className={styles.colorPalette}>
           {themes.map(theme => (
@@ -40,7 +41,7 @@ const ThemeSelector = ({ selectedTheme, onChangeTheme }: ThemeSelectorProps) => 
               data-tooltip-id="themeTooltip"
               data-tooltip-place='bottom'
               data-tooltip-content={theme.name} className={styles.colorItem} key={theme.value}>
-              <label htmlFor={theme.name} className={styles.colorLabel} style={{ backgroundColor: theme.color, border: selectedTheme === theme.value ? '2px solid white' : '1px solid white', transition: 'border 0.5s ease' }}>
+              <label htmlFor={theme.name} className={styles.colorLabel} style={{ backgroundColor: theme.color, border: selectedTheme === theme.value ? '2px solid white' : `1px solid white`, transition: 'border 0.1s ease' }}>
                 <input
                   type="radio"
                   name="theme"

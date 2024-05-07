@@ -17,6 +17,17 @@
   --red-200-accent: #ff5252;
   --red-400-accent: #ff1744;
   --red-700-accent: #d50000;
+  --rose-50: #fff1f2;
+  --rose-100: #ffe4e6;
+  --rose-200: #fecdd3;
+  --rose-300: #fda4af;
+  --rose-400: #fb7185;
+  --rose-500: #f43f5e;
+  --rose-600: #e11d48;
+  --rose-700: #be123c;
+  --rose-800: #9f1239;
+  --rose-900: #881337;
+  --rose-950: #4c0519;
   --pink: #e91e63;
   --pink-50: #fce4ec;
   --pink-100: #f8bbd0;
@@ -275,6 +286,19 @@
   --blue-grey-700: #455a64;
   --blue-grey-800: #37474f;
   --blue-grey-900: #263238;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --slate-950: #020617;
+
+
   --b1: #000e3d;
   --b15: #0b276d;
   --b2: #234cda;
@@ -360,6 +384,10 @@ code {
   --panel-text-hover: var(--b2);
 
   --alert: var(--b1);
+
+  --scrollbar-track: var(--b3);
+  --scrollbar-thumb: var(--b5);
+  --scrollbar-thumb-hover: var(--b2);
 }
 
 [data-theme="dark"] {
@@ -378,6 +406,10 @@ code {
   --panel-text-hover: var(--blue-grey-50);
 
   --alert: var(--blue-grey-50);
+
+  --scrollbar-track: var(--blue-grey-900);
+  --scrollbar-thumb: var(--blue-grey-700);
+  --scrollbar-thumb-hover: var(--blue-grey-600);
 }
 
 [data-theme="red-theme"] {
@@ -395,6 +427,10 @@ code {
   --panel-text-hover: var(--red-50);
 
   --alert: var(--red-700);
+
+  --scrollbar-track: var(--red-100);
+  --scrollbar-thumb: var(--red-300);
+  --scrollbar-thumb-hover: var(--red-400);
 }
 
 [data-theme="green-theme"] {
@@ -412,6 +448,10 @@ code {
   --panel-text-hover: var(--green-50);
 
   --alert: var(--green-700);
+
+  --scrollbar-track: var(--green-100);
+  --scrollbar-thumb: var(--green-300);
+  --scrollbar-thumb-hover: var(--green-400);
 }
 
 [data-theme="indigo-theme"] {
@@ -429,6 +469,10 @@ code {
   --panel-text-hover: var(--indigo-50);
 
   --alert: var(--indigo-700);
+
+  --scrollbar-track: var(--indigo-100);
+  --scrollbar-thumb: var(--indigo-300);
+  --scrollbar-thumb-hover: var(--indigo-400);
 }
 
 [data-theme="deep-orange-theme"] {
@@ -446,6 +490,10 @@ code {
   --panel-text-hover: var(--deep-orange-50);
 
   --alert: var(--deep-orange-700);
+
+  --scrollbar-track: var(--deep-orange-100);
+  --scrollbar-thumb: var(--deep-orange-300);
+  --scrollbar-thumb-hover: var(--deep-orange-400);
 }
 
 [data-theme="teal-theme"] {
@@ -463,6 +511,10 @@ code {
   --panel-text-hover: var(--teal-50);
 
   --alert: var(--teal-700);
+
+  --scrollbar-track: var(--teal-100);
+  --scrollbar-thumb: var(--teal-300);
+  --scrollbar-thumb-hover: var(--teal-400);
 }
 
 [data-theme="purple-theme"] {
@@ -480,6 +532,10 @@ code {
   --panel-text-hover: var(--purple-50);
 
   --alert: var(--purple-700);
+
+  --scrollbar-track: var(--purple-100);
+  --scrollbar-thumb: var(--purple-300);
+  --scrollbar-thumb-hover: var(--purple-400);
 }
 
 [data-theme="pink-theme"] {
@@ -497,6 +553,10 @@ code {
   --panel-text-hover: var(--pink-50);
 
   --alert: var(--pink-700);
+
+  --scrollbar-track: var(--pink-100);
+  --scrollbar-thumb: var(--pink-300);
+  --scrollbar-thumb-hover: var(--pink-400);
 }
 
 [data-theme='blue-theme'] {
@@ -514,6 +574,52 @@ code {
   --panel-text-hover: var(--blue-50);
 
   --alert: var(--blue-700);
+
+  --scrollbar-track: var(--blue-100);
+  --scrollbar-thumb: var(--blue-300);
+  --scrollbar-thumb-hover: var(--blue-400);
+}
+
+[data-theme='rose-theme'] {
+  --background-color: var(--rose-100);
+  --text-color: var(--rose-900);
+
+  --button-background: var(--rose-500);
+  --button-background-hover: var(--rose-700);
+  --button-text: var(--rose-50);
+
+  --panel-background: var(--rose-200);
+  --panel-background-hover: var(--rose-300);
+  --panel-text: var(--rose-900);
+  --panel-text-faint: var(--rose-600);
+  --panel-text-hover: var(--rose-50);
+
+  --alert: var(--rose-700);
+
+  --scrollbar-track: var(--rose-100);
+  --scrollbar-thumb: var(--rose-300);
+  --scrollbar-thumb-hover: var(--rose-400);
+}
+
+[data-theme='slate-theme'] {
+  --background-color: var(--slate-100);
+  --text-color: var(--slate-900);
+
+  --button-background: var(--slate-500);
+  --button-background-hover: var(--slate-700);
+  --button-text: var(--slate-50);
+
+  --panel-background: var(--slate-200);
+  --panel-background-hover: var(--slate-300);
+  --panel-text: var(--slate-900);
+  --panel-text-faint: var(--slate-600);
+  --panel-text-hover: var(--slate-50);
+
+  --alert: var(--slate-700);
+
+  --scrollbar-track: var(--slate-100);
+  --scrollbar-thumb: var(--slate-300);
+  --scrollbar-thumb-hover: var(--slate-400);
 }
 
 [data-theme='orange-theme'] {
@@ -531,6 +637,10 @@ code {
   --panel-text-hover: var(--orange-50);
 
   --alert: var(--orange-700);
+
+  --scrollbar-track: var(--orange-100);
+  --scrollbar-thumb: var(--orange-300);
+  --scrollbar-thumb-hover: var(--orange-400);
 }
 
 [data-theme="brown-theme"] {
@@ -548,6 +658,10 @@ code {
   --panel-text-hover: var(--brown-50);
 
   --alert: var(--brown-700);
+
+  --scrollbar-track: var(--brown-100);
+  --scrollbar-thumb: var(--brown-300);
+  --scrollbar-thumb-hover: var(--brown-400);
 }
 
 [data-theme="grey-theme"] {
@@ -565,6 +679,10 @@ code {
   --panel-text-hover: var(--grey-50);
 
   --alert: var(--grey-700);
+
+  --scrollbar-track: var(--grey-100);
+  --scrollbar-thumb: var(--grey-300);
+  --scrollbar-thumb-hover: var(--grey-400);
 }
 
 [data-theme="high-contrast"] {
@@ -582,8 +700,29 @@ code {
   --panel-text-hover: #000000;         
 
   --alert: #FF0000;
+
+  --scrollbar-track: #1A73E8;
+  --scrollbar-thumb: #333333;
+  --scrollbar-thumb-hover: #474747;
 }
-  
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
 
 button {
   background-color: var(--button-background);
@@ -645,3 +784,4 @@ button {
     rgba(50, 50, 93, 0.2) 0 3px 3px 0, rgba(0, 0, 0, 0.1) 0 1px 3px 0;
   transform: translateY(2px);
 }
+

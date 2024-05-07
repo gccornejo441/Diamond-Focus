@@ -10,6 +10,11 @@
   color: var(--text-color);
 }
 
+[data-theme="dark"] .inputArea input,
+[data-theme="high-contrast"] .inputArea input {
+  color: var(--background-color);
+}
+
 .inputArea input {
   flex-grow: 1;
   padding: 10px;

@@ -65,13 +65,16 @@ const ModalSettings = ({ onClose, count, setCount, breakDuration, setBreakDurati
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+
     const newCount = formData.get('focusTimer') as string;
     const newBreakDuration = formData.get('breakTimer') as string;
     const newTheme = formData.get('theme') as string;
     const newBgImg = formData.get('bgImg') as string;
 
-    const newIsAlertOn = formData.has('alarmSound');
-    const newAutoSwitchOn = formData.has('alarmToggle');
+    const newIsAlertOn = formData.has('alarmMuter');
+    const newAutoSwitchOn = formData.has('autoSwitch');
+
+    const newAlarmSoundName = formData.has('alarmSoundName'); // Needs implementation
 
     if (newCount && newBreakDuration) {
       const countInSeconds = parseInt(newCount) * 60;
@@ -142,9 +145,7 @@ const ModalSettings = ({ onClose, count, setCount, breakDuration, setBreakDurati
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        <form method="post" onSubmit={handleSave}>
-        <a className={styles.modalClose} aria-label="Close">
-          {/* SVG Close Icon */}
+        <a onClick={onClose} className={styles.modalClose} aria-label="Close">
           <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" className={styles.icon}>
             <path d="M6 18L18 6M6 6l12 12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
           </svg>
@@ -162,9 +163,9 @@ const ModalSettings = ({ onClose, count, setCount, breakDuration, setBreakDurati
             </li>
           </ul>
         </aside>
-
           <div className={styles.content}>
             <h2>General Settings</h2>
+        <form method="post" onSubmit={handleSave}>
             <div className={styles.timerSettings}>
               <div className={styles.timerSetting}>
                 <label htmlFor="focusTimer">Focus Time (minutes):</label>
@@ -212,26 +213,26 @@ const ModalSettings = ({ onClose, count, setCount, breakDuration, setBreakDurati
               </div>
 
               <div className={styles.timerSetting}>
-                <label htmlFor="alarmToggle">Enable Alarm:</label>
+                <label htmlFor="alarmMuter">Enable Alarm:</label>
                 <div className={styles.toggleSwitch}>
                   <input
                     type="checkbox"
-                    id="alarmToggle"
-                    name='alarmToggle'
+                    id="alarmMuter"
+                    name='alarmMuter'
                     checked={isAlertOn}
                     onChange={e => setIsAlertOn(e.target.checked)}
                     className={styles.toggleInput}
                   />
-                  <label htmlFor="alarmToggle" className={styles.toggleLabel}></label>
+                  <label htmlFor="alarmMuter" className={styles.toggleLabel}></label>
                 </div>
               </div>
 
               <div className={styles.timerSetting}>
-                <label htmlFor="alarmSound">Alarm Sound:</label>
+                <label htmlFor="alarmSoundName">Alarm Sound:</label>
                 <select
-                  id="alarmSound"
+                  id="alarmSoundName"
                   value={alertName}
-                  name='alarmSound'
+                  name='alarmSoundName'
                   onChange={e => setAlertName(e.target.value)}
                   className={styles.textInput}
                   disabled={!isAlertOn}
@@ -241,7 +242,7 @@ const ModalSettings = ({ onClose, count, setCount, breakDuration, setBreakDurati
               </div>
 
               <div className={styles.timerSetting}>
-                <label htmlFor="alarmSound">Alarm Sound:</label>
+                <label htmlFor="bgImg">Background Image Link:</label>
                 <div className={styles.inputWithClear}>
                   <input
                     type="url"
@@ -271,9 +272,9 @@ const ModalSettings = ({ onClose, count, setCount, breakDuration, setBreakDurati
               <button onClick={handleReset} className={styles.resetButton}>Reset</button>
               <button onClick={onClose} className={styles.cancelButton}>Cancel</button>
             </div>
+          </form>
           </div>
 
-        </form>
       </div>
     </div>
   );
