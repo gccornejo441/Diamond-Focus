@@ -16,6 +16,7 @@ const useTimerEffect = ({
 
         if (isRunning) {
             const seconds = isBreak ? breakDuration : count;
+        
             worker?.postMessage({ command: 'start', seconds: seconds });
         } else {
             worker?.postMessage({ command: 'pause' });

@@ -30,13 +30,13 @@ function App() {
     const savedTasks = localStorage.getItem('tasks');
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
-
   useEffect(() => {
     const settings = localStorage.getItem('settingsSaved');
     if (settings) {
+      
       const savedSettings = JSON.parse(settings);
-      setCount(savedSettings.count ? parseInt(savedSettings.count) * 60 : 1500);
-      setBreakDuration(savedSettings.breakDuration ? parseInt(savedSettings.breakDuration) * 60 : 300);
+      setCount(savedSettings.count ? parseInt(savedSettings.count) : 1500);
+      setBreakDuration(savedSettings.breakDuration ? parseInt(savedSettings.breakDuration): 300);
       setIsAlertOn(savedSettings.isAlertOn ?? false);
       setAutoSwitchOn(savedSettings.isAutoSwitchOn ?? false);
       setIsNewTaskOnTop(savedSettings.isNewTaskOnTop ?? false);

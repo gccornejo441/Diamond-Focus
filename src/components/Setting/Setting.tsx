@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Setting.module.css';
-import { ApplyBodyStyles } from '../../utils';
+import { ApplyBodyStyles, getParsedSettings, settingFormHelper } from '../../utils';
 import ThemeSelector from './SettingThemeSelector';
 
 export const SettingIcon = () => (
@@ -52,53 +52,38 @@ interface SettingPanelProps {
 const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn, isAutoSwitchOn, setAutoSwitchOn, isNewTaskOnTop, setIsNewTaskOnTop, bgImg, setBgImg, theme, setTheme, alarmName, setAlarmName }: SettingPanelProps) => {
   const [tempTheme, setTempTheme] = useState<string>('');
   const [tempBgImg, setTempBgImg] = useState<string>('');
+  const [tempCount, setTempCount] = useState<number>(25);
+  const [tempBreakDuration, setTempBreakDuration] = useState<number>(5);
 
   useEffect(() => {
     setTempTheme(theme);
     setTempBgImg(bgImg);
+    const settings = getParsedSettings('settingsSaved');
+    if (!settings) return;
+
+    setTempCount(settings.count / 60);
+    setTempBreakDuration(settings.breakDuration / 60);
   },[]);
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+    const settings = settingFormHelper(formData);
 
-    const newCount = formData.get('focusTimer') as string;
-    const newBreakDuration = formData.get('breakTimer') as string;
-    const newTheme = formData.get('theme') as string;
-    const newBgImg = formData.get('bgImg') as string;
-    const newAlarmSoundName = formData.get('alarmSoundName') as string; // Needs implementation
-    const newIsAlertOn = formData.has('alarmMuter') as boolean;
-    const newAutoSwitchOn = formData.has('autoSwitch') as boolean;
-    const newIsNewTaskOnTop = formData.has('newTasksOnTop') as boolean;
+    setCount(settings.count);
+    setBreakDuration(settings.breakDuration);
+    
+    setIsAlertOn(settings.isAlertOn);
+    setAutoSwitchOn(settings.isAutoSwitchOn);
+    setIsNewTaskOnTop(settings.isNewTaskOnTop);
 
-    const countInSeconds = parseInt(newCount) * 60;
-    const breakInSeconds = parseInt(newBreakDuration) * 60;
+    ApplyBodyStyles(settings.bgImg, settings.theme);
 
-    setCount(countInSeconds);
-    setBreakDuration(breakInSeconds);
-    
-    setIsAlertOn(newIsAlertOn);
-    setAutoSwitchOn(newAutoSwitchOn);
-    setIsNewTaskOnTop(newIsNewTaskOnTop);
-    
-    ApplyBodyStyles(newBgImg, newTheme);
-    
-    setBgImg(newBgImg);
-    setTheme(newTheme);
+    setBgImg(settings.bgImg);
+    setTheme(settings.theme);
   
-
-    localStorage.setItem('settingsSaved',
-      JSON.stringify({
-        count: newCount,
-        breakDuration: newBreakDuration,
-        isAlertOn: newIsAlertOn,
-        isAutoSwitchOn: newAutoSwitchOn,
-        theme: newTheme,
-        bgImg: newBgImg,
-        alarmSoundName: newAlarmSoundName,
-        isNewTaskOnTop: newIsNewTaskOnTop
-      }));
+    localStorage.setItem('settingsSaved', JSON.stringify(settings));
 
     onClose();
   };
@@ -187,8 +172,8 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                   min="1"
                   max="60"
                   step="1"
-                  value={count / 60} 
-                  onChange={e => setCount(Math.max(60, Math.min(3600, parseInt(e.target.value) * 60)))} 
+                  value={tempCount} 
+                  onChange={e => setTempCount(Math.max(1, Math.min(60, parseInt(e.target.value))))}
                   className={styles.timerInput}
                 />
               </div>
@@ -202,9 +187,9 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                   min="1"
                   max="60"
                   step="1"
-                  value={breakDuration / 60}
+                  value={tempBreakDuration}
+                  onChange={e => setTempBreakDuration(Math.max(1, Math.min(60, parseInt(e.target.value))))}
                   className={styles.timerInput}
-                  onChange={e => setBreakDuration(Math.max(60, Math.min(3600, parseInt(e.target.value) * 60)))}
                 />
               </div>
 

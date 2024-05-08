@@ -11,8 +11,6 @@ export const TimePadder = (seconds: number) => {
   return `${minutes}:${formattedSeconds}`;
 };
 
-
-
 /**
  * Applies styles to the body element based on the provided background image and theme.
  *
@@ -58,3 +56,50 @@ export const ApplyBodyStyles = (bgImg: string, theme: string) => {
       document.body.removeAttribute('data-theme');
   }
 };
+
+
+/**
+ * Retrieves and parses settings from local storage based on the provided key.
+ *
+ * @param {string} key - The key used to retrieve the settings from local storage.
+ * @return {any | null} The parsed settings object if successful, otherwise null.
+ */
+export function getParsedSettings(key: string) {
+    try {
+        const settings = localStorage.getItem(key);
+        return settings ? JSON.parse(settings) : null;
+    } catch (e) {
+        console.error(`Error parsing settings from ${key}:`, e);
+        return null;
+    }
+}
+
+export interface Settings {
+    count: number;
+    breakDuration: number;
+    isAlertOn: boolean;
+    isAutoSwitchOn: boolean;
+    theme: string;
+    bgImg: string;
+    alarmSoundName: string;
+    isNewTaskOnTop: boolean;
+  }
+  
+/**
+ * Generates a Settings object based on the provided FormData.
+ *
+ * @param {FormData} formData - The FormData containing the settings data.
+ * @return {Settings} The generated Settings object.
+ */
+export function settingFormHelper(formData: FormData): Settings {
+    return {
+      count: parseInt(formData.get('focusTimer') as string) * 60,
+      breakDuration: parseInt(formData.get('breakTimer') as string) * 60,
+      isAlertOn: formData.has('alarmMuter'),
+      isAutoSwitchOn: formData.has('autoSwitch'),
+      theme: formData.get('theme') as string,
+      bgImg: formData.get('bgImg') as string,
+      alarmSoundName: formData.get('alarmSoundName') as string,
+      isNewTaskOnTop: formData.has('newTasksOnTop')
+    };
+}

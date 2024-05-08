@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './Timer.module.css';
-import { TimePadder } from '../../utils';
+import { TimePadder, getParsedSettings } from '../../utils';
 import ButtonPanel from '../ButtonPanel/ButtonPanel';
 import SciFiAlarm from '../assets/sciFiAlarm.mp3';
 import useTimerEffect from '../../hooks/useTimerEffect';
@@ -76,8 +76,11 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
 
 
     const completeReset = () => {
-        const initialCount = parseInt(localStorage.getItem('count') || '1500');
-        const initialBreakDuration = parseInt(localStorage.getItem('breakDuration') || '300');
+        const settings = getParsedSettings('settingsSaved');
+        if (!settings) return;
+        
+        const initialCount = parseInt(settings.count || '1500');
+        const initialBreakDuration = parseInt(settings.breakDuration || '300');
 
         if (isBreak) {
             if (isAutoSwitchOn) setIsBreak(false);
@@ -92,12 +95,15 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
     };
 
     const changeIsBreak = () => {
+        const settings = getParsedSettings('settingsSaved');
+        if (!settings) return;
+
         if (isBreak) {
             setIsBreak(false);
-            setCount(parseInt(localStorage.getItem('count') || '1500'));
+            setCount(parseInt(settings.count || '1500'));
         } else {
             setIsBreak(true);
-            setBreakDuration(parseInt(localStorage.getItem('breakDuration') || '300'));
+            setBreakDuration(parseInt(settings.breakDuration || '300'));
         }
     }
 
