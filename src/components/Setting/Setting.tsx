@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './Setting.module.css';
 import { ApplyBodyStyles } from '../../utils';
 import ThemeSelector from './SettingThemeSelector';
-export const SettingIcon = ({ cls = styles.settingsIcon }) => (
+
+export const SettingIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="18"
@@ -38,27 +39,24 @@ interface SettingPanelProps {
   setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
   isAutoSwitchOn: boolean;
   setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
+  isNewTaskOnTop: boolean;
+  setIsNewTaskOnTop: React.Dispatch<React.SetStateAction<boolean>>;
+  bgImg: string;
+  setBgImg: React.Dispatch<React.SetStateAction<string>>;
+  theme: string;
+  setTheme: React.Dispatch<React.SetStateAction<string>>;
+  alarmName: string;
+  setAlarmName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn, isAutoSwitchOn, setAutoSwitchOn }: SettingPanelProps) => {
-  const [tempCount, setTempCount] = useState<number>(0);
-  const [tempBreak, setTempBreak] = useState<number>(0);
-  const [alertName, setAlertName] = useState<string>('');
-  const [bgImg, setBgImg] = useState<string>('');
-  const [theme, setTheme] = useState('default');
-  
+const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn, isAutoSwitchOn, setAutoSwitchOn, isNewTaskOnTop, setIsNewTaskOnTop, bgImg, setBgImg, theme, setTheme, alarmName, setAlarmName }: SettingPanelProps) => {
+  const [tempTheme, setTempTheme] = useState<string>('');
+  const [tempBgImg, setTempBgImg] = useState<string>('');
 
   useEffect(() => {
-    setIsAlertOn(localStorage.getItem('isAlertOn') === 'true' ? true : false);
-    setAutoSwitchOn(localStorage.getItem('isAutoSwitchOn') === 'true' ? true : false);
-    setTempCount(Math.floor(parseInt(localStorage.getItem('count') || String(count)) / 60));
-    setTempBreak(Math.floor(parseInt(localStorage.getItem('breakDuration') || String(breakDuration)) / 60));
-    const savedBgImg = localStorage.getItem('bgImg') || '';
-    setBgImg(savedBgImg);
-    if (savedBgImg) {
-      document.body.style.backgroundImage = `url('${savedBgImg}')`;
-    }
-  }, [count, breakDuration]);
+    setTempTheme(theme);
+    setTempBgImg(bgImg);
+  },[]);
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,48 +67,43 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
     const newBreakDuration = formData.get('breakTimer') as string;
     const newTheme = formData.get('theme') as string;
     const newBgImg = formData.get('bgImg') as string;
+    const newAlarmSoundName = formData.get('alarmSoundName') as string; // Needs implementation
+    const newIsAlertOn = formData.has('alarmMuter') as boolean;
+    const newAutoSwitchOn = formData.has('autoSwitch') as boolean;
+    const newIsNewTaskOnTop = formData.has('newTasksOnTop') as boolean;
 
-    const newIsAlertOn = formData.has('alarmMuter');
-    const newAutoSwitchOn = formData.has('autoSwitch');
+    const countInSeconds = parseInt(newCount) * 60;
+    const breakInSeconds = parseInt(newBreakDuration) * 60;
 
-    const newAlarmSoundName = formData.has('alarmSoundName'); // Needs implementation
-
-    if (newCount && newBreakDuration) {
-      const countInSeconds = parseInt(newCount) * 60;
-      const breakInSeconds = parseInt(newBreakDuration) * 60;
-      setCount(countInSeconds);
-      setBreakDuration(breakInSeconds);
-
-      localStorage.setItem('count', countInSeconds.toString());
-      localStorage.setItem('breakDuration', breakInSeconds.toString());
-    }
-
+    setCount(countInSeconds);
+    setBreakDuration(breakInSeconds);
+    
     setIsAlertOn(newIsAlertOn);
-    localStorage.setItem('isAlertOn', String(newIsAlertOn));
     setAutoSwitchOn(newAutoSwitchOn);
-    localStorage.setItem('isAutoSwitchOn', String(newAutoSwitchOn));
-
+    setIsNewTaskOnTop(newIsNewTaskOnTop);
+    
     ApplyBodyStyles(newBgImg, newTheme);
+    
+    setBgImg(newBgImg);
+    setTheme(newTheme);
+  
 
-    if (newBgImg) {
-      localStorage.setItem('bgImg', newBgImg);
-    } else {
-      localStorage.removeItem('bgImg');
-    }
-
-    if (newTheme) {
-      localStorage.setItem('theme', newTheme);
-    } else {
-      localStorage.removeItem('theme');
-    }
+    localStorage.setItem('settingsSaved',
+      JSON.stringify({
+        count: newCount,
+        breakDuration: newBreakDuration,
+        isAlertOn: newIsAlertOn,
+        isAutoSwitchOn: newAutoSwitchOn,
+        theme: newTheme,
+        bgImg: newBgImg,
+        alarmSoundName: newAlarmSoundName,
+        isNewTaskOnTop: newIsNewTaskOnTop
+      }));
 
     onClose();
   };
 
-  const handleThemeChange = (themeName: string) => {
-    setTheme(themeName);
-  }
-
+  
   const handleReset = () => {
     const defaultCount = 1500;
     const defaultBreak = 300;
@@ -118,21 +111,30 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
     const defaultAutoSwitch = true;
     const defaultTheme = 'default';
     const defaultBgImg = '';
+    const defaultNewTaskOnTop = true;
 
     setCount(defaultCount);
     setBreakDuration(defaultBreak);
     setIsAlertOn(defaultAlert);
     setAutoSwitchOn(defaultAutoSwitch);
     setBgImg(defaultBgImg);
+    setIsNewTaskOnTop(defaultNewTaskOnTop);
+
     document.body.style.backgroundImage = '';
     document.body.setAttribute('data-theme', defaultTheme);
 
-    localStorage.setItem('count', (defaultCount).toString());
-    localStorage.setItem('breakDuration', (defaultBreak).toString());
-    localStorage.setItem('isAlertOn', String(defaultAlert));
-    localStorage.setItem('theme', defaultTheme);
-    localStorage.setItem('isAutoSwitchOn', String(defaultAutoSwitch));
     localStorage.removeItem('bgImg');
+    localStorage.removeItem('settingsSaved');
+    localStorage.setItem('settingsSaved', JSON.stringify({
+      count: defaultCount,
+      breakDuration: defaultBreak,
+      isAlertOn: defaultAlert,
+      isAutoSwitchOn: defaultAutoSwitch,
+      theme: defaultTheme,
+      bgImg: defaultBgImg,
+      isNewTaskOnTop: defaultNewTaskOnTop
+    }))
+
     onClose();
   };
 
@@ -141,10 +143,20 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
     setBgImg('');
   }
 
+  const handleThemeChange = (themeName: string) => {
+    setTheme(themeName);
+  }
+
+  const handleCancel = () => {
+    setBgImg(tempBgImg);
+    ApplyBodyStyles(tempBgImg, tempTheme);
+    onClose();
+  }
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        <a onClick={onClose} className={styles.modalClose} aria-label="Close">
+        <a onClick={handleCancel} className={styles.modalClose} aria-label="Close">
           <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" className={styles.icon}>
             <path d="M6 18L18 6M6 6l12 12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
           </svg>
@@ -162,9 +174,9 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
             </li>
           </ul>
         </aside>
-          <div className={styles.content}>
-            <h2>General Settings</h2>
-        <form method="post" onSubmit={handleSave}>
+        <div className={styles.content}>
+          <h2>General Settings</h2>
+          <form method="post" onSubmit={handleSave}>
             <div className={styles.timerSettings}>
               <div className={styles.timerSetting}>
                 <label htmlFor="focusTimer">Focus Time (minutes):</label>
@@ -175,8 +187,8 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                   min="1"
                   max="60"
                   step="1"
-                  value={tempCount}
-                  onChange={e => setTempCount(Math.max(1, Math.min(60, parseInt(e.target.value))))}
+                  value={count / 60} 
+                  onChange={e => setCount(Math.max(60, Math.min(3600, parseInt(e.target.value) * 60)))} 
                   className={styles.timerInput}
                 />
               </div>
@@ -190,9 +202,9 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                   min="1"
                   max="60"
                   step="1"
-                  value={tempBreak}
+                  value={breakDuration / 60}
                   className={styles.timerInput}
-                  onChange={e => setTempBreak(Math.max(1, Math.min(60, parseInt(e.target.value))))}
+                  onChange={e => setBreakDuration(Math.max(60, Math.min(3600, parseInt(e.target.value) * 60)))}
                 />
               </div>
 
@@ -226,13 +238,28 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                 </div>
               </div>
 
+                <div className={styles.timerSetting}>
+                  <label htmlFor="newTasksOnTop">New Tasks Appear First:</label>
+                  <div className={styles.toggleSwitch}>
+                    <input
+                      type="checkbox"
+                      id="newTasksOnTop"
+                      name='newTasksOnTop'
+                      checked={isNewTaskOnTop}
+                      onChange={e => setIsNewTaskOnTop(e.target.checked)}
+                      className={styles.toggleInput}
+                    />
+                    <label htmlFor="newTasksOnTop" className={styles.toggleLabel}></label>
+                  </div>
+                </div>
+
               <div className={styles.timerSetting}>
                 <label htmlFor="alarmSoundName">Alarm Sound:</label>
                 <select
                   id="alarmSoundName"
-                  value={alertName}
                   name='alarmSoundName'
-                  onChange={e => setAlertName(e.target.value)}
+                  value={alarmName}
+                  onChange={e => (e.target.value)}
                   className={styles.textInput}
                   disabled={!isAlertOn}
                 >
@@ -245,8 +272,8 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                 <div className={styles.inputWithClear}>
                   <input
                     type="url"
-                    value={bgImg}
                     name='bgImg'
+                    value={bgImg}
                     onChange={(e) => setBgImg(e.target.value)}
                     className={styles.textInput}
                     placeholder="Enter image URL"
@@ -269,10 +296,10 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
             <div className={styles.buttonGroup}>
               <button type="submit" className={styles.saveButton}>Save</button>
               <button onClick={handleReset} className={styles.resetButton}>Reset</button>
-              <button onClick={onClose} className={styles.cancelButton}>Cancel</button>
+              <button onClick={handleCancel} className={styles.cancelButton}>Cancel</button>
             </div>
           </form>
-          </div>
+        </div>
 
       </div>
     </div>

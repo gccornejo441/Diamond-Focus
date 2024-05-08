@@ -4,7 +4,6 @@ import { TimePadder } from '../../utils';
 import ButtonPanel from '../ButtonPanel/ButtonPanel';
 import SciFiAlarm from '../assets/sciFiAlarm.mp3';
 import useTimerEffect from '../../hooks/useTimerEffect';
-import Settings from '../Setting/Setting';
 
 interface TimerModuleProps {
     count: number;
@@ -28,11 +27,13 @@ interface TimerProps {
     handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
     isAutoSwitchOn: boolean;
     setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
+    count: number;
+    setCount: React.Dispatch<React.SetStateAction<number>>;
+    breakDuration: number;
+    setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDeleteAll, isAutoSwitchOn, setAutoSwitchOn }: TimerProps) => {
-    const [count, setCount] = useState(parseInt(localStorage.getItem('count') || '1500'));
-    const [breakDuration, setBreakDuration] = useState(parseInt(localStorage.getItem('breakDuration') || '300'));
+const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDeleteAll, isAutoSwitchOn, setAutoSwitchOn, count, breakDuration, setCount, setBreakDuration }: TimerProps) => {
     const [isRunning, setIsRunning] = useState(false);
     const [worker, setWorker] = useState<Worker | null>(null);
     const [isBreak, setIsBreak] = useState(false);
@@ -112,18 +113,6 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
                 handlePlayPause={() => setIsRunning(!isRunning)}
                 changeIsBreak={changeIsBreak}
                 onReset={completeReset} />
-            {isModalOpen && (
-                <Settings
-                isAutoSwitchOn={isAutoSwitchOn}
-                setAutoSwitchOn={setAutoSwitchOn}
-                isAlertOn={isAlertOn}
-                setIsAlertOn={setIsAlertOn}
-                setBreakDuration={setBreakDuration}
-                breakDuration={breakDuration}
-                count={count}
-                setCount={setCount}
-                onClose={() => setModalOpen(false)} />
-            )}
         </div>
     );
 };
