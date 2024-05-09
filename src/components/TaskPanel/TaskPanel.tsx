@@ -67,7 +67,8 @@ const TaskPanel =
 
         const addTask = () => {
             if (task.trim() !== '') {
-                setTasks([...tasks, { id: Date.now(), text: task, completed: false, favorite: false, createdAt: new Date() }]);
+                const newTask = { id: Date.now(), text: task, completed: false, favorite: false, createdAt: new Date() } as Task;
+                setTasks(isNewTaskOnTop ? [newTask, ...tasks] : [...tasks, newTask]);
                 setTask('');
             }
         };
@@ -148,18 +149,6 @@ const TaskPanel =
             });
         };
 
-        const sortedTasks = useMemo(() => {
-            if (isNewTaskOnTop) {
-                return [...tasks].sort((a, b) => {
-                    const dateA = a.createdAt instanceof Date ? a.createdAt : new Date(a.createdAt);
-                    const dateB = b.createdAt instanceof Date ? b.createdAt : new Date(b.createdAt);
-        
-                    return dateB.getTime() - dateA.getTime();
-                });
-            }
-            return tasks;
-        }, [tasks, isNewTaskOnTop]);
-
         return (
             <DndContext onDragEnd={handleOnDragEnd} sensors={sensors} collisionDetection={closestCorners}>
                 <Popup onClose={() => setOpenTask(false)} isOpen={openTask} >
@@ -183,12 +172,17 @@ const TaskPanel =
                             onClick={editId ? () => saveEdit(editId) : addTask}
                             className="controlButton"
                             disabled={editId ? editText.trim() === '' : task.trim() === ''}>
-                            {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
+                            {
+                                editId ?
+                                    <SaveButton style={{ ...svgStyle, cursor: (editId && editText.trim() === '') ? 'not-allowed' : 'inherit' }} />
+                                    :
+                                    <TaskButton style={{ ...svgStyle, cursor: (!editId && task.trim() === '') ? 'not-allowed' : 'inherit' }} />
+                            }
                         </button>
                     </div>
                     <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
                         <ul className={styles.taskList}>
-                            {sortedTasks.map(task => (
+                            {tasks.map(task => (
                                 <TaskItem key={task.id} task={task} toggleTaskCompletion={toggleTaskCompletion} handleDoubleClick={handleDoubleClick} />
                             ))}
                         </ul>

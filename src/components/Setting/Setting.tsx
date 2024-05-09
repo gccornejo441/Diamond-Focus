@@ -224,7 +224,7 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
               </div>
 
                 <div className={styles.timerSetting}>
-                  <label htmlFor="newTasksOnTop">New Tasks Appear First:</label>
+                  <label htmlFor="newTasksOnTop">New Tasks On Top:</label>
                   <div className={styles.toggleSwitch}>
                     <input
                       type="checkbox"
