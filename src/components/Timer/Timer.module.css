@@ -11,10 +11,10 @@
 
 .timerContainer {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 620px;
-  justify-content: space-between;
+    flex-direction: row;
+    max-width: 670px;
+    margin: 10px;
+    justify-content: space-between;
 }
 
 a:hover {

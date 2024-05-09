@@ -181,7 +181,7 @@ const TaskPanel =
                         />
                         <button
                             onClick={editId ? () => saveEdit(editId) : addTask}
-                            className={editId ? styles.button : styles.button}
+                            className="controlButton"
                             disabled={editId ? editText.trim() === '' : task.trim() === ''}>
                             {editId ? <SaveButton style={svgStyle} /> : <TaskButton style={svgStyle} />}
                         </button>

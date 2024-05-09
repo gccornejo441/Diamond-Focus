@@ -361,6 +361,9 @@ textarea:focus {
 a {
   text-decoration: none;
   color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  outline: none;
 }
 
 code {
@@ -393,6 +396,7 @@ code {
 [data-theme="dark"] {
   --background-color: var(--grey-900);
   --text-color: var(--blue-grey-100);
+  --background-color-light: var(--grey-800);
 
   --button-background: var(--blue-grey-900);
   --button-background-hover: var(--blue-grey-500);
@@ -410,11 +414,18 @@ code {
   --scrollbar-track: var(--blue-grey-900);
   --scrollbar-thumb: var(--blue-grey-700);
   --scrollbar-thumb-hover: var(--blue-grey-600);
+
+  --border-color: var(--blue-grey-900);
+
+  --highlight-color-focus: var(--blue-grey-50);
 }
 
 [data-theme="red-theme"] {
   --background-color: var(--red-100);
   --text-color: var(--red-900);
+  --background-color-light: var(--red-900);
+
+  --button-background: var(--red-500);
 
   --button-background: var(--red-500);
   --button-background-hover: var(--red-700);
@@ -688,6 +699,7 @@ code {
 [data-theme="high-contrast"] {
   --background-color: #000000; 
   --text-color: #FFFFFF;       
+  --background-color-light: #131313;
 
   --button-background: #1A73E8;     
   --button-background-hover: #1669C2; 
@@ -704,6 +716,8 @@ code {
   --scrollbar-track: #1A73E8;
   --scrollbar-thumb: #333333;
   --scrollbar-thumb-hover: #474747;
+
+  --highlight-color-focus: #1A73E8;
 }
 
 body::-webkit-scrollbar {

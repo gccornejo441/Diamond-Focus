@@ -174,7 +174,7 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                   step="1"
                   value={tempCount} 
                   onChange={e => setTempCount(Math.max(1, Math.min(60, parseInt(e.target.value))))}
-                  className={styles.timerInput}
+                  className={styles.settingInput}
                 />
               </div>
 
@@ -189,7 +189,7 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                   step="1"
                   value={tempBreakDuration}
                   onChange={e => setTempBreakDuration(Math.max(1, Math.min(60, parseInt(e.target.value))))}
-                  className={styles.timerInput}
+                  className={styles.settingInput}
                 />
               </div>
 
@@ -245,7 +245,7 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                   name='alarmSoundName'
                   value={alarmName}
                   onChange={e => (e.target.value)}
-                  className={styles.textInput}
+                  className={styles.settingInput}
                   disabled={!isAlertOn}
                 >
                   <option value="SciFi Alert">SciFi Alert</option>
@@ -260,7 +260,7 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
                     name='bgImg'
                     value={bgImg}
                     onChange={(e) => setBgImg(e.target.value)}
-                    className={styles.textInput}
+                    className={styles.settingInput}
                     placeholder="Enter image URL"
                   />
                   {bgImg && (
@@ -278,11 +278,13 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
               </div>
             </div>
 
+
             <div className={styles.buttonGroup}>
               <button type="submit" className={styles.saveButton}>Save</button>
               <button onClick={handleReset} className={styles.resetButton}>Reset</button>
               <button onClick={handleCancel} className={styles.cancelButton}>Cancel</button>
             </div>
+
           </form>
         </div>
 

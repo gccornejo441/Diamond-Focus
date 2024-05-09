@@ -33,10 +33,10 @@ function App() {
   useEffect(() => {
     const settings = localStorage.getItem('settingsSaved');
     if (settings) {
-      
+
       const savedSettings = JSON.parse(settings);
       setCount(savedSettings.count ? parseInt(savedSettings.count) : 1500);
-      setBreakDuration(savedSettings.breakDuration ? parseInt(savedSettings.breakDuration): 300);
+      setBreakDuration(savedSettings.breakDuration ? parseInt(savedSettings.breakDuration) : 300);
       setIsAlertOn(savedSettings.isAlertOn ?? false);
       setAutoSwitchOn(savedSettings.isAutoSwitchOn ?? false);
       setIsNewTaskOnTop(savedSettings.isNewTaskOnTop ?? false);
@@ -109,32 +109,24 @@ function App() {
           onClose={() => setModalOpen(false)} />
       )}
       <div className={styles.innerContainer}>
-        <div className={styles.settingButtonPanel}>
-          <div className={styles.settingHeaderContainer}>
-            <h1>
+        <div className={styles.bodyContainer}>
+          <div className={styles.bodyInnerContainer}>
+            <div className={styles.settingHeaderContainer}>
               <a href="/" className={styles.title}>
                 <GemIcon aria-label="Gem Icon" className={styles.icon} />
               </a>
-            </h1>
-            <button onClick={() => setModalOpen(true)} className="controlButton">
-              <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
-            </button>
-          </div>
-        </div>
-        <div className={styles.bodyContainer}>
-          <div className={styles.bodyInnerContainer}>
+              <button onClick={() => setModalOpen(true)} className="controlButton">
+                <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
+              </button>
+            </div>
             <Timer
               count={count}
               breakDuration={breakDuration}
               setCount={setCount}
               setBreakDuration={setBreakDuration}
               isAutoSwitchOn={isAutoSwitchOn}
-              setAutoSwitchOn={setAutoSwitchOn}
               handleDeleteAll={handleDeleteAll}
-              setIsAlertOn={setIsAlertOn}
-              isAlertOn={isAlertOn}
-              isModalOpen={isModalOpen}
-              setModalOpen={setModalOpen} />
+              isAlertOn={isAlertOn} />
             <TaskPanel isNewTaskOnTop={isNewTaskOnTop} isMassDelete={isMassDelete} handleDeleteAll={handleDeleteAll} currentTask={currentTask} setCurrentTask={setCurrentTask} openTask={openTask} setOpenTask={setOpenTask} tasks={tasks} setTasks={setTasks} setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
           </div>
         </div>

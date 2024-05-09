@@ -20,20 +20,16 @@ const TimerModule = ({ count, breakDuration, isBreak }: TimerModuleProps) => (
 );
 
 interface TimerProps {
-    isModalOpen: boolean;
-    setModalOpen: (value: boolean) => void;
     isAlertOn: boolean;
-    setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
     handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
     isAutoSwitchOn: boolean;
-    setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
     count: number;
     setCount: React.Dispatch<React.SetStateAction<number>>;
     breakDuration: number;
     setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDeleteAll, isAutoSwitchOn, setAutoSwitchOn, count, breakDuration, setCount, setBreakDuration }: TimerProps) => {
+const Timer = ({isAlertOn, handleDeleteAll, isAutoSwitchOn, count, breakDuration, setCount, setBreakDuration }: TimerProps) => {
     const [isRunning, setIsRunning] = useState(false);
     const [worker, setWorker] = useState<Worker | null>(null);
     const [isBreak, setIsBreak] = useState(false);
@@ -78,7 +74,7 @@ const Timer = ({ isModalOpen, setModalOpen, isAlertOn, setIsAlertOn, handleDelet
     const completeReset = () => {
         const settings = getParsedSettings('settingsSaved');
         if (!settings) return;
-        
+
         const initialCount = parseInt(settings.count || '1500');
         const initialBreakDuration = parseInt(settings.breakDuration || '300');
 
