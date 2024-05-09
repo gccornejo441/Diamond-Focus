@@ -41,7 +41,7 @@
   padding-top: 10px;
 }
 
-.innerContainer {
+/* .innerContainer {
   margin: 0px auto;
   border-radius: 6px;
   border: 1px solid #ffffff4a;
@@ -50,21 +50,21 @@
   max-width: 670px;
   background-color: #ffffff4a;
   transition: background-color 0.5 ease-in-out 0s;
-}
+} */
 
-[data-theme="dark"] .innerContainer {
+/* [data-theme="dark"] .innerContainer {
   background-color: transparent;
   border: 0px;
-}
+} */
 
 @media screen and (max-width: 500px) {
-  .innerContainer {
+  /* .innerContainer {
     max-width: 100%;
     margin: 0px ;
     border-radius: 0px;
     border: 0px;
   }
-  
+   */
   .container {
     padding: 0px;
   }

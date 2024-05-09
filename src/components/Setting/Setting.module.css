@@ -344,7 +344,8 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-input {
+[data-theme='dark'] input,
+[data-theme='high-contrast'] input {
   -moz-appearance: textfield;
   appearance: textfield;
   margin: 0;
@@ -354,6 +355,20 @@ input {
   font-size: 0.875rem; 
   color: var(--text-color);
   background-color: var(--panel-background);
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.875rem; 
+  color: var(--text-color);
   width: 100%;
   box-sizing: border-box;
   outline: none;
@@ -370,7 +385,8 @@ input:disabled {
   cursor: not-allowed;
 }
 
-select {
+[data-theme='dark'] select,
+[data-theme='high-contrast'] select {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -379,6 +395,20 @@ select {
   font-size: 0.875rem; 
   color: var(--text-color);
   background-color: var(--panel-background);
+  padding: 8px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.875rem; 
+  color: var(--text-color);
   padding: 8px 12px;
   width: 100%;
   box-sizing: border-box;

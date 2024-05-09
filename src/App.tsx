@@ -32,8 +32,8 @@ function App() {
   });
   useEffect(() => {
     const settings = localStorage.getItem('settingsSaved');
+    
     if (settings) {
-
       const savedSettings = JSON.parse(settings);
       setCount(savedSettings.count ? parseInt(savedSettings.count) : 1500);
       setBreakDuration(savedSettings.breakDuration ? parseInt(savedSettings.breakDuration) : 300);
