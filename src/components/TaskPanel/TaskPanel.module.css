@@ -270,6 +270,7 @@ ul {
   width: fit-content;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: inline-grid;
 }
 
 .strikethrough {

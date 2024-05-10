@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import TaskPanel, { Task } from './components/TaskPanel/TaskPanel';
 import Timer from './components/Timer/Timer';
 import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
-import { ReactComponent as SettingButton } from './components/assets/settingIcon.svg';
 import styles from './App.module.css';
 import Sidebar from './components/Sidebar/Sidebar';
 import { ApplyBodyStyles } from './utils';
 import Settings from './components/Setting/Setting';
+import Dropdown from './components/Dropdown/Dropdown';
 
 function App() {
   const [openTask, setOpenTask] = useState(false);
@@ -115,9 +115,7 @@ function App() {
               <a href="/" className={styles.title}>
                 <GemIcon aria-label="Gem Icon" className={styles.icon} />
               </a>
-              <button onClick={() => setModalOpen(true)} className="controlButton">
-                <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
-              </button>
+              <Dropdown setModalOpen={setModalOpen} />
             </div>
             <Timer
               count={count}

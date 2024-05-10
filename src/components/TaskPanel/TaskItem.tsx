@@ -55,7 +55,7 @@ const TaskItem = ({ task, toggleTaskCompletion, handleDoubleClick }: TaskCompone
                 <p id={`text-${task.id}`}
                     className={`${styles.taskText} ${task.completed ? styles.strikethrough : ''}`}>
                     {task.text}
-                    <p className={styles.timeStamp}>{relativeTime}</p>
+                    <span className={styles.timeStamp}>{relativeTime}</span>
                 </p>
             </div>
         </li>
