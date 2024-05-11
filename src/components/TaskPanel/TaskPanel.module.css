@@ -41,18 +41,6 @@
   box-sizing: border-box;
   outline: none;
 }
-/* 
-appearance: textfield;
-margin: 0;
-padding: 8px 12px;
-border: 1px solid #ccc;
-border-radius: 4px;
-font-size: 0.875rem;
-color: var(--text-color);
-background-color: var(--panel-background);
-width: 100%;
-box-sizing: border-box;
-outline: none; */
 
 ul {
   list-style: none;
