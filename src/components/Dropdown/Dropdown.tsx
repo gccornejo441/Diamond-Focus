@@ -18,9 +18,10 @@ const DropdownItem = ({ name, onDropDownItemClick }: DropdownItemProps) => (
 
 interface DropdownProps {
     setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setSidebarListOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Dropdown = ({ setModalOpen }: DropdownProps) => {
+const Dropdown = ({ setModalOpen, setSidebarListOpen }: DropdownProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -49,6 +50,10 @@ const Dropdown = ({ setModalOpen }: DropdownProps) => {
                 setModalOpen(true);
                 setIsOpen(false);
                 break;
+            case "Lists":
+                setIsOpen(false);
+                setSidebarListOpen(true);
+                break;
         }
     }
 
@@ -61,6 +66,7 @@ const Dropdown = ({ setModalOpen }: DropdownProps) => {
                 <div className={styles.dropdownWrapper}>
                     <div className={styles.menuLinksWrapper}>
                         <DropdownItem name="Settings" onDropDownItemClick={onDropdownItemClick} />
+                        <DropdownItem name="Lists" onDropDownItemClick={onDropdownItemClick} />
                     </div>
                 </div>
             )}

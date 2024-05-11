@@ -426,7 +426,6 @@ select:disabled {
   cursor: not-allowed;
 }
 
-
 .buttonGroup {
   display: flex;
   justify-content: space-evenly;

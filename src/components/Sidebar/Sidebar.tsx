@@ -15,7 +15,7 @@ interface NavigationItemProps {
     children?: React.ReactNode;
 }
 
-const NavigationItem = ({ label, children }: NavigationItemProps) => {
+const NavigationItem: React.FC<NavigationItemProps> = ({ label, children }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -32,19 +32,21 @@ const NavigationItem = ({ label, children }: NavigationItemProps) => {
 
 const Sidebar = ({ isOpen, toggleSidebar, taskDescription }: SidebarProps) => {
     return (
-        <div className={isOpen ? `${styles.sidebar} ${styles.open}` : `${styles.sidebar} ${styles.closed}`}>
-            <CancelButton className={styles.cancelButton} onClick={toggleSidebar} />
-            <nav>
+        <div className={isOpen ? `${settingStyles.modalOverlay}` : ""}>
+            <div className={isOpen ? `${styles.sidebar} ${styles.open}` : `${styles.sidebar} ${styles.closed}`}>
+                <CancelButton className={styles.cancelButton} onClick={toggleSidebar} />
+                <nav>
                     <GemIcon aria-label="Gem Icon" className={settingStyles.icon} />
-                <h2 className={styles.sideBarTitle}>Diamond Focus</h2>
-                <p>{taskDescription}</p>
-                {/* <NavigationItem label="Home" />
+                    <h2 className={styles.sideBarTitle}>Diamond Focus</h2>
+                    <p>{taskDescription}</p>
+                    {/* <NavigationItem label="Home" />
                 <NavigationItem label="About">
                     <ul>
                         <li>{taskDescription}</li>
                     </ul>
                 </NavigationItem> */}
-            </nav>
+                </nav>
+            </div>
         </div>
     )
 }

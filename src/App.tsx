@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import { ApplyBodyStyles } from './utils';
 import Settings from './components/Setting/Setting';
 import Dropdown from './components/Dropdown/Dropdown';
+import SideBarListWrapper from './components/Sidebar/SidebarList';
 
 function App() {
   const [openTask, setOpenTask] = useState(false);
@@ -26,13 +27,15 @@ function App() {
   const [bgImg, setBgImg] = useState<string>('');
   const [theme, setTheme] = useState('default');
 
+  const [isSidebarListOpen, setSidebarListOpen] = useState(false);
+
   const [tasks, setTasks] = useState<Task[]>(() => {
     const savedTasks = localStorage.getItem('tasks');
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
   useEffect(() => {
     const settings = localStorage.getItem('settingsSaved');
-    
+
     if (settings) {
       const savedSettings = JSON.parse(settings);
       setCount(savedSettings.count ? parseInt(savedSettings.count) : 1500);
@@ -85,6 +88,10 @@ function App() {
     }
   }
 
+  const toggleSidebarList = () => {
+    setSidebarListOpen(!isSidebarListOpen);
+  };
+
   return (
     <div className={styles.App}>
       <div className={styles.container}></div>
@@ -115,7 +122,7 @@ function App() {
               <a href="/" className={styles.title}>
                 <GemIcon aria-label="Gem Icon" className={styles.icon} />
               </a>
-              <Dropdown setModalOpen={setModalOpen} />
+              <Dropdown setSidebarListOpen={setSidebarListOpen} setModalOpen={setModalOpen} />
             </div>
             <Timer
               count={count}
@@ -129,6 +136,9 @@ function App() {
           </div>
         </div>
       </div>
+      <SideBarListWrapper
+        setSidebarListOpen={setSidebarListOpen}
+        isSidebarListOpen={isSidebarListOpen} />
       <Sidebar
         taskDescription={askedForTask}
         isOpen={isSidebarOpen}
