@@ -1,13 +1,13 @@
 .taskList {
   padding: 10px;
-  background-color: white;
+  background-color: var(--panel-background);
   margin-bottom: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .taskList:hover {
-  background-color: #eaeaea;
+  background-color: var(--panel-background-hover);
 }
 
 .overlay {
@@ -24,11 +24,10 @@
   max-width: 20rem;
   width: 20rem;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: var(--background-color);
   padding: 15px;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
-  
   position: fixed;
   left: 0;
   top: 0;

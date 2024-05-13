@@ -1,22 +1,20 @@
 import { useState, useEffect } from 'react';
-import TaskPanel, { Task } from './components/TaskPanel/TaskPanel';
+import TaskPanel from './components/TaskPanel/TaskPanel';
 import Timer from './components/Timer/Timer';
 import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
 import styles from './App.module.css';
-import Sidebar from './components/Sidebar/Sidebar';
+import Sidebar from './components/Sidebar/SidebarView/Sidebar';
 import { ApplyBodyStyles } from './utils';
 import Settings from './components/Setting/Setting';
 import Dropdown from './components/Dropdown/Dropdown';
-import SideBarListWrapper from './components/Sidebar/SidebarList';
+import SideBarListWrapper from './components/Sidebar/SidebarList/SidebarList';
+import useTasks from './hooks/useTasks';
 
 function App() {
-  const [openTask, setOpenTask] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [askedForTask, setAskedForTask] = useState<string>("");
-  const [currentTask, setCurrentTask] = useState<Task | null>(null);
-  const [isMassDelete, setIsMassDelete] = useState<boolean>(false);
 
   const [count, setCount] = useState(0);
   const [breakDuration, setBreakDuration] = useState(0);
@@ -28,11 +26,9 @@ function App() {
   const [theme, setTheme] = useState('default');
 
   const [isSidebarListOpen, setSidebarListOpen] = useState(false);
+  const { tasks, setTasks, handleDeleteAll, openTask, setOpenTask, isMassDelete, currentTask, setCurrentTask } = useTasks();
 
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const savedTasks = localStorage.getItem('tasks');
-    return savedTasks ? JSON.parse(savedTasks) : [];
-  });
+
   useEffect(() => {
     const settings = localStorage.getItem('settingsSaved');
 
@@ -61,36 +57,6 @@ function App() {
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   }
-
-  const deleteTask = (id: number) => {
-    setTasks(tasks.filter(t => t.id !== id));
-  };
-
-  const handleDeleteAll = (removeTask: boolean, massDelete: boolean) => {
-    setIsMassDelete(massDelete)
-
-    if (massDelete) {
-      setOpenTask(true);
-      if (removeTask) {
-        localStorage.removeItem('tasks');
-        setTasks([]);
-        setOpenTask(false);
-        setIsMassDelete(false);
-      }
-
-    } else {
-      setOpenTask(true);
-      if (removeTask && currentTask && currentTask.id) {
-        deleteTask(currentTask.id);
-        setOpenTask(false);
-        setIsMassDelete(false);
-      }
-    }
-  }
-
-  const toggleSidebarList = () => {
-    setSidebarListOpen(!isSidebarListOpen);
-  };
 
   return (
     <div className={styles.App}>
@@ -132,7 +98,18 @@ function App() {
               isAutoSwitchOn={isAutoSwitchOn}
               handleDeleteAll={handleDeleteAll}
               isAlertOn={isAlertOn} />
-            <TaskPanel isNewTaskOnTop={isNewTaskOnTop} isMassDelete={isMassDelete} handleDeleteAll={handleDeleteAll} currentTask={currentTask} setCurrentTask={setCurrentTask} openTask={openTask} setOpenTask={setOpenTask} tasks={tasks} setTasks={setTasks} setAskedForTask={setAskedForTask} onClick={toggleSidebar} />
+            <TaskPanel
+              isNewTaskOnTop={isNewTaskOnTop}
+              isMassDelete={isMassDelete}
+              handleDeleteAll={handleDeleteAll}
+              currentTask={currentTask}
+              setCurrentTask={setCurrentTask}
+              openTask={openTask}
+              setOpenTask={setOpenTask}
+              tasks={tasks}
+              setTasks={setTasks}
+              setAskedForTask={setAskedForTask}
+              onClick={toggleSidebar} />
           </div>
         </div>
       </div>
