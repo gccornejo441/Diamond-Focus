@@ -43,7 +43,7 @@ const DynamicTextInput = ({ id, value, onTitleChange }: TaskListProps) => {
                     onBlur={handleInputBlur}
                 />
             ) : (
-                <div onClick={handleTextClick} className={styles.text}>
+                <div onDoubleClick={handleTextClick} className={styles.text}>
                     {value}
                 </div>
             )}
