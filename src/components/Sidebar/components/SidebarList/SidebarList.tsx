@@ -1,24 +1,12 @@
 import React, { useState } from 'react';
-import styles from './SidebarList.module.css';
 import { ReactComponent as ToggleIcon } from '../../../assets/toggleIcon.svg';
-import { Task } from '../../../TaskPanel/TaskPanel';
-import TaskList from './SidebarTaskList';
 import { initialTaskLists } from '../../../../utils';
+import styles from './SidebarList.module.css';
+import { TaskListProps, SidebarProps } from '../../types/SidebarTypes';
+import SidebarTaskList from './SidebarTaskList';
 
-interface SidebarListProps {
-    isOpen: boolean;
-    toggleSidebar: () => void;
-}
-
-export interface TasklistProp {
-    id: number;
-    title: string;
-    tasks: Task[];
-}
-
-const SidebarList = ({ isOpen, toggleSidebar }: SidebarListProps) => {
-
-    const [taskLists, setTaskLists] = useState<TasklistProp[]>(initialTaskLists);
+const SideBarListWrapper = ({ isSidebarListOpen, setSidebarListOpen }: SidebarProps) => {
+    const [taskLists, setTaskLists] = useState<TaskListProps[]>(initialTaskLists);
 
     const addTaskList = () => {
         const newTaskList = {
@@ -40,30 +28,19 @@ const SidebarList = ({ isOpen, toggleSidebar }: SidebarListProps) => {
         });
         localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
         setTaskLists(updatedTaskLists);
-    }
+    };
 
-    return (
-        <div className={isOpen ? `${styles.sidebar} ${styles.open}` : styles.sidebar}>
-            <div className={styles.toggleButton} onClick={toggleSidebar}>
-                <ToggleIcon className={styles.toggleIcon} aria-label="Toggle Icon" />
-            </div>
-            <button onClick={addTaskList} className={styles.addButton}>Add List</button>
-            {taskLists.map(list => (
-                <TaskList key={list.id} id={list.id} value={list.title} onTitleChange={handleTitleChange} />
-            ))}
-        </div>
-    );
-}
-
-interface SidebarProps {
-    isSidebarListOpen: boolean;
-    setSidebarListOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const SideBarListWrapper = ({isSidebarListOpen, setSidebarListOpen }: SidebarProps) => {
     return (
         <div>
-            <SidebarList isOpen={isSidebarListOpen} toggleSidebar={() => setSidebarListOpen(!isSidebarListOpen)} />
+            <div className={isSidebarListOpen ? `${styles.sidebar} ${styles.open}` : styles.sidebar}>
+                <div className={styles.toggleButton} onClick={() => setSidebarListOpen(!isSidebarListOpen)}>
+                    <ToggleIcon className={styles.toggleIcon} aria-label="Toggle Icon" />
+                </div>
+                <button onClick={addTaskList} className={styles.addButton}>Add List</button>
+                {taskLists.map(list => (
+                    <SidebarTaskList key={list.id} id={list.id} value={list.title} onTitleChange={handleTitleChange} />
+                ))}
+            </div>
             {isSidebarListOpen && <div className={styles.overlay} onClick={() => setSidebarListOpen(false)}></div>}
         </div>
     );

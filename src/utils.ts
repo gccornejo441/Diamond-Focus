@@ -1,4 +1,4 @@
-import { TaskListProp } from "./components/Sidebar/types/SidebarTypes";
+import { TaskListProps } from "./components/Sidebar/types/SidebarTypes";
 /**
  * Formats the given number of seconds into a string in the format "minutes:seconds".
  *
@@ -63,7 +63,7 @@ export const ApplyBodyStyles = (bgImg: string, theme: string) => {
  *
  * @return {TaskList[]} The initial task lists.
  */
-export const initialTaskLists = () : TaskListProp[] => {
+export const initialTaskLists = () : TaskListProps[] => {
     const storedTaskLists = localStorage.getItem('taskLists');
     if (storedTaskLists) {
         return JSON.parse(storedTaskLists);

@@ -1,13 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { TaskListTitleProps } from '../../types/SidebarTypes';
 import styles from './SidebarList.module.css';
 
-interface TaskListProps {
-    id: number;
-    value: string;
-    onTitleChange: (id: number, newTitle: string) => void;
-}
-
-const DynamicTextInput = ({ id, value, onTitleChange }: TaskListProps) => {
+const SidebarTaskList = ({ id, value, onTitleChange }: TaskListTitleProps) => {
     const [isEditing, setEditing] = useState(false);
     const [inputValue, setInputValue] = useState(value);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -31,32 +26,24 @@ const DynamicTextInput = ({ id, value, onTitleChange }: TaskListProps) => {
         setEditing(false);
     };
 
-
-    return (
-        <div className={styles.editableText}>
-            {isEditing ? (
-                <input
-                    ref={inputRef}
-                    className={styles.input}
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onBlur={handleInputBlur}
-                />
-            ) : (
-                <div onDoubleClick={handleTextClick} className={styles.text}>
-                    {value}
-                </div>
-            )}
-        </div>
-    )
-}
-
-
-const TaskList = ({ id, value, onTitleChange }: TaskListProps) => {
     return (
         <div className={styles.taskList}>
-            <DynamicTextInput id={id} value={value} onTitleChange={onTitleChange} />
+            <div className={styles.editableText}>
+                {isEditing ? (
+                    <input
+                        ref={inputRef}
+                        className={styles.input}
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onBlur={handleInputBlur}
+                    />
+                ) : (
+                    <div onDoubleClick={handleTextClick} className={styles.text}>
+                        {value}
+                    </div>
+                )}
+            </div>
         </div>
     );
-}
-export default TaskList;
+};
+export default SidebarTaskList;

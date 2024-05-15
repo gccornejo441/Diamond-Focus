@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Task, TaskListProp } from '../types/SidebarTypes';
+import { Task, TaskListProps } from '../types/SidebarTypes';
 
 type Props = {
-    initialTaskLists: () => TaskListProp[];
+    initialTaskLists: () => TaskListProps[];
 };
 
 const useSidebarList = ({ initialTaskLists }: Props) => {
-    const [taskLists, setTaskLists] = useState<TaskListProp[]>(initialTaskLists);
+    const [taskLists, setTaskLists] = useState<TaskListProps[]>(initialTaskLists);
 
    
     const addTaskList = () => {
@@ -14,7 +14,7 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
             id: taskLists.length,
             title: 'New List',
             tasks: [{ id: 0, text: 'New Task', completed: false, favorite: false, createdAt: new Date() }],
-        } as TaskListProp;
+        } as TaskListProps;
 
         const updatedTaskLists = [...taskLists, newTaskList];
         localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
