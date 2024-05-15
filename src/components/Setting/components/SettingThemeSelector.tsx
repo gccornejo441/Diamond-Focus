@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Setting.module.css';
 import { Tooltip } from 'react-tooltip';
+import {styles} from '../index';
 
 interface ThemeSelectorProps {
   selectedTheme: string;

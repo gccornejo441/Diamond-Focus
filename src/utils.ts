@@ -1,3 +1,4 @@
+import { TaskListProp } from "./components/Sidebar/types/SidebarTypes";
 /**
  * Formats the given number of seconds into a string in the format "minutes:seconds".
  *
@@ -57,49 +58,21 @@ export const ApplyBodyStyles = (bgImg: string, theme: string) => {
   }
 };
 
-
 /**
- * Retrieves and parses settings from local storage based on the provided key.
+ * Retrieves the initial task lists from localStorage. If no task lists are stored, returns a default task list.
  *
- * @param {string} key - The key used to retrieve the settings from local storage.
- * @return {any | null} The parsed settings object if successful, otherwise null.
+ * @return {TaskList[]} The initial task lists.
  */
-export function getParsedSettings(key: string) {
-    try {
-        const settings = localStorage.getItem(key);
-        return settings ? JSON.parse(settings) : null;
-    } catch (e) {
-        console.error(`Error parsing settings from ${key}:`, e);
-        return null;
+export const initialTaskLists = () : TaskListProp[] => {
+    const storedTaskLists = localStorage.getItem('taskLists');
+    if (storedTaskLists) {
+        return JSON.parse(storedTaskLists);
     }
-}
-
-export interface Settings {
-    count: number;
-    breakDuration: number;
-    isAlertOn: boolean;
-    isAutoSwitchOn: boolean;
-    theme: string;
-    bgImg: string;
-    alarmSoundName: string;
-    isNewTaskOnTop: boolean;
-  }
-  
-/**
- * Generates a Settings object based on the provided FormData.
- *
- * @param {FormData} formData - The FormData containing the settings data.
- * @return {Settings} The generated Settings object.
- */
-export function settingFormHelper(formData: FormData): Settings {
-    return {
-      count: parseInt(formData.get('focusTimer') as string) * 60,
-      breakDuration: parseInt(formData.get('breakTimer') as string) * 60,
-      isAlertOn: formData.has('alarmMuter'),
-      isAutoSwitchOn: formData.has('autoSwitch'),
-      theme: formData.get('theme') as string,
-      bgImg: formData.get('bgImg') as string,
-      alarmSoundName: formData.get('alarmSoundName') as string,
-      isNewTaskOnTop: formData.has('newTasksOnTop')
-    };
-}
+    return [{
+        id: 0,
+        title: 'New List',
+        tasks: [
+            { id: 0, text: 'New Task', completed: false, favorite: false, createdAt: new Date() }, 
+        ] 
+    }];
+};

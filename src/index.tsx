@@ -5,6 +5,12 @@ import 'react-tooltip/dist/react-tooltip.css'
 import 'reactjs-popup/dist/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { initializeDefaultSettings } from './components/Setting/utils/Settings';
+
+const SETTINGS_KEY = 'appSettings';
+
+initializeDefaultSettings(SETTINGS_KEY);
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

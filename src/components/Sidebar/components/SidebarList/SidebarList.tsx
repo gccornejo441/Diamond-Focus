@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import styles from '../SidebarList/SidebarList.module.css';
-import { ReactComponent as ToggleIcon } from '../../assets/toggleIcon.svg';
-import { Task } from '../../TaskPanel/TaskPanel';
+import styles from './SidebarList.module.css';
+import { ReactComponent as ToggleIcon } from '../../../assets/toggleIcon.svg';
+import { Task } from '../../../TaskPanel/TaskPanel';
 import TaskList from './SidebarTaskList';
+import { initialTaskLists } from '../../../../utils';
 
 interface SidebarListProps {
     isOpen: boolean;
@@ -16,25 +17,12 @@ export interface TasklistProp {
 }
 
 const SidebarList = ({ isOpen, toggleSidebar }: SidebarListProps) => {
-    const initialTaskLists = () => {
-        const storedTaskLists = localStorage.getItem('taskLists');
-        if (storedTaskLists) {
-            return JSON.parse(storedTaskLists);
-        }
-        return [{
-            id: 0,
-            title: 'New List',
-            tasks: [
-                { id: 0, text: 'New Task', completed: false, favorite: false, createdAt: new Date() }, 
-            ] 
-        }];
-    };
 
     const [taskLists, setTaskLists] = useState<TasklistProp[]>(initialTaskLists);
 
     const addTaskList = () => {
         const newTaskList = {
-            id: taskLists.length, // Adjust ID calculation if needed
+            id: taskLists.length,
             title: 'New List',
             tasks: [{ id: 0, text: 'New Task', completed: false, favorite: false, createdAt: new Date() }],
         };

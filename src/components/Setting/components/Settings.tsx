@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from './Setting.module.css';
-import { ApplyBodyStyles, getParsedSettings, settingFormHelper } from '../../utils';
-import ThemeSelector from './SettingThemeSelector';
+import { ApplyBodyStyles } from '../../../utils';
+import { getParsedSettings, settingFormHelper, styles, ThemeSelector, SettingPanelProps } from '../index';
 
 export const SettingIcon = () => (
   <svg
@@ -28,27 +27,6 @@ export const SettingIcon = () => (
   </svg>
 );
 
-
-interface SettingPanelProps {
-  onClose: () => void;
-  count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-  breakDuration: number;
-  setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
-  isAlertOn: boolean;
-  setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
-  isAutoSwitchOn: boolean;
-  setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
-  isNewTaskOnTop: boolean;
-  setIsNewTaskOnTop: React.Dispatch<React.SetStateAction<boolean>>;
-  bgImg: string;
-  setBgImg: React.Dispatch<React.SetStateAction<string>>;
-  theme: string;
-  setTheme: React.Dispatch<React.SetStateAction<string>>;
-  alarmName: string;
-  setAlarmName: React.Dispatch<React.SetStateAction<string>>;
-}
-
 const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, isAlertOn, setIsAlertOn, isAutoSwitchOn, setAutoSwitchOn, isNewTaskOnTop, setIsNewTaskOnTop, bgImg, setBgImg, theme, setTheme, alarmName, setAlarmName }: SettingPanelProps) => {
   const [tempTheme, setTempTheme] = useState<string>('');
   const [tempBgImg, setTempBgImg] = useState<string>('');
@@ -58,7 +36,7 @@ const Settings = ({ onClose, count, setCount, breakDuration, setBreakDuration, i
   useEffect(() => {
     setTempTheme(theme);
     setTempBgImg(bgImg);
-    const settings = getParsedSettings('settingsSaved');
+    const settings = getParsedSettings('appSettings');
     if (!settings) return;
 
     setTempCount(settings.count / 60);

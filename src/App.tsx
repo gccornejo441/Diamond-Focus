@@ -3,12 +3,13 @@ import TaskPanel from './components/TaskPanel/TaskPanel';
 import Timer from './components/Timer/Timer';
 import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
 import styles from './App.module.css';
-import Sidebar from './components/Sidebar/SidebarView/Sidebar';
+import Sidebar from './components/Sidebar/components/Sidebar/Sidebar';
 import { ApplyBodyStyles } from './utils';
-import Settings from './components/Setting/Setting';
 import Dropdown from './components/Dropdown/Dropdown';
-import SideBarListWrapper from './components/Sidebar/SidebarList/SidebarList';
+import SideBarListWrapper from './components/Sidebar/components/SidebarList/SidebarList';
 import useTasks from './hooks/useTasks';
+import { SettingsProps, Settings, getParsedSettings } from './components/Setting/index';
+const SETTINGS_KEY = 'appSettings';
 
 function App() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -16,8 +17,8 @@ function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [askedForTask, setAskedForTask] = useState<string>("");
 
-  const [count, setCount] = useState(0);
-  const [breakDuration, setBreakDuration] = useState(0);
+  const [count, setCount] = useState(1500);
+  const [breakDuration, setBreakDuration] = useState(300);
   const [isAlertOn, setIsAlertOn] = useState<boolean>(false);
   const [isAutoSwitchOn, setAutoSwitchOn] = useState<boolean>(true);
   const [isNewTaskOnTop, setIsNewTaskOnTop] = useState<boolean>(false);
@@ -30,21 +31,21 @@ function App() {
 
 
   useEffect(() => {
-    const settings = localStorage.getItem('settingsSaved');
+    const settings: SettingsProps | null = getParsedSettings(SETTINGS_KEY);
 
     if (settings) {
-      const savedSettings = JSON.parse(settings);
-      setCount(savedSettings.count ? parseInt(savedSettings.count) : 1500);
-      setBreakDuration(savedSettings.breakDuration ? parseInt(savedSettings.breakDuration) : 300);
-      setIsAlertOn(savedSettings.isAlertOn ?? false);
-      setAutoSwitchOn(savedSettings.isAutoSwitchOn ?? false);
-      setIsNewTaskOnTop(savedSettings.isNewTaskOnTop ?? false);
-      setTheme(savedSettings.theme || '');
-      setBgImg(savedSettings.bgImg || '');
+        setCount(settings.count);
+        setBreakDuration(settings.breakDuration);
+        setIsAlertOn(settings.isAlertOn);
+        setAutoSwitchOn(settings.isAutoSwitchOn);
+        setIsNewTaskOnTop(settings.isNewTaskOnTop);
+        setTheme(settings.theme);
+        setBgImg(settings.bgImg);
+        setAlarmName(settings.alarmSoundName);
     }
 
     setTimeout(() => setIsLoading(false), 100);
-  }, []);
+}, []);
 
   useEffect(() => {
     ApplyBodyStyles(bgImg, theme);

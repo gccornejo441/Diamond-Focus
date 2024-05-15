@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from './Timer.module.css';
-import { TimePadder, getParsedSettings } from '../../utils';
+import { TimePadder } from '../../utils';
 import ButtonPanel from '../ButtonPanel/ButtonPanel';
 import SciFiAlarm from '../assets/sciFiAlarm.mp3';
 import useTimerEffect from '../../hooks/useTimerEffect';
+import { getParsedSettings } from '../Setting/index';
 
 interface TimerModuleProps {
     count: number;
@@ -72,11 +73,11 @@ const Timer = ({isAlertOn, handleDeleteAll, isAutoSwitchOn, count, breakDuration
 
 
     const completeReset = () => {
-        const settings = getParsedSettings('settingsSaved');
+        const settings = getParsedSettings('appSettings');
         if (!settings) return;
 
-        const initialCount = parseInt(settings.count || '1500');
-        const initialBreakDuration = parseInt(settings.breakDuration || '300');
+        const initialCount = parseInt(`${settings.count}` || '1500');
+        const initialBreakDuration = parseInt(`${settings.breakDuration}` || '300');
 
         if (isBreak) {
             if (isAutoSwitchOn) setIsBreak(false);
@@ -91,15 +92,16 @@ const Timer = ({isAlertOn, handleDeleteAll, isAutoSwitchOn, count, breakDuration
     };
 
     const changeIsBreak = () => {
-        const settings = getParsedSettings('settingsSaved');
+     
+        const settings = getParsedSettings('appSettings');
         if (!settings) return;
 
         if (isBreak) {
             setIsBreak(false);
-            setCount(parseInt(settings.count || '1500'));
+            setCount(parseInt(`${settings.count}` || '1500'));
         } else {
             setIsBreak(true);
-            setBreakDuration(parseInt(settings.breakDuration || '300'));
+            setBreakDuration(parseInt(`${settings.breakDuration}`|| '300'));
         }
     }
 

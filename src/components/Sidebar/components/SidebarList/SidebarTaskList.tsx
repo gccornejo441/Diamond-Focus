@@ -27,7 +27,7 @@ const DynamicTextInput = ({ id, value, onTitleChange }: TaskListProps) => {
     };
 
     const handleInputBlur = () => {
-        onTitleChange(id, inputValue); // Include id when calling onTitleChange
+        onTitleChange(id, inputValue);
         setEditing(false);
     };
 
