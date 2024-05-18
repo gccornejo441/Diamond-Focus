@@ -54,7 +54,7 @@ function App() {
   }, [bgImg, theme]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className={styles.progressBarArea}>Loading...</div>;
   }
 
   const toggleSidebar = () => {

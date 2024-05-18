@@ -48,3 +48,7 @@
   left: 10px;
   z-index: 20;
 }
+
+.progressBarArea {
+  display: flex;
+}
