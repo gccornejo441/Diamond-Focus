@@ -1,8 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ReactComponent as ListMenuButton } from '../../../assets/listMenuIcon.svg';
 import { TaskListTitleProps } from '../../types/SidebarTypes';
 import styles from './SidebarList.module.css';
+import Dropdown from '../../../Dropdown/Dropdown';
 
-const SidebarTaskList = ({ id, value, onTitleChange }: TaskListTitleProps) => {
+interface SidebarTaskListProps extends TaskListTitleProps {
+    onDelete: (id: number) => void;
+}
+
+const SidebarTaskList = ({ id, value, onTitleChange, onDelete }: SidebarTaskListProps) => {
     const [isEditing, setEditing] = useState(false);
     const [inputValue, setInputValue] = useState(value);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -26,6 +32,10 @@ const SidebarTaskList = ({ id, value, onTitleChange }: TaskListTitleProps) => {
         setEditing(false);
     };
 
+    const handleDeleteClick = () => {
+        onDelete(id);
+    };
+
     return (
         <div className={styles.taskList}>
             <div className={styles.editableText}>
@@ -38,12 +48,21 @@ const SidebarTaskList = ({ id, value, onTitleChange }: TaskListTitleProps) => {
                         onBlur={handleInputBlur}
                     />
                 ) : (
-                    <div onDoubleClick={handleTextClick} className={styles.text}>
+                    <div onDoubleClick={handleTextClick} className={styles.taskListTitle}>
                         {value}
                     </div>
                 )}
             </div>
+            <Dropdown
+                stateHandlers={{
+                    "Rename list": () => setEditing(true),
+                    "Delete list": handleDeleteClick,
+                }}
+            >
+                <ListMenuButton className={styles.svgStyle} />
+            </Dropdown>
         </div>
     );
 };
+
 export default SidebarTaskList;

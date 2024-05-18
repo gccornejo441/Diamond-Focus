@@ -9,6 +9,8 @@ import Dropdown from './components/Dropdown/Dropdown';
 import SideBarListWrapper from './components/Sidebar/components/SidebarList/SidebarList';
 import useTasks from './hooks/useTasks';
 import { SettingsProps, Settings, getParsedSettings } from './components/Setting/index';
+import { ReactComponent as SettingButton } from '../src/components/assets/settingIcon.svg'
+
 const SETTINGS_KEY = 'appSettings';
 
 function App() {
@@ -34,18 +36,18 @@ function App() {
     const settings: SettingsProps | null = getParsedSettings(SETTINGS_KEY);
 
     if (settings) {
-        setCount(settings.count);
-        setBreakDuration(settings.breakDuration);
-        setIsAlertOn(settings.isAlertOn);
-        setAutoSwitchOn(settings.isAutoSwitchOn);
-        setIsNewTaskOnTop(settings.isNewTaskOnTop);
-        setTheme(settings.theme);
-        setBgImg(settings.bgImg);
-        setAlarmName(settings.alarmSoundName);
+      setCount(settings.count);
+      setBreakDuration(settings.breakDuration);
+      setIsAlertOn(settings.isAlertOn);
+      setAutoSwitchOn(settings.isAutoSwitchOn);
+      setIsNewTaskOnTop(settings.isNewTaskOnTop);
+      setTheme(settings.theme);
+      setBgImg(settings.bgImg);
+      setAlarmName(settings.alarmSoundName);
     }
 
     setTimeout(() => setIsLoading(false), 100);
-}, []);
+  }, []);
 
   useEffect(() => {
     ApplyBodyStyles(bgImg, theme);
@@ -89,7 +91,13 @@ function App() {
               <a href="/" className={styles.title}>
                 <GemIcon aria-label="Gem Icon" className={styles.icon} />
               </a>
-              <Dropdown setSidebarListOpen={setSidebarListOpen} setModalOpen={setModalOpen} />
+              <Dropdown 
+            stateHandlers={{
+                "Settings": setModalOpen,
+                "Lists": setSidebarListOpen,
+            }}>
+                <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
+              </Dropdown>
             </div>
             <Timer
               count={count}

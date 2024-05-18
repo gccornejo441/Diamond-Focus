@@ -5,6 +5,6 @@ export { default as sidebarListStyles } from './components/SidebarList/SidebarLi
 
 export { default as Sidebar } from './components/Sidebar/Sidebar';
 export { default as SidebarList } from './components/SidebarList/SidebarList';
-export { default as SidebarTaskList } from './components/SidebarList/SidebarTaskList';
+export { default as SidebarTaskList } from './components/SidebarList/SidebarListTask';
 
 export { default as useSidebarList } from './hooks/useSidebar';

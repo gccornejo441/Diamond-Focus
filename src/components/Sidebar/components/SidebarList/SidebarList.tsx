@@ -3,7 +3,7 @@ import { ReactComponent as ToggleIcon } from '../../../assets/toggleIcon.svg';
 import { initialTaskLists } from '../../../../utils';
 import styles from './SidebarList.module.css';
 import { TaskListProps, SidebarProps } from '../../types/SidebarTypes';
-import SidebarTaskList from './SidebarTaskList';
+import SidebarTaskList from './SidebarListTask';
 
 const SideBarListWrapper = ({ isSidebarListOpen, setSidebarListOpen }: SidebarProps) => {
     const [taskLists, setTaskLists] = useState<TaskListProps[]>(initialTaskLists);
@@ -30,6 +30,12 @@ const SideBarListWrapper = ({ isSidebarListOpen, setSidebarListOpen }: SidebarPr
         setTaskLists(updatedTaskLists);
     };
 
+    const handleTaskListDelete = (id: number) => {
+        const updatedTaskLists = taskLists.filter(list => list.id !== id);
+        localStorage.setItem('taskLists', JSON.stringify(updatedTaskLists));
+        setTaskLists(updatedTaskLists);
+    };
+
     return (
         <div>
             <div className={isSidebarListOpen ? `${styles.sidebar} ${styles.open}` : styles.sidebar}>
@@ -38,7 +44,13 @@ const SideBarListWrapper = ({ isSidebarListOpen, setSidebarListOpen }: SidebarPr
                 </div>
                 <button onClick={addTaskList} className={styles.addButton}>Add List</button>
                 {taskLists.map(list => (
-                    <SidebarTaskList key={list.id} id={list.id} value={list.title} onTitleChange={handleTitleChange} />
+                    <SidebarTaskList
+                        key={list.id}
+                        id={list.id}
+                        value={list.title}
+                        onTitleChange={handleTitleChange}
+                        onDelete={handleTaskListDelete} // Pass the delete handler
+                    />
                 ))}
             </div>
             {isSidebarListOpen && <div className={styles.overlay} onClick={() => setSidebarListOpen(false)}></div>}

@@ -400,8 +400,8 @@ code {
 
   --button-background: var(--blue-grey-900);
   --button-background-hover: var(--blue-grey-500);
-  --button-hover-text: var(--blue-grey-100);
-  --button-text: var(--blue-grey-900);
+  --button-hover-text: var(--blue-grey-300);
+  --button-text: var(--blue-grey-100);
 
   --panel-background: var(--blue-grey-800);
   --panel-background-hover: var(--blue-grey-700);

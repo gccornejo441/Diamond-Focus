@@ -1,5 +1,6 @@
 .relative {
   position: relative;
+  align-content: center;
 }
 
 .dropdownWrapper {
