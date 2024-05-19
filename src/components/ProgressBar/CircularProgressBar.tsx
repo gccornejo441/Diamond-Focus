@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import styles from './CircularProgressBar.module.css';
+import { ReactElement } from "react";
+import styles from "./CircularProgressBar.module.css";
 
 interface CircularProgressBarProps {
   progress: number;
@@ -9,11 +9,11 @@ interface CircularProgressBarProps {
 
 export function CircularProgressBar({
   progress,
-  label = 'Progress Bar',
-  width = 300
+  label = "Progress Bar",
+  width = 300,
 }: CircularProgressBarProps): ReactElement {
   const strokeWidth = 6;
-  const radius = (100 / 2) - (strokeWidth * 2);
+  const radius = 100 / 2 - strokeWidth * 2;
   const circumference = radius * 2 * Math.PI;
   const offset = circumference - (progress / 100) * circumference;
 

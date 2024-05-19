@@ -1,30 +1,30 @@
 /* eslint-disable no-restricted-globals */
 
-let timerID; 
+let timerID;
 let startTimerInterval;
 let timeRemaining;
-let count; 
+let count;
 const initSeconds = (seconds) => {
   count = seconds;
   timeRemaining = seconds;
 };
 
 const updateTimer = () => {
-  const currentTime = new Date().getTime(); 
+  const currentTime = new Date().getTime();
   const elapsed = Math.floor((currentTime - startTimerInterval) / 1000);
-  timeRemaining = count - elapsed; 
-  
+  timeRemaining = count - elapsed;
+
   if (timeRemaining <= 0) {
     timeRemaining = 0;
-    clearInterval(timerID); 
+    clearInterval(timerID);
   }
 
-  return timeRemaining; 
+  return timeRemaining;
 };
 
 const startTimer = () => {
-  if (!timerID) { 
-    startTimerInterval = new Date().getTime() - (count - timeRemaining) * 1000; 
+  if (!timerID) {
+    startTimerInterval = new Date().getTime() - (count - timeRemaining) * 1000;
     timerID = setInterval(() => {
       const remainingSeconds = updateTimer();
       self.postMessage(remainingSeconds);
@@ -33,8 +33,8 @@ const startTimer = () => {
 };
 
 const pauseTimer = () => {
-  clearInterval(timerID); 
-  timerID = null; 
+  clearInterval(timerID);
+  timerID = null;
 };
 
 self.addEventListener("message", (e) => {
@@ -57,7 +57,7 @@ self.addEventListener("message", (e) => {
     case "change":
       initSeconds(seconds);
       startTimer();
-      break; 
+      break;
     case "reset":
       pauseTimer();
       initSeconds(seconds);

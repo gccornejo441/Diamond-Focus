@@ -1,88 +1,96 @@
 .buttonPanel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px 0px 0px 0px;
-    gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 0px 0px 0px;
+  gap: 1rem;
 }
 
 .buttonPanel a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonPanel a:active {
-    transform: scale(0.9);
-    transition: 0.5s;
-    color: #FFFFFF;
-    text-shadow: 0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF, 0 0 40px #FFFFFF, 0 0 50px #FFFFFF, 0 0 60px #FFFFFF, 0 0 70px #FFFFFF;
-    text-decoration: none;
+  transform: scale(0.9);
+  transition: 0.5s;
+  color: #ffffff;
+  text-shadow:
+    0 0 10px #ffffff,
+    0 0 20px #ffffff,
+    0 0 30px #ffffff,
+    0 0 40px #ffffff,
+    0 0 50px #ffffff,
+    0 0 60px #ffffff,
+    0 0 70px #ffffff;
+  text-decoration: none;
 }
 
 .buttonMenu {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 16px;
-    border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    outline: none;
-    background-color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+  outline: none;
+  background-color: inherit;
 }
 
-.buttonMenu:hover, .buttonMenu:focus {
-    background-color: var(--button-hover-color);
-    transform: scale(1.05);
+.buttonMenu:hover,
+.buttonMenu:focus {
+  background-color: var(--button-hover-color);
+  transform: scale(1.05);
 }
 
 .dropdown {
-    position: relative;
-    margin: 16px;
-    width: auto;
-    display: inline-block;
-  }
-  
-  .button {
-    padding: 8px 16px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: #e0e0e0;
-  }
-  
+  position: relative;
+  margin: 16px;
+  width: auto;
+  display: inline-block;
+}
 
-  /* DropDownCard.module.css */
-  .dropdownCard {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    width: 100%;
-    position: absolute;
-    background: white;
-    z-index: 1000;
-  }
-  
-  .list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-  }
-  
-  .listItem {
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-  }
-  
-  .listItem:hover {
-    background-color: #f0f0f0;
-    color: white;
-  }
-  
+.button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #e0e0e0;
+}
+
+/* DropDownCard.module.css */
+.dropdownCard {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  position: absolute;
+  background: white;
+  z-index: 1000;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.listItem {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.listItem:hover {
+  background-color: #f0f0f0;
+  color: white;
+}
