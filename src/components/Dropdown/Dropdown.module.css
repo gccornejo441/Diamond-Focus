@@ -18,14 +18,18 @@
   transform: scale(1);
   opacity: 1;
   z-index: 999;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+  box-shadow:
+    rgba(0, 0, 0, 0.15) 0px 10px 20px,
+    rgba(0, 0, 0, 0.1) 0px 3px 6px;
 }
 
 .menuLinksWrapper {
   background-color: var(--background-color);
   border-radius: calc(5px - 2px);
   border-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+  box-shadow:
+    rgba(0, 0, 0, 0.15) 0px 10px 20px,
+    rgba(0, 0, 0, 0.1) 0px 3px 6px;
   max-height: calc(100vh - 100px) !important;
   min-width: 12rem;
   overflow-y: auto;
@@ -48,8 +52,10 @@
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
-  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  transition:
+    opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
 }
 
 .menuLink:focus {
@@ -67,7 +73,9 @@
   transition: cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.15s;
   background-color: var(--panel-background);
   border-radius: 5px;
-  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
 }
 
 .menuLink {

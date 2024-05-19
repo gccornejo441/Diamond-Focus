@@ -11,10 +11,10 @@
   flex-direction: column;
 }
 
-[data-theme='dark'] .deleteModal,
-[data-theme='high-contrast'] .deleteModal {
+[data-theme="dark"] .deleteModal,
+[data-theme="high-contrast"] .deleteModal {
   background-color: var(--background-color);
-  border : 1px solid var(--border-color);
+  border: 1px solid var(--border-color);
 }
 
 .deleteModalHeader {

@@ -298,7 +298,6 @@
   --slate-900: #0f172a;
   --slate-950: #020617;
 
-
   --b1: #000e3d;
   --b15: #0b276d;
   --b2: #234cda;
@@ -315,7 +314,8 @@ body {
   color: var(--text-color);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
@@ -328,7 +328,19 @@ main {
   flex-grow: 1;
 }
 
-blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre {
+blockquote,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+pre {
   margin: 0;
 }
 
@@ -584,7 +596,7 @@ code {
   --highlight-color-focus: var(--pink-200);
 }
 
-[data-theme='blue-theme'] {
+[data-theme="blue-theme"] {
   --background-color: var(--blue-100);
   --text-color: var(--blue-900);
 
@@ -607,7 +619,7 @@ code {
   --highlight-color-focus: var(--blue-200);
 }
 
-[data-theme='rose-theme'] {
+[data-theme="rose-theme"] {
   --background-color: var(--rose-100);
   --text-color: var(--rose-900);
 
@@ -630,7 +642,7 @@ code {
   --highlight-color-focus: var(--rose-200);
 }
 
-[data-theme='slate-theme'] {
+[data-theme="slate-theme"] {
   --background-color: var(--slate-100);
   --text-color: var(--slate-900);
 
@@ -653,7 +665,7 @@ code {
   --highlight-color-focus: var(--slate-200);
 }
 
-[data-theme='orange-theme'] {
+[data-theme="orange-theme"] {
   --background-color: var(--orange-100);
   --text-color: var(--orange-900);
 
@@ -723,23 +735,23 @@ code {
 }
 
 [data-theme="high-contrast"] {
-  --background-color: #000000; 
-  --text-color: #FFFFFF;       
+  --background-color: #000000;
+  --text-color: #ffffff;
   --background-color-light: #131313;
 
-  --button-background: #1A73E8;     
-  --button-background-hover: #1669C2; 
-  --button-text: #FFFFFF;             
+  --button-background: #1a73e8;
+  --button-background-hover: #1669c2;
+  --button-text: #ffffff;
 
-  --panel-background: #333333;        
-  --panel-background-hover: #474747;   
-  --panel-text: #FFFFFF; 
-  --panel-text-faint: #BBBBBB;     
-  --panel-text-hover: #000000;         
+  --panel-background: #333333;
+  --panel-background-hover: #474747;
+  --panel-text: #ffffff;
+  --panel-text-faint: #bbbbbb;
+  --panel-text-hover: #000000;
 
-  --alert: #FF0000;
+  --alert: #ff0000;
 
-  --scrollbar-track: #1A73E8;
+  --scrollbar-track: #1a73e8;
   --scrollbar-thumb: #333333;
   --scrollbar-thumb-hover: #474747;
 
@@ -793,8 +805,10 @@ button {
   background-color: var(--button-background);
   border-radius: 6px;
   border-width: 0;
-  box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-    rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+  box-shadow:
+    rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
+    rgba(50, 50, 93, 0.1) 0 2px 5px 0,
+    rgba(0, 0, 0, 0.07) 0 1px 1px 0;
   box-sizing: border-box;
   cursor: pointer;
   font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
@@ -807,21 +821,27 @@ button {
   text-align: center;
   text-transform: none;
   transform: translateZ(0);
-  transition: all 0.2s, box-shadow 0.08s ease-in;
+  transition:
+    all 0.2s,
+    box-shadow 0.08s ease-in;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 }
 
 .controlButton:hover {
-  box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-    rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0;
+  box-shadow:
+    rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
+    rgba(50, 50, 93, 0.2) 0 6px 15px 0,
+    rgba(0, 0, 0, 0.1) 0 2px 2px 0;
   transform: translateY(-2px);
 }
 
 .controlButton:active {
-  box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-    rgba(50, 50, 93, 0.2) 0 3px 3px 0, rgba(0, 0, 0, 0.1) 0 1px 3px 0;
+  box-shadow:
+    rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
+    rgba(50, 50, 93, 0.2) 0 3px 3px 0,
+    rgba(0, 0, 0, 0.1) 0 1px 3px 0;
   transform: translateY(2px);
 }
 

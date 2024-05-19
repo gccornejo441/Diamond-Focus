@@ -30,7 +30,9 @@
   background-color: var(--background-color);
   padding: 15px;
   box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+  box-shadow:
+    rgba(0, 0, 0, 0.15) 0px 10px 20px,
+    rgba(0, 0, 0, 0.1) 0px 3px 6px;
   position: fixed;
   left: 0;
   top: 0;
@@ -122,5 +124,5 @@
 
 .editableText {
   padding: 5px;
-  align-content: center
+  align-content: center;
 }

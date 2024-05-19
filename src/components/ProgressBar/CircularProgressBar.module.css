@@ -1,39 +1,38 @@
 .container {
-    position: relative;
-  }
-  
-  .backgroundCircle {
-    fill: hsla(0, 0%, 100%, 0);
-  }
-  
-  .circle {
-    fill: transparent;
-    stroke: hsla(225, 20%, 92%, 0.9);
-    stroke-linecap: round;
-  }
-  
-  .filledCircle {
-    fill: none;
-    stroke: hsla(302, 23%, 72%, 0.9);
-    transform: rotate(-90deg);
-    transform-origin: 50% 50%;
-    transition: stroke-dashoffset 0.5s ease-out;
-  }
-  
-  .text {
-    align-items: center;
-    color: hsla(225, 23%, 62%, 1);
-    display: flex;
-    font-weight: bold;
-    height: 100%;
-    justify-content: center;
-    left: 0;
-    letter-spacing: 0.025em;
-    margin-bottom: 1rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-  }
-  
+  position: relative;
+}
+
+.backgroundCircle {
+  fill: hsla(0, 0%, 100%, 0);
+}
+
+.circle {
+  fill: transparent;
+  stroke: hsla(225, 20%, 92%, 0.9);
+  stroke-linecap: round;
+}
+
+.filledCircle {
+  fill: none;
+  stroke: hsla(302, 23%, 72%, 0.9);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.5s ease-out;
+}
+
+.text {
+  align-items: center;
+  color: hsla(225, 23%, 62%, 1);
+  display: flex;
+  font-weight: bold;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  letter-spacing: 0.025em;
+  margin-bottom: 1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}

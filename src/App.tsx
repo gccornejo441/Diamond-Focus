@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
-import TaskPanel from './components/TaskPanel/TaskPanel';
-import Timer from './components/Timer/Timer';
-import { ReactComponent as GemIcon } from './components/assets/gemIcon.svg';
-import styles from './App.module.css';
-import Sidebar from './components/Sidebar/components/Sidebar/Sidebar';
-import { ApplyBodyStyles } from './utils';
-import Dropdown from './components/Dropdown/Dropdown';
-import SideBarListWrapper from './components/Sidebar/components/SidebarList/SidebarList';
-import useTasks from './hooks/useTasks';
-import { SettingsProps, Settings, getParsedSettings } from './components/Setting/index';
-import { ReactComponent as SettingButton } from '../src/components/assets/settingIcon.svg'
+import { useState, useEffect } from "react";
+import TaskPanel from "./components/TaskPanel/TaskPanel";
+import Timer from "./components/Timer/Timer";
+import styles from "./App.module.css";
+import Sidebar from "./components/Sidebar/components/Sidebar/Sidebar";
+import { ApplyBodyStyles } from "./utils";
+import { SidebarList } from "@components/Sidebar/index";
+import Dropdown from "./components/Dropdown/Dropdown";
+import useTasks from "@hooks/useTasks";
+import SettingButton from "@assets/settingIcon.svg?react";
+import GemLogo from "@assets/gemIcon.svg?react";
+import { getParsedSettings, SettingsProps } from "@components/Setting/export";
+import { Settings } from "@components/Setting/";
 
-const SETTINGS_KEY = 'appSettings';
+const SETTINGS_KEY = "appSettings";
 
 function App() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -24,13 +25,21 @@ function App() {
   const [isAlertOn, setIsAlertOn] = useState<boolean>(false);
   const [isAutoSwitchOn, setAutoSwitchOn] = useState<boolean>(true);
   const [isNewTaskOnTop, setIsNewTaskOnTop] = useState<boolean>(false);
-  const [alarmName, setAlarmName] = useState<string>('');
-  const [bgImg, setBgImg] = useState<string>('');
-  const [theme, setTheme] = useState('default');
+  const [alarmName, setAlarmName] = useState<string>("");
+  const [bgImg, setBgImg] = useState<string>("");
+  const [theme, setTheme] = useState("default");
 
   const [isSidebarListOpen, setSidebarListOpen] = useState(false);
-  const { tasks, setTasks, handleDeleteAll, openTask, setOpenTask, isMassDelete, currentTask, setCurrentTask } = useTasks();
-
+  const {
+    tasks,
+    setTasks,
+    handleDeleteAll,
+    openTask,
+    setOpenTask,
+    isMassDelete,
+    currentTask,
+    setCurrentTask,
+  } = useTasks();
 
   useEffect(() => {
     const settings: SettingsProps | null = getParsedSettings(SETTINGS_KEY);
@@ -59,7 +68,7 @@ function App() {
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
-  }
+  };
 
   return (
     <div className={styles.App}>
@@ -82,21 +91,26 @@ function App() {
           setBreakDuration={setBreakDuration}
           count={count}
           setCount={setCount}
-          onClose={() => setModalOpen(false)} />
+          onClose={() => setModalOpen(false)}
+        />
       )}
       <div className={styles.innerContainer}>
         <div className={styles.bodyContainer}>
           <div className={styles.bodyInnerContainer}>
             <div className={styles.settingHeaderContainer}>
               <a href="/" className={styles.title}>
-                <GemIcon aria-label="Gem Icon" className={styles.icon} />
+                <GemLogo aria-label="Gem Icon" className={styles.icon} />
               </a>
-              <Dropdown 
-            stateHandlers={{
-                "Settings": setModalOpen,
-                "Lists": setSidebarListOpen,
-            }}>
-                <SettingButton style={{ width: '20px', height: '20px' }} aria-label="Setting Button" />
+              <Dropdown
+                stateHandlers={{
+                  Settings: setModalOpen,
+                  Lists: setSidebarListOpen,
+                }}
+              >
+                <SettingButton
+                  style={{ width: "20px", height: "20px" }}
+                  aria-label="Setting Button"
+                />
               </Dropdown>
             </div>
             <Timer
@@ -106,7 +120,8 @@ function App() {
               setBreakDuration={setBreakDuration}
               isAutoSwitchOn={isAutoSwitchOn}
               handleDeleteAll={handleDeleteAll}
-              isAlertOn={isAlertOn} />
+              isAlertOn={isAlertOn}
+            />
             <TaskPanel
               isNewTaskOnTop={isNewTaskOnTop}
               isMassDelete={isMassDelete}
@@ -118,17 +133,20 @@ function App() {
               tasks={tasks}
               setTasks={setTasks}
               setAskedForTask={setAskedForTask}
-              onClick={toggleSidebar} />
+              onClick={toggleSidebar}
+            />
           </div>
         </div>
       </div>
-      <SideBarListWrapper
+      <SidebarList
         setSidebarListOpen={setSidebarListOpen}
-        isSidebarListOpen={isSidebarListOpen} />
+        isSidebarListOpen={isSidebarListOpen}
+      />
       <Sidebar
         taskDescription={askedForTask}
         isOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar} />
+        toggleSidebar={toggleSidebar}
+      />
     </div>
   );
 }
