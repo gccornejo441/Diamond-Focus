@@ -1,9 +1,12 @@
-import ToggleIcon from "@assets/toggleIcon.svg?react";
-import { initialTaskLists } from "../../../../utils";
+import { useState } from "react";
 import styles from "./SidebarList.module.css";
 import { SidebarProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
-import useSidebarList from "../../hooks/useSidebarList";
+import useSidebarList from "../../hooks/useSidebar";
+import ToggleIcon from "@assets/toggleIcon.svg?react";
+import { initialTaskLists } from "@utilities/helpers";
+import Popup from "@components/Popup/Popup";
+import DeleteModal from "@components/DeleteModal";
 
 const SidebarList = ({
   isSidebarListOpen,
@@ -15,9 +18,38 @@ const SidebarList = ({
     handleTitleChange,
     handleTaskListDelete,
     handleTaskListSelect,
+    setDeletingTaskList,
+    deletingTaskList,
   } = useSidebarList({ initialTaskLists });
+  const [openTask, setOpenTask] = useState(false);
+
+  const handleCancel = () => {
+    setOpenTask(false);
+  };
+
+  const onDelete = (id: number) => {
+    setDeletingTaskList(id);
+    setOpenTask(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deletingTaskList) {
+      handleTaskListDelete(deletingTaskList);
+      setOpenTask(false);
+      setDeletingTaskList(null);
+    }
+  };
+
   return (
     <div>
+      <Popup onClose={() => setOpenTask(false)} isOpen={openTask}>
+        <DeleteModal
+          handleDelete={handleConfirmDelete}
+          handleCancel={handleCancel}
+          isMassDelete={false}
+          overrideCaption="Are you sure you want to delete this list and all its content?"
+        />
+      </Popup>
       <div
         className={
           isSidebarListOpen
@@ -40,7 +72,7 @@ const SidebarList = ({
             id={list.id}
             value={list.title}
             onTitleChange={handleTitleChange}
-            onDelete={handleTaskListDelete}
+            onDelete={onDelete}
             onSelect={handleTaskListSelect}
           />
         ))}

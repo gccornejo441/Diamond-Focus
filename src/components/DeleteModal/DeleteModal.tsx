@@ -1,23 +1,33 @@
 import styles from "./DeleteModal.module.css";
+
 interface DeleteModalProps {
   handleDelete: () => void;
   handleCancel: () => void;
-  item: string;
+  item?: string | null;
   isMassDelete: boolean;
+  overrideCaption?: string;
 }
 
 const DeleteModal = ({
   handleDelete,
   handleCancel,
-  item,
+  item = null,
   isMassDelete,
+  overrideCaption,
 }: DeleteModalProps): JSX.Element => {
   return (
     <div className={styles.deleteModal}>
       <div className={styles.deleteModalHeader}>
         <h5 className={styles.deleteModalTitle}>
-          Are you sure you want to delete
-          <br /> <span>{isMassDelete ? "all these tasks" : `"${item}"`}?</span>
+          {overrideCaption ? (
+            <span>{overrideCaption}</span>
+          ) : (
+            <>
+              Are you sure you want to delete
+              <br />
+              <span>{isMassDelete ? "all these tasks" : `"${item}"`}?</span>
+            </>
+          )}
         </h5>
       </div>
       <div className={styles.deleteModalBody}>

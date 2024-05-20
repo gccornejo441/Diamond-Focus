@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ApplyBodyStyles } from "../../../utils";
+import { ApplyBodyStyles } from "../../../utilities/helpers";
 import {
   getParsedSettings,
   settingFormHelper,

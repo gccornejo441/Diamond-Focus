@@ -8,6 +8,7 @@ type Props = {
 const useSidebarList = ({ initialTaskLists }: Props) => {
   const [taskLists, setTaskLists] =
     useState<TaskListProps[]>(initialTaskLists());
+  const [deletingTaskList, setDeletingTaskList] = useState<number | null>();
 
   const addTaskList = () => {
     const newTaskList = {
@@ -62,6 +63,8 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     handleTitleChange,
     handleTaskListDelete,
     handleTaskListSelect,
+    deletingTaskList,
+    setDeletingTaskList,
   };
 };
 

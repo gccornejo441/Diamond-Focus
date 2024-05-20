@@ -1,4 +1,4 @@
-import { TaskListProps } from "./components/Sidebar/types/SidebarTypes";
+import { TaskListProps } from "../components/Sidebar/types/SidebarTypes";
 /**
  * Formats the given number of seconds into a string in the format "minutes:seconds".
  *

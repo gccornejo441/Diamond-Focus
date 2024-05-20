@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./Timer.module.css";
-import { TimePadder } from "../../utils";
+import { TimePadder } from "../../utilities/helpers";
 import ButtonPanel from "../ButtonPanel/ButtonPanel";
 import useTimerEffect from "@hooks/useTimerEffect";
 import { getParsedSettings } from "@components/Setting/export";

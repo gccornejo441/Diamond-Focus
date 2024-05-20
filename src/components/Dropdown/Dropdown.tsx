@@ -6,10 +6,7 @@ interface DropdownItemProps {
   onDropDownItemClick: (name: string) => void;
 }
 
-const DropdownItem: React.FC<DropdownItemProps> = ({
-  name,
-  onDropDownItemClick,
-}) => (
+const DropdownItem = ({ name, onDropDownItemClick }: DropdownItemProps) => (
   <button
     onClick={() => onDropDownItemClick(name)}
     className={styles.menuLink}
@@ -54,7 +51,7 @@ const Dropdown = ({ stateHandlers, children }: DropdownProps) => {
   const onDropdownItemClick = (name: string): void => {
     if (stateHandlers[name]) {
       stateHandlers[name](true);
-      setIsOpen(false);
+      setIsOpen(true);
     }
   };
   return (
