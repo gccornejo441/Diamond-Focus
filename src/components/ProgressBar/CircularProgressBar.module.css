@@ -1,5 +1,10 @@
 .container {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
 }
 
 .backgroundCircle {
@@ -14,7 +19,7 @@
 
 .filledCircle {
   fill: none;
-  stroke: hsla(302, 23%, 72%, 0.9);
+  stroke: hsla(302, 100%, 80%, 0.9);
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
   transition: stroke-dashoffset 0.5s ease-out;
@@ -22,9 +27,11 @@
 
 .text {
   align-items: center;
-  color: hsla(225, 23%, 62%, 1);
+  color: hsla(302, 100%, 80%, 0.9);
   display: flex;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 1rem;
+  font-family: inherit;
   height: 100%;
   justify-content: center;
   left: 0;
@@ -35,4 +42,9 @@
   top: 0;
   width: 100%;
   z-index: 100;
+}
+
+.icon {
+  height: 2.5em;
+  width: 2.5em;
 }

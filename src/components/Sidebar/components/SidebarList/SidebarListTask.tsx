@@ -6,6 +6,7 @@ import Dropdown from "../../../Dropdown/Dropdown";
 
 interface SidebarTaskListProps extends TaskListTitleProps {
   onDelete: (id: number) => void;
+  onSelect: (id: number) => void;
 }
 
 const SidebarTaskList = ({
@@ -13,10 +14,12 @@ const SidebarTaskList = ({
   value,
   onTitleChange,
   onDelete,
+  onSelect,
 }: SidebarTaskListProps) => {
   const [isEditing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
+  const outerDivRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -41,14 +44,27 @@ const SidebarTaskList = ({
     onDelete(id);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      handleInputBlur();
+    }
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (outerDivRef.current && outerDivRef.current === event.target) {
+      onSelect(id);
+    }
+  };
+
   return (
-    <div className={styles.taskList}>
+    <div ref={outerDivRef} onClick={handleClick} className={styles.taskList}>
       <div className={styles.editableText}>
         {isEditing ? (
           <input
             ref={inputRef}
             className={styles.input}
             value={inputValue}
+            onKeyDown={handleKeyDown}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
           />

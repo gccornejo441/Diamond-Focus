@@ -11,12 +11,14 @@ import SettingButton from "@assets/settingIcon.svg?react";
 import GemLogo from "@assets/gemIcon.svg?react";
 import { getParsedSettings, SettingsProps } from "@components/Setting/export";
 import { Settings } from "@components/Setting/";
+import ProgressBar from "@components/ProgressBar/CircularProgressBar";
+import useLoading from "@hooks/useLoading";
 
 const SETTINGS_KEY = "appSettings";
 
 function App() {
+  const { isLoading, progress } = useLoading();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [askedForTask, setAskedForTask] = useState<string>("");
 
@@ -54,8 +56,6 @@ function App() {
       setBgImg(settings.bgImg);
       setAlarmName(settings.alarmSoundName);
     }
-
-    setTimeout(() => setIsLoading(false), 100);
   }, []);
 
   useEffect(() => {
@@ -63,7 +63,11 @@ function App() {
   }, [bgImg, theme]);
 
   if (isLoading) {
-    return <div className={styles.progressBarArea}>Loading...</div>;
+    return (
+      <div className={styles.progressBarArea}>
+        <ProgressBar width={100} progress={progress * 3} />
+      </div>
+    );
   }
 
   const toggleSidebar = () => {

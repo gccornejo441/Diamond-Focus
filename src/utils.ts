@@ -64,7 +64,7 @@ export const ApplyBodyStyles = (bgImg: string, theme: string) => {
 /**
  * Retrieves the initial task lists from localStorage. If no task lists are stored, returns a default task list.
  *
- * @return {TaskList[]} The initial task lists.
+ * @return {TaskListProps[]} The initial task lists.
  */
 export const initialTaskLists = (): TaskListProps[] => {
   const storedTaskLists = localStorage.getItem("taskLists");

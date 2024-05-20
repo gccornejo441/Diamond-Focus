@@ -2,7 +2,7 @@
   "name": "diamond-focus",
   "description": "A timer for diamond focus built building stronger brains under pressure.",
   "author": "Gabe Cornejo",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": false,
   "type": "module",
   "keywords": [
@@ -37,8 +37,7 @@
     "react-contexify": "^6.0.0",
     "react-dom": "^18.2.0",
     "react-tooltip": "^5.26.4",
-    "reactjs-popup": "^2.0.6",
-    "web-vitals": "^4.0.0"
+    "reactjs-popup": "^2.0.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import styles from "./CircularProgressBar.module.css";
+import GemIogo from "@assets/gemIcon.svg?react";
 
 interface CircularProgressBarProps {
   progress: number;
@@ -7,11 +8,11 @@ interface CircularProgressBarProps {
   width?: number;
 }
 
-export function CircularProgressBar({
+const CircularProgressBar = ({
   progress,
   label = "Progress Bar",
   width = 300,
-}: CircularProgressBarProps): ReactElement {
+}: CircularProgressBarProps): ReactElement => {
   const strokeWidth = 6;
   const radius = 100 / 2 - strokeWidth * 2;
   const circumference = radius * 2 * Math.PI;
@@ -56,8 +57,10 @@ export function CircularProgressBar({
         />
       </svg>
       <div className={styles.text} data-testid="progress-bar-text">
-        {progress}
+        <GemIogo className={styles.icon} />
       </div>
     </div>
   );
-}
+};
+
+export default CircularProgressBar;

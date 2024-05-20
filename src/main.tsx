@@ -10,7 +10,7 @@ import {
 } from "@components/Setting/utils/Settings";
 
 const SETTINGS_KEY = "appSettings";
-const TASK_LIST_KEY = "taskList";
+const TASK_LIST_KEY = "taskLists";
 
 initializeDefaultSettings(SETTINGS_KEY);
 initializeDefaultTaskList(TASK_LIST_KEY);

@@ -15,7 +15,15 @@ export const defaultSettings: SettingsProps = {
 export const defaultTaskList: TaskListProps = {
   id: 0,
   title: "New List",
-  tasks: [],
+  tasks: [
+    {
+      id: 0,
+      text: "New Task",
+      completed: false,
+      favorite: false,
+      createdAt: new Date(),
+    },
+  ],
 };
 
 /**
@@ -65,7 +73,7 @@ export function initializeDefaultTaskList(key: string): void {
   try {
     const taskList = localStorage.getItem(key);
     if (!taskList) {
-      localStorage.setItem(key, JSON.stringify(defaultTaskList));
+      localStorage.setItem(key, JSON.stringify([defaultTaskList]));
     }
   } catch (e) {
     console.error(`Error initializing default task list for ${key}:`, e);

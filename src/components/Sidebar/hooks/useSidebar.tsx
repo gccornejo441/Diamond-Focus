@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Task, TaskListProps } from "../types/SidebarTypes";
+import { TaskListProps } from "../types/SidebarTypes";
 
 type Props = {
   initialTaskLists: () => TaskListProps[];
 };
 
 const useSidebarList = ({ initialTaskLists }: Props) => {
-  const [taskLists, setTaskLists] = useState<TaskListProps[]>(initialTaskLists);
+  const [taskLists, setTaskLists] =
+    useState<TaskListProps[]>(initialTaskLists());
 
   const addTaskList = () => {
     const newTaskList = {
@@ -39,35 +40,28 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     setTaskLists(updatedTaskLists);
   };
 
-  const addTaskToList = (listId: number, task: Task) => {
-    const updatedTaskLists = taskLists.map((list) => {
-      if (list.id === listId) {
-        return { ...list, tasks: [...list.tasks, task] };
-      }
-      return list;
-    });
+  const handleTaskListDelete = (id: number) => {
+    const updatedTaskLists = taskLists.filter((list) => list.id !== id);
     localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
     setTaskLists(updatedTaskLists);
   };
 
-  const addTaskToCurrentList = (task: Task) => {
-    const updatedTaskLists = taskLists.map((list) => {
-      if (list.id === 0) {
-        return { ...list, tasks: [...list.tasks, task] };
-      }
-      return list;
-    });
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
-    setTaskLists(updatedTaskLists);
+  const handleTaskListSelect = (id: number) => {
+    const selectedTaskList = taskLists.find((list) => list.id === id);
+    if (selectedTaskList) {
+      localStorage.setItem(
+        "selectedTaskList",
+        JSON.stringify(selectedTaskList),
+      );
+    }
   };
 
   return {
     taskLists,
     addTaskList,
     handleTitleChange,
-    addTaskToList,
-    setTaskLists,
-    addTaskToCurrentList,
+    handleTaskListDelete,
+    handleTaskListSelect,
   };
 };
 

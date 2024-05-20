@@ -1,52 +1,21 @@
-import { useState } from "react";
 import ToggleIcon from "@assets/toggleIcon.svg?react";
 import { initialTaskLists } from "../../../../utils";
 import styles from "./SidebarList.module.css";
-import { TaskListProps, SidebarProps } from "../../types/SidebarTypes";
+import { SidebarProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
+import useSidebarList from "../../hooks/useSidebar";
 
-const SideBarList = ({
+const SidebarList = ({
   isSidebarListOpen,
   setSidebarListOpen,
 }: SidebarProps) => {
-  const [taskLists, setTaskLists] = useState<TaskListProps[]>(initialTaskLists);
-
-  const addTaskList = () => {
-    const newTaskList = {
-      id: taskLists.length,
-      title: "New List",
-      tasks: [
-        {
-          id: 0,
-          text: "New Task",
-          completed: false,
-          favorite: false,
-          createdAt: new Date(),
-        },
-      ],
-    };
-    const updatedTaskLists = [...taskLists, newTaskList];
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
-    setTaskLists(updatedTaskLists);
-  };
-
-  const handleTitleChange = (id: number, newTitle: string) => {
-    const updatedTaskLists = taskLists.map((list) => {
-      if (list.id === id) {
-        return { ...list, title: newTitle };
-      }
-      return list;
-    });
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
-    setTaskLists(updatedTaskLists);
-  };
-
-  const handleTaskListDelete = (id: number) => {
-    const updatedTaskLists = taskLists.filter((list) => list.id !== id);
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
-    setTaskLists(updatedTaskLists);
-  };
-
+  const {
+    taskLists,
+    addTaskList,
+    handleTitleChange,
+    handleTaskListDelete,
+    handleTaskListSelect,
+  } = useSidebarList({ initialTaskLists });
   return (
     <div>
       <div
@@ -56,12 +25,12 @@ const SideBarList = ({
             : styles.sidebar
         }
       >
-        <div
+        <button
           className={styles.toggleButton}
           onClick={() => setSidebarListOpen(!isSidebarListOpen)}
         >
           <ToggleIcon className={styles.toggleIcon} aria-label="Toggle Icon" />
-        </div>
+        </button>
         <button onClick={addTaskList} className={styles.addButton}>
           Add List
         </button>
@@ -71,7 +40,8 @@ const SideBarList = ({
             id={list.id}
             value={list.title}
             onTitleChange={handleTitleChange}
-            onDelete={handleTaskListDelete} // Pass the delete handler
+            onDelete={handleTaskListDelete}
+            onSelect={handleTaskListSelect}
           />
         ))}
       </div>
@@ -85,4 +55,4 @@ const SideBarList = ({
   );
 };
 
-export default SideBarList;
+export default SidebarList;
