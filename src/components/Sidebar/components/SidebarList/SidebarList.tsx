@@ -3,7 +3,7 @@ import { initialTaskLists } from "../../../../utils";
 import styles from "./SidebarList.module.css";
 import { SidebarProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
-import useSidebarList from "../../hooks/useSidebar";
+import useSidebarList from "../../hooks/useSidebarList";
 
 const SidebarList = ({
   isSidebarListOpen,
