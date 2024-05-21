@@ -19,7 +19,11 @@ export interface TaskListProps {
   tasks: Task[];
 }
 
-export interface SidebarProps {
+export interface CurrentSelectedTaskProps extends SidebarListStateProps {
+  currentSelectedTaskList: number;
+}
+
+export interface SidebarListStateProps {
   isSidebarListOpen: boolean;
   setSidebarListOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentSelectedTaskList: React.Dispatch<React.SetStateAction<number>>;

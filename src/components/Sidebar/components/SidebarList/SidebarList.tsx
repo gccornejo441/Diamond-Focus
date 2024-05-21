@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./SidebarList.module.css";
-import { SidebarProps } from "../../types/SidebarTypes";
+import { SidebarListStateProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
 import useSidebarList from "../../hooks/useSidebar";
 import ToggleIcon from "@assets/toggleIcon.svg?react";
@@ -12,7 +12,7 @@ const SidebarList = ({
   setCurrentSelectedTaskList,
   isSidebarListOpen,
   setSidebarListOpen,
-}: SidebarProps) => {
+}: SidebarListStateProps) => {
   const {
     taskLists,
     addTaskList,

@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { SidebarProps } from "../export";
+import { CurrentSelectedTaskProps } from "../export";
 
-const useSidebarListToggle = (): SidebarProps => {
+const useSidebarListToggle = (): CurrentSelectedTaskProps => {
   const [isSidebarListOpen, setSidebarListOpen] = useState<boolean>(false);
-  return { isSidebarListOpen, setSidebarListOpen };
+  const [currentSelectedTaskList, setCurrentSelectedTaskList] =
+    useState<number>(0);
+
+  return {
+    isSidebarListOpen,
+    setSidebarListOpen,
+    currentSelectedTaskList,
+    setCurrentSelectedTaskList,
+  };
 };
 
 export default useSidebarListToggle;

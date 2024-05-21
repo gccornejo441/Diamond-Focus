@@ -31,10 +31,13 @@ function App() {
   const [alarmName, setAlarmName] = useState<string>("");
   const [bgImg, setBgImg] = useState<string>("");
   const [theme, setTheme] = useState("default");
-  const [currentSelectedTaskList, setCurrentSelectedTaskList] =
-    useState<number>(0);
 
-  const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
+  const {
+    isSidebarListOpen,
+    setSidebarListOpen,
+    currentSelectedTaskList,
+    setCurrentSelectedTaskList,
+  } = useSidebarListToggle();
   const {
     tasks,
     setTasks,

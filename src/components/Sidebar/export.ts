@@ -3,7 +3,7 @@ export type {
   Task,
   TaskListProps,
   TaskListTitleProps,
-  SidebarProps,
+  CurrentSelectedTaskProps,
 } from "./types/SidebarTypes";
 export { default as useSidebarList } from "./hooks/useSidebar";
 
