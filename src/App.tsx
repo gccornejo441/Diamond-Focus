@@ -31,6 +31,8 @@ function App() {
   const [alarmName, setAlarmName] = useState<string>("");
   const [bgImg, setBgImg] = useState<string>("");
   const [theme, setTheme] = useState("default");
+  const [currentSelectedTaskList, setCurrentSelectedTaskList] =
+    useState<number>(0);
 
   const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
   const {
@@ -128,6 +130,7 @@ function App() {
               isAlertOn={isAlertOn}
             />
             <TaskPanel
+              currentSelectedTaskList={currentSelectedTaskList}
               isNewTaskOnTop={isNewTaskOnTop}
               isMassDelete={isMassDelete}
               handleDeleteAll={handleDeleteAll}
@@ -144,6 +147,7 @@ function App() {
         </div>
       </div>
       <SidebarList
+        setCurrentSelectedTaskList={setCurrentSelectedTaskList}
         setSidebarListOpen={setSidebarListOpen}
         isSidebarListOpen={isSidebarListOpen}
       />

@@ -291,3 +291,9 @@ ul {
   line-height: 13px;
   color: var(--panel-text-faint);
 }
+
+.taskTitle {
+  padding: 0px 10px;
+  min-height: 28px;
+  border-radius: 4px;
+}

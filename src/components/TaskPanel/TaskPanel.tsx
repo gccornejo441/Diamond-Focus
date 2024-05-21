@@ -26,6 +26,7 @@ import {
   UniqueIdentifier,
   MouseSensor,
 } from "@dnd-kit/core";
+import { TaskListProps } from "@components/Sidebar/export";
 
 const svgStyle = {
   cursor: "pointer",
@@ -57,6 +58,7 @@ interface TaskPanelProps {
   handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
   isMassDelete: boolean;
   isNewTaskOnTop: boolean;
+  currentSelectedTaskList: number;
 }
 
 const TaskPanel = ({
@@ -71,11 +73,15 @@ const TaskPanel = ({
   setTasks,
   openTask,
   setOpenTask,
+  currentSelectedTaskList,
 }: TaskPanelProps) => {
   const { show } = useContextMenu({ id: MENU_ID });
   const [task, setTask] = useState<string>("");
   const [editId, setEditId] = useState<number | null>(null);
   const [editText, setEditText] = useState("");
+  const [currentTaskList, setCurrentTaskList] = useState<TaskListProps | null>(
+    null,
+  );
 
   const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
     event.preventDefault();
@@ -190,6 +196,15 @@ const TaskPanel = ({
     });
   };
 
+  useEffect(() => {
+    const taskListStr = localStorage.getItem("taskLists");
+    const taskList = taskListStr ? JSON.parse(taskListStr) : [];
+    const selectedTaskList = taskList.find(
+      (taskList: TaskListProps) => taskList.id === currentSelectedTaskList,
+    );
+    setCurrentTaskList(selectedTaskList);
+  }, [currentSelectedTaskList]);
+
   return (
     <DndContext
       onDragEnd={handleOnDragEnd}
@@ -205,6 +220,9 @@ const TaskPanel = ({
         />
       </Popup>
       <div className={styles.taskPanel}>
+        <h2 className={styles.taskTitle}>
+          {currentTaskList ? currentTaskList.title : "Unknown"}
+        </h2>
         <div className={styles.inputArea}>
           <input
             type="text"
@@ -244,7 +262,7 @@ const TaskPanel = ({
         </div>
         <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
           <ul className={styles.taskList}>
-            {tasks.map((task) => (
+            {currentTaskList?.tasks.map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}

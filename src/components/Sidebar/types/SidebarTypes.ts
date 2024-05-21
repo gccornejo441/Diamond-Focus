@@ -22,6 +22,7 @@ export interface TaskListProps {
 export interface SidebarProps {
   isSidebarListOpen: boolean;
   setSidebarListOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentSelectedTaskList: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface TaskListTitleProps {

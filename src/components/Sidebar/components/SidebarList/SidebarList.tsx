@@ -9,6 +9,7 @@ import Popup from "@components/Popup/Popup";
 import DeleteModal from "@components/DeleteModal";
 
 const SidebarList = ({
+  setCurrentSelectedTaskList,
   isSidebarListOpen,
   setSidebarListOpen,
 }: SidebarProps) => {
@@ -32,6 +33,11 @@ const SidebarList = ({
     setOpenTask(true);
   };
 
+  const onSelect = (id: number) => {
+    setCurrentSelectedTaskList(id);
+    handleTaskListSelect(id);
+  };
+
   const handleConfirmDelete = () => {
     if (deletingTaskList) {
       handleTaskListDelete(deletingTaskList);
@@ -47,7 +53,7 @@ const SidebarList = ({
           handleDelete={handleConfirmDelete}
           handleCancel={handleCancel}
           isMassDelete={false}
-          overrideCaption="Are you sure you want to delete this list and all its content?"
+          overrideCaption="Are you should you want to delete this list and all it's content?"
         />
       </Popup>
       <div
@@ -73,7 +79,7 @@ const SidebarList = ({
             value={list.title}
             onTitleChange={handleTitleChange}
             onDelete={onDelete}
-            onSelect={handleTaskListSelect}
+            onSelect={onSelect}
           />
         ))}
       </div>
