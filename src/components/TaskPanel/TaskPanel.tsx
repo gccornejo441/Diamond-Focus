@@ -58,7 +58,7 @@ interface TaskPanelProps {
   handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
   isMassDelete: boolean;
   isNewTaskOnTop: boolean;
-  currentSelectedTaskList: number;
+  currentSelectedTaskList: TaskListProps | null;
 }
 
 const TaskPanel = ({
@@ -79,9 +79,6 @@ const TaskPanel = ({
   const [task, setTask] = useState<string>("");
   const [editId, setEditId] = useState<number | null>(null);
   const [editText, setEditText] = useState("");
-  const [currentTaskList, setCurrentTaskList] = useState<TaskListProps | null>(
-    null,
-  );
 
   const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
     event.preventDefault();
@@ -196,15 +193,6 @@ const TaskPanel = ({
     });
   };
 
-  useEffect(() => {
-    const taskListStr = localStorage.getItem("taskLists");
-    const taskList = taskListStr ? JSON.parse(taskListStr) : [];
-    const selectedTaskList = taskList.find(
-      (taskList: TaskListProps) => taskList.id === currentSelectedTaskList,
-    );
-    setCurrentTaskList(selectedTaskList);
-  }, [currentSelectedTaskList]);
-
   return (
     <DndContext
       onDragEnd={handleOnDragEnd}
@@ -221,7 +209,7 @@ const TaskPanel = ({
       </Popup>
       <div className={styles.taskPanel}>
         <h2 className={styles.taskTitle}>
-          {currentTaskList ? currentTaskList.title : "Unknown"}
+          {currentSelectedTaskList ? currentSelectedTaskList.title : "Unknown"}
         </h2>
         <div className={styles.inputArea}>
           <input
@@ -262,7 +250,7 @@ const TaskPanel = ({
         </div>
         <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
           <ul className={styles.taskList}>
-            {currentTaskList?.tasks.map((task) => (
+            {tasks.map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}

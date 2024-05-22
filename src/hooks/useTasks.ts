@@ -1,28 +1,24 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Task } from "../components/TaskPanel/TaskPanel";
+import { TaskListProps } from "@components/Sidebar/export";
 
-interface TaskList {
-  id: number;
-  title: string;
-  tasks: Task[];
-}
-
-const useTasks = () => {
+const useTasks = (currentSelectedTaskList: TaskListProps | null) => {
   const [openTask, setOpenTask] = useState(false);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
   const [isMassDelete, setIsMassDelete] = useState<boolean>(false);
-
-  const [taskLists, setTaskLists] = useState<TaskList[]>(() => {
+  const [taskLists, setTaskLists] = useState<TaskListProps[]>(() => {
     const savedTaskLists = localStorage.getItem("taskLists");
     return savedTaskLists ? JSON.parse(savedTaskLists) : [];
   });
 
-  const [selectedTaskList, setSelectedTaskList] = useState<TaskList | null>(
-    () => {
-      const savedSelectedTaskList = localStorage.getItem("selectedTaskList");
-      return savedSelectedTaskList ? JSON.parse(savedSelectedTaskList) : null;
-    },
-  );
+  const [selectedTaskList, setSelectedTaskList] =
+    useState<TaskListProps | null>(currentSelectedTaskList);
+
+  useEffect(() => {
+    if (currentSelectedTaskList) {
+      setSelectedTaskList(currentSelectedTaskList);
+    }
+  }, [currentSelectedTaskList]);
 
   useEffect(() => {
     localStorage.setItem("taskLists", JSON.stringify(taskLists));
@@ -67,8 +63,8 @@ const useTasks = () => {
     if (massDelete) {
       setOpenTask(true);
       if (removeTask) {
-        localStorage.removeItem("selectedTaskList");
-        setSelectedTaskList(null);
+        localStorage.removeItem("tasks");
+        setTasks([]);
         setOpenTask(false);
         setIsMassDelete(false);
       }
@@ -83,7 +79,6 @@ const useTasks = () => {
   };
 
   return {
-    taskLists,
     setTaskLists,
     selectedTaskList,
     setSelectedTaskList,

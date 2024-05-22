@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SidebarList.module.css";
 import { SidebarListStateProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
-import useSidebarList from "../../hooks/useSidebar";
+import useSidebarList from "../../hooks/useSidebarList";
 import ToggleIcon from "@assets/toggleIcon.svg?react";
 import { initialTaskLists } from "@utilities/helpers";
 import Popup from "@components/Popup/Popup";
@@ -21,8 +21,15 @@ const SidebarList = ({
     handleTaskListSelect,
     setDeletingTaskList,
     deletingTaskList,
+    selectedTaskListObj,
   } = useSidebarList({ initialTaskLists });
   const [openTask, setOpenTask] = useState(false);
+
+  useEffect(() => {
+    if (selectedTaskListObj) {
+      setCurrentSelectedTaskList(selectedTaskListObj);
+    }
+  }, [selectedTaskListObj]);
 
   const handleCancel = () => {
     setOpenTask(false);
@@ -34,16 +41,14 @@ const SidebarList = ({
   };
 
   const onSelect = (id: number) => {
-    setCurrentSelectedTaskList(id);
     handleTaskListSelect(id);
   };
 
   const handleConfirmDelete = () => {
-    if (deletingTaskList) {
-      handleTaskListDelete(deletingTaskList);
-      setOpenTask(false);
-      setDeletingTaskList(null);
-    }
+    if (deletingTaskList == null) return;
+    handleTaskListDelete(deletingTaskList);
+    setOpenTask(false);
+    setDeletingTaskList(null);
   };
 
   return (

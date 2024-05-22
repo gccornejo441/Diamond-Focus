@@ -9,6 +9,8 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
   const [taskLists, setTaskLists] =
     useState<TaskListProps[]>(initialTaskLists());
   const [deletingTaskList, setDeletingTaskList] = useState<number | null>();
+  const [selectedTaskListObj, setSelectedTaskListObj] =
+    useState<TaskListProps | null>(null);
 
   const addTaskList = () => {
     const newTaskList = {
@@ -31,25 +33,41 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
   };
 
   const handleTitleChange = (id: number, newTitle: string) => {
-    const updatedTaskLists = taskLists.map((list) => {
-      if (list.id === id) {
-        return { ...list, title: newTitle };
-      }
-      return list;
-    });
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+    const updatedTaskLists = taskLists.map((list) => ({
+      ...list,
+      title: list.id === id ? newTitle : list.title,
+    }));
+
     setTaskLists(updatedTaskLists);
+    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+
+    if (selectedTaskListObj && selectedTaskListObj.id === id) {
+      const updatedSelectedTaskList = {
+        ...selectedTaskListObj,
+        title: newTitle,
+      };
+      setSelectedTaskListObj(updatedSelectedTaskList);
+      localStorage.setItem(
+        "selectedTaskList",
+        JSON.stringify(updatedSelectedTaskList),
+      );
+    }
   };
 
   const handleTaskListDelete = (id: number) => {
     const updatedTaskLists = taskLists.filter((list) => list.id !== id);
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
     setTaskLists(updatedTaskLists);
+    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+    if (selectedTaskListObj && selectedTaskListObj.id === id) {
+      setSelectedTaskListObj(null);
+      localStorage.removeItem("selectedTaskList");
+    }
   };
 
   const handleTaskListSelect = (id: number) => {
     const selectedTaskList = taskLists.find((list) => list.id === id);
     if (selectedTaskList) {
+      setSelectedTaskListObj(selectedTaskList);
       localStorage.setItem(
         "selectedTaskList",
         JSON.stringify(selectedTaskList),
@@ -65,6 +83,8 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     handleTaskListSelect,
     deletingTaskList,
     setDeletingTaskList,
+    selectedTaskListObj,
+    setSelectedTaskListObj,
   };
 };
 

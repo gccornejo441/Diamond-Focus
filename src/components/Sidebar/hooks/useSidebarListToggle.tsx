@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { CurrentSelectedTaskProps } from "../export";
+import { CurrentSelectedTaskProps, TaskListProps } from "../export";
 
 const useSidebarListToggle = (): CurrentSelectedTaskProps => {
   const [isSidebarListOpen, setSidebarListOpen] = useState<boolean>(false);
   const [currentSelectedTaskList, setCurrentSelectedTaskList] =
-    useState<number>(0);
+    useState<TaskListProps | null>(() => {
+      const storedItem = localStorage.getItem("selectedTaskList");
+      return storedItem ? JSON.parse(storedItem) : null;
+    });
 
   return {
     isSidebarListOpen,

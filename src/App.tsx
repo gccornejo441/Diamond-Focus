@@ -38,6 +38,7 @@ function App() {
     currentSelectedTaskList,
     setCurrentSelectedTaskList,
   } = useSidebarListToggle();
+
   const {
     tasks,
     setTasks,
@@ -47,7 +48,7 @@ function App() {
     isMassDelete,
     currentTask,
     setCurrentTask,
-  } = useTasks();
+  } = useTasks(currentSelectedTaskList);
 
   useEffect(() => {
     const settings: SettingsProps | null = getParsedSettings(SETTINGS_KEY);
