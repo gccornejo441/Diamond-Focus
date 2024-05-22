@@ -3,6 +3,8 @@ import styles from "./SidebarList.module.css";
 import { SidebarListStateProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
 import useSidebarList from "../../hooks/useSidebarList";
+
+import AddListButton from "@assets/addListIcon.svg?react";
 import ToggleIcon from "@assets/toggleIcon.svg?react";
 import { initialTaskLists } from "@utilities/helpers";
 import Popup from "@components/Popup/Popup";
@@ -69,14 +71,20 @@ const SidebarList = ({
         }
       >
         <button
+          aria-label="Toggle Button"
+          aria-expanded={isSidebarListOpen}
+          aria-controls="sidebar-list"
+          id="toggle-button"
           className={styles.toggleButton}
           onClick={() => setSidebarListOpen(!isSidebarListOpen)}
         >
           <ToggleIcon className={styles.toggleIcon} aria-label="Toggle Icon" />
         </button>
-        <button onClick={addTaskList} className={styles.addButton}>
-          Add List
-        </button>
+        <div className={styles.sidebarListControls}>
+          <button onClick={addTaskList} className="controlButton">
+            <AddListButton className={styles.svgStyle} />
+          </button>
+        </div>
         {taskLists.map((list) => (
           <SidebarTaskList
             key={list.id}

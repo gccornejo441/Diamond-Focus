@@ -390,7 +390,7 @@ code {
   --button-background: var(--b3);
   --button-background-hover: var(--b5);
   --button-hover-text: var(--b4);
-  --button-text: var(--b5);
+  --button-text: var(--b15);
 
   --panel-background: var(--b3);
   --panel-background-hover: var(--b2);

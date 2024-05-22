@@ -49,17 +49,29 @@
 }
 
 .addButton {
-  padding: 8px;
-  width: 100%;
-  margin-bottom: 10px;
+  height: 2.5rem;
+  border-radius: .5rem;
+  padding: 0rem .625rem;
   color: var(--button-text);
-  background-color: var(--button-background);
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .addButton:hover {
   color: var(--button-text);
   background-color: var(--button-background-hover);
   transition: all 0.3s ease-in-out;
+}
+
+.svgStyle {
+  stroke-width: 2;
+  flex-shrink: 0;
+  height: 24px;
+  width: 24px;
+  fill: currentColor;
+  color: var(--button-text);
 }
 
 .toggleButton {
@@ -101,28 +113,39 @@
   fill: #fff;
 }
 
-.svgStyle {
-  height: 20px;
-  width: 20px;
-  fill: currentColor;
-}
-
 .taskList {
   height: 40px;
-  padding: 5px;
+  padding: 0.225rem;
 }
 
 .taskListTitle {
-  padding: 5px;
+  margin: 5px 10px 5px 0px;
+  padding: 0.625rem 0.255rem;
+  color: var(--panel-text);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: justify;
+  white-space: nowrap;
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inherit; 
 }
 
 .taskListTitle:hover {
   border-radius: 5px;
-  padding: 5px;
   background-color: var(--button-background-hover);
+  transition: all 0.3s ease-in-out;
 }
 
 .editableText {
-  padding: 5px;
   align-content: center;
+}
+
+.sidebarListControls {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 3.5rem;
+  padding-bottom: 10px;
 }

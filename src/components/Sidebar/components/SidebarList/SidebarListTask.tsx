@@ -61,6 +61,8 @@ const SidebarTaskList = ({
       <div className={styles.editableText}>
         {isEditing ? (
           <input
+            type="text"
+            maxLength={255}
             ref={inputRef}
             className={styles.input}
             value={inputValue}

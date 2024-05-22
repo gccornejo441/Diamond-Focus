@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TaskListProps } from "../types/SidebarTypes";
 
 type Props = {
@@ -8,9 +8,19 @@ type Props = {
 const useSidebarList = ({ initialTaskLists }: Props) => {
   const [taskLists, setTaskLists] =
     useState<TaskListProps[]>(initialTaskLists());
-  const [deletingTaskList, setDeletingTaskList] = useState<number | null>();
+  const [deletingTaskList, setDeletingTaskList] = useState<number | null>(null);
   const [selectedTaskListObj, setSelectedTaskListObj] =
-    useState<TaskListProps | null>(null);
+    useState<TaskListProps | null>(() => {
+      const storedSelectedTaskList = localStorage.getItem("selectedTaskList");
+      return storedSelectedTaskList ? JSON.parse(storedSelectedTaskList) : null;
+    });
+
+  useEffect(() => {
+    const storedTaskLists = localStorage.getItem("taskLists");
+    if (storedTaskLists) {
+      setTaskLists(JSON.parse(storedTaskLists));
+    }
+  }, []);
 
   const addTaskList = () => {
     const newTaskList = {
@@ -41,11 +51,10 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     setTaskLists(updatedTaskLists);
     localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
 
-    if (selectedTaskListObj && selectedTaskListObj.id === id) {
-      const updatedSelectedTaskList = {
-        ...selectedTaskListObj,
-        title: newTitle,
-      };
+    const updatedSelectedTaskList = updatedTaskLists.find(
+      (list) => list.id === id,
+    );
+    if (updatedSelectedTaskList) {
       setSelectedTaskListObj(updatedSelectedTaskList);
       localStorage.setItem(
         "selectedTaskList",
