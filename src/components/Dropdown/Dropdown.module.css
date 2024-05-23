@@ -4,9 +4,6 @@
 }
 
 .dropdownWrapper {
-  background-color: var(--background-color);
-  border-color: var(--border-color);
-  border-style: solid;
   border-radius: 5px;
   border-width: 1px;
   min-width: 12rem;
@@ -24,7 +21,7 @@
 }
 
 .menuLinksWrapper {
-  background-color: var(--background-color);
+  background-color: #fff;
   border-radius: calc(5px - 2px);
   border-width: 1px;
   box-shadow:
@@ -71,7 +68,7 @@
   cursor: pointer;
   color: var(--text-color);
   transition: cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.15s;
-  background-color: var(--panel-background);
+  background-color: #e1e0e0;
   border-radius: 5px;
   transition:
     background-color 0.15s ease-in-out,

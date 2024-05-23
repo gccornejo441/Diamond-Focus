@@ -93,7 +93,12 @@ const TaskPanel = ({
   };
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    if (currentSelectedTaskList) {
+      localStorage.setItem(
+        "selectedTaskList",
+        JSON.stringify(currentSelectedTaskList),
+      );
+    }
   }, [tasks]);
 
   const addTask = () => {
@@ -209,7 +214,7 @@ const TaskPanel = ({
       </Popup>
       <div className={styles.taskPanel}>
         <h2 className={styles.taskTitle}>
-          {currentSelectedTaskList ? currentSelectedTaskList.title : "Unknown"}
+          {currentSelectedTaskList ? currentSelectedTaskList.title : ""}
         </h2>
         <div className={styles.inputArea}>
           <input

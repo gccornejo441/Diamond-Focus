@@ -236,7 +236,7 @@ ul {
 
 @media screen and (min-width: 360px) {
   .taskText {
-    font-size: 10px;
+    font-size: 0.75rem;
   }
 }
 
@@ -252,7 +252,7 @@ ul {
 .taskText {
   margin: 5px 10px 5px 10px;
   color: var(--panel-text);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   text-align: justify;
   padding: 0px 10px 0px 0px;
@@ -284,7 +284,7 @@ ul {
 }
 
 .timeStamp {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   margin: 0px;

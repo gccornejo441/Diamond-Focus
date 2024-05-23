@@ -1,4 +1,5 @@
 :root {
+  --base-font-size: 16px;
   --transparent: transparent;
   --black: #000000;
   --white: #ffffff;
@@ -309,6 +310,10 @@
   --b6: #e7ecff;
 }
 
+html {
+  font-size: var(--base-font-size);
+}
+
 body {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -322,6 +327,10 @@ body {
   min-height: 100vh;
   flex-direction: column;
   justify-content: space-between;
+  /* line-height: 1.5;
+  letter-spacing: 0.1em;
+  margin-bottom: 2em;
+  word-spacing: 0.16em; */
 }
 
 main {
@@ -381,6 +390,30 @@ a {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+[data-theme="light"] {
+  --background-color: var(--grey-50);
+  --text-color: var(--black);
+  --background-color-light: var(--white);
+
+  --button-background: #F081FA;
+  --button-background-hover: #f8aeff;
+  --button-text: var(--white);
+
+  --panel-background: var(--grey-200);
+  --panel-background-hover: var(--grey-300);
+  --panel-text: var(--black);
+  --panel-text-faint: var(--grey-600);
+  --panel-text-hover: var(--black);
+
+  --alert: var(--red-500);
+
+  --scrollbar-track: var(--grey-200);
+  --scrollbar-thumb: var(--grey-400);
+  --scrollbar-thumb-hover: var(--grey-500);
+
+  --highlight-color-focus: #f9b2ff;
 }
 
 [data-theme="default"] {

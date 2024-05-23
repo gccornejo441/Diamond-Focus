@@ -2,7 +2,13 @@ import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Task } from "../components/TaskPanel/TaskPanel";
 import { TaskListProps } from "@components/Sidebar/export";
 
-const useTasks = (currentSelectedTaskList: TaskListProps | null) => {
+const useTasks = () => {
+  const [currentSelectedTaskList, setCurrentSelectedTaskList] =
+    useState<TaskListProps | null>(() => {
+      const storedItem = localStorage.getItem("selectedTaskList");
+      return storedItem ? JSON.parse(storedItem) : null;
+    });
+
   const [openTask, setOpenTask] = useState(false);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
   const [isMassDelete, setIsMassDelete] = useState<boolean>(false);
@@ -15,7 +21,7 @@ const useTasks = (currentSelectedTaskList: TaskListProps | null) => {
     useState<TaskListProps | null>(currentSelectedTaskList);
 
   useEffect(() => {
-    if (currentSelectedTaskList) {
+    if (currentSelectedTaskList || currentSelectedTaskList == null) {
       setSelectedTaskList(currentSelectedTaskList);
     }
   }, [currentSelectedTaskList]);
@@ -90,6 +96,8 @@ const useTasks = (currentSelectedTaskList: TaskListProps | null) => {
     isMassDelete,
     currentTask,
     setCurrentTask,
+    currentSelectedTaskList,
+    setCurrentSelectedTaskList,
   };
 };
 

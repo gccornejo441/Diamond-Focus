@@ -27,7 +27,8 @@ const themes = [
   { name: "Dark", value: "dark", color: "var(--grey-900)" },
   { name: "High Contrast", value: "high-contrast", color: "black" },
   { name: "Slate", value: "slate-theme", color: "var(--slate-100)" },
-  { name: "rose", value: "rose-theme", color: "var(--rose-100)" },
+  { name: "Rose", value: "rose-theme", color: "var(--rose-100)" },
+  { name: "Light", value: "light", color: "var(--grey-50)" },
 ];
 
 const ThemeSelector = ({

@@ -32,12 +32,7 @@ function App() {
   const [bgImg, setBgImg] = useState<string>("");
   const [theme, setTheme] = useState("default");
 
-  const {
-    isSidebarListOpen,
-    setSidebarListOpen,
-    currentSelectedTaskList,
-    setCurrentSelectedTaskList,
-  } = useSidebarListToggle();
+  const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
 
   const {
     tasks,
@@ -48,7 +43,9 @@ function App() {
     isMassDelete,
     currentTask,
     setCurrentTask,
-  } = useTasks(currentSelectedTaskList);
+    currentSelectedTaskList,
+    setCurrentSelectedTaskList,
+  } = useTasks();
 
   useEffect(() => {
     const settings: SettingsProps | null = getParsedSettings(SETTINGS_KEY);

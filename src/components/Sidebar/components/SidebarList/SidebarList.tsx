@@ -5,7 +5,7 @@ import SidebarTaskList from "./SidebarListTask";
 import useSidebarList from "../../hooks/useSidebarList";
 
 import AddListButton from "@assets/addListIcon.svg?react";
-import ToggleIcon from "@assets/toggleIcon.svg?react";
+import CollapseButton from "@assets/collapseIcon.svg?react";
 import { initialTaskLists } from "@utilities/helpers";
 import Popup from "@components/Popup/Popup";
 import DeleteModal from "@components/DeleteModal";
@@ -15,6 +15,7 @@ const SidebarList = ({
   isSidebarListOpen,
   setSidebarListOpen,
 }: SidebarListStateProps) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const {
     taskLists,
     addTaskList,
@@ -29,7 +30,7 @@ const SidebarList = ({
   const [openTask, setOpenTask] = useState(false);
 
   useEffect(() => {
-    if (selectedTaskListObj) {
+    if (selectedTaskListObj || selectedTaskListObj == null) {
       setCurrentSelectedTaskList(selectedTaskListObj);
     }
   }, [selectedTaskListObj, setSelectedTaskListObj]);
@@ -52,6 +53,11 @@ const SidebarList = ({
     handleTaskListDelete(deletingTaskListId);
     setOpenTask(false);
     setDeletingTaskListId(null);
+  };
+
+  const handleToggleClick = () => {
+    setIsCollapsed(!isCollapsed);
+    setSidebarListOpen(!isSidebarListOpen);
   };
 
   return (
@@ -77,9 +83,13 @@ const SidebarList = ({
           aria-controls="sidebar-list"
           id="toggle-button"
           className={styles.toggleButton}
-          onClick={() => setSidebarListOpen(!isSidebarListOpen)}
+          onClick={handleToggleClick}
         >
-          <ToggleIcon className={styles.toggleIcon} aria-label="Toggle Icon" />
+          <CollapseButton
+            className={`${styles.svgStyle} ${
+              isCollapsed ? styles.collapsed : ""
+            }`}
+          />
         </button>
         <div className={styles.sidebarListControls}>
           <button onClick={addTaskList} className="controlButton">

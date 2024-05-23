@@ -27,6 +27,17 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedTaskListObj) {
+      localStorage.setItem(
+        "selectedTaskList",
+        JSON.stringify(selectedTaskListObj),
+      );
+    } else {
+      localStorage.removeItem("selectedTaskList");
+    }
+  }, [selectedTaskListObj]);
+
   const addTaskList = () => {
     const newTaskList = {
       id: taskLists.length,
@@ -74,11 +85,17 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
 
     const updatedSelectedTaskList = updatedTaskLists[0] || null;
-    setSelectedTaskListObj(updatedSelectedTaskList);
-    localStorage.setItem(
-      "selectedTaskList",
-      JSON.stringify(updatedSelectedTaskList),
-    );
+    if (updatedSelectedTaskList) {
+      setSelectedTaskListObj(updatedSelectedTaskList);
+      localStorage.setItem(
+        "selectedTaskList",
+        JSON.stringify(updatedSelectedTaskList),
+      );
+    } else {
+      setSelectedTaskListObj(null);
+      localStorage.removeItem("selectedTaskList");
+      localStorage.removeItem("tasks");
+    }
   };
 
   const handleTaskListSelect = (id: number) => {

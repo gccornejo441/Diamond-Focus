@@ -66,15 +66,16 @@
 }
 
 .svgStyle {
+  stroke-width: 2;
+  flex-shrink: 0;
   height: 20px;
   width: 20px;
-  fill: currentColor;
   color: #fff;
 }
 
 .toggleButton {
   position: absolute;
-  right: -30px;
+  right: -20px;
   top: 50%;
   transform: translateY(-50%);
   width: 30px;
@@ -86,6 +87,7 @@
   user-select: none;
   z-index: 20;
   display: block;
+  transition: transform 0.3s ease-in-out;
 }
 
 @media (max-width: 600px) {
@@ -100,12 +102,10 @@
   }
 }
 
-.toggleIcon {
-  width: 13px;
-  height: 13px;
-  fill: #333;
-  transition: fill 0.3s;
+.collapsed {
+  transform: rotate(180deg);
 }
+
 
 .sidebar:not(.open) .toggleIcon {
   fill: #fff;

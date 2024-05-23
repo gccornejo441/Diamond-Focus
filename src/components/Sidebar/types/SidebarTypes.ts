@@ -19,9 +19,9 @@ export interface TaskListProps {
   tasks: Task[];
 }
 
-export interface CurrentSelectedTaskProps extends SidebarListStateProps {
-  currentSelectedTaskList: TaskListProps | null;
-}
+// export interface CurrentSelectedTaskProps extends SidebarListStateProps {
+//   currentSelectedTaskList: TaskListProps | null;
+// }
 
 export interface SidebarListStateProps {
   isSidebarListOpen: boolean;
