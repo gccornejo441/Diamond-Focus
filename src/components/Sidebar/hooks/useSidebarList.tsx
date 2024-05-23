@@ -8,11 +8,16 @@ type Props = {
 const useSidebarList = ({ initialTaskLists }: Props) => {
   const [taskLists, setTaskLists] =
     useState<TaskListProps[]>(initialTaskLists());
-  const [deletingTaskList, setDeletingTaskList] = useState<number | null>(null);
+  const [deletingTaskListId, setDeletingTaskListId] = useState<number | null>(
+    null,
+  );
   const [selectedTaskListObj, setSelectedTaskListObj] =
     useState<TaskListProps | null>(() => {
       const storedSelectedTaskList = localStorage.getItem("selectedTaskList");
-      return storedSelectedTaskList ? JSON.parse(storedSelectedTaskList) : null;
+      const initialTaskList = taskLists.find((list) => list.id === 0);
+      return storedSelectedTaskList
+        ? JSON.parse(storedSelectedTaskList)
+        : initialTaskList;
     });
 
   useEffect(() => {
@@ -67,10 +72,13 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     const updatedTaskLists = taskLists.filter((list) => list.id !== id);
     setTaskLists(updatedTaskLists);
     localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
-    if (selectedTaskListObj && selectedTaskListObj.id === id) {
-      setSelectedTaskListObj(null);
-      localStorage.removeItem("selectedTaskList");
-    }
+
+    const updatedSelectedTaskList = updatedTaskLists[0] || null;
+    setSelectedTaskListObj(updatedSelectedTaskList);
+    localStorage.setItem(
+      "selectedTaskList",
+      JSON.stringify(updatedSelectedTaskList),
+    );
   };
 
   const handleTaskListSelect = (id: number) => {
@@ -90,8 +98,8 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
     handleTitleChange,
     handleTaskListDelete,
     handleTaskListSelect,
-    deletingTaskList,
-    setDeletingTaskList,
+    deletingTaskListId,
+    setDeletingTaskListId,
     selectedTaskListObj,
     setSelectedTaskListObj,
   };

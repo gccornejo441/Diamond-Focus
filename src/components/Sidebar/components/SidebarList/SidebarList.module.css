@@ -66,12 +66,10 @@
 }
 
 .svgStyle {
-  stroke-width: 2;
-  flex-shrink: 0;
-  height: 24px;
-  width: 24px;
+  height: 20px;
+  width: 20px;
   fill: currentColor;
-  color: var(--button-text);
+  color: #fff;
 }
 
 .toggleButton {
@@ -144,7 +142,7 @@
 
 .sidebarListControls {
   display: flex;
-  justify-content: end;
+  justify-content: start;
   align-items: center;
   height: 3.5rem;
   padding-bottom: 10px;

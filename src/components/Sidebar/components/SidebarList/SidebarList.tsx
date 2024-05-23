@@ -21,9 +21,10 @@ const SidebarList = ({
     handleTitleChange,
     handleTaskListDelete,
     handleTaskListSelect,
-    setDeletingTaskList,
-    deletingTaskList,
+    setDeletingTaskListId,
+    deletingTaskListId,
     selectedTaskListObj,
+    setSelectedTaskListObj,
   } = useSidebarList({ initialTaskLists });
   const [openTask, setOpenTask] = useState(false);
 
@@ -31,14 +32,14 @@ const SidebarList = ({
     if (selectedTaskListObj) {
       setCurrentSelectedTaskList(selectedTaskListObj);
     }
-  }, [selectedTaskListObj]);
+  }, [selectedTaskListObj, setSelectedTaskListObj]);
 
   const handleCancel = () => {
     setOpenTask(false);
   };
 
   const onDelete = (id: number) => {
-    setDeletingTaskList(id);
+    setDeletingTaskListId(id);
     setOpenTask(true);
   };
 
@@ -47,10 +48,10 @@ const SidebarList = ({
   };
 
   const handleConfirmDelete = () => {
-    if (deletingTaskList == null) return;
-    handleTaskListDelete(deletingTaskList);
+    if (deletingTaskListId == null) return;
+    handleTaskListDelete(deletingTaskListId);
     setOpenTask(false);
-    setDeletingTaskList(null);
+    setDeletingTaskListId(null);
   };
 
   return (
