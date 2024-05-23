@@ -73,6 +73,16 @@
   color: #fff;
 }
 
+.sidebarSvg {
+  stroke-width: 2;
+  flex-shrink: 0;
+  height: 20px;
+  width: 20px;
+  color: #fff;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
 .toggleButton {
   position: absolute;
   right: -20px;
@@ -90,8 +100,8 @@
   transition: transform 0.3s ease-in-out;
 }
 
-@media (max-width: 600px) {
-  .toggleButton {
+@media (max-width: 800px) {
+  /* .toggleButton {
     top: 0;
     right: 0;
     transform: translateY(0);
@@ -99,6 +109,10 @@
 
   .sidebar:not(.open) .toggleButton {
     display: none;
+  } */
+
+  .toggleButton {
+    display: none; 
   }
 }
 
@@ -117,8 +131,7 @@
 }
 
 .taskListTitle {
-  margin: 5px 10px 5px 0px;
-  padding: 0.625rem 0.255rem;
+  padding: 0.625rem 0.5rem;
   color: var(--panel-text);
   font-size: 14px;
   font-weight: 500;
@@ -128,11 +141,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: inherit; 
+  border-radius: 5px;
 }
 
 .taskListTitle:hover {
   border-radius: 5px;
+  padding: 0.625rem 0.5rem;
   background-color: var(--button-background-hover);
+  color: var(--button-text-hover);
   transition: all 0.3s ease-in-out;
 }
 
@@ -142,7 +158,7 @@
 
 .sidebarListControls {
   display: flex;
-  justify-content: start;
+  justify-content:space-between;
   align-items: center;
   height: 3.5rem;
   padding-bottom: 10px;

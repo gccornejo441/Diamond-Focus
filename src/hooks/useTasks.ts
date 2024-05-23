@@ -76,7 +76,8 @@ const useTasks = () => {
       }
     } else {
       setOpenTask(true);
-      if (removeTask && currentTask && currentTask.id) {
+      if (!currentTask) return null;
+      if (removeTask) {
         deleteTask(currentTask.id);
         setOpenTask(false);
         setIsMassDelete(false);

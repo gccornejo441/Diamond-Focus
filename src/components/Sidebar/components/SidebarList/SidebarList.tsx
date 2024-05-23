@@ -6,6 +6,7 @@ import useSidebarList from "../../hooks/useSidebarList";
 
 import AddListButton from "@assets/addListIcon.svg?react";
 import CollapseButton from "@assets/collapseIcon.svg?react";
+import SidebarRightButton from "@assets/sidebarRightIcon.svg?react";
 import { initialTaskLists } from "@utilities/helpers";
 import Popup from "@components/Popup/Popup";
 import DeleteModal from "@components/DeleteModal";
@@ -94,6 +95,20 @@ const SidebarList = ({
         <div className={styles.sidebarListControls}>
           <button onClick={addTaskList} className="controlButton">
             <AddListButton className={styles.svgStyle} />
+          </button>
+          <button
+            aria-label="Toggle Button"
+            aria-expanded={isSidebarListOpen}
+            aria-controls="sidebar-list"
+            id="toggle-button"
+            className="controlButton"
+            onClick={handleToggleClick}
+          >
+            <SidebarRightButton
+              className={`${styles.sidebarSvg} ${
+                isCollapsed ? styles.collapsed : ""
+              }`}
+            />
           </button>
         </div>
         {taskLists.map((list) => (
