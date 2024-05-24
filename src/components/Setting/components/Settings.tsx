@@ -7,31 +7,7 @@ import {
   SettingPanelProps,
 } from "../export";
 import ThemeSelector from "./SettingThemeSelector";
-
-export const SettingIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    strokeWidth={2}
-    stroke="currentColor"
-    fill="none"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-    <circle cx="6" cy="10" r="2" />
-    <line x1="6" y1="4" x2="6" y2="8" />
-    <line x1="6" y1="12" x2="6" y2="20" />
-    <circle cx="12" cy="16" r="2" />
-    <line x1="12" y1="4" x2="12" y2="14" />
-    <line x1="12" y1="18" x2="12" y2="20" />
-    <circle cx="18" cy="7" r="2" />
-    <line x1="18" y1="4" x2="18" y2="5" />
-    <line x1="18" y1="9" x2="18" y2="20" />
-  </svg>
-);
+import SettingsButton from "@assets/settingsIcon.svg?react";
 
 const Settings = ({
   onClose,
@@ -135,6 +111,7 @@ const Settings = ({
 
   const handleCancel = () => {
     setBgImg(tempBgImg);
+    setTheme(tempTheme);
     ApplyBodyStyles(tempBgImg, tempTheme);
     onClose();
   };
@@ -169,7 +146,7 @@ const Settings = ({
             <li className={styles.activeMenuItem}>
               <a className={styles.menuLink}>
                 <span className={styles.menuIcon}>
-                  <SettingIcon />
+                  <SettingsButton className={styles.settingsIcon} />
                 </span>
                 <strong className={styles.menuText}>General</strong>
               </a>

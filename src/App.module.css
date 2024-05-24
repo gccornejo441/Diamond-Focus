@@ -51,3 +51,9 @@
 .progressBarArea {
   display: flex;
 }
+
+.svgStyle {
+  height: 20px;
+  width: 20px;
+  color: #fff;
+}

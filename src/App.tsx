@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import TaskPanel from "./components/TaskPanel/TaskPanel";
 import Timer from "./components/Timer/Timer";
 import styles from "./App.module.css";
@@ -7,7 +7,7 @@ import { ApplyBodyStyles } from "./utilities/helpers";
 import { SidebarList } from "@components/Sidebar/index";
 import Dropdown from "./components/Dropdown/Dropdown";
 import useTasks from "@hooks/useTasks";
-import SettingButton from "@assets/settingIcon.svg?react";
+import SettingButton from "@assets/menuIcon.svg?react";
 import GemLogo from "@assets/gemIcon.svg?react";
 import { getParsedSettings, SettingsProps } from "@components/Setting/export";
 import { Settings } from "@components/Setting/";
@@ -33,6 +33,16 @@ function App() {
   const [theme, setTheme] = useState("default");
 
   const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
+
+  const stateHandlers = useMemo(
+    () => ({
+      Settings: () => setModalOpen(true),
+      "Add list": () => setSidebarListOpen(true),
+    }),
+    [],
+  );
+
+  const names = useMemo(() => [{ name: "Settings" }, { name: "Add list" }], []);
 
   const {
     tasks,
@@ -109,16 +119,8 @@ function App() {
               <a href="/" className={styles.title}>
                 <GemLogo aria-label="Gem Icon" className={styles.icon} />
               </a>
-              <Dropdown
-                stateHandlers={{
-                  Settings: setModalOpen,
-                  Lists: setSidebarListOpen,
-                }}
-              >
-                <SettingButton
-                  style={{ width: "20px", height: "20px" }}
-                  aria-label="Setting Button"
-                />
+              <Dropdown names={names} stateHandlers={stateHandlers}>
+                <SettingButton className={styles.svgStyle} />
               </Dropdown>
             </div>
             <Timer

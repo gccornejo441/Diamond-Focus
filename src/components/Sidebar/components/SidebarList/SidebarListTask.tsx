@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ListMenuButton from "@assets/listMenuIcon.svg?react";
 import { TaskListTitleProps } from "../../types/SidebarTypes";
 import styles from "./SidebarList.module.css";
-import Dropdown from "../../../Dropdown/Dropdown";
+import Dropdown from "@components/Dropdown/Dropdown";
 
 interface SidebarTaskListProps extends TaskListTitleProps {
   onDelete: (id: number) => void;
@@ -20,6 +20,7 @@ const SidebarTaskList = ({
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
   const outerDivRef = useRef<HTMLDivElement>(null);
+  const names = [{ name: "Rename list" }, { name: "Delete list" }];
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -77,6 +78,7 @@ const SidebarTaskList = ({
         )}
       </div>
       <Dropdown
+        names={names}
         stateHandlers={{
           "Rename list": () => setEditing(true),
           "Delete list": handleDeleteClick,

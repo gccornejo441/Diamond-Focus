@@ -10,6 +10,7 @@ import SidebarRightButton from "@assets/sidebarRightIcon.svg?react";
 import { initialTaskLists } from "@utilities/helpers";
 import Popup from "@components/Popup/Popup";
 import DeleteModal from "@components/DeleteModal";
+import { Tooltip } from "react-tooltip";
 
 const SidebarList = ({
   setCurrentSelectedTaskList,
@@ -79,6 +80,12 @@ const SidebarList = ({
         }
       >
         <button
+          data-tooltip-id="toggleTooltip"
+          data-tooltip-place="right"
+          data-tooltip-delay-show={500}
+          data-tooltip-content={
+            !isSidebarListOpen ? "Open Sidebar" : "Close Sidebar"
+          }
           aria-label="Toggle Button"
           aria-expanded={isSidebarListOpen}
           aria-controls="sidebar-list"
@@ -93,19 +100,31 @@ const SidebarList = ({
           />
         </button>
         <div className={styles.sidebarListControls}>
-          <button onClick={addTaskList} className="controlButton">
+          <button
+            aria-label="Add List"
+            aria-controls="sidebar-list"
+            id="add-list-button"
+            onClick={addTaskList}
+            className="controlButton"
+          >
             <AddListButton className={styles.svgStyle} />
           </button>
           <button
+            data-tooltip-delay-show={500}
+            data-tooltip-id="toggleTooltip"
+            data-tooltip-place="bottom"
+            data-tooltip-content={
+              !isSidebarListOpen ? "Open Sidebar" : "Close Sidebar"
+            }
             aria-label="Toggle Button"
             aria-expanded={isSidebarListOpen}
             aria-controls="sidebar-list"
             id="toggle-button"
-            className="controlButton"
+            className={`controlButton ${styles.desktopToggleButton}`}
             onClick={handleToggleClick}
           >
             <SidebarRightButton
-              className={`${styles.sidebarSvg} ${
+              className={`${styles.svgStyle} ${
                 isCollapsed ? styles.collapsed : ""
               }`}
             />
@@ -128,6 +147,8 @@ const SidebarList = ({
           onClick={() => setSidebarListOpen(false)}
         ></div>
       )}
+      <Tooltip className="tootipStyles" id="toggleTooltip" />
+      <Tooltip className="tootipStyles" id="sidebarTooltip" />
     </div>
   );
 };

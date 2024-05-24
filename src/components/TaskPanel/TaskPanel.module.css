@@ -278,7 +278,6 @@ ul {
   border-radius: 5px;
   margin-left: 10px;
   padding: 5px;
-
   width: fit-content;
   white-space: nowrap;
 }
@@ -289,7 +288,7 @@ ul {
   font-weight: 500;
   margin: 0px;
   line-height: 13px;
-  color: var(--panel-text-faint);
+  color: var(--panel-text);
 }
 
 .taskTitle {

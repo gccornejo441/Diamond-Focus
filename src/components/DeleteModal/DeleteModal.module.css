@@ -17,6 +17,11 @@
   border: 1px solid var(--border-color);
 }
 
+[data-theme="high-contrast"] .deleteModal {
+  background-color: rgba(0,0,0,0.60);
+  border: 1px solid #ffffff99;
+}
+
 .deleteModalHeader {
   text-align: center;
   width: 300px;
@@ -38,6 +43,16 @@
 .deleteModalFooter {
   display: flex;
   justify-content: space-around;
+}
+
+[data-theme="high-contrast"] .btnDanger {
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btnDanger {
