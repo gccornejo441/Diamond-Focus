@@ -2,12 +2,12 @@ import { ReactNode } from "react";
 import EditListButton from "@assets/editListIcon.svg?react";
 import DeleteListButton from "@assets/deleteIcon.svg?react";
 import SettingsButton from "@assets/settingsIcon.svg?react";
-import SidebarRightButton from "@assets/sidebarRightIcon.svg?react";
+import AddListButton from "@assets/addListIcon.svg?react";
 
-export const icons = {
+const icons = {
   "Rename list": <EditListButton />,
   "Delete list": <DeleteListButton />,
-  "Add list": <SidebarRightButton />,
+  "Add list": <AddListButton />,
   Settings: <SettingsButton />,
 };
 

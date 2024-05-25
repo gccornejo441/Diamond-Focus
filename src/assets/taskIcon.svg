@@ -1,5 +1,8 @@
-<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#FFF">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g stroke-width="0"/>
   <g stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12 5v14m0-14-6 6m6-6 6 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <g stroke="#ffffff" stroke-width="1.699" stroke-linecap="round">
+    <path d="M11.994 10.001V14m1.999-2H9.996m10.849 0V6.51a3.66 3.66 0 0 0-3.66-3.66H6.505a3.66 3.66 0 0 0-3.661 3.66v10.98a3.66 3.66 0 0 0 3.66 3.66h5.34"/>
+    <path d="m20.785 15.883-1.954-1.986a.5.5 0 0 0-.717 0l-3.756 3.819a.52.52 0 0 0-.146.42l.215 1.996c.013.12.106.215.225.228l1.962.219a.5.5 0 0 0 .414-.148l3.757-3.819a.52.52 0 0 0 0-.73Z"/>
+  </g>
 </svg>

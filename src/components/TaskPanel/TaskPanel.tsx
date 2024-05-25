@@ -30,7 +30,8 @@ import { TaskListProps } from "@components/Sidebar/export";
 
 const svgStyle = {
   cursor: "pointer",
-  fill: "white",
+  stroke: "#ffffff",
+  padding: "2px",
   width: "20px",
   height: "20px",
   transition: "fill 0.2s",

@@ -24,6 +24,7 @@ const svgStyle = {
 const svgTimerStyle = {
   width: "20px",
   height: "20px",
+  stroke: "white",
 };
 
 const ButtonPanel = ({

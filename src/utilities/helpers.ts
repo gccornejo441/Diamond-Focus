@@ -77,7 +77,7 @@ export const initialTaskLists = (): TaskListProps[] => {
       title: "New List",
       tasks: [
         {
-          id: 0,
+          id: 10000,
           text: "New Task",
           completed: false,
           favorite: false,
