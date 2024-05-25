@@ -8,6 +8,7 @@ import {
 } from "../export";
 import ThemeSelector from "./SettingThemeSelector";
 import SettingsButton from "@assets/settingsIcon.svg?react";
+import CloseButton from "@assets/closeIcon.svg?react";
 
 const Settings = ({
   onClose,
@@ -119,25 +120,14 @@ const Settings = ({
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        <a
+        <button
+          type="button"
           onClick={handleCancel}
           className={styles.modalClose}
           aria-label="Close"
         >
-          <svg
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            fill="none"
-            className={styles.icon}
-          >
-            <path
-              d="M6 18L18 6M6 6l12 12"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></path>
-          </svg>
-        </a>
+          <CloseButton className={styles.svgStyle} />
+        </button>
         <aside className={styles.sidebar}>
           <header>
             <h1 className={styles.title}>Settings</h1>
@@ -145,10 +135,10 @@ const Settings = ({
           <ul className={styles.menu}>
             <li className={styles.activeMenuItem}>
               <a className={styles.menuLink}>
-                <span className={styles.menuIcon}>
-                  <SettingsButton className={styles.settingsIcon} />
+                <span className={styles.menuLinkContent}>
+                  <SettingsButton className={styles.svgStyle} />
+                  <span className={styles.menuText}>General</span>
                 </span>
-                <strong className={styles.menuText}>General</strong>
               </a>
             </li>
           </ul>
@@ -280,7 +270,7 @@ const Settings = ({
                       className={styles.clearButton}
                       aria-label="Clear image URL"
                     >
-                      ✕
+                      <CloseButton className={styles.svgStyle} />
                     </button>
                   )}
                 </div>

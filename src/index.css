@@ -308,6 +308,11 @@
   --b4: #a6b8f8;
   --b5: #d2dbfd;
   --b6: #e7ecff;
+
+  --icon-color: #676879;
+  --primary-background: var(--white);
+  --primary-background-hover-color: rgba(103, 104, 121, 0.1);
+  --primary-text-color: #323338;
 }
 
 html {
@@ -427,7 +432,7 @@ code {
 
   --panel-background: var(--b3);
   --panel-background-hover: var(--b2);
-  --panel-text: var(--b5);
+  --panel-text: var(--b6);
   --panel-text-faint: var(--b4);
   --panel-text-hover: var(--b2);
 
@@ -789,6 +794,30 @@ code {
   --highlight-color-focus: #006eff;
 }
 
+[data-theme="cyan-theme"] {
+  --background-color: var(--cyan-100);
+  --text-color: var(--cyan-900);
+
+  --button-background: var(--cyan-500);
+  --button-background-hover: var(--cyan-700);
+  --button-text: var(--cyan-50);
+  --button-text-hover: var(--cyan-50);
+
+  --panel-background: var(--cyan-400);
+  --panel-background-hover: var(--cyan-300);
+  --panel-text: var(--cyan-50);
+  --panel-text-faint: var(--cyan-600);
+  --panel-text-hover: var(--cyan-50);
+
+  --alert: var(--cyan-700);
+
+  --scrollbar-track: var(--cyan-100);
+  --scrollbar-thumb: var(--cyan-300);
+  --scrollbar-thumb-hover: var(--cyan-400);
+
+  --highlight-color-focus: var(--cyan-200);
+}
+
 body::-webkit-scrollbar {
   width: 8px;
 }
@@ -808,13 +837,11 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 button {
-  background-color: var(--button-background);
-  color: var(--button-text);
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
+} 
 
 .tootipStyles {
   background-color: var(--panel-background);

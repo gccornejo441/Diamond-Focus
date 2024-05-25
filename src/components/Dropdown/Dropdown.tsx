@@ -19,7 +19,7 @@ const DropdownItem = ({
     aria-label={`Open ${name} settings`}
   >
     <span className={styles.menuIcon}>{icon}</span>
-    <strong className={styles.menuText}>{name}</strong>
+    <span className={styles.menuText}>{name}</span>
   </button>
 );
 
