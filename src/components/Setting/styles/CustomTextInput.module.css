@@ -1,0 +1,25 @@
+.selectContainer {
+    position: relative;
+    display: inline-block;
+    min-width: 200px;
+  }
+  
+  .settingInput {
+    padding: 7px 12px;
+    width: 100%;
+    border: 1px solid #e8eaed;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 1px 3px -2px #9098a9;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    transition: all 150ms ease;
+  }
+  
+  .settingInput:focus {
+    outline: none;
+    border-color: #0077ff;
+    box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+  }
+  

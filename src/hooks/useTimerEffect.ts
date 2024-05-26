@@ -8,7 +8,7 @@ const useTimerEffect = ({
   breakDuration,
   isAlertOn,
   completeReset,
-  SciFiAlarm,
+  alarmSound,
 }: {
   isRunning: boolean;
   worker: Worker | null;
@@ -17,10 +17,10 @@ const useTimerEffect = ({
   breakDuration: number;
   isAlertOn: boolean;
   completeReset: () => void;
-  SciFiAlarm: string;
+  alarmSound: string;
 }) => {
   useEffect(() => {
-    const audio = new Audio(SciFiAlarm);
+    const audio = new Audio(alarmSound);
 
     if (isRunning) {
       const seconds = isBreak ? breakDuration : count;
@@ -49,7 +49,7 @@ const useTimerEffect = ({
     breakDuration,
     isAlertOn,
     completeReset,
-    SciFiAlarm,
+    alarmSound,
   ]);
 };
 

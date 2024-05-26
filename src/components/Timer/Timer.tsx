@@ -1,10 +1,22 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Timer.module.css";
 import { TimePadder } from "../../utilities/helpers";
 import ButtonPanel from "../ButtonPanel/ButtonPanel";
 import useTimerEffect from "@hooks/useTimerEffect";
 import { getParsedSettings } from "@components/Setting/export";
 import SciFiAlarm from "@assets/sciFiAlarm.mp3";
+import BeepWarning from "@assets/beepWarning.mp3";
+import NewSubscriberAlert from "@assets/newSubscriberAlert.mp3";
+import SimpAlert from "@assets/simpAlert.mp3";
+import RedAlertNuclearBuzzer from "@assets/redAlertNuclearBuzzer.mp3";
+
+const alarmSounds = {
+  sciFiAlarm: SciFiAlarm,
+  beepWarning: BeepWarning,
+  newSubscriberAlert: NewSubscriberAlert,
+  simpAlert: SimpAlert,
+  redAlertNuclearBuzzer: RedAlertNuclearBuzzer,
+};
 
 interface TimerModuleProps {
   count: number;
@@ -43,6 +55,17 @@ const Timer = ({
   const [worker, setWorker] = useState<Worker | null>(null);
   const [isBreak, setIsBreak] = useState(false);
   const [initialState, setInitialState] = useState(true);
+  const [alarmSound, setAlarmSound] = useState(alarmSounds.sciFiAlarm);
+
+  useEffect(() => {
+    const settings = getParsedSettings("appSettings");
+    if (settings && settings.alarmSoundName) {
+      // const alert = settings.alarmSoundName;
+      // const sound = alarmSounds[alert];
+      // setAlarmSound(sound || alarmSounds.sciFiAlarm);
+      setAlarmSound(alarmSounds.sciFiAlarm);
+    }
+  }, []);
 
   useEffect(() => {
     const timerWorker = new Worker("worker.js");
@@ -118,7 +141,7 @@ const Timer = ({
     breakDuration,
     isAlertOn,
     completeReset,
-    SciFiAlarm: SciFiAlarm,
+    alarmSound,
   });
 
   return (

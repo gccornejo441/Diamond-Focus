@@ -28,15 +28,6 @@ import {
 } from "@dnd-kit/core";
 import { TaskListProps } from "@components/Sidebar/export";
 
-const svgStyle = {
-  cursor: "pointer",
-  stroke: "#ffffff",
-  padding: "2px",
-  width: "20px",
-  height: "20px",
-  transition: "fill 0.2s",
-};
-
 const MENU_ID = "task-context-menu";
 
 export interface Task {
@@ -235,8 +226,8 @@ const TaskPanel = ({
           >
             {editId ? (
               <SaveButton
+                className={styles.svgStyle}
                 style={{
-                  ...svgStyle,
                   cursor:
                     editId && editText.trim() === ""
                       ? "not-allowed"
@@ -245,8 +236,8 @@ const TaskPanel = ({
               />
             ) : (
               <TaskButton
+                className={styles.svgStyle}
                 style={{
-                  ...svgStyle,
                   cursor:
                     !editId && task.trim() === "" ? "not-allowed" : "inherit",
                 }}

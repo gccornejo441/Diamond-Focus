@@ -468,6 +468,8 @@ code {
   --border-color: var(--blue-grey-900);
 
   --highlight-color-focus: var(--blue-grey-50);
+
+  --icon-color: var(--blue-grey-100);
 }
 
 [data-theme="red-theme"] {
@@ -771,19 +773,19 @@ code {
 }
 
 [data-theme="high-contrast"] {
-  --background-color: #000000;
-  --text-color: #ffffff;
+  --background-color: var(--black);
+  --text-color: var(--white);
   --background-color-light: #131313;
 
   --button-background: #1a73e8;
   --button-background-hover: #1669c2;
-  --button-text: #ffffff;
+  --button-text: var(--white);
 
   --panel-background: #333333;
   --panel-background-hover: #474747;
-  --panel-text: #ffffff;
+  --panel-text: var(--white);
   --panel-text-faint: #bbbbbb;
-  --panel-text-hover: #000000;
+  --panel-text-hover: var(--black);
 
   --alert: #ff0000;
 
@@ -792,6 +794,8 @@ code {
   --scrollbar-thumb-hover: #474747;
 
   --highlight-color-focus: #006eff;
+
+  --icon-color: var(--white);
 }
 
 [data-theme="cyan-theme"] {

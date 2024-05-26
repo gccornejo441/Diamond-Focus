@@ -73,6 +73,11 @@
     color 0.15s ease-in-out;
 }
 
+[data-theme="dark"] .menuLink,
+[data-theme="high-contrast"] .menuLink {
+  color: var(--panel-text);
+}
+
 .menuLink:focus {
   outline: none;
   box-shadow: 0 0 0 3px var(--highlight-color-focus);

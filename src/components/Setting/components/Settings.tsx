@@ -9,6 +9,17 @@ import {
 import ThemeSelector from "./SettingThemeSelector";
 import SettingsButton from "@assets/settingsIcon.svg?react";
 import CloseButton from "@assets/closeIcon.svg?react";
+import CustomSelectDropdown from "./CustomSelectDropdown";
+import CustomNumberInput from "./CustomNumberInput";
+import CustomTextInput from "./CustomTextInput";
+
+const options = [
+  { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
+  { value: "beepWarning", label: "Space Alarm" },
+  { value: "newSubscriberAlert", label: "New Subscriber" },
+  { value: "simpAlert", label: "Simple Alert" },
+  { value: "redAlertNuclearBuzzer", label: "Red Alert Buzzer" },
+];
 
 const Settings = ({
   onClose,
@@ -25,6 +36,7 @@ const Settings = ({
   theme,
   setTheme,
   alarmName,
+  setAlarmName,
 }: SettingPanelProps) => {
   const [tempTheme, setTempTheme] = useState<string>("");
   const [tempBgImg, setTempBgImg] = useState<string>("");
@@ -149,39 +161,31 @@ const Settings = ({
             <div className={styles.timerSettings}>
               <div className={styles.timerSetting}>
                 <label htmlFor="focusTimer">Focus Time (minutes):</label>
-                <input
-                  type="number"
+                <CustomNumberInput
                   id="focusTimer"
                   name="focusTimer"
-                  min="1"
-                  max="60"
-                  step="1"
+                  min={1}
+                  max={60}
+                  step={1}
                   value={tempCount}
-                  onChange={(e) =>
-                    setTempCount(
-                      Math.max(1, Math.min(60, parseInt(e.target.value))),
-                    )
+                  onChange={(value) =>
+                    setTempCount(Math.max(1, Math.min(60, value)))
                   }
-                  className={styles.settingInput}
                 />
               </div>
 
               <div className={styles.timerSetting}>
                 <label htmlFor="breakTimer">Break Time (minutes):</label>
-                <input
-                  type="number"
+                <CustomNumberInput
                   id="breakTimer"
                   name="breakTimer"
-                  min="1"
-                  max="60"
-                  step="1"
+                  min={1}
+                  max={60}
+                  step={1}
                   value={tempBreakDuration}
-                  onChange={(e) =>
-                    setTempBreakDuration(
-                      Math.max(1, Math.min(60, parseInt(e.target.value))),
-                    )
+                  onChange={(value) =>
+                    setTempBreakDuration(Math.max(1, Math.min(60, value)))
                   }
-                  className={styles.settingInput}
                 />
               </div>
 
@@ -241,27 +245,38 @@ const Settings = ({
 
               <div className={styles.timerSetting}>
                 <label htmlFor="alarmSoundName">Alarm Sound:</label>
-                <select
+                <CustomSelectDropdown
                   id="alarmSoundName"
                   name="alarmSoundName"
                   value={alarmName}
-                  onChange={(e) => e.target.value}
-                  className={styles.settingInput}
+                  onChange={(e) => setAlarmName(e.target.value)}
                   disabled={!isAlertOn}
-                >
-                  <option value="SciFi Alert">SciFi Alert</option>
-                </select>
+                  options={options}
+                />
               </div>
 
               <div className={styles.timerSetting}>
                 <label htmlFor="bgImg">Background Image Link:</label>
                 <div className={styles.inputWithClear}>
+                  {/* <CustomTextInput
+                    type="url"
+                    name="bgImg"
+                    value={bgImg}
+                    onChange={(e) => setBgImg(e.target.value)}
+                    placeholder="Enter image URL"
+                  /> */}
                   <input
                     type="url"
                     name="bgImg"
                     value={bgImg}
                     onChange={(e) => setBgImg(e.target.value)}
-                    className={styles.settingInput}
+                    placeholder="Enter image URL"
+                  />
+                  <CustomTextInput
+                    type="url"
+                    name="bgImg"
+                    value={bgImg}
+                    onChange={(e) => setBgImg(e.target.value)}
                     placeholder="Enter image URL"
                   />
                   {bgImg && (

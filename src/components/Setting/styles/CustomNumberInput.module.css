@@ -1,0 +1,57 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #E8EAED;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 150px;
+  /* height: 50px; */
+  background: #F5F8FA;
+}
+
+.inputLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.inputLabel input {
+  border: none;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  outline: none;
+  background: #FFFFFF;
+}
+
+.incrementButton,
+.decrementButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 100%;
+  background: var(--button-background);
+  border: none;
+  cursor: pointer;
+  padding: 9px;
+}
+
+.incrementButton:hover,
+.decrementButton:hover {
+  background: var(----button-background-hover);
+}
+
+.incrementButton svg,
+.decrementButton svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2px;
+  stroke: #FFFFFF;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
