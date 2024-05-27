@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TimePadder } from "../../../utilities/helpers";
 import ButtonPanel from "../../ButtonPanel/ButtonPanel";
 import TimerDisplay from "./TimerDisplay";
