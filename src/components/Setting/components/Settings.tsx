@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { ApplyBodyStyles } from "../../../utilities/helpers";
-import {
-  getParsedSettings,
-  settingFormHelper,
-  styles,
-  SettingPanelProps,
-} from "../export";
-import ThemeSelector from "./SettingThemeSelector";
+import styles from "../styles/Setting.module.css";
+import { ApplyBodyStyles } from "@utilities/helpers";
+import CustomThemeSelector from "./CustomThemeSelector";
 import SettingsButton from "@assets/settingsIcon.svg?react";
 import CloseButton from "@assets/closeIcon.svg?react";
 import CustomSelectDropdown from "./CustomSelectDropdown";
 import CustomNumberInput from "./CustomNumberInput";
 import CustomTextInput from "./CustomTextInput";
+
+import { SettingPanelProps } from "../types/SettingTypes";
+import { getParsedSettings, settingFormHelper } from "../utils/Settings";
 
 const options = [
   { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
@@ -257,43 +255,20 @@ const Settings = ({
 
               <div className={styles.timerSetting}>
                 <label htmlFor="bgImg">Background Image Link:</label>
-                <div className={styles.inputWithClear}>
-                  {/* <CustomTextInput
-                    type="url"
-                    name="bgImg"
-                    value={bgImg}
-                    onChange={(e) => setBgImg(e.target.value)}
-                    placeholder="Enter image URL"
-                  /> */}
-                  <input
-                    type="url"
-                    name="bgImg"
-                    value={bgImg}
-                    onChange={(e) => setBgImg(e.target.value)}
-                    placeholder="Enter image URL"
-                  />
-                  <CustomTextInput
-                    type="url"
-                    name="bgImg"
-                    value={bgImg}
-                    onChange={(e) => setBgImg(e.target.value)}
-                    placeholder="Enter image URL"
-                  />
-                  {bgImg && (
-                    <button
-                      onClick={clearWebImageUrl}
-                      className={styles.clearButton}
-                      aria-label="Clear image URL"
-                    >
-                      <CloseButton className={styles.svgStyle} />
-                    </button>
-                  )}
-                </div>
+
+                <CustomTextInput
+                  type="url"
+                  name="bgImg"
+                  value={bgImg}
+                  onChange={(e) => setBgImg(e.target.value)}
+                  placeholder="Enter image URL"
+                  onClear={clearWebImageUrl}
+                />
               </div>
 
               <div className={styles.timerSetting}>
                 <label htmlFor="themeSelector">Theme:</label>
-                <ThemeSelector
+                <CustomThemeSelector
                   selectedTheme={theme}
                   onChangeTheme={handleThemeChange}
                 />

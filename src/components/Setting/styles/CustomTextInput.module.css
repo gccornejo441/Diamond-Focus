@@ -1,25 +1,55 @@
-.selectContainer {
-    position: relative;
-    display: inline-block;
-    min-width: 200px;
-  }
-  
-  .settingInput {
-    padding: 7px 12px;
-    width: 100%;
-    border: 1px solid #e8eaed;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 1px 3px -2px #9098a9;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 16px;
-    transition: all 150ms ease;
-  }
-  
-  .settingInput:focus {
-    outline: none;
-    border-color: #0077ff;
-    box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
-  }
-  
+.inputContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.settingInput {
+  padding: 7px 40px 7px 12px;
+  flex: 1;
+  border: 1px solid #e8eaed;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 1px 3px -2px #9098a9;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 150ms ease;
+} 
+
+.clearButton {
+  position: absolute;
+  right: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--button-background);
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 9px;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clearButton:hover {
+  background: var(--button-background-hover);
+}
+
+.clearButton:focus,
+.settingInput:focus {
+  outline: 2px solid var(--highlight-color-focus);
+  box-shadow: 0 0 5px var(--highlight-color-focus);
+}
+
+.clearButton svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2px;
+  fill: var(--white);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

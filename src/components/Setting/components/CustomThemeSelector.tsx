@@ -1,8 +1,8 @@
 import React from "react";
 import { Tooltip } from "react-tooltip";
-import { styles } from "../export";
+import styles from "../styles/CustomThemeSelector.module.css";
 
-interface ThemeSelectorProps {
+interface CustomThemeSelectorProps {
   selectedTheme: string;
   onChangeTheme: (theme: string) => void;
 }
@@ -118,10 +118,10 @@ const themes = [
   },
 ];
 
-const ThemeSelector = ({
+const CustomThemeSelector = ({
   selectedTheme,
   onChangeTheme,
-}: ThemeSelectorProps) => {
+}: CustomThemeSelectorProps) => {
   const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChangeTheme(e.target.value);
   };
@@ -169,4 +169,4 @@ const ThemeSelector = ({
   );
 };
 
-export default ThemeSelector;
+export default CustomThemeSelector;

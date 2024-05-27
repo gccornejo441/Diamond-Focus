@@ -26,7 +26,7 @@ import {
   UniqueIdentifier,
   MouseSensor,
 } from "@dnd-kit/core";
-import { TaskListProps } from "@components/Sidebar/export";
+import { TaskListProps } from "@components/Sidebar";
 
 const MENU_ID = "task-context-menu";
 

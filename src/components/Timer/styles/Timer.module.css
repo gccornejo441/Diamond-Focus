@@ -1,0 +1,86 @@
+
+.timerBox > span {
+  position: relative;
+}
+
+.timerContainer {
+  display: flex;
+  flex-direction: row;
+  max-width: 670px;
+  margin: 10px;
+  justify-content: space-between;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.timerBox {
+  border-radius: 5px;
+}
+
+.timerFont {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--panel-text);
+  border-radius: 5px;
+  padding: 0px 15px;
+  background-color: var(--panel-background);
+}
+
+/* 
+.timerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2c2f33;
+  border: 1px solid #23272a;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.timerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2c2f33;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.timerFont {
+  font-size: 3rem;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 10px;
+}
+
+.timerProgressBar {
+  width: 100%;
+  height: 10px;
+  background-color: #40444b;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.timerProgress {
+  height: 100%;
+  background-color: #7289da;
+  transition: width 0.3s ease-in-out;
+}
+
+.timerButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  font-size: 1.5rem;
+  margin: 0 10px;
+}
+
+.timerButton:hover {
+  transform: scale(1.1);
+} */

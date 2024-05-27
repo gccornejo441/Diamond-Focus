@@ -1,5 +1,6 @@
 import React from "react";
-import styles from "../styles/CustomSelectDropdown.module.css";
+import styles from "../styles/CustomTextInput.module.css";
+import CloseButton from "@assets/closeIcon.svg?react";
 
 interface CustomTextInputProps {
   type: string;
@@ -9,6 +10,7 @@ interface CustomTextInputProps {
   className?: string;
   placeholder?: string;
   disabled?: boolean;
+  onClear: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const CustomTextInput = ({
@@ -19,9 +21,10 @@ const CustomTextInput = ({
   className,
   placeholder,
   disabled,
+  onClear,
 }: CustomTextInputProps) => {
   return (
-    <div className={styles.selectContainer}>
+    <div className={styles.inputContainer}>
       <input
         type={type}
         name={name}
@@ -31,6 +34,11 @@ const CustomTextInput = ({
         placeholder={placeholder}
         disabled={disabled}
       />
+      {value && (
+        <button type="button" className={styles.clearButton} onClick={onClear}>
+          <CloseButton />
+        </button>
+      )}
     </div>
   );
 };

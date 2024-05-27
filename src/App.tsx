@@ -1,19 +1,24 @@
 import { useState, useEffect, useMemo } from "react";
-import TaskPanel from "./components/TaskPanel/TaskPanel";
-import Timer from "./components/Timer/Timer";
 import styles from "./App.module.css";
-import Sidebar from "./components/Sidebar/components/Sidebar/Sidebar";
-import { ApplyBodyStyles } from "./utilities/helpers";
-import { SidebarList } from "@components/Sidebar/index";
-import Dropdown from "./components/Dropdown/Dropdown";
+import { TaskPanel } from "@components/TaskPanel";
+import { Timer } from "@components/Timer";
+import { ApplyBodyStyles } from "@utilities/helpers";
+import Dropdown from "@components/Dropdown/Dropdown";
 import useTasks from "@hooks/useTasks";
 import SettingButton from "@assets/menuIcon.svg?react";
 import GemLogo from "@assets/gemIcon.svg?react";
-import { getParsedSettings, SettingsProps } from "@components/Setting/export";
-import { Settings } from "@components/Setting/";
 import ProgressBar from "@components/ProgressBar/CircularProgressBar";
 import useLoading from "@hooks/useLoading";
-import useSidebarListToggle from "@components/Sidebar/hooks/useSidebarListToggle";
+import {
+  Settings,
+  SettingsProps,
+  getParsedSettings,
+} from "@components/Setting";
+import {
+  Sidebar,
+  SidebarList,
+  useSidebarListToggle,
+} from "@components/Sidebar";
 
 const SETTINGS_KEY = "appSettings";
 
@@ -68,7 +73,7 @@ function App() {
       setIsNewTaskOnTop(settings.isNewTaskOnTop);
       setTheme(settings.theme);
       setBgImg(settings.bgImg);
-      setAlarmName(settings.alarmSoundName);
+      setAlarmName(settings.alarmName);
     }
   }, []);
 

@@ -272,7 +272,8 @@
 }
 
 .toggleInput:focus + .toggleLabel {
-  box-shadow: 0 0 1px var(--button-background-hover);
+  outline: 2px solid var(--highlight-color-focus);
+  box-shadow: 0 0 5px var(--highlight-color-focus);
 }
 
 .content {
@@ -316,35 +317,6 @@
   align-items: center;
 }
 
-.clearButton {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--button-background);
-  color: var(--button-text);
-  cursor: pointer;
-}
-
-.clearButton:hover {
-  background-color: var(--button-background-hover);
-  color: var(--button-text-hover);
-}
-
-.timerInput {
-  background-color: hsl(var(--background));
-  border-color: var(--lx-gray-07, var(--rx-gray-07));
-  border-radius: 0.25rem;
-  border-width: 1px;
-  display: block;
-  padding-left: 0.5rem;
-  width: 100%;
-}
-
 .textInput {
   width: 100%;
   padding: 8px 12px;
@@ -368,85 +340,11 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 [data-theme="dark"] input,
-[data-theme="high-contrast"] input {
-  -moz-appearance: textfield;
-  appearance: textfield;
-  margin: 0;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  color: var(--text-color);
-  background-color: var(--panel-background);
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
-}
-
-input {
-  -moz-appearance: textfield;
-  appearance: textfield;
-  margin: 0;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  color: var(--primary-text-color);
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
-}
-
-input:focus {
-  outline: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
-}
-
-input:disabled {
-  background-color: #f3f3f3;
-  color: #ccc;
-  cursor: not-allowed;
-}
-
+[data-theme="high-contrast"] input,
 [data-theme="dark"] select,
 [data-theme="high-contrast"] select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.875rem;
   color: var(--text-color);
   background-color: var(--panel-background);
-  padding: 8px 12px;
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
-}
-
-select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  color: inherit;
-  padding: 8px 12px;
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
-}
-
-select:focus {
-  outline: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
-}
-
-select:disabled {
-  background-color: #f3f3f3;
-  color: #ccc;
-  cursor: not-allowed;
 }
 
 .buttonGroup {
@@ -486,73 +384,4 @@ select:disabled {
 .cancelButton:focus {
   outline: 2px solid var(--highlight-color-focus);
   box-shadow: 0 0 5px var(--highlight-color-focus);
-}
-
-[data-theme="high-contrast"] input[type="number"]:focus,
-[data-theme="high-contrast"] .textInput:focus,
-[data-theme="high-contrast"] .timerInput:focus {
-  outline: none;
-  border: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
-}
-
-.settingCardItem {
-  position: relative;
-  max-width: 780px;
-  margin: auto;
-}
-
-.cardIllustration {
-  padding: 0.3rem;
-  border-radius: 8px;
-  background-color: rgba(24, 24, 24, 0.95);
-}
-
-.colorPalette {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-}
-
-.colorPalette {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 0;
-  list-style: none;
-  justify-content: center;
-}
-
-.colorItem {
-  margin: 5px;
-}
-
-.colorLabel {
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-
-.colorLabel:hover {
-  transform: scale(1.1);
-  border: 3px solid var(--highlight-color-focus);
-}
-
-.colorLabel:focus {
-  outline: none;
-  border: 3px solid var(--highlight-color-focus);
-}
-
-.themeTooltipStyles {
-  background: var(--tooltip-background);
-  color: var(--tooltip-text);
-  border-radius: 4px;
-  padding: 5px 10px;
-  font-size: 12px;
 }

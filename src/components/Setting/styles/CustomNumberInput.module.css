@@ -6,8 +6,7 @@
   border-radius: 5px;
   overflow: hidden;
   width: 150px;
-  /* height: 50px; */
-  background: #F5F8FA;
+  background-color: var(--panel-background);
 }
 
 .inputLabel {
@@ -21,10 +20,14 @@
   border: none;
   text-align: center;
   width: 100%;
-  height: 100%;
+  height: 31px;
   font-size: 1rem;
   outline: none;
-  background: #FFFFFF;
+}
+
+.inputLabel input:focus {
+  outline: 2px solid var(--highlight-color-focus);
+  box-shadow: 0 0 5px var(--highlight-color-focus);
 }
 
 .incrementButton,
@@ -37,12 +40,19 @@
   background: var(--button-background);
   border: none;
   cursor: pointer;
-  padding: 9px;
+  padding: 10px;
 }
 
 .incrementButton:hover,
-.decrementButton:hover {
-  background: var(----button-background-hover);
+.decrementButton:hover,
+.incrementButton:hover > svg {
+  background: var(--button-background-hover);
+}
+
+.incrementButton:focus,
+.decrementButton:focus {
+  outline: 2px solid var(--highlight-color-focus);
+  box-shadow: 0 0 5px var(--highlight-color-focus);
 }
 
 .incrementButton svg,

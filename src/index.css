@@ -793,7 +793,7 @@ code {
   --scrollbar-thumb: #333333;
   --scrollbar-thumb-hover: #474747;
 
-  --highlight-color-focus: #006eff;
+  --highlight-color-focus: var(--white);
 
   --icon-color: var(--white);
 }

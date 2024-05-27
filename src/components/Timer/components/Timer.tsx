@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Timer.module.css";
-import { TimePadder } from "../../utilities/helpers";
-import ButtonPanel from "../ButtonPanel/ButtonPanel";
+import { TimePadder } from "../../../utilities/helpers";
+import ButtonPanel from "../../ButtonPanel/ButtonPanel";
+import TimerDisplay from "./TimerDisplay";
+import { TimerProps } from "../types/TimerTypes";
+import styles from "../styles/Timer.module.css";
+
 import useTimerEffect from "@hooks/useTimerEffect";
-import { getParsedSettings } from "@components/Setting/export";
 import SciFiAlarm from "@assets/sciFiAlarm.mp3";
 import BeepWarning from "@assets/beepWarning.mp3";
 import NewSubscriberAlert from "@assets/newSubscriberAlert.mp3";
 import SimpAlert from "@assets/simpAlert.mp3";
 import RedAlertNuclearBuzzer from "@assets/redAlertNuclearBuzzer.mp3";
+import { getParsedSettings } from "@components/Setting/utils/Settings";
 
 const alarmSounds = {
   sciFiAlarm: SciFiAlarm,
@@ -18,37 +21,13 @@ const alarmSounds = {
   redAlertNuclearBuzzer: RedAlertNuclearBuzzer,
 };
 
-interface TimerModuleProps {
-  count: number;
-  breakDuration: number;
-  isBreak: boolean;
-}
-
-const TimerModule = ({ count, breakDuration, isBreak }: TimerModuleProps) => (
-  <div className={styles.timerBox}>
-    <div className={styles.timerFont}>
-      <span>{isBreak ? TimePadder(breakDuration) : TimePadder(count)}</span>
-    </div>
-  </div>
-);
-
-interface TimerProps {
-  isAlertOn: boolean;
-  handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
-  isAutoSwitchOn: boolean;
-  count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-  breakDuration: number;
-  setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
-}
-
 const Timer = ({
   isAlertOn,
   handleDeleteAll,
   isAutoSwitchOn,
   count,
-  breakDuration,
   setCount,
+  breakDuration,
   setBreakDuration,
 }: TimerProps) => {
   const [isRunning, setIsRunning] = useState(false);
@@ -56,14 +35,19 @@ const Timer = ({
   const [isBreak, setIsBreak] = useState(false);
   const [initialState, setInitialState] = useState(true);
   const [alarmSound, setAlarmSound] = useState(alarmSounds.sciFiAlarm);
+  const [initialCount, setInitialCount] = useState(1500);
+  const [initialBreakDuration, setInitialBreakDuration] = useState(300);
 
   useEffect(() => {
     const settings = getParsedSettings("appSettings");
-    if (settings && settings.alarmSoundName) {
-      // const alert = settings.alarmSoundName;
-      // const sound = alarmSounds[alert];
-      // setAlarmSound(sound || alarmSounds.sciFiAlarm);
-      setAlarmSound(alarmSounds.sciFiAlarm);
+    if (settings) {
+      if (settings.alarmName) {
+        const alert = settings.alarmName;
+        const sound = alarmSounds[alert as keyof typeof alarmSounds];
+        setAlarmSound(sound || alarmSounds.sciFiAlarm);
+      }
+      setInitialCount(settings.count || 1500);
+      setInitialBreakDuration(settings.breakDuration || 300);
     }
   }, []);
 
@@ -146,10 +130,12 @@ const Timer = ({
 
   return (
     <div className={styles.timerContainer}>
-      <TimerModule
+      <TimerDisplay
         isBreak={isBreak}
         breakDuration={breakDuration}
         count={count}
+        initialCount={initialCount}
+        initialBreakDuration={initialBreakDuration}
       />
       <ButtonPanel
         handleDeleteAll={handleDeleteAll}

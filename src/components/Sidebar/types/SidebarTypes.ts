@@ -1,11 +1,11 @@
 import React from "react";
 
-export interface SidebarListProps {
+interface SidebarListProps {
   isOpen: boolean;
   toggleSidebar: () => void;
 }
 
-export interface Task {
+interface Task {
   id: number;
   text: string;
   completed: boolean;
@@ -13,17 +13,13 @@ export interface Task {
   createdAt: Date;
 }
 
-export interface TaskListProps {
+interface TaskListProps {
   id: number;
   title: string;
   tasks: Task[];
 }
 
-// export interface CurrentSelectedTaskProps extends SidebarListStateProps {
-//   currentSelectedTaskList: TaskListProps | null;
-// }
-
-export interface SidebarListStateProps {
+interface SidebarListStateProps {
   isSidebarListOpen: boolean;
   setSidebarListOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentSelectedTaskList: React.Dispatch<
@@ -31,8 +27,16 @@ export interface SidebarListStateProps {
   >;
 }
 
-export interface TaskListTitleProps {
+interface TaskListTitleProps {
   id: number;
   value: string;
   onTitleChange: (id: number, newTitle: string) => void;
 }
+
+export type {
+  SidebarListProps,
+  TaskListProps,
+  TaskListTitleProps,
+  SidebarListStateProps,
+  Task,
+};

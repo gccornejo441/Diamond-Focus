@@ -1,18 +1,18 @@
 import { TaskListProps } from "../../Sidebar/types/SidebarTypes";
 import { SettingsProps } from "../types/SettingTypes";
 
-export const defaultSettings: SettingsProps = {
+const defaultSettings: SettingsProps = {
   count: 1500,
   breakDuration: 300,
   isAlertOn: true,
   isAutoSwitchOn: false,
   theme: "default",
   bgImg: "",
-  alarmSoundName: "sciFiAlarm.mp3",
+  alarmName: "sciFiAlarm.mp3",
   isNewTaskOnTop: true,
 };
 
-export const defaultTaskList: TaskListProps = {
+const defaultTaskList: TaskListProps = {
   id: 0,
   title: "New List",
   tasks: [
@@ -36,7 +36,7 @@ export const defaultTaskList: TaskListProps = {
  * @return {any | null} The parsed settings object if successful, otherwise null.
  *
  */
-export function initializeDefaultSettings(key: string): void {
+function initializeDefaultSettings(key: string): void {
   try {
     const settings = localStorage.getItem(key);
     if (!settings) {
@@ -53,7 +53,7 @@ export function initializeDefaultSettings(key: string): void {
  * @param {string} key - The key used to retrieve the settings from local storage.
  * @return {any | null} The parsed settings object if successful, otherwise null.
  */
-export function getParsedSettings(key: string): SettingsProps | null {
+function getParsedSettings(key: string): SettingsProps | null {
   try {
     const settings = localStorage.getItem(key);
     return settings ? JSON.parse(settings) : null;
@@ -69,7 +69,7 @@ export function getParsedSettings(key: string): SettingsProps | null {
  * @param {string} key - The key used to store the task list in local storage.
  * @return {any | null} The parsed task list object if successful, otherwise null.
  */
-export function initializeDefaultTaskList(key: string): void {
+function initializeDefaultTaskList(key: string): void {
   try {
     const taskList = localStorage.getItem(key);
     if (!taskList) {
@@ -86,7 +86,7 @@ export function initializeDefaultTaskList(key: string): void {
  * @param {string} key - The key used to retrieve the task list from local storage.
  * @return {any | null} The parsed task list object if successful, otherwise null.
  */
-export function getParsedTaskList(key: string): TaskListProps | null {
+function getParsedTaskList(key: string): TaskListProps | null {
   try {
     const taskList = localStorage.getItem(key);
     return taskList ? JSON.parse(taskList) : null;
@@ -102,7 +102,7 @@ export function getParsedTaskList(key: string): TaskListProps | null {
  * @param {FormData} formData - The FormData containing the settings data.
  * @return {SettingsProps} The generated Settings object.
  */
-export function settingFormHelper(formData: FormData): SettingsProps {
+function settingFormHelper(formData: FormData): SettingsProps {
   return {
     count: parseInt(formData.get("focusTimer") as string) * 60,
     breakDuration: parseInt(formData.get("breakTimer") as string) * 60,
@@ -110,7 +110,17 @@ export function settingFormHelper(formData: FormData): SettingsProps {
     isAutoSwitchOn: formData.has("autoSwitch"),
     theme: formData.get("theme") as string,
     bgImg: formData.get("bgImg") as string,
-    alarmSoundName: formData.get("alarmSoundName") as string,
+    alarmName: formData.get("alarmName") as string,
     isNewTaskOnTop: formData.has("newTasksOnTop"),
   };
 }
+
+export {
+  initializeDefaultSettings,
+  getParsedSettings,
+  initializeDefaultTaskList,
+  getParsedTaskList,
+  settingFormHelper,
+  defaultSettings,
+  defaultTaskList,
+};

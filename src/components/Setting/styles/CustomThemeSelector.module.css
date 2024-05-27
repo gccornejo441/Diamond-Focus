@@ -1,0 +1,63 @@
+
+/* Color Palette */
+.settingCardItem {
+    position: relative;
+    max-width: 780px;
+    margin: auto;
+  }
+  
+  .cardIllustration {
+    padding: 0.3rem;
+    border-radius: 8px;
+    background-color: rgba(24, 24, 24, 0.95);
+  }
+  
+  .colorPalette {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  
+  .colorPalette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+    justify-content: center;
+  }
+  
+  .colorItem {
+    margin: 5px;
+  }
+  
+  .colorLabel {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+  
+  .colorLabel:hover {
+    transform: scale(1.1);
+    border: 3px solid var(--highlight-color-focus);
+  }
+  
+  .colorLabel:focus {
+    outline: none;
+    border: 3px solid var(--highlight-color-focus);
+  }
+  
+  .themeTooltipStyles {
+    background: var(--tooltip-background);
+    color: var(--tooltip-text);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  /* Color Palette */
