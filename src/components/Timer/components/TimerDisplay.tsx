@@ -1,5 +1,5 @@
 import { TimePadder } from "@utilities/helpers";
-import styles from "../styles/Timer.module.css";
+import styles from "../styles/TimerDisplay.module.css";
 import { TimerDisplayProps } from "../types/TimerTypes";
 
 const TimerDisplay = ({
@@ -20,7 +20,7 @@ const TimerDisplay = ({
       </div>
       <div className={styles.timerProgressBar}>
         <div
-          className={styles.timerProgress}
+          className={`${styles.timerProgress} ${isBreak ? styles.breakProgress : styles.focusProgress}`}
           style={{
             width: `${progress}%`,
           }}

@@ -1,6 +1,5 @@
+import { useEffect } from "react";
 import styles from "./Sidebar.module.css";
-import settingStyles from "../../../Setting/styles/Setting.module.css";
-import CancelButton from "@assets/cancelIcon.svg?react";
 import GemLogo from "@assets/gemIcon.svg?react";
 
 interface SidebarProps {
@@ -9,28 +8,28 @@ interface SidebarProps {
   toggleSidebar: () => void;
 }
 
-// interface NavigationItemProps {
-//   label: string;
-//   children?: React.ReactNode;
-// }
-
-// const NavigationItem: React.FC<NavigationItemProps> = ({ label, children }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const handleToggle = () => {
-//     setIsOpen(!isOpen);
-//   };
-//   return (
-//     <div>
-//       <button onClick={handleToggle}>{label}</button>
-//       {isOpen && <div className={styles.submenu}>{children}</div>}
-//     </div>
-//   );
-// };
-
 const Sidebar = ({ isOpen, toggleSidebar, taskDescription }: SidebarProps) => {
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const sidebarElement = document.querySelector(`.${styles.sidebar}`);
+      if (sidebarElement && !sidebarElement.contains(event.target as Node)) {
+        toggleSidebar();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, toggleSidebar]);
+
   return (
-    <div className={isOpen ? `${settingStyles.modalOverlay}` : ""}>
+    <div className={isOpen ? `${styles.overlay}` : ""}>
       <div
         className={
           isOpen
@@ -38,24 +37,10 @@ const Sidebar = ({ isOpen, toggleSidebar, taskDescription }: SidebarProps) => {
             : `${styles.sidebar} ${styles.closed}`
         }
       >
-        <button
-          onClick={toggleSidebar}
-          className={styles.cancelButton}
-          aria-label="Close sidebar"
-          type="button"
-        >
-          <CancelButton />
-        </button>
         <nav>
-          <GemLogo aria-label="Gem Icon" className={settingStyles.icon} />
+          <GemLogo aria-label="Gem Icon" className={styles.icon} />
           <h2 className={styles.sideBarTitle}>Diamond Focus</h2>
           <p>{taskDescription}</p>
-          {/* <NavigationItem label="Home" />
-                <NavigationItem label="About">
-                    <ul>
-                        <li>{taskDescription}</li>
-                    </ul>
-                </NavigationItem> */}
         </nav>
       </div>
     </div>

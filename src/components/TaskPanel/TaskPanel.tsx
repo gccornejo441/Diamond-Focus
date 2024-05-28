@@ -206,7 +206,11 @@ const TaskPanel = ({
       </Popup>
       <div className={styles.taskPanel}>
         <h2 className={styles.taskTitle}>
-          {currentSelectedTaskList ? currentSelectedTaskList.title : ""}
+          {currentSelectedTaskList ? (
+            <span>{currentSelectedTaskList.title}</span>
+          ) : (
+            ""
+          )}
         </h2>
         <div className={styles.inputArea}>
           <input

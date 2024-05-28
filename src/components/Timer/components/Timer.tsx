@@ -129,7 +129,9 @@ const Timer = ({
   });
 
   return (
-    <div className={styles.timerContainer}>
+    <div
+      className={`${styles.timerContainer} ${isBreak ? styles.breakTimer : styles.focusTimer}`}
+    >
       <TimerDisplay
         isBreak={isBreak}
         breakDuration={breakDuration}

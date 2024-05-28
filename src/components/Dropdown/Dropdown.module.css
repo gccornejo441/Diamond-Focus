@@ -41,6 +41,10 @@
   background-color: var(--panel-background);
 }
 
+[data-theme="high-contrast"] .dropdownWrapper {
+  border: 2px solid var(--panel-text);
+}
+
 .menuIcon {
   margin-right: 10px;
   display: flex;
