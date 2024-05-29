@@ -51,6 +51,10 @@
   color: var(--panel-text);
 }
 
+[data-theme="high-contrast"] .menu {
+  border: 2px solid var(--text-color);
+}
+
 .menuItem {
   border-radius: 4px;
   margin-bottom: 5px;
@@ -286,8 +290,7 @@
 }
 
 .toggleInput:focus + .toggleLabel {
-  outline: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
+  outline: 2px solid var(--text-color);
 }
 
 .content {
@@ -396,6 +399,5 @@ input[type="number"]::-webkit-outer-spin-button {
 .saveButton:focus,
 .resetButton:focus,
 .cancelButton:focus {
-  outline: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
+  outline: 2px solid var(--text-color);
 }

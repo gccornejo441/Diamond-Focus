@@ -1,29 +1,15 @@
-import { TimePadder } from "@utilities/helpers";
 import styles from "../styles/TimerDisplay.module.css";
 import { TimerDisplayProps } from "../types/TimerTypes";
+import TimerIsland from "./TimerIsland";
 
-const TimerDisplay = ({
-  count,
-  breakDuration,
-  isBreak,
-  initialCount,
-  initialBreakDuration,
-}: TimerDisplayProps) => {
-  const totalDuration = isBreak ? initialBreakDuration : initialCount;
-  const remainingTime = isBreak ? breakDuration : count;
-  const progress = ((totalDuration - remainingTime) / totalDuration) * 100;
-
+const TimerDisplay = ({ count, breakDuration, isBreak }: TimerDisplayProps) => {
   return (
     <div className={styles.timerBox}>
       <div className={styles.timerFont}>
-        <span>{isBreak ? TimePadder(breakDuration) : TimePadder(count)}</span>
-      </div>
-      <div className={styles.timerProgressBar}>
-        <div
-          className={`${styles.timerProgress} ${isBreak ? styles.breakProgress : styles.focusProgress}`}
-          style={{
-            width: `${progress}%`,
-          }}
+        <TimerIsland
+          isBreak={isBreak}
+          breakDuration={breakDuration}
+          count={count}
         />
       </div>
     </div>

@@ -14,12 +14,7 @@
 [data-theme="dark"] .deleteModal,
 [data-theme="high-contrast"] .deleteModal {
   background-color: var(--background-color);
-  border: 1px solid var(--border-color);
-}
-
-[data-theme="high-contrast"] .deleteModal {
-  background-color: rgba(0,0,0,0.60);
-  border: 1px solid #ffffff99;
+  border: 1px solid var(--white);
 }
 
 .deleteModalHeader {

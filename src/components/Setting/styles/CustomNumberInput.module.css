@@ -26,8 +26,7 @@
 }
 
 .inputLabel input:focus {
-  outline: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
+  outline: 2px solid var(--text-color);
 }
 
 .incrementButton,
@@ -51,8 +50,7 @@
 
 .incrementButton:focus,
 .decrementButton:focus {
-  outline: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
+  outline: 2px solid var(--text-color);
 }
 
 .incrementButton svg,

@@ -40,7 +40,7 @@
   }
   
   .select select option {
-    color: #223254;
+    color: var(--text-color);
   }
   
   .select select option[value=""][disabled] {

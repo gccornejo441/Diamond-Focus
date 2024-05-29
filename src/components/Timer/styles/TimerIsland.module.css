@@ -1,0 +1,145 @@
+@media screen and (min-width: 48em) {
+    .timerIsland {
+        width: calc(100% - 36px);
+    }
+}
+
+.layoutMobile .timerIsland {
+    top: calc(50% - 90px);
+    left: 0;
+    width: 100%;
+}
+
+@media only screen and (max-height: 699px) and (orientation: landscape) {
+    .layoutMobile .timerIsland {
+        width: 50%;
+        left: 0;
+        top: calc(50% - 90px + 25.5px);
+    }
+}
+
+.timerIsland {
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 500;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+    width: 180px;
+    height: 180px;
+    line-height: 182px;
+    border-radius: 180px;
+    transform-origin: center center;
+}
+
+[data-theme="high-contrast"] .timerIsland {
+    border: 1px solid var(--text-color);
+}
+
+.layoutMobile .timerIsland {
+    transform: translateY(0);
+}
+
+.timerText {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.timerBorder {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    box-sizing: border-box;
+    background-color: var(--panel-background);
+    border: 2px transparent solid;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    background-image: linear-gradient(var(--panel-background), var(--panel-background)), linear-gradient(to bottom, var(--panel-background), var(--panel-background));
+    animation-name: timer-heartbeat;
+    animation-delay: 3.5s;
+    animation-duration: 3.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+}
+
+.timerBackground {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    background-color: #232f4e;
+}
+
+.timerRing {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    box-sizing: border-box;
+    border: 2px var(--alert) solid;
+    opacity: 0;
+    animation-name: timer-ring;
+    animation-delay: 3.5s;
+    animation-duration: 3.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+[data-theme="high-contrast"] .timerRing {
+    border: 2px var(--white) solid;
+}
+
+@keyframes timer-heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    8.333% {
+        transform: scale(0.989);
+    }
+    16.667% {
+        transform: scale(1);
+    }
+}
+
+@keyframes timer-ring {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    12.5% {
+        opacity: 0;
+        transform: scale(0.995);
+    }
+    16.667% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+        transform: scale(1.3);
+    }
+}
