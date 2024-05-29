@@ -35,8 +35,6 @@ const Timer = ({
   const [isBreak, setIsBreak] = useState(false);
   const [initialState, setInitialState] = useState(true);
   const [alarmSound, setAlarmSound] = useState(alarmSounds.sciFiAlarm);
-  const [initialCount, setInitialCount] = useState(1500);
-  const [initialBreakDuration, setInitialBreakDuration] = useState(300);
 
   useEffect(() => {
     const settings = getParsedSettings("appSettings");
@@ -46,8 +44,6 @@ const Timer = ({
         const sound = alarmSounds[alert as keyof typeof alarmSounds];
         setAlarmSound(sound || alarmSounds.sciFiAlarm);
       }
-      setInitialCount(settings.count || 1500);
-      setInitialBreakDuration(settings.breakDuration || 300);
     }
   }, []);
 
@@ -136,8 +132,6 @@ const Timer = ({
         isBreak={isBreak}
         breakDuration={breakDuration}
         count={count}
-        initialCount={initialCount}
-        initialBreakDuration={initialBreakDuration}
       />
       <ButtonPanel
         handleDeleteAll={handleDeleteAll}

@@ -48,13 +48,14 @@ const SidebarList = ({
 
   const onSelect = (id: number) => {
     handleTaskListSelect(id);
+    setIsCollapsed(!isCollapsed);
+    setSidebarListOpen(!isSidebarListOpen);
   };
 
   const handleConfirmDelete = () => {
     if (deletingTaskListId == null) return;
     handleTaskListDelete(deletingTaskListId);
-    setOpenTask(false);
-    setDeletingTaskListId(null);
+    handleToggleClick();
   };
 
   const handleToggleClick = () => {
