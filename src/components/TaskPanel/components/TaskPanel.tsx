@@ -187,6 +187,7 @@ const TaskPanel = ({
         <TaskTitle
           handleDeleteAll={handleDeleteAll}
           currentSelectedTaskList={currentSelectedTaskList}
+          tasks={tasks}
         />
         <div className={styles.inputArea}>
           <input

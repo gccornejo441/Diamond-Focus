@@ -6,6 +6,7 @@ import { useMemo } from "react";
 const TaskTitle = ({
   currentSelectedTaskList,
   handleDeleteAll,
+  tasks,
 }: TaskTitleProps) => {
   const stateHandlers = useMemo(
     () => ({
@@ -27,9 +28,7 @@ const TaskTitle = ({
           >
             <span>{currentSelectedTaskList?.title}</span>
           </Dropdown>
-          <span className={styles.taskCount}>
-            {currentSelectedTaskList?.tasks.length} Tasks
-          </span>
+          <span className={styles.taskCount}>{tasks.length} Tasks</span>
         </div>
       </div>
     </div>

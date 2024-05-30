@@ -3,6 +3,7 @@ import { Task, TaskListProps } from "@components/Sidebar";
 interface TaskTitleProps {
   currentSelectedTaskList: TaskListProps | null;
   handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
+  tasks: Task[];
 }
 
 interface TaskPanelProps {

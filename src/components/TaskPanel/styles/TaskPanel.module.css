@@ -87,7 +87,7 @@ ul {
 }
 
 [data-theme="high-contrast"] .contextMenuButton {
-  --contexify-activeItem-bgColor:  #000;
+  --contexify-activeItem-bgColor: #000;
   --contexify-activeItem-color: var(--white);
   --contexify-menu-bgColor: #000000;
   --contexify-separator-color: #000000;
@@ -102,13 +102,11 @@ ul {
 }
 
 .taskPanel {
-  /* margin-top: 30px; */
   max-width: 670px;
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* height: 80vh; */
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 .taskPanel::-webkit-scrollbar {
