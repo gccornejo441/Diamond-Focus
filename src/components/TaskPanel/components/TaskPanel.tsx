@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import "react-contexify/dist/ReactContexify.css";
-import styles from "../TaskPanel/TaskPanel.module.css";
-import TaskItem from "./TaskItem";
-import DeleteModal from "../DeleteModal";
-import Popup from "../Popup/Popup";
+import styles from "../styles/TaskPanel.module.css";
+import DeleteModal from "@components/DeleteModal";
+import { Popup } from "@components/Popup";
 import { Menu, Item, useContextMenu, RightSlot } from "react-contexify";
 import TaskButton from "@assets/taskIcon.svg?react";
 import SaveButton from "@assets/saveIcon.svg?react";
@@ -26,32 +25,12 @@ import {
   UniqueIdentifier,
   MouseSensor,
 } from "@dnd-kit/core";
-import { TaskListProps } from "@components/Sidebar";
+import { TaskPanelProps } from "../types/TaskTypes";
+import { Task } from "@components/Sidebar";
+import TaskItem from "./TaskItem";
+import TaskTitle from "./TaskTitle";
 
 const MENU_ID = "task-context-menu";
-
-export interface Task {
-  id: number;
-  text: string;
-  completed: boolean;
-  favorite: boolean;
-  createdAt: Date;
-}
-
-interface TaskPanelProps {
-  setAskedForTask: React.Dispatch<React.SetStateAction<string>>;
-  onClick: () => void;
-  tasks: Task[];
-  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-  openTask: boolean;
-  setOpenTask: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentTask: React.Dispatch<React.SetStateAction<Task | null>>;
-  currentTask: Task | null;
-  handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
-  isMassDelete: boolean;
-  isNewTaskOnTop: boolean;
-  currentSelectedTaskList: TaskListProps | null;
-}
 
 const TaskPanel = ({
   isNewTaskOnTop,
@@ -205,13 +184,10 @@ const TaskPanel = ({
         />
       </Popup>
       <div className={styles.taskPanel}>
-        <h2 className={styles.taskTitle}>
-          {currentSelectedTaskList ? (
-            <span>{currentSelectedTaskList.title}</span>
-          ) : (
-            ""
-          )}
-        </h2>
+        <TaskTitle
+          handleDeleteAll={handleDeleteAll}
+          currentSelectedTaskList={currentSelectedTaskList}
+        />
         <div className={styles.inputArea}>
           <input
             type="text"

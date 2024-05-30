@@ -1,6 +1,5 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { Task } from "../components/TaskPanel/TaskPanel";
-import { TaskListProps } from "@components/Sidebar";
+import { Task, TaskListProps } from "@components/Sidebar";
 
 const useTasks = () => {
   const [currentSelectedTaskList, setCurrentSelectedTaskList] =

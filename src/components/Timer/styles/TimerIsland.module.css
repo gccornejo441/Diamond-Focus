@@ -25,15 +25,15 @@
     display: block;
     margin: 0 auto;
     text-align: center;
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 500;
     box-sizing: border-box;
     position: relative;
     padding: 0;
-    width: 180px;
-    height: 180px;
-    line-height: 182px;
-    border-radius: 180px;
+    width: 220px;
+    height: 220px;
+    line-height: 220px;
+    border-radius: 220px;
     transform-origin: center center;
 }
 

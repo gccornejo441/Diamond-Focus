@@ -1,0 +1,161 @@
+.container {
+  padding: 20px;
+  max-width: 670px;
+  margin: auto;
+}
+
+.inputArea {
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 25px;
+  padding: 5px;
+  margin: 25px 10px;
+  color: var(--text-color);
+  position: relative;
+}
+
+.inputArea:focus-within {
+  outline: 2px solid var(--alert);
+}
+
+.inputArea input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: none;
+  font-size: 16px;
+  background: transparent;
+  color: var(--text-color);
+  border-radius: 25px;
+  outline: none;
+}
+
+.inputArea input::placeholder {
+  color: var(--panel-text-faint);
+}
+
+.inputArea button {
+  background-color: var(--button-background);
+  border: none;
+  color: var(--button-text);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  padding-left: 11px;
+}
+
+.inputArea button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .inputArea {
+  background-color: var(--panel-background);
+}
+
+[data-theme="high-contrast"] .inputArea {
+  background-color: var(--panel-background);
+  border: 1px solid var(--text-color);
+}
+
+[data-theme="high-contrast"] .inputArea:focus-within,
+[data-theme="dark"] .inputArea:focus-within {
+  outline: 2px solid var(--text-color);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0px;
+}
+
+.contextMenuButton {
+  --contexify-activeItem-bgColor: var(--panel-background-hover);
+  --contexify-activeItem-color: var(--white);
+
+  --contexify-menu-bgColor: #fff;
+  --contexify-separator-color: #eee;
+  --contexify-item-color: #000000;
+  --contexify-rightSlot-color: #000;
+  --contexify-activeRightSlot-color: #fff;
+  --contexify-arrow-color: #6f6e77;
+  --contexify-activeArrow-color: #000000;
+
+  font-size: 0.875rem;
+  font-family: "Montserrat", sans-serif;
+}
+
+[data-theme="high-contrast"] .contextMenuButton {
+  --contexify-activeItem-bgColor:  #000;
+  --contexify-activeItem-color: var(--white);
+  --contexify-menu-bgColor: #000000;
+  --contexify-separator-color: #000000;
+  --contexify-item-color: #000000;
+  --contexify-rightSlot-color: #000;
+  --contexify-activeRightSlot-color: #fff;
+  --contexify-arrow-color: #000000;
+  --contexify-activeArrow-color: #000000;
+
+  font-size: 0.875rem;
+  font-family: "Montserrat", sans-serif;
+}
+
+.taskPanel {
+  /* margin-top: 30px; */
+  max-width: 670px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* height: 80vh; */
+  overflow-y: auto;
+}
+
+.taskPanel::-webkit-scrollbar {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-track {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-button {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-corner {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-resizer {
+  display: none;
+}
+
+.taskPanel::-webkit-scrollbar-track-piece {
+  display: none;
+}
+
+@media screen and (min-width: 360px) {
+  .taskText {
+    font-size: 0.75rem;
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.svgStyle {
+  cursor: pointer;
+  fill: var(--panel-text);
+  stroke: none;
+  width: 20px;
+  height: 20px;
+}

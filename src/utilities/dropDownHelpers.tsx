@@ -9,6 +9,7 @@ const icons = {
   "Delete list": <DeleteListButton />,
   "Add list": <AddListButton />,
   Settings: <SettingsButton />,
+  "Delete All Tasks": <DeleteListButton />,
 };
 
 interface NameObject {
@@ -36,6 +37,8 @@ const IconRepository = ({ names }: IconNamesProps): ReactNode[] => {
         return icons["Add list"];
       case "Settings":
         return icons["Settings"];
+      case "Delete All Tasks":
+        return icons["Delete All Tasks"];
       default:
         return null;
     }

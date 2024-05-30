@@ -4,7 +4,6 @@ import PauseButton from "@assets/pauseIcon.svg?react";
 import ResetButton from "@assets/resetIcon.svg?react";
 import CouchButton from "@assets/couchIcon.svg?react";
 import TimerButton from "@assets/timerIcon.svg?react";
-import DeleteButton from "@assets/deleteIcon.svg?react";
 import { Tooltip } from "react-tooltip";
 interface ButtonPanelProps {
   onReset: () => void;
@@ -12,7 +11,6 @@ interface ButtonPanelProps {
   isBreak: boolean;
   changeIsBreak: () => void;
   isRunning: boolean;
-  handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
 }
 
 const svgStyle = {
@@ -28,7 +26,6 @@ const svgTimerStyle = {
 };
 
 const ButtonPanel = ({
-  handleDeleteAll,
   onReset,
   handlePlayPause,
   isBreak,
@@ -39,6 +36,7 @@ const ButtonPanel = ({
     <button
       data-tooltip-id="panelTooltip"
       data-tooltip-place="bottom"
+      data-tooltip-delay-show={700}
       data-tooltip-content={!isRunning ? "Play" : "Pause"}
       onClick={handlePlayPause}
       className="controlButton"
@@ -56,6 +54,7 @@ const ButtonPanel = ({
     <button
       data-tooltip-id="panelTooltip"
       data-tooltip-place="bottom"
+      data-tooltip-delay-show={700}
       data-tooltip-content="Reset"
       className="controlButton"
       onClick={onReset}
@@ -65,6 +64,7 @@ const ButtonPanel = ({
     <button
       data-tooltip-id="panelTooltip"
       data-tooltip-place="bottom"
+      data-tooltip-delay-show={700}
       data-tooltip-content={isBreak ? "Timer" : "Break"}
       onClick={changeIsBreak}
       className="controlButton"
@@ -75,7 +75,7 @@ const ButtonPanel = ({
         <CouchButton style={svgStyle} aria-label="Break" />
       )}
     </button>
-    <button
+    {/* <button
       data-tooltip-id="panelTooltip"
       data-tooltip-place="bottom"
       data-tooltip-content="Delete All Tasks"
@@ -83,7 +83,7 @@ const ButtonPanel = ({
       className="controlButton"
     >
       <DeleteButton style={svgTimerStyle} aria-label="Delete" />
-    </button>
+    </button> */}
     <Tooltip className="tootipStyles" id="panelTooltip" />
   </div>
 );

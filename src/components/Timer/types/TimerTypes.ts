@@ -1,6 +1,5 @@
 export interface TimerProps {
   isAlertOn: boolean;
-  handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
   isAutoSwitchOn: boolean;
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;

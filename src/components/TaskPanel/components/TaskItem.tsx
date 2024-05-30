@@ -1,16 +1,9 @@
-import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Task } from "./TaskPanel";
-import styles from "./TaskPanel.module.css";
+import styles from "../styles/TaskItem.module.css";
 import { formatDistanceToNowStrict } from "date-fns";
 import type { FormatDistanceToNowOptions } from "date-fns";
-
-interface TaskComponentProps {
-  task: Task;
-  toggleTaskCompletion: (id: number) => void;
-  handleDoubleClick: (e: React.MouseEvent, task: Task) => void;
-}
+import { TaskComponentProps } from "../types/TaskTypes";
 
 const TaskItem = ({
   task,

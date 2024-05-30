@@ -134,7 +134,6 @@ function App() {
               setCount={setCount}
               setBreakDuration={setBreakDuration}
               isAutoSwitchOn={isAutoSwitchOn}
-              handleDeleteAll={handleDeleteAll}
               isAlertOn={isAlertOn}
             />
             <TaskPanel

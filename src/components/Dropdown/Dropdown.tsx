@@ -31,9 +31,15 @@ interface DropdownProps {
   stateHandlers: StateHandlers;
   children: ReactNode;
   names: { name: string }[];
+  className?: string;
 }
 
-const Dropdown = ({ stateHandlers, children, names }: DropdownProps) => {
+const Dropdown = ({
+  stateHandlers,
+  children,
+  names,
+  className,
+}: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -75,7 +81,7 @@ const Dropdown = ({ stateHandlers, children, names }: DropdownProps) => {
         aria-controls="dropdown"
         aria-haspopup="true"
         aria-label="Open dropdown"
-        className="controlButton"
+        className={className || "controlButton"}
         onClick={toggleDropdown}
       >
         {children}

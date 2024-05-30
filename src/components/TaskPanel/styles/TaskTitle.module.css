@@ -1,0 +1,79 @@
+.taskTitleWrapper {
+  flex-grow: 1;
+  padding: 0px 10px;
+}
+
+.taskTitleInner {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  border-radius: 5px;
+  padding: 4px 0px 4px 4px;
+  color: var(--text-color);
+}
+
+.taskTitleCount {
+  width: fit-content;
+  padding: 5px 0px 5px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown {
+  
+}
+
+.taskTitle {
+  color: inherit;
+  display: inline-block;
+  max-width: 400px;  
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  cursor: pointer;
+  background-color: transparent;
+  
+  &:focus {
+    outline: 2px solid var(--text-color);
+    outline-offset: 2px;
+  }
+}
+
+.taskCount {
+  width: fit-content;
+  font-size: 0.75rem;
+  color: inherit;
+  font-weight: 500;
+  overflow: hidden;
+  display: block;
+  font-size: 0.85rem;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.taskTitleCount {
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+  align-items: left;
+  display: flex;
+  margin: 0px 0px 0px 0px;
+  color: inherit;
+
+  &:focus {
+    outline: 2px solid var(--text-color);
+    outline-offset: 2px;
+  }
+}

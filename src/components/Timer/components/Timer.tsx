@@ -23,7 +23,6 @@ const alarmSounds = {
 
 const Timer = ({
   isAlertOn,
-  handleDeleteAll,
   isAutoSwitchOn,
   count,
   setCount,
@@ -134,7 +133,6 @@ const Timer = ({
         count={count}
       />
       <ButtonPanel
-        handleDeleteAll={handleDeleteAll}
         isBreak={isBreak}
         isRunning={isRunning}
         handlePlayPause={() => setIsRunning(!isRunning)}
