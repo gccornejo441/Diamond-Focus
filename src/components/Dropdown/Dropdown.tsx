@@ -32,6 +32,7 @@ interface DropdownProps {
   children: ReactNode;
   names: { name: string }[];
   className?: string;
+  alignment?: "left" | "right" | "center";
 }
 
 const Dropdown = ({
@@ -39,6 +40,7 @@ const Dropdown = ({
   children,
   names,
   className,
+  alignment = "left",
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -71,6 +73,17 @@ const Dropdown = ({
 
   const icons = useMemo(() => IconRepository({ names }), [names]);
 
+  const getAlignmentStyle = () => {
+    switch (alignment) {
+      case "right":
+        return styles.alignRight;
+      case "center":
+        return styles.alignCenter;
+      default:
+        return styles.alignLeft;
+    }
+  };
+
   return (
     <div
       className={`${styles.relative} ${styles.uiDropdownTrigger}`}
@@ -87,7 +100,7 @@ const Dropdown = ({
         {children}
       </button>
       {isOpen && (
-        <div className={styles.dropdownWrapper}>
+        <div className={`${styles.dropdownWrapper} ${getAlignmentStyle()}`}>
           <div className={styles.menuLinksWrapper}>
             {names.map((obj, index) => (
               <DropdownItem

@@ -1,10 +1,11 @@
-import buttonStyles from "./ButtonPanel.module.css";
+import styles from "./ButtonPanel.module.css";
 import PlayButton from "@assets/playIcon.svg?react";
 import PauseButton from "@assets/pauseIcon.svg?react";
 import ResetButton from "@assets/resetIcon.svg?react";
-import CouchButton from "@assets/couchIcon.svg?react";
+import MoonButton from "@assets/moonIcon.svg?react";
 import TimerButton from "@assets/timerIcon.svg?react";
 import { Tooltip } from "react-tooltip";
+
 interface ButtonPanelProps {
   onReset: () => void;
   handlePlayPause: () => void;
@@ -13,18 +14,6 @@ interface ButtonPanelProps {
   isRunning: boolean;
 }
 
-const svgStyle = {
-  width: "20px",
-  height: "20px",
-  fill: "#FFF",
-};
-
-const svgTimerStyle = {
-  width: "20px",
-  height: "20px",
-  stroke: "white",
-};
-
 const ButtonPanel = ({
   onReset,
   handlePlayPause,
@@ -32,7 +21,7 @@ const ButtonPanel = ({
   changeIsBreak,
   isRunning,
 }: ButtonPanelProps) => (
-  <div className={buttonStyles.buttonPanel}>
+  <div className={styles.buttonPanel}>
     <button
       data-tooltip-id="panelTooltip"
       data-tooltip-place="bottom"
@@ -44,9 +33,9 @@ const ButtonPanel = ({
       {
         <>
           {!isRunning ? (
-            <PlayButton style={svgStyle} aria-label="Play" />
+            <PlayButton className={styles.svgStyle} aria-label="Play" />
           ) : (
-            <PauseButton style={svgStyle} aria-label="Pause" />
+            <PauseButton className={styles.svgStyle} aria-label="Pause" />
           )}
         </>
       }
@@ -59,7 +48,7 @@ const ButtonPanel = ({
       className="controlButton"
       onClick={onReset}
     >
-      <ResetButton style={svgStyle} aria-label="Reset" />
+      <ResetButton className={styles.svgStyle} aria-label="Reset" />
     </button>
     <button
       data-tooltip-id="panelTooltip"
@@ -70,20 +59,11 @@ const ButtonPanel = ({
       className="controlButton"
     >
       {isBreak ? (
-        <TimerButton style={svgTimerStyle} aria-label="Timer" />
+        <TimerButton className={styles.svgStyle} aria-label="Timer" />
       ) : (
-        <CouchButton style={svgStyle} aria-label="Break" />
+        <MoonButton className={styles.svgStyle} aria-label="Break" />
       )}
     </button>
-    {/* <button
-      data-tooltip-id="panelTooltip"
-      data-tooltip-place="bottom"
-      data-tooltip-content="Delete All Tasks"
-      onClick={() => handleDeleteAll(false, true)}
-      className="controlButton"
-    >
-      <DeleteButton style={svgTimerStyle} aria-label="Delete" />
-    </button> */}
     <Tooltip className="tootipStyles" id="panelTooltip" />
   </div>
 );

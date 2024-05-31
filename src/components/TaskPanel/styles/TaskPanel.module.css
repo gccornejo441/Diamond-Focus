@@ -13,13 +13,13 @@
   margin: 25px 10px;
   color: var(--text-color);
   position: relative;
+
+  &:focus-within {
+    outline: 2px solid var(--alert);
+  }
 }
 
-.inputArea:focus-within {
-  outline: 2px solid var(--alert);
-}
-
-.inputArea input {
+.inputArea > input {
   flex-grow: 1;
   padding: 10px 15px;
   border: none;
@@ -28,40 +28,43 @@
   color: var(--text-color);
   border-radius: 25px;
   outline: none;
+
+  &::placeholder {
+    color: var(--text-color-faint);
+  }
 }
 
-.inputArea input::placeholder {
-  color: var(--panel-text-faint);
-}
-
-.inputArea button {
-  background-color: var(--button-background);
-  border: none;
-  color: var(--button-text);
-  border-radius: 50%;
+.inputArea > button {
   width: 40px;
   height: 40px;
-  cursor: pointer;
-  padding-left: 11px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
-.inputArea button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.svgStyle {
+  fill: white;
+  stroke: none;
+  width: 23px;
+  height: 23px;
+  margin-left: 1px;
 }
 
 [data-theme="dark"] .inputArea {
   background-color: var(--panel-background);
+  &:focus-within {
+    outline: 2px solid var(--text-color);
+  }
 }
 
 [data-theme="high-contrast"] .inputArea {
   background-color: var(--panel-background);
   border: 1px solid var(--text-color);
-}
-
-[data-theme="high-contrast"] .inputArea:focus-within,
-[data-theme="dark"] .inputArea:focus-within {
-  outline: 2px solid var(--text-color);
+  &:focus-within {
+    outline: 2px solid var(--text-color);
+  }
 }
 
 ul {
@@ -73,8 +76,7 @@ ul {
 .contextMenuButton {
   --contexify-activeItem-bgColor: var(--panel-background-hover);
   --contexify-activeItem-color: var(--white);
-
-  --contexify-menu-bgColor: #fff;
+  --contexify-menu-bgColor: #020202;
   --contexify-separator-color: #eee;
   --contexify-item-color: #000000;
   --contexify-rightSlot-color: #000;
@@ -107,53 +109,38 @@ ul {
   flex-direction: column;
   width: 100%;
   /* overflow-y: auto; */
-}
 
-.taskPanel::-webkit-scrollbar {
-  display: none;
-}
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-.taskPanel::-webkit-scrollbar-track {
-  display: none;
-}
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
 
-.taskPanel::-webkit-scrollbar-thumb {
-  display: none;
-}
+  &::-webkit-scrollbar-thumb {
+    display: none;
+  }
 
-.taskPanel::-webkit-scrollbar-button {
-  display: none;
-}
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
 
-.taskPanel::-webkit-scrollbar-corner {
-  display: none;
-}
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
 
-.taskPanel::-webkit-scrollbar-resizer {
-  display: none;
-}
+  &::-webkit-scrollbar-resizer {
+    display: none;
+  }
 
-.taskPanel::-webkit-scrollbar-track-piece {
-  display: none;
+  &::-webkit-scrollbar-track-piece {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 360px) {
   .taskText {
     font-size: 0.75rem;
   }
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.svgStyle {
-  cursor: pointer;
-  fill: var(--panel-text);
-  stroke: none;
-  width: 20px;
-  height: 20px;
 }

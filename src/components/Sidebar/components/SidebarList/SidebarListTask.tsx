@@ -79,6 +79,8 @@ const SidebarTaskList = ({
       </div>
       <Dropdown
         names={names}
+        alignment="right"
+        className={styles.dropdown}
         stateHandlers={{
           "Rename list": () => setEditing(true),
           "Delete list": handleDeleteClick,

@@ -9,7 +9,6 @@
   min-width: 12rem;
   overflow: hidden;
   position: absolute;
-  right: 0;
   margin-top: 0.5rem;
   transition: cubic-bezier(1, 0, 0, 1) 0.15s;
   transform: scale(1);
@@ -18,6 +17,19 @@
   box-shadow:
     rgba(0, 0, 0, 0.15) 0px 10px 20px,
     rgba(0, 0, 0, 0.1) 0px 3px 6px;
+}
+
+.alignLeft {
+  left: 0;
+}
+
+.alignRight {
+  right: 0;
+}
+
+.alignCenter {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .menuLinksWrapper {
@@ -75,19 +87,19 @@
     opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1),
     background-color 0.15s ease-in-out,
     color 0.15s ease-in-out;
+}
 
-  &:focus {
-    outline: 2px solid var(--text-color);
-  }
+.menuLink:focus {
+  outline: 2px solid var(--text-color);
+}
 
-  &:hover {
-    opacity: 0.8;
-    cursor: pointer;
-    transition: cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.15s;
-    background-color: var(--primary-background-hover-color);
-    border-radius: 5px;
-    transition: background-color 0.15s ease-in-out;
-  }
+.menuLink:hover {
+  opacity: 0.8;
+  cursor: pointer;
+  transition: cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.15s;
+  background-color: var(--primary-background-hover-color);
+  border-radius: 5px;
+  transition: background-color 0.15s ease-in-out;
 }
 
 [data-theme="dark"] .menuLink,

@@ -14,11 +14,9 @@ import {
   SettingsProps,
   getParsedSettings,
 } from "@components/Setting";
-import {
-  Sidebar,
-  SidebarList,
-  useSidebarListToggle,
-} from "@components/Sidebar";
+import { SidebarList, useSidebarListToggle } from "@components/Sidebar";
+import SideMenu from "@components/Sidebar/components/SideMenu/SideMenu";
+import { Sidebar } from "@components/Sidebar";
 
 const SETTINGS_KEY = "appSettings";
 
@@ -95,74 +93,83 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <div className={styles.container}></div>
-      {isModalOpen && (
-        <Settings
-          alarmName={alarmName}
-          setAlarmName={setAlarmName}
-          theme={theme}
-          setTheme={setTheme}
-          bgImg={bgImg}
-          setBgImg={setBgImg}
-          isNewTaskOnTop={isNewTaskOnTop}
-          setIsNewTaskOnTop={setIsNewTaskOnTop}
-          isAutoSwitchOn={isAutoSwitchOn}
-          setAutoSwitchOn={setAutoSwitchOn}
-          isAlertOn={isAlertOn}
-          setIsAlertOn={setIsAlertOn}
-          breakDuration={breakDuration}
-          setBreakDuration={setBreakDuration}
-          count={count}
-          setCount={setCount}
-          onClose={() => setModalOpen(false)}
-        />
-      )}
-      <div className={styles.innerContainer}>
-        <div className={styles.bodyContainer}>
-          <div className={styles.bodyInnerContainer}>
-            <div className={styles.settingHeaderContainer}>
-              <a href="/" className={styles.title}>
-                <GemLogo aria-label="Gem Icon" className={styles.icon} />
-              </a>
-              <Dropdown names={names} stateHandlers={stateHandlers}>
-                <SettingButton className={styles.svgStyle} />
-              </Dropdown>
+      <SideMenu
+        isSidebarListOpen={isSidebarListOpen}
+        setSidebarListOpen={setSidebarListOpen}
+      />
+      <div className={styles.container}>
+        {isModalOpen && (
+          <Settings
+            alarmName={alarmName}
+            setAlarmName={setAlarmName}
+            theme={theme}
+            setTheme={setTheme}
+            bgImg={bgImg}
+            setBgImg={setBgImg}
+            isNewTaskOnTop={isNewTaskOnTop}
+            setIsNewTaskOnTop={setIsNewTaskOnTop}
+            isAutoSwitchOn={isAutoSwitchOn}
+            setAutoSwitchOn={setAutoSwitchOn}
+            isAlertOn={isAlertOn}
+            setIsAlertOn={setIsAlertOn}
+            breakDuration={breakDuration}
+            setBreakDuration={setBreakDuration}
+            count={count}
+            setCount={setCount}
+            onClose={() => setModalOpen(false)}
+          />
+        )}
+        <div className={styles.innerContainer}>
+          <div className={styles.bodyContainer}>
+            <div className={styles.bodyInnerContainer}>
+              <div className={styles.settingHeaderContainer}>
+                <a href="/" className={styles.title}>
+                  <GemLogo aria-label="Gem Icon" className={styles.icon} />
+                </a>
+                <Dropdown
+                  alignment="right"
+                  names={names}
+                  stateHandlers={stateHandlers}
+                >
+                  <SettingButton className={styles.svgStyle} />
+                </Dropdown>
+              </div>
+              <Timer
+                count={count}
+                breakDuration={breakDuration}
+                setCount={setCount}
+                setBreakDuration={setBreakDuration}
+                isAutoSwitchOn={isAutoSwitchOn}
+                isAlertOn={isAlertOn}
+              />
+              <TaskPanel
+                currentSelectedTaskList={currentSelectedTaskList}
+                isNewTaskOnTop={isNewTaskOnTop}
+                isMassDelete={isMassDelete}
+                handleDeleteAll={handleDeleteAll}
+                currentTask={currentTask}
+                setCurrentTask={setCurrentTask}
+                openTask={openTask}
+                setOpenTask={setOpenTask}
+                tasks={tasks}
+                setTasks={setTasks}
+                setAskedForTask={setAskedForTask}
+                onClick={toggleSidebar}
+              />
             </div>
-            <Timer
-              count={count}
-              breakDuration={breakDuration}
-              setCount={setCount}
-              setBreakDuration={setBreakDuration}
-              isAutoSwitchOn={isAutoSwitchOn}
-              isAlertOn={isAlertOn}
-            />
-            <TaskPanel
-              currentSelectedTaskList={currentSelectedTaskList}
-              isNewTaskOnTop={isNewTaskOnTop}
-              isMassDelete={isMassDelete}
-              handleDeleteAll={handleDeleteAll}
-              currentTask={currentTask}
-              setCurrentTask={setCurrentTask}
-              openTask={openTask}
-              setOpenTask={setOpenTask}
-              tasks={tasks}
-              setTasks={setTasks}
-              setAskedForTask={setAskedForTask}
-              onClick={toggleSidebar}
-            />
           </div>
         </div>
+        <SidebarList
+          setCurrentSelectedTaskList={setCurrentSelectedTaskList}
+          setSidebarListOpen={setSidebarListOpen}
+          isSidebarListOpen={isSidebarListOpen}
+        />
+        <Sidebar
+          taskDescription={askedForTask}
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
       </div>
-      <SidebarList
-        setCurrentSelectedTaskList={setCurrentSelectedTaskList}
-        setSidebarListOpen={setSidebarListOpen}
-        isSidebarListOpen={isSidebarListOpen}
-      />
-      <Sidebar
-        taskDescription={askedForTask}
-        isOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
     </div>
   );
 }

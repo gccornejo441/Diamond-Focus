@@ -59,7 +59,11 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
   };
 
   const handleTitleChange = (id: number, newTitle: string) => {
-    const updatedTaskLists = taskLists.map((list) => ({
+    const storedTaskLists = localStorage.getItem("taskLists");
+    if (!storedTaskLists) return;
+    const storedTaskListsJson = JSON.parse(storedTaskLists) as TaskListProps[];
+
+    const updatedTaskLists = storedTaskListsJson.map((list) => ({
       ...list,
       title: list.id === id ? newTitle : list.title,
     }));

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   --base-font-size: 16px;
@@ -32,7 +32,7 @@
   --rose-800: #9f1239;
   --rose-900: #881337;
   --rose-950: #4c0519;
-  --rose-100-mono: #FFB8C3;
+  --rose-100-mono: #ffb8c3;
   --pink: #e91e63;
   --pink-50: #fce4ec;
   --pink-100: #f8bbd0;
@@ -48,7 +48,7 @@
   --pink-200-accent: #ff4081;
   --pink-400-accent: #f50057;
   --pink-700-accent: #c51162;
-  --pink-100-mono: #F38DB0;
+  --pink-100-mono: #f38db0;
   --purple: #9c27b0;
   --purple-50: #f3e5f5;
   --purple-100: #e1bee7;
@@ -64,7 +64,7 @@
   --purple-200-accent: #e040fb;
   --purple-400-accent: #d500f9;
   --purple-700-accent: #aa00ff;
-  --purple-100-mono: #D099D9;
+  --purple-100-mono: #d099d9;
   --deep-purple: #673ab7;
   --deep-purple-50: #ede7f6;
   --deep-purple-100: #d1c4e9;
@@ -95,7 +95,7 @@
   --indigo-200-accent: #536dfe;
   --indigo-400-accent: #3d5afe;
   --indigo-700-accent: #304ffe;
-  --indigo-100-mono: #A0A8DB;
+  --indigo-100-mono: #a0a8db;
   --blue: #2196f3;
   --blue-50: #e3f2fd;
   --blue-100: #bbdefb;
@@ -111,7 +111,7 @@
   --blue-200-accent: #448aff;
   --blue-400-accent: #2979ff;
   --blue-700-accent: #2962ff;
-  --blue-100-mono: #8BC7F8;
+  --blue-100-mono: #8bc7f8;
   --light-blue: #03a9f4;
   --light-blue-50: #e1f5fe;
   --light-blue-100: #b3e5fc;
@@ -220,7 +220,7 @@
   --yellow-200-accent: #ffff00;
   --yellow-400-accent: #ffea00;
   --yellow-700-accent: #ffd600;
-  --yellow-100-mono: #FFF491;
+  --yellow-100-mono: #fff491;
   --amber: #ffc107;
   --amber-50: #fff8e1;
   --amber-100: #ffecb3;
@@ -251,8 +251,8 @@
   --orange-200-accent: #ffab40;
   --orange-400-accent: #ff9100;
   --orange-700-accent: #ff6d00;
-  --orange-100-mono: #FFCB7F;
-  --deep-orange-mono: #FF8F6D;
+  --orange-100-mono: #ffcb7f;
+  --deep-orange-mono: #ff8f6d;
   --deep-orange: #ff5722;
   --deep-orange-50: #fbe9e7;
   --deep-orange-100: #ffccbc;
@@ -268,7 +268,7 @@
   --deep-orange-200-accent: #ff6e40;
   --deep-orange-400-accent: #ff3d00;
   --deep-orange-700-accent: #dd2c00;
-  --deep-orange-100-mono: #FFA589;
+  --deep-orange-100-mono: #ffa589;
   --brown: #795548;
   --brown-50: #efebe9;
   --brown-100: #d7ccc8;
@@ -292,7 +292,7 @@
   --grey-700: #616161;
   --grey-800: #424242;
   --grey-900: #212121;
-  --grey-100-mono: #DCDCDC;
+  --grey-100-mono: #dcdcdc;
   --blue-grey: #607d8b;
   --blue-grey-50: #eceff1;
   --blue-grey-100: #cfd8dc;
@@ -304,7 +304,7 @@
   --blue-grey-700: #455a64;
   --blue-grey-800: #37474f;
   --blue-grey-900: #263238;
-  --blue-gray-100-mono: #4C626D;
+  --blue-gray-100-mono: #4c626d;
   --slate-50: #f8fafc;
   --slate-100: #f1f5f9;
   --slate-200: #e2e8f0;
@@ -316,7 +316,7 @@
   --slate-800: #1e293b;
   --slate-900: #0f172a;
   --slate-950: #020617;
-  --slate-100-mono: #CDDCEA;
+  --slate-100-mono: #cddcea;
 
   --b1: #000e3d;
   --b15: #0b276d;
@@ -420,7 +420,7 @@ code {
   --text-color: var(--black);
   --background-color-light: var(--white);
 
-  --button-background: #F081FA;
+  --button-background: #f081fa;
   --button-background-hover: #f8aeff;
   --button-text: var(--white);
 
@@ -438,7 +438,7 @@ code {
 
   --highlight-color-focus: #f9b2ff;
 
-  --momochromatic-bakcground: #E6E6E6;
+  --momochromatic-bakcground: #e6e6e6;
 }
 
 [data-theme="default"] {
@@ -901,7 +901,7 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-} 
+}
 
 .tootipStyles {
   background-color: var(--panel-background);
@@ -918,32 +918,16 @@ button {
 }
 
 .controlButton {
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: var(--button-background);
-  border-radius: 5px;
-  border-width: 0;
-  box-shadow:
-    rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-    rgba(50, 50, 93, 0.1) 0 2px 5px 0,
-    rgba(0, 0, 0, 0.07) 0 1px 1px 0;
-  box-sizing: border-box;
+  background-color: var(--panel-background);
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: 3px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 100%;
-  outline: none;
-  overflow: hidden;
-  padding: 8px 10px 4px 10px;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transform: translateZ(0);
-  transition:
-    all 0.2s,
-    box-shadow 0.08s ease-in;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  transition: all 0.2s ease;
 }
 
 .controlButton:disabled {
@@ -962,6 +946,11 @@ button {
   outline: 2px solid var(--alert);
 }
 
-[data-theme="high-contrast"] .controlButton:focus {
-  outline: 2px solid var(--white);
+[data-theme="high-contrast"] .controlButton {
+  border: 1px solid var(--white);
+
+  &:focus {
+    outline: 2px solid var(--white);
+  }
 }
+

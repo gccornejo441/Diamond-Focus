@@ -5,7 +5,6 @@ import SidebarTaskList from "./SidebarListTask";
 import useSidebarList from "../../hooks/useSidebarList";
 
 import AddListButton from "@assets/addListIcon.svg?react";
-import CollapseButton from "@assets/collapseIcon.svg?react";
 import SidebarRightButton from "@assets/sidebarRightIcon.svg?react";
 import { initialTaskLists } from "@utilities/helpers";
 import Popup from "@components/Popup/Popup";
@@ -80,26 +79,6 @@ const SidebarList = ({
             : styles.sidebar
         }
       >
-        <button
-          data-tooltip-id="toggleTooltip"
-          data-tooltip-place="right"
-          data-tooltip-delay-show={500}
-          data-tooltip-content={
-            !isSidebarListOpen ? "Open Sidebar" : "Close Sidebar"
-          }
-          aria-label="Toggle Button"
-          aria-expanded={isSidebarListOpen}
-          aria-controls="sidebar-list"
-          id="toggle-button"
-          className={styles.toggleButton}
-          onClick={handleToggleClick}
-        >
-          <CollapseButton
-            className={`${styles.svgStyle} ${
-              isCollapsed ? styles.collapsed : ""
-            }`}
-          />
-        </button>
         <div className={styles.sidebarListControls}>
           <button
             aria-label="Add List"

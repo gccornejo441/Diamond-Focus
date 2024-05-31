@@ -1,3 +1,1 @@
-import ButtonPanel from "./ButtonPanel";
-
-export default ButtonPanel;
+export { default as ButtonPanel } from "./ButtonPanel";
