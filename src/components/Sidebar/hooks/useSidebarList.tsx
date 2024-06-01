@@ -1,47 +1,49 @@
-import { useState, useEffect } from "react";
-import { TaskListProps } from "../types/SidebarTypes";
+import { useEffect, useState } from "react";
+import { TaskListProps } from "@components/Sidebar";
 
-type Props = {
-  initialTaskLists: () => TaskListProps[];
-};
+interface TaskListWithTasks {
+  taskLists: TaskListProps[];
+  setTaskLists: React.Dispatch<React.SetStateAction<TaskListProps[]>>;
+  setCurrentSelectedTaskList: React.Dispatch<
+    React.SetStateAction<TaskListProps | null>
+  >;
+  isSidebarListOpen: boolean;
+  setSidebarListOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const useSidebarList = ({ initialTaskLists }: Props) => {
-  const [taskLists, setTaskLists] =
-    useState<TaskListProps[]>(initialTaskLists());
+const useSidebarList = ({
+  taskLists,
+  setTaskLists,
+  setCurrentSelectedTaskList,
+  isSidebarListOpen,
+  setSidebarListOpen,
+}: TaskListWithTasks) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [openTask, setOpenTask] = useState(false);
   const [deletingTaskListId, setDeletingTaskListId] = useState<number | null>(
     null,
   );
-  const [selectedTaskListObj, setSelectedTaskListObj] =
-    useState<TaskListProps | null>(() => {
-      const storedSelectedTaskList = localStorage.getItem("selectedTaskList");
-      const initialTaskList = taskLists.find((list) => list.id === 0);
-      return storedSelectedTaskList
-        ? JSON.parse(storedSelectedTaskList)
-        : initialTaskList;
-    });
 
   useEffect(() => {
     const storedTaskLists = localStorage.getItem("taskLists");
     if (storedTaskLists) {
       setTaskLists(JSON.parse(storedTaskLists));
     }
-  }, []);
+  }, [setTaskLists]);
 
   useEffect(() => {
-    if (selectedTaskListObj) {
-      localStorage.setItem(
-        "selectedTaskList",
-        JSON.stringify(selectedTaskListObj),
-      );
-    } else {
-      localStorage.removeItem("selectedTaskList");
-    }
-  }, [selectedTaskListObj]);
+    localStorage.setItem("taskLists", JSON.stringify(taskLists));
+  }, [taskLists]);
+
+  const updateLocalStorageTaskLists = (updatedTaskLists: TaskListProps[]) => {
+    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+  };
 
   const addTaskList = () => {
     const newTaskList = {
       id: taskLists.length,
       title: "New List",
+      taskSelected: false,
       tasks: [
         {
           id: 0,
@@ -53,76 +55,92 @@ const useSidebarList = ({ initialTaskLists }: Props) => {
       ],
     } as TaskListProps;
 
-    const updatedTaskLists = [...taskLists, newTaskList];
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+    const updatedTaskLists = [...taskLists, newTaskList] as TaskListProps[];
     setTaskLists(updatedTaskLists);
+    updateLocalStorageTaskLists(updatedTaskLists);
   };
 
   const handleTitleChange = (id: number, newTitle: string) => {
-    const storedTaskLists = localStorage.getItem("taskLists");
-    if (!storedTaskLists) return;
-    const storedTaskListsJson = JSON.parse(storedTaskLists) as TaskListProps[];
-
-    const updatedTaskLists = storedTaskListsJson.map((list) => ({
+    const updatedTaskLists = taskLists.map((list: TaskListProps) => ({
       ...list,
       title: list.id === id ? newTitle : list.title,
-    }));
+    })) as TaskListProps[];
 
     setTaskLists(updatedTaskLists);
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+    updateLocalStorageTaskLists(updatedTaskLists);
 
     const updatedSelectedTaskList = updatedTaskLists.find(
       (list) => list.id === id,
     );
+
     if (updatedSelectedTaskList) {
-      setSelectedTaskListObj(updatedSelectedTaskList);
-      localStorage.setItem(
-        "selectedTaskList",
-        JSON.stringify(updatedSelectedTaskList),
-      );
+      setCurrentSelectedTaskList(updatedSelectedTaskList);
     }
   };
 
   const handleTaskListDelete = (id: number) => {
-    const updatedTaskLists = taskLists.filter((list) => list.id !== id);
+    const updatedTaskLists = taskLists.filter(
+      (list: TaskListProps) => list.id !== id,
+    );
     setTaskLists(updatedTaskLists);
-    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+    updateLocalStorageTaskLists(updatedTaskLists);
 
     const updatedSelectedTaskList = updatedTaskLists[0] || null;
-    if (updatedSelectedTaskList) {
-      setSelectedTaskListObj(updatedSelectedTaskList);
-      localStorage.setItem(
-        "selectedTaskList",
-        JSON.stringify(updatedSelectedTaskList),
-      );
-    } else {
-      setSelectedTaskListObj(null);
-      localStorage.removeItem("selectedTaskList");
-      localStorage.removeItem("tasks");
-    }
+    setCurrentSelectedTaskList(updatedSelectedTaskList);
   };
 
   const handleTaskListSelect = (id: number) => {
-    const selectedTaskList = taskLists.find((list) => list.id === id);
-    if (selectedTaskList) {
-      setSelectedTaskListObj(selectedTaskList);
-      localStorage.setItem(
-        "selectedTaskList",
-        JSON.stringify(selectedTaskList),
-      );
-    }
+    const updatedTaskLists = taskLists.map((list: TaskListProps) =>
+      list.id === id
+        ? { ...list, taskSelected: true }
+        : { ...list, taskSelected: false },
+    );
+    const selectedTaskList = updatedTaskLists.find(
+      (list: TaskListProps) => list.id === id,
+    ) as TaskListProps;
+
+    setTaskLists(updatedTaskLists);
+    setCurrentSelectedTaskList(selectedTaskList);
+    updateLocalStorageTaskLists(updatedTaskLists);
+  };
+
+  const handleCancel = () => {
+    setOpenTask(false);
+  };
+
+  const onDelete = (id: number) => {
+    setDeletingTaskListId(id);
+    setOpenTask(true);
+  };
+
+  const onSelect = (id: number) => {
+    handleTaskListSelect(id);
+    setIsCollapsed(!isCollapsed);
+    setSidebarListOpen(!isSidebarListOpen);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deletingTaskListId == null) return;
+    handleTaskListDelete(deletingTaskListId);
+    handleToggleClick();
+  };
+
+  const handleToggleClick = () => {
+    setIsCollapsed(!isCollapsed);
+    setSidebarListOpen(!isSidebarListOpen);
   };
 
   return {
-    taskLists,
+    openTask,
+    setOpenTask,
+    handleConfirmDelete,
+    handleCancel,
     addTaskList,
+    handleToggleClick,
+    isCollapsed,
     handleTitleChange,
-    handleTaskListDelete,
-    handleTaskListSelect,
-    deletingTaskListId,
-    setDeletingTaskListId,
-    selectedTaskListObj,
-    setSelectedTaskListObj,
+    onDelete,
+    onSelect,
   };
 };
 

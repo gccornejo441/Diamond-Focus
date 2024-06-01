@@ -24,16 +24,6 @@ const useTasks = () => {
     useState<TaskListProps | null>(currentSelectedTaskList);
 
   useEffect(() => {
-    if (currentSelectedTaskList || currentSelectedTaskList == null) {
-      setSelectedTaskList(currentSelectedTaskList);
-    }
-  }, [currentSelectedTaskList]);
-
-  useEffect(() => {
-    localStorage.setItem("taskLists", JSON.stringify(taskLists));
-  }, [taskLists]);
-
-  useEffect(() => {
     if (selectedTaskList) {
       const updatedTaskLists = taskLists.map((list) =>
         list.id === selectedTaskList.id ? selectedTaskList : list,
@@ -44,19 +34,24 @@ const useTasks = () => {
     }
   }, [selectedTaskList]);
 
-  const tasks = selectedTaskList ? selectedTaskList.tasks : [];
+  const tasks = currentSelectedTaskList ? currentSelectedTaskList.tasks : [];
 
   const setTasks: Dispatch<SetStateAction<Task[]>> = (newTasks) => {
-    if (selectedTaskList) {
+    if (currentSelectedTaskList) {
       const updatedTaskList = {
-        ...selectedTaskList,
+        ...currentSelectedTaskList,
         tasks:
           typeof newTasks === "function"
-            ? newTasks(selectedTaskList.tasks)
+            ? newTasks(currentSelectedTaskList.tasks)
             : newTasks,
       };
       setSelectedTaskList(updatedTaskList);
-      localStorage.setItem("taskLists", JSON.stringify(updatedTaskList));
+      setCurrentSelectedTaskList(updatedTaskList);
+      const updatedTaskLists = taskLists.map((list) =>
+        list.id === updatedTaskList.id ? updatedTaskList : list,
+      );
+      setTaskLists(updatedTaskLists);
+      localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
     }
   };
 
@@ -87,6 +82,7 @@ const useTasks = () => {
   };
 
   return {
+    taskLists,
     setTaskLists,
     selectedTaskList,
     setSelectedTaskList,

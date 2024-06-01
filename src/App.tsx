@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import styles from "./App.module.css";
 import { TaskPanel } from "@components/TaskPanel";
 import { Timer } from "@components/Timer";
-import { ApplyBodyStyles, initialTaskLists } from "@utilities/helpers";
+import { ApplyBodyStyles } from "@utilities/helpers";
 import Dropdown from "@components/Dropdown/Dropdown";
 import useTasks from "@hooks/useTasks";
 import SettingButton from "@assets/menuIcon.svg?react";
@@ -14,11 +14,7 @@ import {
   SettingsProps,
   getParsedSettings,
 } from "@components/Setting";
-import {
-  SidebarList,
-  TaskListProps,
-  useSidebarListToggle,
-} from "@components/Sidebar";
+import { SidebarList, useSidebarListToggle } from "@components/Sidebar";
 import SideMenu from "@components/Sidebar/components/SideMenu/SideMenu";
 import { Sidebar } from "@components/Sidebar";
 
@@ -39,11 +35,6 @@ function App() {
   const [bgImg, setBgImg] = useState<string>("");
   const [theme, setTheme] = useState("default");
 
-  const [taskLists, setTaskLists] = useState<TaskListProps[]>(() => {
-    const storedTaskLists = localStorage.getItem("taskLists");
-    return storedTaskLists ? JSON.parse(storedTaskLists) : initialTaskLists();
-  });
-
   const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
 
   const stateHandlers = useMemo(
@@ -57,6 +48,8 @@ function App() {
   const names = useMemo(() => [{ name: "Settings" }, { name: "Add list" }], []);
 
   const {
+    taskLists,
+    setTaskLists,
     tasks,
     setTasks,
     handleDeleteAll,
