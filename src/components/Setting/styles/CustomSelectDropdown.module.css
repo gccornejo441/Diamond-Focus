@@ -24,6 +24,7 @@
   
   .select select {
     -webkit-appearance: none;
+    appearance: none;
     padding: 7px 40px 7px 12px;
     width: 100%;
     border: 1px solid #E8EAED;
@@ -65,3 +66,9 @@
     user-select: none;
   }
   
+
+[data-theme="dark"] select,
+[data-theme="high-contrast"] select {
+  color: var(--text-color);
+  background-color: var(--panel-background);
+}

@@ -53,3 +53,9 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+[data-theme="dark"] input,
+[data-theme="high-contrast"] input {
+  color: var(--text-color);
+  background-color: var(--panel-background);
+}

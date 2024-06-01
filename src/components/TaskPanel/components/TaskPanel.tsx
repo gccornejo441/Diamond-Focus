@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "react-contexify/dist/ReactContexify.css";
 import styles from "../styles/TaskPanel.module.css";
 import DeleteModal from "@components/DeleteModal";
@@ -6,7 +6,6 @@ import { Popup } from "@components/Popup";
 import { Menu, Item, useContextMenu, RightSlot } from "react-contexify";
 import TaskButton from "@assets/taskIcon.svg?react";
 import SaveButton from "@assets/saveIcon.svg?react";
-
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -62,15 +61,6 @@ const TaskPanel = ({
       },
     });
   };
-
-  useEffect(() => {
-    if (currentSelectedTaskList) {
-      localStorage.setItem(
-        "selectedTaskList",
-        JSON.stringify(currentSelectedTaskList),
-      );
-    }
-  }, [tasks]);
 
   const addTask = () => {
     if (task.trim() !== "") {
@@ -158,7 +148,6 @@ const TaskPanel = ({
 
   const handleOnDragEnd = (event: DragOverEvent) => {
     const { active, over } = event;
-
     if (active.id === over?.id) return;
 
     setTasks((tasks) => {

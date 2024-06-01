@@ -117,7 +117,6 @@
 
 [data-theme="high-contrast"] .modal {
   border: 1px solid var(--text-color);
-
 }
 
 .modalClose {
@@ -354,14 +353,6 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-[data-theme="dark"] input,
-[data-theme="high-contrast"] input,
-[data-theme="dark"] select,
-[data-theme="high-contrast"] select {
-  color: var(--text-color);
-  background-color: var(--panel-background);
 }
 
 .buttonGroup {

@@ -4,8 +4,12 @@ import { Task, TaskListProps } from "@components/Sidebar";
 const useTasks = () => {
   const [currentSelectedTaskList, setCurrentSelectedTaskList] =
     useState<TaskListProps | null>(() => {
-      const storedItem = localStorage.getItem("selectedTaskList");
-      return storedItem ? JSON.parse(storedItem) : null;
+      const storedItem = localStorage.getItem("taskLists");
+      if (!storedItem) return null;
+      const selectedTaskList = JSON.parse(storedItem).find(
+        (list: TaskListProps) => list.taskSelected === true,
+      );
+      return selectedTaskList ? selectedTaskList : null;
     });
 
   const [openTask, setOpenTask] = useState(false);
@@ -31,10 +35,12 @@ const useTasks = () => {
 
   useEffect(() => {
     if (selectedTaskList) {
-      localStorage.setItem(
-        "selectedTaskList",
-        JSON.stringify(selectedTaskList),
+      const updatedTaskLists = taskLists.map((list) =>
+        list.id === selectedTaskList.id ? selectedTaskList : list,
       );
+
+      setTaskLists(updatedTaskLists);
+      localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
     }
   }, [selectedTaskList]);
 
@@ -50,11 +56,7 @@ const useTasks = () => {
             : newTasks,
       };
       setSelectedTaskList(updatedTaskList);
-
-      const updatedTaskLists = taskLists.map((list) =>
-        list.id === selectedTaskList.id ? updatedTaskList : list,
-      );
-      setTaskLists(updatedTaskLists);
+      localStorage.setItem("taskLists", JSON.stringify(updatedTaskList));
     }
   };
 

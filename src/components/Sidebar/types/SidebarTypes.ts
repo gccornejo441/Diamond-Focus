@@ -16,10 +16,16 @@ interface Task {
 interface TaskListProps {
   id: number;
   title: string;
+  taskSelected: boolean;
   tasks: Task[];
 }
 
-interface SidebarListStateProps {
+interface useSidebarHookProps {
+  setTaskLists: React.Dispatch<React.SetStateAction<TaskListProps[]>>;
+  taskLists: TaskListProps[];
+}
+
+interface SidebarListStateProps extends useSidebarHookProps {
   isSidebarListOpen: boolean;
   setSidebarListOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentSelectedTaskList: React.Dispatch<
@@ -34,6 +40,7 @@ interface TaskListTitleProps {
 }
 
 export type {
+  useSidebarHookProps,
   SidebarListProps,
   TaskListProps,
   TaskListTitleProps,

@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./SidebarList.module.css";
-import { SidebarListStateProps } from "../../types/SidebarTypes";
+import { SidebarListStateProps, TaskListProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
-import useSidebarList from "../../hooks/useSidebarList";
-
 import AddListButton from "@assets/addListIcon.svg?react";
 import SidebarRightButton from "@assets/sidebarRightIcon.svg?react";
-import { initialTaskLists } from "@utilities/helpers";
 import Popup from "@components/Popup/Popup";
 import DeleteModal from "@components/DeleteModal";
 import { Tooltip } from "react-tooltip";
@@ -15,26 +12,93 @@ const SidebarList = ({
   setCurrentSelectedTaskList,
   isSidebarListOpen,
   setSidebarListOpen,
+  taskLists,
+  setTaskLists,
 }: SidebarListStateProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const {
-    taskLists,
-    addTaskList,
-    handleTitleChange,
-    handleTaskListDelete,
-    handleTaskListSelect,
-    setDeletingTaskListId,
-    deletingTaskListId,
-    selectedTaskListObj,
-    setSelectedTaskListObj,
-  } = useSidebarList({ initialTaskLists });
   const [openTask, setOpenTask] = useState(false);
+  const [deletingTaskListId, setDeletingTaskListId] = useState<number | null>(
+    null,
+  );
 
   useEffect(() => {
-    if (selectedTaskListObj || selectedTaskListObj == null) {
-      setCurrentSelectedTaskList(selectedTaskListObj);
+    const storedTaskLists = localStorage.getItem("taskLists");
+    if (storedTaskLists) {
+      setTaskLists(JSON.parse(storedTaskLists));
     }
-  }, [selectedTaskListObj, setSelectedTaskListObj]);
+  }, [setTaskLists]);
+
+  useEffect(() => {
+    localStorage.setItem("taskLists", JSON.stringify(taskLists));
+  }, [taskLists]);
+
+  const updateLocalStorageTaskLists = (updatedTaskLists: TaskListProps[]) => {
+    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+  };
+
+  const addTaskList = () => {
+    const newTaskList = {
+      id: taskLists.length,
+      title: "New List",
+      taskSelected: false,
+      tasks: [
+        {
+          id: 0,
+          text: "New Task",
+          completed: false,
+          favorite: false,
+          createdAt: new Date(),
+        },
+      ],
+    } as TaskListProps;
+
+    const updatedTaskLists = [...taskLists, newTaskList] as TaskListProps[];
+    setTaskLists(updatedTaskLists);
+    updateLocalStorageTaskLists(updatedTaskLists);
+  };
+
+  const handleTitleChange = (id: number, newTitle: string) => {
+    const updatedTaskLists = taskLists.map((list) => ({
+      ...list,
+      title: list.id === id ? newTitle : list.title,
+    })) as TaskListProps[];
+
+    setTaskLists(updatedTaskLists);
+    updateLocalStorageTaskLists(updatedTaskLists);
+
+    const updatedSelectedTaskList = updatedTaskLists.find(
+      (list) => list.id === id,
+    );
+
+    if (updatedSelectedTaskList) {
+      setCurrentSelectedTaskList(updatedSelectedTaskList);
+    }
+  };
+
+  const handleTaskListDelete = (id: number) => {
+    const updatedTaskLists = taskLists.filter((list) => list.id !== id);
+    setTaskLists(updatedTaskLists);
+    updateLocalStorageTaskLists(updatedTaskLists);
+
+    const updatedSelectedTaskList = updatedTaskLists[0] || null;
+    setCurrentSelectedTaskList(updatedSelectedTaskList);
+  };
+
+  const handleTaskListSelect = (id: number) => {
+    const updatedTaskLists = taskLists.map((list) =>
+      list.id === id
+        ? { ...list, taskSelected: true }
+        : { ...list, taskSelected: false },
+    );
+
+    const selectedTaskList = updatedTaskLists.find(
+      (list) => list.id === id,
+    ) as TaskListProps;
+
+    setTaskLists(updatedTaskLists);
+    setCurrentSelectedTaskList(selectedTaskList);
+    updateLocalStorageTaskLists(updatedTaskLists);
+  };
 
   const handleCancel = () => {
     setOpenTask(false);
@@ -69,7 +133,7 @@ const SidebarList = ({
           handleDelete={handleConfirmDelete}
           handleCancel={handleCancel}
           isMassDelete={false}
-          overrideCaption="Are you should you want to delete this list and all it's content?"
+          overrideCaption="Are you sure you want to delete this list and all its content?"
         />
       </Popup>
       <div
@@ -127,8 +191,8 @@ const SidebarList = ({
           onClick={() => setSidebarListOpen(false)}
         ></div>
       )}
-      <Tooltip className="tootipStyles" id="toggleTooltip" />
-      <Tooltip className="tootipStyles" id="sidebarTooltip" />
+      <Tooltip className="tooltipStyles" id="toggleTooltip" />
+      <Tooltip className="tooltipStyles" id="sidebarTooltip" />
     </div>
   );
 };
