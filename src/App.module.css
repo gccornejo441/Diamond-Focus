@@ -14,6 +14,7 @@
   display: flex;
   justify-content: center;
   box-sizing: border-box;
+  z-index: 0;
 }
 
 .innerContainer {
@@ -46,6 +47,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+
+  &:focus {
+    outline: 2px solid var(--text-color);
+    outline-offset: 2px;
+    border-radius: 5px;
+  }
 }
 
 .icon {
@@ -99,15 +106,13 @@
   }
 
   .settingHeaderContainer {
-    margin: 15px 5px;
-    height: 100%;
+    display: none;
   }
 
   .bodyContainer {
     padding: 0px 0em;
   }
 
-  
   .icon {
     height: 2.5rem;
     width: 2.5rem;

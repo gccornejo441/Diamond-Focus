@@ -6,7 +6,6 @@ import { ApplyBodyStyles } from "@utilities/helpers";
 import Dropdown from "@components/Dropdown/Dropdown";
 import useTasks from "@hooks/useTasks";
 import SettingButton from "@assets/menuIcon.svg?react";
-import GemLogo from "@assets/gemIcon.svg?react";
 import ProgressBar from "@components/ProgressBar/CircularProgressBar";
 import useLoading from "@hooks/useLoading";
 import {
@@ -96,6 +95,7 @@ function App() {
   return (
     <div className={styles.App}>
       <SideMenu
+        setModalOpen={setModalOpen}
         isSidebarListOpen={isSidebarListOpen}
         setSidebarListOpen={setSidebarListOpen}
       />
@@ -125,9 +125,6 @@ function App() {
           <div className={styles.bodyContainer}>
             <div className={styles.bodyInnerContainer}>
               <div className={styles.settingHeaderContainer}>
-                <a href="/" className={styles.title}>
-                  <GemLogo aria-label="Gem Icon" className={styles.icon} />
-                </a>
                 <Dropdown
                   alignment="right"
                   names={names}

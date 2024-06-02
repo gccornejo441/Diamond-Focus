@@ -1,8 +1,9 @@
 .sideMenu {
+  justify-content: space-between;
   position: fixed;
+  z-index: 20;
   top: 0;
   left: 0;
-  z-index: 20;
   display: flex;
   height: 100vh;
   width: 50px;
@@ -10,7 +11,7 @@
   align-items: center;
   overflow: hidden;
   background-color: var(--panel-background);
-  color: rgba(156, 163, 175, 1);
+  color: var(--panel-text);
   transition: transform 0.3s ease-in-out;
   transform: translateX(0);
 }
@@ -23,32 +24,47 @@
   border-right: 1px solid var(--text-color);
 }
 
-.topIcon {
-  margin-top: 0.75rem;
+.topIcon, .gemIcon {
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: inherit;
-  padding: 0.5rem;
-  border-radius: 1.5rem;
-  height: 2.5rem;
-  width: 2.5rem;
+  padding: 0.25rem;
+  border-radius: 5px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   border: none;
+  height: 3rem;
+  width: 3rem;
+  background-color: transparent;
 }
 
-.topIcon:hover {
-  background-color: var(--panel-background-hover);
+.topIcon {
+  margin-top: 1rem;
 }
 
-.topIcon:focus {
+.gemIcon {
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+
+.dropdown {
+  display: none;
+}
+
+.topIcon:hover, .gemIcon:hover, .dropdown:hover {
+  background-color: transparent;
+}
+
+.topIcon:focus, .gemIcon:focus, .dropdown:focus {
   outline: 2px solid var(--text-color);
+  offset: 2px;
 }
 
 .topIconSvg {
   height: 32px;
   width: 32px;
+  background-color: transparent;
   color: var(--panel-text);
 }
 
@@ -56,29 +72,58 @@
   .sideMenu {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: auto;
     display: flex;
-    align-items: center;
-    justify-content:flex-start;
-    border-bottom-width: 1px;
-    width: 100%;
-    height: auto;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-width: 1px;
+    height: 50px;
+    background-color: transparent;
+    padding: 0.1rem 0rem;
+    width: 100%;
   }
 
   .sideMenu.open {
     transform: translateY(0);
   }
 
-  .topIcon {
-    margin: 0.025rem;
-    padding: 0.025rem;
-    height: 3.5rem;
-    width: 3.5rem;
+  .topIcon, .gemIcon, .dropdown {
+    margin-top: 0;
+    border-radius: 5px;
+    height: 3rem;
+    width: 3rem;
+    
+    &:focus {
+      outline: 2px solid var(--text-color);
+      border-radius: 5px;
+    }
+
+    &:hover {
+      background-color: var(--background-color);
+    }
   }
 
   .topIconSvg {
-    height: 2rem;
-    width: 2rem;
+    color: var(--panel-text);
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .dropdown {
+    margin-top: 0;
+    border-radius: 5px;
+    height: 3rem;
+    width: 3rem;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    padding: 0.25rem;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    border: none;
   }
 }

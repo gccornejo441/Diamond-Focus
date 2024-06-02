@@ -16,15 +16,7 @@ const defaultTaskList: TaskListProps = {
   id: 0,
   title: "New List",
   taskSelected: true,
-  tasks: [
-    {
-      id: 10000,
-      text: "New Task",
-      completed: false,
-      favorite: false,
-      createdAt: new Date(),
-    },
-  ],
+  tasks: [],
 };
 
 /**

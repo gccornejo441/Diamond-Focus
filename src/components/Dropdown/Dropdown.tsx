@@ -23,14 +23,14 @@ const DropdownItem = ({
   </button>
 );
 
-interface StateHandlers {
+export interface StateHandlers {
   [key: string]: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface DropdownProps {
   stateHandlers: StateHandlers;
-  children: ReactNode;
   names: { name: string }[];
+  children: ReactNode;
   className?: string;
   alignment?: "left" | "right" | "center";
 }
@@ -85,10 +85,7 @@ const Dropdown = ({
   };
 
   return (
-    <div
-      className={`${styles.relative} ${styles.uiDropdownTrigger}`}
-      ref={dropdownRef}
-    >
+    <div className={`${styles.relative}`} ref={dropdownRef}>
       <button
         aria-expanded={isOpen}
         aria-controls="dropdown"

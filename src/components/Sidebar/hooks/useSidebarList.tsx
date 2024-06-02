@@ -44,15 +44,7 @@ const useSidebarList = ({
       id: taskLists.length,
       title: "New List",
       taskSelected: false,
-      tasks: [
-        {
-          id: 0,
-          text: "New Task",
-          completed: false,
-          favorite: false,
-          createdAt: new Date(),
-        },
-      ],
+      tasks: [],
     } as TaskListProps;
 
     const updatedTaskLists = [...taskLists, newTaskList] as TaskListProps[];
