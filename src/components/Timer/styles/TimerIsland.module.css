@@ -48,6 +48,10 @@
   animation-timing-function: ease-out;
 }
 
+[data-theme="high-contrast"] .timerBorder {
+  border: 1px var(--white) solid;
+}
+
 .timerRing {
   display: block;
   position: absolute;
@@ -57,7 +61,6 @@
   height: 100%;
   border-radius: 100%;
   box-sizing: border-box;
-  border: 2px var(--alert) solid;
   opacity: 0;
   animation-name: timer-ring;
   animation-delay: 3.5s;

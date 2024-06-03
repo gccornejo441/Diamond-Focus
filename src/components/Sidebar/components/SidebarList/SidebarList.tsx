@@ -35,7 +35,7 @@ const SidebarList = ({
   });
 
   return (
-    <div>
+    <div className={styles.sidebarList}>
       <Popup onClose={() => setOpenTask(false)} isOpen={openTask}>
         <DeleteModal
           handleDelete={handleConfirmDelete}

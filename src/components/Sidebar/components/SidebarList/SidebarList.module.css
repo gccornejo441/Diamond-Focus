@@ -1,3 +1,7 @@
+.sidebarList {
+  background-color: var(--background-color);
+}
+
 .taskList {
   padding: 10px;
   background-color: var(--panel-background);
@@ -34,7 +38,7 @@
   max-width: 20rem;
   width: 20rem;
   height: 100vh;
-  background-color: var(--background-color);
+  background-color: inherit;
   padding: 15px;
   box-sizing: border-box;
   box-shadow:
@@ -63,8 +67,8 @@
 
 .addButton {
   height: 2.5rem;
-  border-radius: .5rem;
-  padding: 0rem .625rem;
+  border-radius: 0.5rem;
+  padding: 0rem 0.625rem;
   color: var(--button-text);
   background-color: transparent;
   display: flex;
@@ -122,9 +126,8 @@
 
 @media (max-width: 800px) {
   .toggleButton {
-    display: none; 
+    display: none;
   }
-
 }
 
 @media (min-width: 800px) {
@@ -152,7 +155,7 @@
   max-width: 12rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: inherit; 
+  display: inherit;
   border-radius: 5px;
 }
 
@@ -177,7 +180,7 @@
 
 .sidebarListControls {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   height: 3.5rem;
   padding-bottom: 10px;
@@ -197,5 +200,5 @@
   max-width: 12rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: inherit; 
+  display: inherit;
 }

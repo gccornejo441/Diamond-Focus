@@ -122,6 +122,13 @@ function App() {
           />
         )}
         <div className={styles.innerContainer}>
+          <SidebarList
+            taskLists={taskLists}
+            setTaskLists={setTaskLists}
+            setCurrentSelectedTaskList={setCurrentSelectedTaskList}
+            setSidebarListOpen={setSidebarListOpen}
+            isSidebarListOpen={isSidebarListOpen}
+          />
           <div className={styles.bodyContainer}>
             <div className={styles.bodyInnerContainer}>
               <div className={styles.settingHeaderContainer}>
@@ -158,13 +165,6 @@ function App() {
             </div>
           </div>
         </div>
-        <SidebarList
-          taskLists={taskLists}
-          setTaskLists={setTaskLists}
-          setCurrentSelectedTaskList={setCurrentSelectedTaskList}
-          setSidebarListOpen={setSidebarListOpen}
-          isSidebarListOpen={isSidebarListOpen}
-        />
         <Sidebar
           taskDescription={askedForTask}
           isOpen={isSidebarOpen}

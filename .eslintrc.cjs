@@ -32,7 +32,7 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    "prettier/prettier": "error",
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "react/prop-types": "off",
