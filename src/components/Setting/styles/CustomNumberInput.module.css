@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #E8EAED;
-  border-radius: 5px;
+  border-radius: 25px;
   overflow: hidden;
   width: 150px;
   background-color: var(--panel-background);
@@ -20,7 +20,7 @@
   border: none;
   text-align: center;
   width: 100%;
-  height: 31px;
+  height: 34px;
   font-size: 1rem;
   outline: none;
 }
@@ -34,12 +34,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 35px;
-  height: 100%;
+  width: 1.8rem;
+  height: 1.8rem;
   background: var(--button-background);
   border: none;
+  border-radius: 25px;
   cursor: pointer;
-  padding: 10px;
+  padding: 0px;
+  margin: 0px 2px;
 }
 
 .incrementButton:hover,

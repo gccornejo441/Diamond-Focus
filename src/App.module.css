@@ -36,10 +36,9 @@
 
 .settingHeaderContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   max-width: 768px;
   margin: 15px 10px;
-  justify-content: space-between;
   height: 35px;
 }
 

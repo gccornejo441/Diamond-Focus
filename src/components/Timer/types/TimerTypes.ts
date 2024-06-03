@@ -11,4 +11,5 @@ export interface TimerDisplayProps {
   count: number;
   breakDuration: number;
   isBreak: boolean;
+  isRunning: boolean;
 }

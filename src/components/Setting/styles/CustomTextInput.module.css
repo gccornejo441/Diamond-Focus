@@ -16,23 +16,25 @@
   font-family: inherit;
   font-size: 16px;
   transition: all 150ms ease;
+  border-radius: 25px;
 } 
 
 .clearButton {
   position: absolute;
-  right: 1px;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
   background: var(--button-background);
   border: none;
   color: white;
   cursor: pointer;
-  padding: 9px;
+  padding: 6px;
   font-size: 16px;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50px;
 }
 
 .clearButton:hover {
@@ -41,8 +43,7 @@
 
 .clearButton:focus,
 .settingInput:focus {
-  outline: 2px solid var(--highlight-color-focus);
-  box-shadow: 0 0 5px var(--highlight-color-focus);
+  outline: 2px solid var(--alert);
 }
 
 .clearButton svg {

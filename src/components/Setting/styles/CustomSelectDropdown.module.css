@@ -28,7 +28,7 @@
     padding: 7px 40px 7px 12px;
     width: 100%;
     border: 1px solid #E8EAED;
-    border-radius: 5px;
+    border-radius: 25px;
     box-shadow: 0 1px 3px -2px #9098A9;
     cursor: pointer;
     font-family: inherit;
@@ -37,7 +37,7 @@
   }
   
   .select select:required:invalid {
-    color: #5A667F;
+    color: #ff0000;
   }
   
   .select select option {
@@ -50,8 +50,7 @@
   
   .select select:focus {
     outline: none;
-    outline: 2px solid var(--highlight-color-focus);
-    box-shadow: 0 0 5px var(--highlight-color-focus);
+    outline: 2px solid var(--alert);
   }
   
   .select select:hover + svg {

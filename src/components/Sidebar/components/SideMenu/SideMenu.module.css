@@ -1,7 +1,7 @@
 .sideMenu {
   justify-content: space-between;
   position: fixed;
-  z-index: 20;
+  z-index: auto;
   top: 0;
   left: 0;
   display: flex;
@@ -24,7 +24,8 @@
   border-right: 1px solid var(--text-color);
 }
 
-.topIcon, .gemIcon {
+.topIcon,
+.gemIcon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,18 +53,22 @@
   display: none;
 }
 
-.topIcon:hover, .gemIcon:hover, .dropdown:hover {
+.topIcon:hover,
+.gemIcon:hover,
+.dropdown:hover {
   background-color: transparent;
 }
 
-.topIcon:focus, .gemIcon:focus, .dropdown:focus {
+.topIcon:focus,
+.gemIcon:focus,
+.dropdown:focus {
   outline: 2px solid var(--text-color);
   offset: 2px;
 }
 
 .topIconSvg {
-  height: 32px;
-  width: 32px;
+  height: 25px;
+  width: 25px;
   background-color: transparent;
   color: var(--panel-text);
 }
@@ -88,12 +93,18 @@
     transform: translateY(0);
   }
 
-  .topIcon, .gemIcon, .dropdown {
+  [data-theme="high-contrast"] .sideMenu {
+    border: none;
+  }
+
+  .topIcon,
+  .gemIcon,
+  .dropdown {
     margin-top: 0;
     border-radius: 5px;
     height: 3rem;
     width: 3rem;
-    
+
     &:focus {
       outline: 2px solid var(--text-color);
       border-radius: 5px;
@@ -104,10 +115,21 @@
     }
   }
 
+  .gemIcon > .topIconSvg {
+    margin-top: 15px;
+    height: 2.3rem;
+    width: 2.3rem;
+  }
+
   .topIconSvg {
-    color: var(--panel-text);
+    color: var(--panel-background);
     height: 1.5rem;
     width: 1.5rem;
+  }
+
+  [data-theme="high-contrast"] .topIconSvg,
+  [data-theme="dark"] .topIconSvg {
+    color: var(--text-color);
   }
 
   .dropdown {

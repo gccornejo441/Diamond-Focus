@@ -30,7 +30,7 @@ const CustomTextInput = ({
         name={name}
         value={value}
         onChange={onChange}
-        className={`${styles.settingInput} ${className}`}
+        className={`${styles.settingInput} ${className || ""}`}
         placeholder={placeholder}
         disabled={disabled}
       />
