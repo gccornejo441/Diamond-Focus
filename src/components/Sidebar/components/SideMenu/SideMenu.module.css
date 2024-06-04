@@ -1,7 +1,7 @@
 .sideMenu {
   justify-content: space-between;
   position: fixed;
-  z-index: auto;
+  z-index: 0;
   top: 0;
   left: 0;
   display: flex;

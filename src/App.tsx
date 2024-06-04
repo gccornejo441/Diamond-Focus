@@ -99,7 +99,14 @@ function App() {
         isSidebarListOpen={isSidebarListOpen}
         setSidebarListOpen={setSidebarListOpen}
       />
-      <div className={styles.container}>
+      <SidebarList
+        taskLists={taskLists}
+        setTaskLists={setTaskLists}
+        setCurrentSelectedTaskList={setCurrentSelectedTaskList}
+        setSidebarListOpen={setSidebarListOpen}
+        isSidebarListOpen={isSidebarListOpen}
+      />
+      <>
         {isModalOpen && (
           <Settings
             alarmName={alarmName}
@@ -121,14 +128,9 @@ function App() {
             onClose={() => setModalOpen(false)}
           />
         )}
+      </>
+      <div className={styles.container}>
         <div className={styles.innerContainer}>
-          <SidebarList
-            taskLists={taskLists}
-            setTaskLists={setTaskLists}
-            setCurrentSelectedTaskList={setCurrentSelectedTaskList}
-            setSidebarListOpen={setSidebarListOpen}
-            isSidebarListOpen={isSidebarListOpen}
-          />
           <div className={styles.bodyContainer}>
             <div className={styles.bodyInnerContainer}>
               <div className={styles.settingHeaderContainer}>
