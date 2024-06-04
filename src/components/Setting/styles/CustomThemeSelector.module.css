@@ -1,63 +1,42 @@
-
-/* Color Palette */
 .settingCardItem {
-    position: relative;
-    max-width: 780px;
-    margin: auto;
-  }
-  
-  .cardIllustration {
-    padding: 0.3rem;
-    border-radius: 8px;
-    background-color: rgba(24, 24, 24, 0.95);
-  }
-  
-  .colorPalette {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-  }
-  
-  .colorPalette {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 0;
-    list-style: none;
-    justify-content: center;
-  }
-  
-  .colorItem {
-    margin: 5px;
-  }
-  
-  .colorLabel {
-    display: block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-  }
-  
-  .colorLabel:hover {
-    transform: scale(1.1);
-    border: 3px solid var(--highlight-color-focus);
-  }
-  
-  .colorLabel:focus {
-    outline: none;
-    border: 3px solid var(--highlight-color-focus);
-  }
-  
-  .themeTooltipStyles {
-    background: var(--tooltip-background);
-    color: var(--tooltip-text);
-    border-radius: 4px;
-    padding: 5px 10px;
-    font-size: 12px;
-  }
-  /* Color Palette */
+  margin-bottom: 1rem;
+}
+
+.cardIllustration {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.colorPalette {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.colorItem {
+  --w: calc((100% / var(--items-per-row)) - var(--gap));
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.colorLabel {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+.colorTooltipStyles {
+  font-size: 0.75rem;
+  background: black;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}

@@ -20,12 +20,14 @@ const DeleteModal = ({
       <div className={styles.deleteModalHeader}>
         <h5 className={styles.deleteModalTitle}>
           {overrideCaption ? (
-            <span>{overrideCaption}</span>
+            <span className={styles.titleText}>{overrideCaption}</span>
           ) : (
             <>
               Are you sure you want to delete
               <br />
-              <span>{isMassDelete ? "all these tasks" : `"${item}"`}?</span>
+              <span className={styles.titleText}>
+                {isMassDelete ? "all these tasks" : `"${item}"`}?
+              </span>
             </>
           )}
         </h5>

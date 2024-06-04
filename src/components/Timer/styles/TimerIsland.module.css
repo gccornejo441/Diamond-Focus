@@ -142,6 +142,6 @@
   }
 }
 
-[data-theme="high-contrast"] .timerRing {
-  border: 2px var(--white) solid;
+ .timerRing {
+  border: 2px var(--text-color) solid;
 }

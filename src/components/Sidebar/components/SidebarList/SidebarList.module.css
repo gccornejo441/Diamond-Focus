@@ -41,9 +41,6 @@
   background-color: inherit;
   padding: 15px;
   box-sizing: border-box;
-  box-shadow:
-    rgba(0, 0, 0, 0.15) 0px 10px 20px,
-    rgba(0, 0, 0, 0.1) 0px 3px 6px;
   position: fixed;
   left: 0;
   top: 0;

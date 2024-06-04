@@ -2,7 +2,8 @@
   background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  max-width: fit-content;
+  width: 360px;
   margin: 20px auto;
   padding: 20px;
   border-radius: 8px;
@@ -23,9 +24,17 @@
   font-size: 1.3rem;
 }
 
-.DeleteModalTitle {
-  width: calc(100%);
+.deleteModalTitle {
+  width: 100%;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.titleText {
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -38,16 +47,6 @@
 .deleteModalFooter {
   display: flex;
   justify-content: space-around;
-}
-
-[data-theme="high-contrast"] .btnDanger {
-  background-color: #e53e3e;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .btnDanger {

@@ -162,6 +162,10 @@
   .favoriteTask {
     border-left: 5px solid var(--alert);
   }
+
+  [data-theme="high-contrast"] .favoriteTask {
+    border-left: 5px solid var(--white);
+  }
   
   .timeStamp {
     font-size: 0.75rem;
