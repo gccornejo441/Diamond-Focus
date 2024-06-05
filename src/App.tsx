@@ -16,6 +16,8 @@ import {
 import { SidebarList, useSidebarListToggle } from "@components/Sidebar";
 import SideMenu from "@components/Sidebar/components/SideMenu/SideMenu";
 import { Sidebar } from "@components/Sidebar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SETTINGS_KEY = "appSettings";
 
@@ -173,6 +175,7 @@ function App() {
           toggleSidebar={toggleSidebar}
         />
       </div>
+      <ToastContainer className="toast-container" />
     </div>
   );
 }

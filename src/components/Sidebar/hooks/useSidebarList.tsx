@@ -18,7 +18,6 @@ const useSidebarList = ({
   isSidebarListOpen,
   setSidebarListOpen,
 }: TaskListWithTasks) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [openTask, setOpenTask] = useState(false);
   const [deletingTaskListId, setDeletingTaskListId] = useState<number | null>(
     null,
@@ -107,19 +106,13 @@ const useSidebarList = ({
 
   const onSelect = (id: number) => {
     handleTaskListSelect(id);
-    setIsCollapsed(!isCollapsed);
     setSidebarListOpen(!isSidebarListOpen);
   };
 
   const handleConfirmDelete = () => {
     if (deletingTaskListId == null) return;
     handleTaskListDelete(deletingTaskListId);
-    handleToggleClick();
-  };
-
-  const handleToggleClick = () => {
-    setIsCollapsed(!isCollapsed);
-    setSidebarListOpen(!isSidebarListOpen);
+    setOpenTask(false);
   };
 
   return {
@@ -128,8 +121,6 @@ const useSidebarList = ({
     handleConfirmDelete,
     handleCancel,
     addTaskList,
-    handleToggleClick,
-    isCollapsed,
     handleTitleChange,
     onDelete,
     onSelect,

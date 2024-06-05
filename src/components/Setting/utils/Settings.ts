@@ -103,7 +103,7 @@ function settingFormHelper(formData: FormData): SettingsProps {
     isAutoSwitchOn: formData.has("autoSwitch"),
     theme: formData.get("theme") as string,
     bgImg: formData.get("bgImg") as string,
-    alarmName: formData.get("alarmName") as string,
+    alarmName: formData.get("alarmSoundName") as string,
     isNewTaskOnTop: formData.has("newTasksOnTop"),
   };
 }

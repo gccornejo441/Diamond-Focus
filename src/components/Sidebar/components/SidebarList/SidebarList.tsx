@@ -2,10 +2,8 @@ import styles from "./SidebarList.module.css";
 import { SidebarListStateProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
 import AddListButton from "@assets/addListIcon.svg?react";
-import SidebarRightButton from "@assets/sidebarRightIcon.svg?react";
 import Popup from "@components/Popup/Popup";
 import DeleteModal from "@components/DeleteModal";
-import { Tooltip } from "react-tooltip";
 import useSidebarList from "@components/Sidebar/hooks/useSidebarList";
 
 const SidebarList = ({
@@ -21,8 +19,6 @@ const SidebarList = ({
     handleConfirmDelete,
     handleCancel,
     addTaskList,
-    handleToggleClick,
-    isCollapsed,
     handleTitleChange,
     onDelete,
     onSelect,
@@ -61,26 +57,6 @@ const SidebarList = ({
           >
             <AddListButton className={styles.svgStyle} />
           </button>
-          <button
-            data-tooltip-delay-show={500}
-            data-tooltip-id="toggleTooltip"
-            data-tooltip-place="bottom"
-            data-tooltip-content={
-              !isSidebarListOpen ? "Open Sidebar" : "Close Sidebar"
-            }
-            aria-label="Toggle Button"
-            aria-expanded={isSidebarListOpen}
-            aria-controls="sidebar-list"
-            id="toggle-button"
-            className={`controlButton ${styles.desktopToggleButton}`}
-            onClick={handleToggleClick}
-          >
-            <SidebarRightButton
-              className={`${styles.svgStyle} ${
-                isCollapsed ? styles.collapsed : ""
-              }`}
-            />
-          </button>
         </div>
         {taskLists.map((list) => (
           <SidebarTaskList
@@ -99,8 +75,6 @@ const SidebarList = ({
           onClick={() => setSidebarListOpen(false)}
         ></div>
       )}
-      <Tooltip className="tooltipStyles" id="toggleTooltip" />
-      <Tooltip className="tooltipStyles" id="sidebarTooltip" />
     </div>
   );
 };

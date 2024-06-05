@@ -395,3 +395,22 @@ input[type="number"]::-webkit-outer-spin-button {
 .cancelButton:focus {
   outline: 2px solid var(--alert);
 }
+
+.spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid var(--alert);
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  animation: spin 2s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

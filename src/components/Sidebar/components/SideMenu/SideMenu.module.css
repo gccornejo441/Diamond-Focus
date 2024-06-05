@@ -45,7 +45,7 @@
 
 .gemIcon {
   margin-top: auto;
-  margin-bottom: 1rem;
+  animation: anim 3.3s infinite;
 }
 
 .dropdown {
@@ -63,6 +63,20 @@
 .dropdown:focus {
   outline: 2px solid var(--text-color);
   offset: 2px;
+}
+
+@keyframes anim {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .topIconSvg {

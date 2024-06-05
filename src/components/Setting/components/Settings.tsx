@@ -10,6 +10,7 @@ import CustomTextInput from "./CustomTextInput";
 
 import { SettingPanelProps } from "../types/SettingTypes";
 import { getParsedSettings, settingFormHelper } from "../utils/Settings";
+import { toast } from "react-toastify";
 
 const options = [
   { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
@@ -40,6 +41,7 @@ const Settings = ({
   const [tempBgImg, setTempBgImg] = useState<string>("");
   const [tempCount, setTempCount] = useState<number>(25);
   const [tempBreakDuration, setTempBreakDuration] = useState<number>(5);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   useEffect(() => {
     setTempTheme(theme);
@@ -51,8 +53,9 @@ const Settings = ({
     setTempBreakDuration(settings.breakDuration / 60);
   }, []);
 
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSaving(true);
 
     const formData = new FormData(e.currentTarget);
     const settings = settingFormHelper(formData);
@@ -71,6 +74,16 @@ const Settings = ({
 
     localStorage.setItem("appSettings", JSON.stringify(settings));
 
+    setIsSaving(false);
+    toast("Settings saved successfully!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     onClose();
   };
 
@@ -108,6 +121,15 @@ const Settings = ({
       }),
     );
 
+    toast("Settings reset to default values.", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     onClose();
   };
 
@@ -277,7 +299,14 @@ const Settings = ({
 
             <div className={styles.buttonGroup}>
               <button type="submit" className={styles.saveButton}>
-                Save
+                {isSaving ? (
+                  <>
+                    <span>Saving...</span>
+                    <span className={styles.spinner}></span>{" "}
+                  </>
+                ) : (
+                  "Save"
+                )}
               </button>
               <button onClick={handleReset} className={styles.resetButton}>
                 Reset

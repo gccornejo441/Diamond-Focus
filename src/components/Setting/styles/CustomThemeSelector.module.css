@@ -5,6 +5,19 @@
 .cardIllustration {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .cardIllustration {
+    width: 370px;
+  }
+}
+
+@media (max-width: 576px) {
+  .cardIllustration {
+    width: 100%;
+  }
 }
 
 .colorPalette {
