@@ -2,6 +2,7 @@ import styles from "./SidebarList.module.css";
 import { SidebarListStateProps } from "../../types/SidebarTypes";
 import SidebarTaskList from "./SidebarListTask";
 import AddListButton from "@assets/addListIcon.svg?react";
+import CollapseButton from "@assets/collapseIcon.svg?react";
 import Popup from "@components/Popup/Popup";
 import DeleteModal from "@components/DeleteModal";
 import useSidebarList from "@components/Sidebar/hooks/useSidebarList";
@@ -57,6 +58,15 @@ const SidebarList = ({
           >
             <AddListButton className={styles.svgStyle} />
           </button>
+          <button
+            aria-label="collapse sidebar"
+            aria-controls="collapse-sidebar"
+            id="collapse-sidebar-button"
+            onClick={() => setSidebarListOpen(!isSidebarListOpen)}
+            className="controlButton"
+          >
+            <CollapseButton className={styles.svgStyle} />
+          </button>
         </div>
         {taskLists.map((list) => (
           <SidebarTaskList
@@ -69,12 +79,6 @@ const SidebarList = ({
           />
         ))}
       </div>
-      {isSidebarListOpen && (
-        <div
-          className={styles.overlay}
-          onClick={() => setSidebarListOpen(false)}
-        ></div>
-      )}
     </div>
   );
 };

@@ -15,8 +15,6 @@ const useSidebarList = ({
   taskLists,
   setTaskLists,
   setCurrentSelectedTaskList,
-  isSidebarListOpen,
-  setSidebarListOpen,
 }: TaskListWithTasks) => {
   const [openTask, setOpenTask] = useState(false);
   const [deletingTaskListId, setDeletingTaskListId] = useState<number | null>(
@@ -106,7 +104,6 @@ const useSidebarList = ({
 
   const onSelect = (id: number) => {
     handleTaskListSelect(id);
-    setSidebarListOpen(!isSidebarListOpen);
   };
 
   const handleConfirmDelete = () => {

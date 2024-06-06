@@ -81,6 +81,29 @@ const useTasks = () => {
     }
   };
 
+  const moveTaskToList = (taskId: number, newListId: number) => {
+    alert(
+      `Task ID: ${taskId} cannot be moved to ${newListId} please try again later.`,
+    );
+
+    // const taskToMove = tasks.find((task) => task.id === taskId);
+    // if (!taskToMove) return;
+
+    // const updatedCurrentListTasks = tasks.filter((task) => task.id !== taskId);
+    // const updatedTaskLists = taskLists.map((list) => {
+    //   if (list.id === currentSelectedTaskList?.id) {
+    //     return { ...list, tasks: updatedCurrentListTasks };
+    //   }
+    //   if (list.id === newListId) {
+    //     return { ...list, tasks: [...list.tasks, taskToMove] };
+    //   }
+    //   return list;
+    // });
+
+    // setTaskLists(updatedTaskLists);
+    // localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+  };
+
   return {
     taskLists,
     setTaskLists,
@@ -96,6 +119,7 @@ const useTasks = () => {
     setCurrentTask,
     currentSelectedTaskList,
     setCurrentSelectedTaskList,
+    moveTaskToList,
   };
 };
 

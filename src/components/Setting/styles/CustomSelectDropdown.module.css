@@ -41,7 +41,12 @@
   }
   
   .select select option {
-    color: var(--text-color);
+    color: #000;
+  }
+
+  [data-theme="dark"] .select select option,
+  [data-theme="high-contrast"] .select select option {
+    color: #fff;
   }
   
   .select select option[value=""][disabled] {

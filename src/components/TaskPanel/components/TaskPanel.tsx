@@ -3,7 +3,7 @@ import "react-contexify/dist/ReactContexify.css";
 import styles from "../styles/TaskPanel.module.css";
 import DeleteModal from "@components/DeleteModal";
 import { Popup } from "@components/Popup";
-import { Menu, Item, useContextMenu, RightSlot } from "react-contexify";
+import { Menu, Item, useContextMenu, Submenu } from "react-contexify";
 import TaskButton from "@assets/taskIcon.svg?react";
 import SaveButton from "@assets/saveIcon.svg?react";
 import {
@@ -32,6 +32,7 @@ import TaskTitle from "./TaskTitle";
 const MENU_ID = "task-context-menu";
 
 const TaskPanel = ({
+  taskLists,
   isNewTaskOnTop,
   isMassDelete,
   handleDeleteAll,
@@ -44,6 +45,7 @@ const TaskPanel = ({
   openTask,
   setOpenTask,
   currentSelectedTaskList,
+  moveTaskToList, // New prop for moving task
 }: TaskPanelProps) => {
   const { show } = useContextMenu({ id: MENU_ID });
   const [task, setTask] = useState<string>("");
@@ -181,7 +183,7 @@ const TaskPanel = ({
         <div className={styles.inputArea}>
           <input
             type="text"
-            placeholder={editId ? "Edit task" : "Add a task"}
+            placeholder={editId ? "Edit task" : "What's your next task?"}
             value={editId ? editText : task}
             onChange={
               editId ? handleEditChange : (e) => setTask(e.target.value)
@@ -227,37 +229,28 @@ const TaskPanel = ({
             ))}
           </ul>
         </SortableContext>
-        <Menu id={MENU_ID}>
+        <Menu className={styles.contextMenuButton} id={MENU_ID}>
+          <Item onClick={() => handleClickOnTask(currentTask)}>View</Item>
+          <Submenu label="Move to">
+            {taskLists.map((taskList) => (
+              <Item
+                key={taskList.id}
+                onClick={() => moveTaskToList(currentTask!.id, taskList.id)}
+              >
+                {taskList.title}
+              </Item>
+            ))}
+          </Submenu>
+          <Item onClick={() => startEdit(currentTask)}>Edit</Item>
           <Item
-            className={styles.contextMenuButton}
-            onClick={() => handleClickOnTask(currentTask)}
-          >
-            View
-          </Item>
-          <Item
-            className={styles.contextMenuButton}
-            onClick={() => startEdit(currentTask)}
-          >
-            Edit
-          </Item>
-          <Item
-            className={styles.contextMenuButton}
             onClick={() => currentTask && toggleTaskCompletion(currentTask.id)}
           >
             Set as {currentTask?.completed ? "active" : "completed"}
           </Item>
-          <Item
-            className={styles.contextMenuButton}
-            onClick={() => currentTask && setAsFavorite(currentTask.id)}
-          >
-            Set as important<RightSlot>⭐</RightSlot>
+          <Item onClick={() => currentTask && setAsFavorite(currentTask.id)}>
+            Set as important
           </Item>
-          <Item
-            className={styles.contextMenuButton}
-            onClick={() => handleDeleteAll(false, false)}
-          >
-            Delete<RightSlot>CTRL + D</RightSlot>
-          </Item>
+          <Item onClick={() => handleDeleteAll(false, false)}>Delete</Item>
         </Menu>
       </div>
     </DndContext>

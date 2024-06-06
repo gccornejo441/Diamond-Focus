@@ -1,8 +1,8 @@
-.container {
+/* .container {
   padding: 20px;
   max-width: 768px;
   margin: auto;
-}
+} */
 
 .inputArea {
   display: flex;
@@ -76,35 +76,48 @@ ul {
 .contextMenuButton {
   --contexify-activeItem-bgColor: var(--panel-background-hover);
   --contexify-activeItem-color: var(--white);
-  --contexify-menu-bgColor: #020202;
+  --contexify-menu-bgColor: #ffffff;
   --contexify-separator-color: #eee;
   --contexify-item-color: #000000;
   --contexify-rightSlot-color: #000;
   --contexify-activeRightSlot-color: #fff;
-  --contexify-arrow-color: #6f6e77;
+  --contexify-arrow-color: var(--text-color);
   --contexify-activeArrow-color: #000000;
 
   font-size: 0.875rem;
   font-family: "Montserrat", sans-serif;
+}
+
+[data-theme="dark"] .contextMenuButton {
+  --contexify-menu-bgColor: var(--background-color);
+  --contexify-separator-color: #ffffff;
+  --contexify-item-color: #ffffff;
+  --contexify-activeItem-color: #fff;
+  --contexify-activeItem-bgColor: #000000;
+  --contexify-rightSlot-color: #ffffff;
+  --contexify-activeRightSlot-color: #fff;
+  --contexify-arrow-color: #ffffff;
+  --contexify-activeArrow-color: #fff;
 }
 
 [data-theme="high-contrast"] .contextMenuButton {
-  --contexify-activeItem-bgColor: #000;
-  --contexify-activeItem-color: var(--white);
-  --contexify-menu-bgColor: #000000;
-  --contexify-separator-color: #000000;
-  --contexify-item-color: #000000;
-  --contexify-rightSlot-color: #000;
+  --contexify-menu-bgColor: rgba(0, 0, 0);
+  --contexify-separator-color: #ffffff;
+  --contexify-item-color: #ffffff;
+  --contexify-activeItem-color: #fff;
+  --contexify-activeItem-bgColor: #000000;
+  --contexify-rightSlot-color: #ffffff;
   --contexify-activeRightSlot-color: #fff;
-  --contexify-arrow-color: #000000;
-  --contexify-activeArrow-color: #000000;
+  --contexify-arrow-color: #ffffff;
+  --contexify-activeArrow-color: #fff;
 
   font-size: 0.875rem;
   font-family: "Montserrat", sans-serif;
 }
 
+
 .taskPanel {
-  max-width: 768px;
+  /* max-width: 768px; */
   display: flex;
   flex-direction: column;
   width: 100%;

@@ -61,6 +61,7 @@ function App() {
     setCurrentTask,
     currentSelectedTaskList,
     setCurrentSelectedTaskList,
+    moveTaskToList,
   } = useTasks();
 
   useEffect(() => {
@@ -101,79 +102,77 @@ function App() {
         isSidebarListOpen={isSidebarListOpen}
         setSidebarListOpen={setSidebarListOpen}
       />
-      <SidebarList
-        taskLists={taskLists}
-        setTaskLists={setTaskLists}
-        setCurrentSelectedTaskList={setCurrentSelectedTaskList}
-        setSidebarListOpen={setSidebarListOpen}
-        isSidebarListOpen={isSidebarListOpen}
-      />
-      <>
-        {isModalOpen && (
-          <Settings
-            alarmName={alarmName}
-            setAlarmName={setAlarmName}
-            theme={theme}
-            setTheme={setTheme}
-            bgImg={bgImg}
-            setBgImg={setBgImg}
-            isNewTaskOnTop={isNewTaskOnTop}
-            setIsNewTaskOnTop={setIsNewTaskOnTop}
-            isAutoSwitchOn={isAutoSwitchOn}
-            setAutoSwitchOn={setAutoSwitchOn}
-            isAlertOn={isAlertOn}
-            setIsAlertOn={setIsAlertOn}
-            breakDuration={breakDuration}
-            setBreakDuration={setBreakDuration}
-            count={count}
-            setCount={setCount}
-            onClose={() => setModalOpen(false)}
-          />
-        )}
-      </>
-      <div className={styles.container}>
-        <div className={styles.innerContainer}>
-          <div className={styles.bodyContainer}>
-            <div className={styles.bodyInnerContainer}>
-              <div className={styles.settingHeaderContainer}>
-                <Dropdown
-                  alignment="right"
-                  names={names}
-                  stateHandlers={stateHandlers}
-                >
-                  <SettingButton className={styles.svgStyle} />
-                </Dropdown>
-              </div>
-              <Timer
-                count={count}
-                breakDuration={breakDuration}
-                setCount={setCount}
-                setBreakDuration={setBreakDuration}
-                isAutoSwitchOn={isAutoSwitchOn}
-                isAlertOn={isAlertOn}
-              />
-              <TaskPanel
-                currentSelectedTaskList={currentSelectedTaskList}
-                isNewTaskOnTop={isNewTaskOnTop}
-                isMassDelete={isMassDelete}
-                handleDeleteAll={handleDeleteAll}
-                currentTask={currentTask}
-                setCurrentTask={setCurrentTask}
-                openTask={openTask}
-                setOpenTask={setOpenTask}
-                tasks={tasks}
-                setTasks={setTasks}
-                setAskedForTask={setAskedForTask}
-                onClick={toggleSidebar}
-              />
-            </div>
-          </div>
-        </div>
-        <Sidebar
-          taskDescription={askedForTask}
-          isOpen={isSidebarOpen}
-          toggleSidebar={toggleSidebar}
+      {isModalOpen && (
+        <Settings
+          alarmName={alarmName}
+          setAlarmName={setAlarmName}
+          theme={theme}
+          setTheme={setTheme}
+          bgImg={bgImg}
+          setBgImg={setBgImg}
+          isNewTaskOnTop={isNewTaskOnTop}
+          setIsNewTaskOnTop={setIsNewTaskOnTop}
+          isAutoSwitchOn={isAutoSwitchOn}
+          setAutoSwitchOn={setAutoSwitchOn}
+          isAlertOn={isAlertOn}
+          setIsAlertOn={setIsAlertOn}
+          breakDuration={breakDuration}
+          setBreakDuration={setBreakDuration}
+          count={count}
+          setCount={setCount}
+          onClose={() => setModalOpen(false)}
         />
+      )}
+      <div className={styles.main}>
+        <SidebarList
+          taskLists={taskLists}
+          setTaskLists={setTaskLists}
+          setCurrentSelectedTaskList={setCurrentSelectedTaskList}
+          setSidebarListOpen={setSidebarListOpen}
+          isSidebarListOpen={isSidebarListOpen}
+        />
+        <div className={styles.mainContent}>
+          <div className={styles.bodyContent}>
+            <div className={styles.settingHeaderContainer}>
+              <Dropdown
+                alignment="right"
+                names={names}
+                stateHandlers={stateHandlers}
+              >
+                <SettingButton className={styles.svgStyle} />
+              </Dropdown>
+            </div>
+            <Timer
+              count={count}
+              breakDuration={breakDuration}
+              setCount={setCount}
+              setBreakDuration={setBreakDuration}
+              isAutoSwitchOn={isAutoSwitchOn}
+              isAlertOn={isAlertOn}
+            />
+            <TaskPanel
+              taskLists={taskLists}
+              currentSelectedTaskList={currentSelectedTaskList}
+              isNewTaskOnTop={isNewTaskOnTop}
+              isMassDelete={isMassDelete}
+              handleDeleteAll={handleDeleteAll}
+              currentTask={currentTask}
+              setCurrentTask={setCurrentTask}
+              openTask={openTask}
+              setOpenTask={setOpenTask}
+              tasks={tasks}
+              setTasks={setTasks}
+              setAskedForTask={setAskedForTask}
+              onClick={toggleSidebar}
+              moveTaskToList={moveTaskToList} // Pass the new function
+            />
+          </div>
+          <Sidebar
+            taskDescription={askedForTask}
+            isOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+          />
+        </div>
       </div>
       <ToastContainer className="toast-container" />
     </div>
