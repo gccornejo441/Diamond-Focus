@@ -7,7 +7,7 @@ const useTasks = () => {
       const storedItem = localStorage.getItem("taskLists");
       if (!storedItem) return null;
       const selectedTaskList = JSON.parse(storedItem).find(
-        (list: TaskListProps) => list.taskSelected === true,
+        (list: TaskListProps) => list.taskSelected === true
       );
       return selectedTaskList ? selectedTaskList : null;
     });
@@ -26,7 +26,7 @@ const useTasks = () => {
   useEffect(() => {
     if (selectedTaskList) {
       const updatedTaskLists = taskLists.map((list) =>
-        list.id === selectedTaskList.id ? selectedTaskList : list,
+        list.id === selectedTaskList.id ? selectedTaskList : list
       );
 
       setTaskLists(updatedTaskLists);
@@ -48,7 +48,7 @@ const useTasks = () => {
       setSelectedTaskList(updatedTaskList);
       setCurrentSelectedTaskList(updatedTaskList);
       const updatedTaskLists = taskLists.map((list) =>
-        list.id === updatedTaskList.id ? updatedTaskList : list,
+        list.id === updatedTaskList.id ? updatedTaskList : list
       );
       setTaskLists(updatedTaskLists);
       localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
@@ -82,26 +82,28 @@ const useTasks = () => {
   };
 
   const moveTaskToList = (taskId: number, newListId: number) => {
-    alert(
-      `Task ID: ${taskId} cannot be moved to ${newListId} please try again later.`,
-    );
+    const taskToMove = tasks.find((task) => task.id === taskId);
+    if (!taskToMove) return;
 
-    // const taskToMove = tasks.find((task) => task.id === taskId);
-    // if (!taskToMove) return;
+    const updatedCurrentListTasks = tasks.filter((task) => task.id !== taskId);
+    const updatedTaskLists = taskLists.map((list) => {
+      if (list.id === currentSelectedTaskList?.id) {
+        return { ...list, tasks: updatedCurrentListTasks };
+      }
+      if (list.id === newListId) {
+        return { ...list, tasks: [...list.tasks, taskToMove] };
+      }
+      return list;
+    });
 
-    // const updatedCurrentListTasks = tasks.filter((task) => task.id !== taskId);
-    // const updatedTaskLists = taskLists.map((list) => {
-    //   if (list.id === currentSelectedTaskList?.id) {
-    //     return { ...list, tasks: updatedCurrentListTasks };
-    //   }
-    //   if (list.id === newListId) {
-    //     return { ...list, tasks: [...list.tasks, taskToMove] };
-    //   }
-    //   return list;
-    // });
+    setTaskLists(updatedTaskLists);
 
-    // setTaskLists(updatedTaskLists);
-    // localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
+    const updatedCurrentTaskList = updatedTaskLists.find((taskList) => {
+      return taskList.id === currentSelectedTaskList?.id;
+    });
+    if (!updatedCurrentTaskList) return;
+    setCurrentSelectedTaskList(updatedCurrentTaskList);
+    localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
   };
 
   return {
