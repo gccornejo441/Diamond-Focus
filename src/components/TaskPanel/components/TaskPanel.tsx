@@ -82,7 +82,7 @@ const TaskPanel = ({
     setTasks(updatedTasks);
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && task.trim() !== "") {
       addTask();
     }
@@ -109,13 +109,13 @@ const TaskPanel = ({
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5,
+        distance: 10,
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
-        tolerance: 5,
+        delay: 500,
+        tolerance: 10,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -145,8 +145,8 @@ const TaskPanel = ({
 
   return (
     <DndContext
-      onDragEnd={handleOnDragEnd}
       sensors={sensors}
+      onDragEnd={handleOnDragEnd}
       collisionDetection={closestCorners}
     >
       <Popup onClose={() => setOpenTask(false)} isOpen={openTask}>
@@ -169,7 +169,7 @@ const TaskPanel = ({
             placeholder="What's your next task?"
             value={task}
             onChange={(e) => setTask(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
             className={styles.input}
           />
           <button
