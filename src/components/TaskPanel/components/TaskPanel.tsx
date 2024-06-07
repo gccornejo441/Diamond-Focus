@@ -5,7 +5,6 @@ import DeleteModal from "@components/DeleteModal";
 import { Popup } from "@components/Popup";
 import { Menu, Item, useContextMenu, Submenu } from "react-contexify";
 import TaskButton from "@assets/taskIcon.svg?react";
-import SaveButton from "@assets/saveIcon.svg?react";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -25,9 +24,9 @@ import {
   MouseSensor,
 } from "@dnd-kit/core";
 import { TaskPanelProps } from "../types/TaskTypes";
-import { Task } from "@components/Sidebar";
 import TaskItem from "./TaskItem";
 import TaskTitle from "./TaskTitle";
+import { Task } from "@components/Sidebar";
 
 const MENU_ID = "task-context-menu";
 
@@ -45,12 +44,10 @@ const TaskPanel = ({
   openTask,
   setOpenTask,
   currentSelectedTaskList,
-  moveTaskToList, // New prop for moving task
+  moveTaskToList,
 }: TaskPanelProps) => {
   const { show } = useContextMenu({ id: MENU_ID });
   const [task, setTask] = useState<string>("");
-  const [editId, setEditId] = useState<number | null>(null);
-  const [editText, setEditText] = useState("");
 
   const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
     event.preventDefault();
@@ -78,36 +75,22 @@ const TaskPanel = ({
     }
   };
 
-  const startEdit = (task: Task | null) => {
-    setEditId(task!.id);
-    setEditText(task!.text);
-  };
-
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditText(e.target.value);
-  };
-
-  const saveEdit = (id: number) => {
+  const saveEdit = (id: number, newText: string) => {
     const updatedTasks = tasks.map((t) =>
-      t.id === id ? { ...t, text: editText } : t,
+      t.id === id ? { ...t, text: newText } : t
     );
     setTasks(updatedTasks);
-    setEditId(null);
-    setEditText("");
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (
-      event.key === "Enter" &&
-      (editId ? editText.trim() !== "" : task.trim() !== "")
-    ) {
-      editId ? saveEdit(editId) : addTask();
+    if (event.key === "Enter" && task.trim() !== "") {
+      addTask();
     }
   };
 
   const toggleTaskCompletion = (id: number) => {
     setTasks(
-      tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
+      tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
     );
   };
 
@@ -118,7 +101,7 @@ const TaskPanel = ({
 
   const setAsFavorite = (id: number) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, favorite: !task.favorite } : task,
+      task.id === id ? { ...task, favorite: !task.favorite } : task
     );
     setTasks(updatedTasks);
   };
@@ -131,8 +114,8 @@ const TaskPanel = ({
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 300,
-        tolerance: 8,
+        delay: 250,
+        tolerance: 5,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -142,7 +125,7 @@ const TaskPanel = ({
       activationConstraint: {
         distance: 8,
       },
-    }),
+    })
   );
 
   const getCurrentTaskPosition = (id: UniqueIdentifier | undefined) =>
@@ -183,38 +166,23 @@ const TaskPanel = ({
         <div className={styles.inputArea}>
           <input
             type="text"
-            placeholder={editId ? "Edit task" : "What's your next task?"}
-            value={editId ? editText : task}
-            onChange={
-              editId ? handleEditChange : (e) => setTask(e.target.value)
-            }
+            placeholder="What's your next task?"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
             onKeyPress={handleKeyPress}
             className={styles.input}
           />
           <button
-            onClick={editId ? () => saveEdit(editId) : addTask}
+            onClick={addTask}
             className="controlButton"
-            disabled={editId ? editText.trim() === "" : task.trim() === ""}
+            disabled={task.trim() === ""}
           >
-            {editId ? (
-              <SaveButton
-                className={styles.svgStyle}
-                style={{
-                  cursor:
-                    editId && editText.trim() === ""
-                      ? "not-allowed"
-                      : "inherit",
-                }}
-              />
-            ) : (
-              <TaskButton
-                className={styles.svgStyle}
-                style={{
-                  cursor:
-                    !editId && task.trim() === "" ? "not-allowed" : "inherit",
-                }}
-              />
-            )}
+            <TaskButton
+              className={styles.svgStyle}
+              style={{
+                cursor: task.trim() === "" ? "not-allowed" : "inherit",
+              }}
+            />
           </button>
         </div>
         <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
@@ -225,6 +193,7 @@ const TaskPanel = ({
                 task={task}
                 toggleTaskCompletion={toggleTaskCompletion}
                 handleDoubleClick={handleDoubleClick}
+                saveEdit={saveEdit}
               />
             ))}
           </ul>
@@ -241,7 +210,6 @@ const TaskPanel = ({
               </Item>
             ))}
           </Submenu>
-          <Item onClick={() => startEdit(currentTask)}>Edit</Item>
           <Item
             onClick={() => currentTask && toggleTaskCompletion(currentTask.id)}
           >

@@ -79,6 +79,12 @@ const SidebarList = ({
           />
         ))}
       </div>
+      {isSidebarListOpen && (
+        <div
+          className={styles.overlay}
+          onClick={() => setSidebarListOpen(false)}
+        ></div>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@
   "name": "diamond-focus",
   "description": "A timer for diamond focus built building stronger brains under pressure.",
   "author": "Gabe Cornejo",
-  "version": "0.5.25",
+  "version": "0.5.26",
   "private": false,
   "license": "MIT",
   "repository": {
@@ -20,7 +20,6 @@
     "vite",
     "eslint",
     "prettier",
-    "dnd-kit",
     "react-tooltip",
     "react-contexify",
     "date-fns",

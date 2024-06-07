@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../styles/TaskItem.module.css";
@@ -8,7 +9,8 @@ import { TaskComponentProps } from "../types/TaskTypes";
 const TaskItem = ({
   task,
   toggleTaskCompletion,
-  handleDoubleClick,
+  handleDoubleClick: parentHandleDoubleClick,
+  saveEdit,
 }: TaskComponentProps) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task.id });
@@ -17,10 +19,36 @@ const TaskItem = ({
     includeSeconds: true,
   } as FormatDistanceToNowOptions);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(task.text);
+
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
     touchAction: "none",
+  };
+
+  const handleDoubleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setIsEditing(true);
+    setEditText(task.text);
+  };
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditText(e.target.value);
+  };
+
+  const handleSaveEdit = () => {
+    if (editText.trim() !== "") {
+      saveEdit(task.id, editText);
+    }
+    setIsEditing(false);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSaveEdit();
+    }
   };
 
   return (
@@ -32,8 +60,8 @@ const TaskItem = ({
       {...listeners}
       id={`task-${task.id}`}
       className={`${styles.taskItem} ${task.favorite ? styles.favoriteTask : ""}`}
-      onContextMenu={(e) => handleDoubleClick(e, task)}
-      onDoubleClick={(e) => handleDoubleClick(e, task)}
+      onContextMenu={(e) => parentHandleDoubleClick(e, task)}
+      onDoubleClick={handleDoubleClick}
     >
       <div className={styles.checkboxwrapper15}>
         <input
@@ -51,13 +79,25 @@ const TaskItem = ({
             </svg>
           </span>
         </label>
-        <p
-          id={`text-${task.id}`}
-          className={`${styles.taskText} ${task.completed ? styles.strikethrough : ""}`}
-        >
-          {task.text}
-          <span className={styles.timeStamp}>{relativeTime}</span>
-        </p>
+        {isEditing ? (
+          <input
+            type="text"
+            value={editText}
+            onChange={handleEditChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleSaveEdit}
+            className={styles.input}
+            autoFocus
+          />
+        ) : (
+          <p
+            id={`text-${task.id}`}
+            className={`${styles.taskText} ${task.completed ? styles.strikethrough : ""}`}
+          >
+            {task.text}
+            <span className={styles.timeStamp}>{relativeTime}</span>
+          </p>
+        )}
       </div>
     </li>
   );

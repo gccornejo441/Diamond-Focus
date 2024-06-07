@@ -925,16 +925,23 @@ button {
 }
 
 .controlButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
   background-color: var(--panel-background);
   color: white;
   border: none;
   padding: 5px;
-  font-size: 3px;
   height: 50px;
   width: 50px;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.controlButton:active {
+  background-color: var(--panel-background-hover);
 }
 
 .controlButton:disabled {
@@ -960,7 +967,6 @@ button {
     outline: 2px solid var(--white);
   }
 }
-
 
 .toast-container {
   --toast-background: var(--panel-background);
@@ -993,7 +999,6 @@ button {
 }
 
 @media (max-width: 768px) {
-
   .toast-container .Toastify__toast {
     width: 90%;
     padding: 1rem;

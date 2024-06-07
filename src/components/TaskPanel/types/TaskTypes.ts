@@ -27,6 +27,7 @@ interface TaskComponentProps {
   task: Task;
   toggleTaskCompletion: (id: number) => void;
   handleDoubleClick: (e: React.MouseEvent, task: Task) => void;
+  saveEdit: (id: number, newText: string) => void;
 }
 
 export type { TaskTitleProps, TaskPanelProps, TaskComponentProps };
