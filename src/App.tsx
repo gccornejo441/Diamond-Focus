@@ -43,7 +43,7 @@ function App() {
       Settings: () => setModalOpen(true),
       "Add list": () => setSidebarListOpen(true),
     }),
-    [],
+    []
   );
 
   const names = useMemo(() => [{ name: "Settings" }, { name: "Add list" }], []);
