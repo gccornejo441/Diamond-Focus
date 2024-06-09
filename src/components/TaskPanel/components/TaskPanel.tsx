@@ -131,9 +131,9 @@ const TaskPanel = ({
       </Popup>
       <div className={styles.taskPanel}>
         <TaskTitle
+          tasks={tasks}
           handleDeleteAll={handleDeleteAll}
           currentSelectedTaskList={currentSelectedTaskList}
-          tasks={tasks}
         />
         <TaskInput
           tasks={tasks}

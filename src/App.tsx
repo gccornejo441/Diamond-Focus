@@ -164,7 +164,7 @@ function App() {
               setTasks={setTasks}
               setAskedForTask={setAskedForTask}
               toggleSidebar={toggleSidebar}
-              moveTaskToList={moveTaskToList} // Pass the new function
+              moveTaskToList={moveTaskToList}
             />
           </div>
           <Sidebar

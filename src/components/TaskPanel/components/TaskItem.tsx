@@ -68,50 +68,55 @@ const TaskItem = ({
       id={`task-${task.id}`}
       className={`${styles.taskItem} ${task.favorite ? styles.favoriteTask : ""}`}
       onContextMenu={(e) => parentHandleDoubleClick(e, task)}
-      onDoubleClick={handleDoubleClick}
+      onDoubleClick={(e) => parentHandleDoubleClick(e, task)}
     >
       <div className={styles.checkboxwrapper15}>
-        <input
-          className={styles.inpCbx}
-          id={`cbx-${task.id}`}
-          type="checkbox"
-          checked={task.completed}
-          style={{ display: "none" }}
-          onChange={() => toggleTaskCompletion(task.id)}
-        />
-        <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
-          <span>
-            <svg width="12px" height="9px" viewBox="0 0 12 9">
-              <polyline points="1 5 4 8 11 1"></polyline>
-            </svg>
-          </span>
-        </label>
-        {isEditing ? (
+        <div className={styles.checkboxwrapper}>
           <input
-            type="text"
-            value={editText}
-            onChange={handleEditChange}
-            onKeyDown={handleKeyDown}
-            onBlur={handleSaveEdit}
-            className={styles.input}
-            autoFocus
+            className={styles.inpCbx}
+            id={`cbx-${task.id}`}
+            type="checkbox"
+            checked={task.completed}
+            style={{ display: "none" }}
+            onChange={() => toggleTaskCompletion(task.id)}
           />
-        ) : (
-          <p
-            id={`text-${task.id}`}
-            className={`${styles.taskText} ${task.completed ? styles.strikethrough : ""}`}
-          >
-            {task.text}
-            <span className={styles.timeStamp}>{relativeTime}</span>
-          </p>
-        )}
-      </div>
-      <div
-        style={{ touchAction: "none" }}
-        className={styles.handle}
-        {...listeners}
-      >
-        <DragHandle className={styles.dragHandle} aria-label="Drag" />
+          <label className={styles.cbx} htmlFor={`cbx-${task.id}`}>
+            <span>
+              <svg width="12px" height="9px" viewBox="0 0 12 9">
+                <polyline points="1 5 4 8 11 1"></polyline>
+              </svg>
+            </span>
+          </label>
+          {isEditing ? (
+            <input
+              id={`text-${task.id}`}
+              type="text"
+              value={editText}
+              onChange={handleEditChange}
+              onKeyDown={handleKeyDown}
+              onBlur={handleSaveEdit}
+              className={styles.input}
+              autoFocus
+            />
+          ) : (
+            <p
+              id={`text-${task.id}`}
+              onDoubleClick={handleDoubleClick}
+              className={`${styles.taskText} ${task.completed ? styles.strikethrough : ""}`}
+            >
+              {task.text}
+              <span className={styles.timeStamp}>{relativeTime}</span>
+            </p>
+          )}
+        </div>
+        <div
+          tabIndex={0}
+          style={{ touchAction: "none" }}
+          className={styles.handle}
+          {...listeners}
+        >
+          <DragHandle className={styles.dragHandle} aria-label="Drag" />
+        </div>
       </div>
     </li>
   );
