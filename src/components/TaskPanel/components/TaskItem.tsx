@@ -5,6 +5,7 @@ import styles from "../styles/TaskItem.module.css";
 import { formatDistanceToNowStrict } from "date-fns";
 import type { FormatDistanceToNowOptions } from "date-fns";
 import { TaskComponentProps } from "../types/TaskTypes";
+import DragHandle from "@assets/dragHandleIcon.svg?react";
 
 const TaskItem = ({
   task,
@@ -12,8 +13,14 @@ const TaskItem = ({
   handleDoubleClick: parentHandleDoubleClick,
   saveEdit,
 }: TaskComponentProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: task.id });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: task.id });
   const relativeTime = formatDistanceToNowStrict(task.createdAt || new Date(), {
     addSuffix: true,
     includeSeconds: true,
@@ -25,7 +32,8 @@ const TaskItem = ({
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
-    touchAction: "none",
+    zIndex: isDragging ? "100" : "auto",
+    opacity: isDragging ? 0.3 : 1,
   };
 
   const handleDoubleClick = (event: React.MouseEvent) => {
@@ -57,7 +65,6 @@ const TaskItem = ({
       style={style}
       ref={setNodeRef}
       {...attributes}
-      {...listeners}
       id={`task-${task.id}`}
       className={`${styles.taskItem} ${task.favorite ? styles.favoriteTask : ""}`}
       onContextMenu={(e) => parentHandleDoubleClick(e, task)}
@@ -98,6 +105,13 @@ const TaskItem = ({
             <span className={styles.timeStamp}>{relativeTime}</span>
           </p>
         )}
+      </div>
+      <div
+        style={{ touchAction: "none" }}
+        className={styles.handle}
+        {...listeners}
+      >
+        <DragHandle className={styles.dragHandle} aria-label="Drag" />
       </div>
     </li>
   );

@@ -181,3 +181,18 @@
   color: var(--text-color);
   transition: all 0.2s ease;
 }
+
+.dragHandle {
+  height: 24px;
+  width: 24px;
+  cursor: grab;
+}
+
+.dragHandle {
+  cursor: grab;
+  display: flex;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
