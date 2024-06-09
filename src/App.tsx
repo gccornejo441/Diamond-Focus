@@ -163,7 +163,7 @@ function App() {
               tasks={tasks}
               setTasks={setTasks}
               setAskedForTask={setAskedForTask}
-              onClick={toggleSidebar}
+              toggleSidebar={toggleSidebar}
               moveTaskToList={moveTaskToList} // Pass the new function
             />
           </div>

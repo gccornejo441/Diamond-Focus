@@ -12,7 +12,7 @@ const TaskTitle = ({
     () => ({
       "Delete All Tasks": () => handleDeleteAll(false, true),
     }),
-    [],
+    []
   );
 
   const names = useMemo(() => [{ name: "Delete All Tasks" }], []);

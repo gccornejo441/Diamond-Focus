@@ -10,7 +10,7 @@ interface TaskPanelProps {
   moveTaskToList: (taskId: number, newListId: number) => void;
   taskLists: TaskListProps[];
   setAskedForTask: React.Dispatch<React.SetStateAction<string>>;
-  onClick: () => void;
+  toggleSidebar: () => void;
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   openTask: boolean;

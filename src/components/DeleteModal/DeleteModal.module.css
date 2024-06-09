@@ -15,11 +15,21 @@
 
 [data-theme="dark"] .deleteModal,
 [data-theme="high-contrast"] .deleteModal {
+  color: var(--panel-text);
   background-color: var(--background-color);
   border: 1px solid var(--white);
 }
 
+[data-theme="dark"] .deleteModalHeader,
+[data-theme="high-contrast"] .deleteModalHeader {
+  color: var(--panel-text);
+  text-align: center;
+  width: 300px;
+  font-size: 1.3rem;
+}
+
 .deleteModalHeader {
+  color: inherit;
   text-align: center;
   width: 300px;
   font-size: 1.3rem;
@@ -72,6 +82,36 @@
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+[data-theme="dark"] .btnSecondary {
+  background-color: var(--button-background);
+  color: var(--panel-text);
+
+  &:hover {
+    background-color: var(--button-background-hover);
+  }
+}
+[data-theme="dark"] .btnDanger {
+  background-color: var(--button-background);
+  color: var(--panel-text);
+  &:hover {
+    background-color: var(--button-background-hover);
+  }
+}
+
+[data-theme="high-contrast"] .btnSecondary,
+[data-theme="high-contrast"] .btnSecondary:hover,
+[data-theme="high-contrast"] .btnDanger,
+[data-theme="high-contrast"] .btnDanger:hover {
+  background-color: var(--background-color);
+  color: var(--panel-text);
+  border: var(--panel-text) 1px solid;
+
+  &:hover {
+    outline: 1px solid var(--panel-text);
+    transition: all 1s ease-in-out;
+  }
 }
 
 .btnSecondary:hover {

@@ -1,16 +1,9 @@
-import { useState } from "react";
 import "react-contexify/dist/ReactContexify.css";
 import styles from "../styles/TaskPanel.module.css";
 import DeleteModal from "@components/DeleteModal";
 import { Popup } from "@components/Popup";
 import { Menu, Item, useContextMenu, Submenu } from "react-contexify";
-import TaskButton from "@assets/taskIcon.svg?react";
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-  arrayMove,
-  sortableKeyboardCoordinates,
-} from "@dnd-kit/sortable";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
   DndContext,
   KeyboardSensor,
@@ -24,9 +17,10 @@ import {
   MouseSensor,
 } from "@dnd-kit/core";
 import { TaskPanelProps } from "../types/TaskTypes";
-import TaskItem from "./TaskItem";
 import TaskTitle from "./TaskTitle";
 import { Task } from "@components/Sidebar";
+import TaskInput from "./TaskInput";
+import TaskList from "./TaskList";
 
 const MENU_ID = "task-context-menu";
 
@@ -37,7 +31,7 @@ const TaskPanel = ({
   handleDeleteAll,
   currentTask,
   setCurrentTask,
-  onClick,
+  toggleSidebar,
   setAskedForTask,
   tasks,
   setTasks,
@@ -47,7 +41,6 @@ const TaskPanel = ({
   moveTaskToList,
 }: TaskPanelProps) => {
   const { show } = useContextMenu({ id: MENU_ID });
-  const [task, setTask] = useState<string>("");
 
   const handleDoubleClick = (event: React.MouseEvent, task: Task) => {
     event.preventDefault();
@@ -60,32 +53,11 @@ const TaskPanel = ({
       },
     });
   };
-
-  const addTask = () => {
-    if (task.trim() !== "") {
-      const newTask = {
-        id: Date.now(),
-        text: task,
-        completed: false,
-        favorite: false,
-        createdAt: new Date(),
-      } as Task;
-      setTasks(isNewTaskOnTop ? [newTask, ...tasks] : [...tasks, newTask]);
-      setTask("");
-    }
-  };
-
   const saveEdit = (id: number, newText: string) => {
     const updatedTasks = tasks.map((t) =>
       t.id === id ? { ...t, text: newText } : t
     );
     setTasks(updatedTasks);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && task.trim() !== "") {
-      addTask();
-    }
   };
 
   const toggleTaskCompletion = (id: number) => {
@@ -95,7 +67,7 @@ const TaskPanel = ({
   };
 
   const handleClickOnTask = (task: Task | null) => {
-    onClick();
+    toggleSidebar();
     setAskedForTask(task!.text);
   };
 
@@ -109,7 +81,7 @@ const TaskPanel = ({
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 10,
+        distance: 5,
       },
     }),
     useSensor(TouchSensor, {
@@ -123,7 +95,7 @@ const TaskPanel = ({
     }),
     useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 8,
+        distance: 2,
       },
     })
   );
@@ -163,52 +135,30 @@ const TaskPanel = ({
           currentSelectedTaskList={currentSelectedTaskList}
           tasks={tasks}
         />
-        <div className={styles.inputArea}>
-          <input
-            type="text"
-            placeholder="What's your next task?"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className={styles.input}
-          />
-          <button
-            onClick={addTask}
-            className="controlButton"
-            disabled={task.trim() === ""}
-          >
-            <TaskButton
-              className={styles.svgStyle}
-              style={{
-                cursor: task.trim() === "" ? "not-allowed" : "inherit",
-              }}
-            />
-          </button>
-        </div>
-        <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
-          <ul className={styles.taskList}>
-            {tasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                toggleTaskCompletion={toggleTaskCompletion}
-                handleDoubleClick={handleDoubleClick}
-                saveEdit={saveEdit}
-              />
-            ))}
-          </ul>
-        </SortableContext>
+        <TaskInput
+          tasks={tasks}
+          setTasks={setTasks}
+          isNewTaskOnTop={isNewTaskOnTop}
+        />
+        <TaskList
+          tasks={tasks}
+          toggleTaskCompletion={toggleTaskCompletion}
+          handleDoubleClick={handleDoubleClick}
+          saveEdit={saveEdit}
+        />
         <Menu className={styles.contextMenuButton} id={MENU_ID}>
           <Item onClick={() => handleClickOnTask(currentTask)}>View</Item>
           <Submenu label="Move to">
-            {taskLists.map((taskList) => (
-              <Item
-                key={taskList.id}
-                onClick={() => moveTaskToList(currentTask!.id, taskList.id)}
-              >
-                {taskList.title}
-              </Item>
-            ))}
+            {taskLists
+              .filter((taskList) => taskList.id !== currentSelectedTaskList?.id)
+              .map((taskList) => (
+                <Item
+                  key={taskList.id}
+                  onClick={() => moveTaskToList(currentTask!.id, taskList.id)}
+                >
+                  {taskList.title}
+                </Item>
+              ))}
           </Submenu>
           <Item
             onClick={() => currentTask && toggleTaskCompletion(currentTask.id)}
