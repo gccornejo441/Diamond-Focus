@@ -18,7 +18,6 @@ import SideMenu from "@components/Sidebar/components/SideMenu/SideMenu";
 import { Sidebar } from "@components/Sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 const SETTINGS_KEY = "appSettings";
 
 function App() {
@@ -43,7 +42,7 @@ function App() {
       Settings: () => setModalOpen(true),
       "Add list": () => setSidebarListOpen(true),
     }),
-    []
+    [setSidebarListOpen]
   );
 
   const names = useMemo(() => [{ name: "Settings" }, { name: "Add list" }], []);
