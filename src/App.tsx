@@ -13,7 +13,7 @@ import {
   SettingsProps,
   getParsedSettings,
 } from "@components/Setting";
-import { SidebarList, useSidebarListToggle } from "@components/Sidebar";
+import { SidebarList, Task, useSidebarListToggle } from "@components/Sidebar";
 import SideMenu from "@components/Sidebar/components/SideMenu/SideMenu";
 import { Sidebar } from "@components/Sidebar";
 import { ToastContainer } from "react-toastify";
@@ -24,7 +24,7 @@ function App() {
   const { isLoading, progress } = useLoading();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [askedForTask, setAskedForTask] = useState<string>("");
+  const [askedForTask, setAskedForTask] = useState<Task | null>(null);
 
   const [count, setCount] = useState(1500);
   const [breakDuration, setBreakDuration] = useState(300);
@@ -48,6 +48,9 @@ function App() {
   const names = useMemo(() => [{ name: "Settings" }, { name: "Add list" }], []);
 
   const {
+    saveEdit,
+    setAsFavorite,
+    toggleTaskCompletion,
     taskLists,
     setTaskLists,
     tasks,
@@ -90,9 +93,15 @@ function App() {
     );
   }
 
-  const toggleSidebar = () => {
+  const toggleSidebar = (task: Task | null) => {
     setSidebarOpen(!isSidebarOpen);
+    setAskedForTask(task!);
   };
+
+  // const handleViewTask = (task: Task | null) => {
+  //   toggleSidebar();
+  //   setAskedForTask(task!.text);
+  // };
 
   return (
     <div className={styles.App}>
@@ -150,6 +159,9 @@ function App() {
               isAlertOn={isAlertOn}
             />
             <TaskPanel
+              saveEdit={saveEdit}
+              toggleTaskCompletion={toggleTaskCompletion}
+              setAsFavorite={setAsFavorite}
               taskLists={taskLists}
               currentSelectedTaskList={currentSelectedTaskList}
               isNewTaskOnTop={isNewTaskOnTop}
@@ -161,13 +173,16 @@ function App() {
               setOpenTask={setOpenTask}
               tasks={tasks}
               setTasks={setTasks}
-              setAskedForTask={setAskedForTask}
               toggleSidebar={toggleSidebar}
               moveTaskToList={moveTaskToList}
             />
           </div>
           <Sidebar
-            taskDescription={askedForTask}
+            saveEdit={saveEdit}
+            handleDeleteAll={handleDeleteAll}
+            toggleTaskCompletion={toggleTaskCompletion}
+            setAsFavorite={setAsFavorite}
+            selectedTaskToView={askedForTask}
             isOpen={isSidebarOpen}
             toggleSidebar={toggleSidebar}
           />

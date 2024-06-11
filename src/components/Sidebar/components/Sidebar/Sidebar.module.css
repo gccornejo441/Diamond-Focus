@@ -55,3 +55,54 @@
   height: 30px;
   width: 30px;
 }
+
+
+.inputArea {
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 5px;
+  padding: 5px;
+  color: var(--text-color);
+  position: relative;
+}
+
+.inputArea:focus-within {
+  outline: 2px solid var(--alert);
+}
+
+.inputArea > input,
+.inputArea > textarea {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: none;
+  font-size: 16px;
+  background: transparent;
+  color: var(--text-color);
+  border-radius: 25px;
+  outline: none;
+  resize: none;
+  height: 400px;
+}
+
+.inputArea > input::placeholder,
+.inputArea > textarea::placeholder {
+  color: var(--text-color-faint);
+}
+
+[data-theme="dark"] .inputArea {
+  background-color: var(--panel-background);
+}
+
+[data-theme="dark"] .inputArea:focus-within {
+  outline: 2px solid var(--text-color);
+}
+
+[data-theme="high-contrast"] .inputArea {
+  background-color: var(--panel-background);
+  border: 1px solid var(--text-color);
+}
+
+[data-theme="high-contrast"] .inputArea:focus-within {
+  outline: 2px solid var(--text-color);
+}

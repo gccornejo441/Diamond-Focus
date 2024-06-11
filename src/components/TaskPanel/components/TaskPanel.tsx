@@ -25,6 +25,8 @@ import TaskList from "./TaskList";
 const MENU_ID = "task-context-menu";
 
 const TaskPanel = ({
+  toggleTaskCompletion,
+  setAsFavorite,
   taskLists,
   isNewTaskOnTop,
   isMassDelete,
@@ -32,7 +34,6 @@ const TaskPanel = ({
   currentTask,
   setCurrentTask,
   toggleSidebar,
-  setAskedForTask,
   tasks,
   setTasks,
   openTask,
@@ -56,24 +57,6 @@ const TaskPanel = ({
   const saveEdit = (id: number, newText: string) => {
     const updatedTasks = tasks.map((t) =>
       t.id === id ? { ...t, text: newText } : t
-    );
-    setTasks(updatedTasks);
-  };
-
-  const toggleTaskCompletion = (id: number) => {
-    setTasks(
-      tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
-    );
-  };
-
-  const handleClickOnTask = (task: Task | null) => {
-    toggleSidebar();
-    setAskedForTask(task!.text);
-  };
-
-  const setAsFavorite = (id: number) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, favorite: !task.favorite } : task
     );
     setTasks(updatedTasks);
   };
@@ -147,7 +130,7 @@ const TaskPanel = ({
           saveEdit={saveEdit}
         />
         <Menu className={styles.contextMenuButton} id={MENU_ID}>
-          <Item onClick={() => handleClickOnTask(currentTask)}>View</Item>
+          <Item onClick={() => toggleSidebar(currentTask)}>View</Item>
           <Submenu label="Move to">
             {taskLists
               .filter((taskList) => taskList.id !== currentSelectedTaskList?.id)

@@ -106,7 +106,30 @@ const useTasks = () => {
     localStorage.setItem("taskLists", JSON.stringify(updatedTaskLists));
   };
 
+  const toggleTaskCompletion = (id: number) => {
+    setTasks(
+      tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+    );
+  };
+
+  const setAsFavorite = (id: number) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, favorite: !task.favorite } : task
+    );
+    setTasks(updatedTasks);
+  };
+
+  const saveEdit = (id: number, newText: string) => {
+    const updatedTasks = tasks.map((t) =>
+      t.id === id ? { ...t, text: newText } : t
+    );
+    setTasks(updatedTasks);
+  };
+
   return {
+    saveEdit,
+    setAsFavorite,
+    toggleTaskCompletion,
     taskLists,
     setTaskLists,
     selectedTaskList,

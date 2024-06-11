@@ -7,10 +7,12 @@ interface TaskTitleProps {
 }
 
 interface TaskPanelProps {
+  saveEdit: (id: number, newText: string) => void;
+  setAsFavorite: (id: number) => void;
+  toggleTaskCompletion: (id: number) => void;
+  toggleSidebar: (task: Task | null) => void;
   moveTaskToList: (taskId: number, newListId: number) => void;
   taskLists: TaskListProps[];
-  setAskedForTask: React.Dispatch<React.SetStateAction<string>>;
-  toggleSidebar: () => void;
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   openTask: boolean;

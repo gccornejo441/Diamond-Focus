@@ -9,7 +9,9 @@ const icons = {
   "Delete list": <DeleteListButton />,
   "Add list": <AddListButton />,
   Settings: <SettingsButton />,
-  "Delete All Tasks": <DeleteListButton />,
+  Delete: <DeleteListButton />,
+  "Toggle Task Completion": <AddListButton />, // New icon mapping
+  "Set as Favorite": <AddListButton />,
 };
 
 interface NameObject {
@@ -37,8 +39,12 @@ const IconRepository = ({ names }: IconNamesProps): ReactNode[] => {
         return icons["Add list"];
       case "Settings":
         return icons["Settings"];
-      case "Delete All Tasks":
-        return icons["Delete All Tasks"];
+      case "Delete":
+        return icons["Delete"];
+      case "Toggle Task Completion":
+        return icons["Toggle Task Completion"];
+      case "Set as Favorite":
+        return icons["Set as Favorite"];
       default:
         return null;
     }
