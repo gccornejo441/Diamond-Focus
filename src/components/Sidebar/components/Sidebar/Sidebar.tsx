@@ -61,6 +61,18 @@ const Sidebar = ({
     };
   }, [inputValue, selectedTaskToView, saveEdit]);
 
+  useEffect(() => {
+    if (selectedTaskToView) {
+      setInputValue(selectedTaskToView.text);
+    }
+  }, [selectedTaskToView]);
+
+  const handleBlur = () => {
+    if (selectedTaskToView) {
+      saveEdit(selectedTaskToView.id, inputValue);
+    }
+  };
+
   const names = useMemo(
     () => [
       { name: "Toggle Task Completion" },
@@ -84,8 +96,9 @@ const Sidebar = ({
           <h2 className={styles.sideBarTitle}>Diamond Focus</h2>
           <div className={styles.inputArea}>
             <textarea
-              value={selectedTaskToView?.text}
+              value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+              onBlur={handleBlur}
               placeholder="Type your message..."
             />
             <Dropdown
