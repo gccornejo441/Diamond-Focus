@@ -504,6 +504,7 @@ code {
 
   --panel-background: var(--blue-grey-800);
   --panel-background-hover: var(--blue-grey-700);
+  --panel-background-active: var(--blue-grey-900);
   --panel-text: var(--blue-grey-100);
   --panel-text-faint: var(--blue-grey-600);
   --panel-text-hover: var(--blue-grey-50);

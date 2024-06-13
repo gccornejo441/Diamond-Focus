@@ -45,45 +45,11 @@
 
 .menu {
   list-style-type: none;
-  padding: 8px;
   margin: 0;
-  border-radius: 25px;
-  background-color: var(--panel-background);
-  color: var(--panel-text);
 }
 
 [data-theme="high-contrast"] .menu {
   border: 2px solid var(--text-color);
-}
-
-.menuItem {
-  border-radius: 4px;
-  margin-bottom: 5px;
-  cursor: pointer;
-}
-
-.activeMenuItem {
-  background-color: inherit;
-  color: inherit;
-}
-
-.menuLink {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  cursor: pointer;
-  color: inherit;
-}
-
-.menuText {
-  font-size: 0.875rem;
-  font-weight: 400;
-  padding-left: 5px;
-}
-
-.menuLinkContent {
-  display: flex;
-  color: inherit;
 }
 
 /* End sidebar */
@@ -362,37 +328,24 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-top: 20px;
 }
 
-.saveButton,
-.resetButton,
-.cancelButton {
+.button {
   padding: 10px 20px;
   font-size: 14px;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
   outline: none;
-  color: inherit;
-}
-
-.saveButton,
-.resetButton,
-.cancelButton {
-  border-radius: 25px;
-  background-color: var(--button-background);
   color: white;
+  background-color: var(--button-background);
   transition: all 0.2s ease;
 }
 
-.saveButton:hover,
-.resetButton:hover,
-.cancelButton:hover {
+.button:hover {
   opacity: 0.8;
   background-color: var(--button-background-hover);
 }
 
-.saveButton:focus,
-.resetButton:focus,
-.cancelButton:focus {
+.button:focus {
   outline: 2px solid var(--alert);
 }
 

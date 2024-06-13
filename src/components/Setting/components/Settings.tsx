@@ -4,6 +4,7 @@ import { ApplyBodyStyles } from "@utilities/helpers";
 import CustomThemeSelector from "./CustomThemeSelector";
 import SettingsButton from "@assets/settingsIcon.svg?react";
 import CloseButton from "@assets/closeIcon.svg?react";
+import ExportImportButton from "@assets/exportImportIcon.svg?react";
 import CustomSelectDropdown from "./CustomSelectDropdown";
 import CustomNumberInput from "./CustomNumberInput";
 import CustomTextInput from "./CustomTextInput";
@@ -11,6 +12,9 @@ import CustomTextInput from "./CustomTextInput";
 import { SettingPanelProps } from "../types/SettingTypes";
 import { getParsedSettings, settingFormHelper } from "../utils/Settings";
 import { toast } from "react-toastify";
+import MenuItem from "./CustomMenuItem";
+import ImportExportTasks from "./ImportExportTasks";
+import { Task } from "@components/Sidebar";
 
 const options = [
   { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
@@ -19,6 +23,11 @@ const options = [
   { value: "simpAlert", label: "Simple Alert" },
   { value: "redAlertNuclearBuzzer", label: "Red Alert Buzzer" },
 ];
+
+export interface RenderExportImportTasksProps {
+  importTasks: (tasks: Task[]) => void;
+  exportTasks: () => Task[];
+}
 
 const Settings = ({
   onClose,
@@ -42,6 +51,7 @@ const Settings = ({
   const [tempCount, setTempCount] = useState<number>(25);
   const [tempBreakDuration, setTempBreakDuration] = useState<number>(5);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [activePanel, setActivePanel] = useState<string>("settings");
 
   useEffect(() => {
     setTempTheme(theme);
@@ -52,6 +62,16 @@ const Settings = ({
     setTempCount(settings.count / 60);
     setTempBreakDuration(settings.breakDuration / 60);
   }, []);
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const importTasks = (tasks: Task[]) => {
+    setTasks(tasks);
+  };
+
+  const exportTasks = () => {
+    return tasks;
+  };
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -118,7 +138,7 @@ const Settings = ({
         theme: defaultTheme,
         bgImg: defaultBgImg,
         isNewTaskOnTop: defaultNewTaskOnTop,
-      }),
+      })
     );
 
     toast("Settings reset to default values.", {
@@ -149,6 +169,152 @@ const Settings = ({
     onClose();
   };
 
+  const renderGeneralSettings = () => (
+    <div className={styles.content}>
+      <h2>General Settings</h2>
+      <form method="post" onSubmit={handleSave}>
+        <div className={styles.timerSettings}>
+          {/* Timer Settings */}
+          <div className={styles.timerSetting}>
+            <label htmlFor="focusTimer">Focus Time (minutes):</label>
+            <CustomNumberInput
+              id="focusTimer"
+              name="focusTimer"
+              min={1}
+              max={60}
+              step={1}
+              value={tempCount}
+              onChange={(value) =>
+                setTempCount(Math.max(1, Math.min(60, value)))
+              }
+            />
+          </div>
+
+          <div className={styles.timerSetting}>
+            <label htmlFor="breakTimer">Break Time (minutes):</label>
+            <CustomNumberInput
+              id="breakTimer"
+              name="breakTimer"
+              min={1}
+              max={60}
+              step={1}
+              value={tempBreakDuration}
+              onChange={(value) =>
+                setTempBreakDuration(Math.max(1, Math.min(60, value)))
+              }
+            />
+          </div>
+
+          <div className={styles.timerSetting}>
+            <label htmlFor="autoSwitch">Auto Switch:</label>
+            <div className={styles.toggleSwitch}>
+              <input
+                type="checkbox"
+                id="autoSwitch"
+                name="autoSwitch"
+                checked={isAutoSwitchOn}
+                onChange={(e) => setAutoSwitchOn(e.target.checked)}
+                className={styles.toggleInput}
+              />
+              <label
+                htmlFor="autoSwitch"
+                className={styles.toggleLabel}
+              ></label>
+            </div>
+          </div>
+
+          <div className={styles.timerSetting}>
+            <label htmlFor="alarmMuter">Enable Alarm:</label>
+            <div className={styles.toggleSwitch}>
+              <input
+                type="checkbox"
+                id="alarmMuter"
+                name="alarmMuter"
+                checked={isAlertOn}
+                onChange={(e) => setIsAlertOn(e.target.checked)}
+                className={styles.toggleInput}
+              />
+              <label
+                htmlFor="alarmMuter"
+                className={styles.toggleLabel}
+              ></label>
+            </div>
+          </div>
+
+          <div className={styles.timerSetting}>
+            <label htmlFor="newTasksOnTop">New Tasks On Top:</label>
+            <div className={styles.toggleSwitch}>
+              <input
+                type="checkbox"
+                id="newTasksOnTop"
+                name="newTasksOnTop"
+                checked={isNewTaskOnTop}
+                onChange={(e) => setIsNewTaskOnTop(e.target.checked)}
+                className={styles.toggleInput}
+              />
+              <label
+                htmlFor="newTasksOnTop"
+                className={styles.toggleLabel}
+              ></label>
+            </div>
+          </div>
+
+          <div className={styles.timerSetting}>
+            <label htmlFor="alarmSoundName">Alarm Sound:</label>
+            <CustomSelectDropdown
+              id="alarmSoundName"
+              name="alarmSoundName"
+              value={alarmName}
+              onChange={(e) => setAlarmName(e.target.value)}
+              disabled={!isAlertOn}
+              options={options}
+            />
+          </div>
+
+          <div className={styles.timerSetting}>
+            <label htmlFor="bgImg">Background Image Link:</label>
+
+            <CustomTextInput
+              type="url"
+              name="bgImg"
+              value={bgImg}
+              onChange={(e) => setBgImg(e.target.value)}
+              placeholder="Enter image URL"
+              onClear={clearWebImageUrl}
+            />
+          </div>
+
+          <div className={styles.timerSetting}>
+            <label htmlFor="themeSelector">Theme:</label>
+            <CustomThemeSelector
+              selectedTheme={theme}
+              onChangeTheme={handleThemeChange}
+            />
+          </div>
+        </div>
+
+        <div className={styles.buttonGroup}>
+          <button type="submit" className={styles.button}>
+            {isSaving ? (
+              <>
+                <span>Saving...</span>
+                <span className={styles.spinner}></span>{" "}
+              </>
+            ) : (
+              "Save"
+            )}
+          </button>
+          <button onClick={handleReset} className={styles.button}>
+            Reset
+          </button>
+          <button onClick={handleCancel} className={styles.button}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
@@ -165,158 +331,34 @@ const Settings = ({
             <h1 className={styles.title}>Settings</h1>
           </header>
           <ul className={styles.menu}>
-            <li className={styles.activeMenuItem}>
-              <a className={styles.menuLink}>
-                <span className={styles.menuLinkContent}>
-                  <SettingsButton className={styles.svgStyle} />
-                  <span className={styles.menuText}>General</span>
-                </span>
-              </a>
-            </li>
+            <MenuItem
+              isActive={activePanel === "settings"}
+              link="#"
+              text="General"
+              IconComponent={SettingsButton}
+              onClick={() => setActivePanel("settings")}
+            />
+            <MenuItem
+              isActive={activePanel === "importExport"}
+              link="#"
+              text="Transfer Tasks"
+              IconComponent={ExportImportButton}
+              onClick={() => setActivePanel("importExport")}
+            />
           </ul>
         </aside>
-        <div className={styles.content}>
-          <h2>General Settings</h2>
-          <form method="post" onSubmit={handleSave}>
-            <div className={styles.timerSettings}>
-              <div className={styles.timerSetting}>
-                <label htmlFor="focusTimer">Focus Time (minutes):</label>
-                <CustomNumberInput
-                  id="focusTimer"
-                  name="focusTimer"
-                  min={1}
-                  max={60}
-                  step={1}
-                  value={tempCount}
-                  onChange={(value) =>
-                    setTempCount(Math.max(1, Math.min(60, value)))
-                  }
-                />
-              </div>
-
-              <div className={styles.timerSetting}>
-                <label htmlFor="breakTimer">Break Time (minutes):</label>
-                <CustomNumberInput
-                  id="breakTimer"
-                  name="breakTimer"
-                  min={1}
-                  max={60}
-                  step={1}
-                  value={tempBreakDuration}
-                  onChange={(value) =>
-                    setTempBreakDuration(Math.max(1, Math.min(60, value)))
-                  }
-                />
-              </div>
-
-              <div className={styles.timerSetting}>
-                <label htmlFor="autoSwitch">Auto Switch:</label>
-                <div className={styles.toggleSwitch}>
-                  <input
-                    type="checkbox"
-                    id="autoSwitch"
-                    name="autoSwitch"
-                    checked={isAutoSwitchOn}
-                    onChange={(e) => setAutoSwitchOn(e.target.checked)}
-                    className={styles.toggleInput}
-                  />
-                  <label
-                    htmlFor="autoSwitch"
-                    className={styles.toggleLabel}
-                  ></label>
-                </div>
-              </div>
-
-              <div className={styles.timerSetting}>
-                <label htmlFor="alarmMuter">Enable Alarm:</label>
-                <div className={styles.toggleSwitch}>
-                  <input
-                    type="checkbox"
-                    id="alarmMuter"
-                    name="alarmMuter"
-                    checked={isAlertOn}
-                    onChange={(e) => setIsAlertOn(e.target.checked)}
-                    className={styles.toggleInput}
-                  />
-                  <label
-                    htmlFor="alarmMuter"
-                    className={styles.toggleLabel}
-                  ></label>
-                </div>
-              </div>
-
-              <div className={styles.timerSetting}>
-                <label htmlFor="newTasksOnTop">New Tasks On Top:</label>
-                <div className={styles.toggleSwitch}>
-                  <input
-                    type="checkbox"
-                    id="newTasksOnTop"
-                    name="newTasksOnTop"
-                    checked={isNewTaskOnTop}
-                    onChange={(e) => setIsNewTaskOnTop(e.target.checked)}
-                    className={styles.toggleInput}
-                  />
-                  <label
-                    htmlFor="newTasksOnTop"
-                    className={styles.toggleLabel}
-                  ></label>
-                </div>
-              </div>
-
-              <div className={styles.timerSetting}>
-                <label htmlFor="alarmSoundName">Alarm Sound:</label>
-                <CustomSelectDropdown
-                  id="alarmSoundName"
-                  name="alarmSoundName"
-                  value={alarmName}
-                  onChange={(e) => setAlarmName(e.target.value)}
-                  disabled={!isAlertOn}
-                  options={options}
-                />
-              </div>
-
-              <div className={styles.timerSetting}>
-                <label htmlFor="bgImg">Background Image Link:</label>
-
-                <CustomTextInput
-                  type="url"
-                  name="bgImg"
-                  value={bgImg}
-                  onChange={(e) => setBgImg(e.target.value)}
-                  placeholder="Enter image URL"
-                  onClear={clearWebImageUrl}
-                />
-              </div>
-
-              <div className={styles.timerSetting}>
-                <label htmlFor="themeSelector">Theme:</label>
-                <CustomThemeSelector
-                  selectedTheme={theme}
-                  onChangeTheme={handleThemeChange}
-                />
-              </div>
-            </div>
-
-            <div className={styles.buttonGroup}>
-              <button type="submit" className={styles.saveButton}>
-                {isSaving ? (
-                  <>
-                    <span>Saving...</span>
-                    <span className={styles.spinner}></span>{" "}
-                  </>
-                ) : (
-                  "Save"
-                )}
-              </button>
-              <button onClick={handleReset} className={styles.resetButton}>
-                Reset
-              </button>
-              <button onClick={handleCancel} className={styles.cancelButton}>
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+        {activePanel === "settings" ? (
+          renderGeneralSettings()
+        ) : (
+          <div className={styles.content}>
+            <h2>Import/Export Tasks</h2>
+            <ImportExportTasks
+              onClose={onClose}
+              importTasks={importTasks}
+              exportTasks={exportTasks}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
