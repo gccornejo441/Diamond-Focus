@@ -18,7 +18,7 @@ const useSidebarList = ({
 }: TaskListWithTasks) => {
   const [openTask, setOpenTask] = useState(false);
   const [deletingTaskListId, setDeletingTaskListId] = useState<number | null>(
-    null,
+    null
   );
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const useSidebarList = ({
     updateLocalStorageTaskLists(updatedTaskLists);
 
     const updatedSelectedTaskList = updatedTaskLists.find(
-      (list) => list.id === id,
+      (list) => list.id === id
     );
 
     if (updatedSelectedTaskList) {
@@ -69,7 +69,7 @@ const useSidebarList = ({
 
   const handleTaskListDelete = (id: number) => {
     const updatedTaskLists = taskLists.filter(
-      (list: TaskListProps) => list.id !== id,
+      (list: TaskListProps) => list.id !== id
     );
     setTaskLists(updatedTaskLists);
     updateLocalStorageTaskLists(updatedTaskLists);
@@ -82,10 +82,10 @@ const useSidebarList = ({
     const updatedTaskLists = taskLists.map((list: TaskListProps) =>
       list.id === id
         ? { ...list, taskSelected: true }
-        : { ...list, taskSelected: false },
+        : { ...list, taskSelected: false }
     );
     const selectedTaskList = updatedTaskLists.find(
-      (list: TaskListProps) => list.id === id,
+      (list: TaskListProps) => list.id === id
     ) as TaskListProps;
 
     setTaskLists(updatedTaskLists);

@@ -1,20 +1,22 @@
-import React, { useState, Suspense } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Task } from "@components/Sidebar";
+import hljs from "highlight.js/lib/core";
+import json from "highlight.js/lib/languages/json";
+import "highlight.js/styles/github.css";
 import styles from "../styles/Setting.module.css";
 
-const AceEditor = React.lazy(() => import("react-ace"));
+hljs.registerLanguage("json", json);
 
 export interface ImportExportTasksProps {
   onClose: () => void;
   importTasks: (tasks: Task[]) => void;
-  exportTasks: () => Task[];
 }
+
 const ImportExportTasks = ({
   onClose,
   importTasks,
-  exportTasks,
 }: ImportExportTasksProps) => {
   const [jsonContent, setJsonContent] = useState<string>("");
 
@@ -30,24 +32,75 @@ const ImportExportTasks = ({
   };
 
   const handleExport = () => {
-    const dataStr = JSON.stringify(exportTasks(), null, 2);
-    setJsonContent(dataStr);
+    const storedTaskLists = localStorage.getItem("taskLists");
+    if (storedTaskLists) {
+      const taskLists = JSON.parse(storedTaskLists) as Task[];
+      const dataStr = JSON.stringify(taskLists, null, 2);
+      setJsonContent(dataStr);
+    } else {
+      toast.error("No tasks found in local storage");
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.target.value;
+    setJsonContent(value);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(jsonContent).then(
+      () => {
+        toast.success("Copied to clipboard!");
+      },
+      (err) => {
+        toast.error("Failed to copy: " + err);
+      }
+    );
+  };
+
+  const handlePaste = () => {
+    navigator.clipboard.readText().then(
+      (text) => {
+        setJsonContent(text);
+        toast.success("Pasted from clipboard!");
+      },
+      (err) => {
+        toast.error("Failed to paste: " + err);
+      }
+    );
+  };
+
+  const renderHighlightedJSON = (json: string) => {
+    try {
+      const highlighted = hljs.highlight(json, { language: "json" }).value;
+      return { __html: highlighted };
+    } catch (e) {
+      return { __html: json };
+    }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Suspense fallback={<div>Loading editor...</div>}>
-        <AceEditor
-          mode="json"
-          theme="github"
-          name="import_export_editor"
-          onChange={(newValue) => setJsonContent(newValue)}
+    <div className={styles.importExportContainer}>
+      <div className={styles.textareaContainer}>
+        <textarea
           value={jsonContent}
-          editorProps={{ $blockScrolling: true }}
-          width="100%"
-          height="400px"
+          onChange={handleInputChange}
+          className={styles.textarea}
+          placeholder="Paste your JSON here..."
         />
-      </Suspense>
+        <div className={styles.copyPasteButtons}>
+          <button className={styles.copyPasteButton} onClick={handleCopy}>
+            Copy
+          </button>
+          <button className={styles.copyPasteButton} onClick={handlePaste}>
+            Paste
+          </button>
+        </div>
+      </div>
+      <pre
+        dangerouslySetInnerHTML={renderHighlightedJSON(jsonContent)}
+        className={styles.pre}
+      />
       <div className={styles.buttonGroup}>
         <button className={styles.button} onClick={handleImport}>
           Import

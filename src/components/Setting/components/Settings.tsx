@@ -63,14 +63,10 @@ const Settings = ({
     setTempBreakDuration(settings.breakDuration / 60);
   }, []);
 
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [, setTasks] = useState<Task[]>([]);
 
   const importTasks = (tasks: Task[]) => {
     setTasks(tasks);
-  };
-
-  const exportTasks = () => {
-    return tasks;
   };
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -352,11 +348,7 @@ const Settings = ({
         ) : (
           <div className={styles.content}>
             <h2>Import/Export Tasks</h2>
-            <ImportExportTasks
-              onClose={onClose}
-              importTasks={importTasks}
-              exportTasks={exportTasks}
-            />
+            <ImportExportTasks onClose={onClose} importTasks={importTasks} />
           </div>
         )}
       </div>
