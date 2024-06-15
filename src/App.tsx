@@ -112,6 +112,7 @@ function App() {
       />
       {isModalOpen && (
         <Settings
+          setTaskLists={setTaskLists}
           alarmName={alarmName}
           setAlarmName={setAlarmName}
           theme={theme}

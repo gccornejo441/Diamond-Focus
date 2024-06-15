@@ -1,3 +1,5 @@
+import { TaskListProps } from "@components/Sidebar";
+
 interface SettingsProps {
   count: number;
   breakDuration: number;
@@ -19,6 +21,7 @@ interface SettingPanelProps extends SettingsProps {
   setBgImg: React.Dispatch<React.SetStateAction<string>>;
   setTheme: React.Dispatch<React.SetStateAction<string>>;
   setAlarmName: React.Dispatch<React.SetStateAction<string>>;
+  setTaskLists: React.Dispatch<React.SetStateAction<TaskListProps[]>>;
 }
 
 export type { SettingsProps, SettingPanelProps };

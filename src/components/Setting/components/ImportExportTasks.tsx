@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Task } from "@components/Sidebar";
+import { TaskListProps } from "@components/Sidebar";
 import hljs from "highlight.js/lib/core";
 import json from "highlight.js/lib/languages/json";
 import "highlight.js/styles/github.css";
@@ -11,7 +11,7 @@ hljs.registerLanguage("json", json);
 
 export interface ImportExportTasksProps {
   onClose: () => void;
-  importTasks: (tasks: Task[]) => void;
+  importTasks: (taskLists: TaskListProps[]) => void;
 }
 
 const ImportExportTasks = ({
@@ -22,9 +22,9 @@ const ImportExportTasks = ({
 
   const handleImport = () => {
     try {
-      const parsedData = JSON.parse(jsonContent) as Task[];
+      const parsedData = JSON.parse(jsonContent) as TaskListProps[];
       importTasks(parsedData);
-      toast.success("Tasks imported successfully!");
+      toast.success("TaskLists imported successfully!");
       onClose();
     } catch (error) {
       toast.error("Invalid JSON format");
@@ -34,11 +34,11 @@ const ImportExportTasks = ({
   const handleExport = () => {
     const storedTaskLists = localStorage.getItem("taskLists");
     if (storedTaskLists) {
-      const taskLists = JSON.parse(storedTaskLists) as Task[];
+      const taskLists = JSON.parse(storedTaskLists) as TaskListProps[];
       const dataStr = JSON.stringify(taskLists, null, 2);
       setJsonContent(dataStr);
     } else {
-      toast.error("No tasks found in local storage");
+      toast.error("No taskLists found in local storage");
     }
   };
 

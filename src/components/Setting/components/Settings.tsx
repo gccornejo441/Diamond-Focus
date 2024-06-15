@@ -14,7 +14,7 @@ import { getParsedSettings, settingFormHelper } from "../utils/Settings";
 import { toast } from "react-toastify";
 import MenuItem from "./CustomMenuItem";
 import ImportExportTasks from "./ImportExportTasks";
-import { Task } from "@components/Sidebar";
+import { Task, TaskListProps } from "@components/Sidebar";
 
 const options = [
   { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
@@ -45,6 +45,7 @@ const Settings = ({
   setTheme,
   alarmName,
   setAlarmName,
+  setTaskLists,
 }: SettingPanelProps) => {
   const [tempTheme, setTempTheme] = useState<string>("");
   const [tempBgImg, setTempBgImg] = useState<string>("");
@@ -63,12 +64,11 @@ const Settings = ({
     setTempBreakDuration(settings.breakDuration / 60);
   }, []);
 
-  const [, setTasks] = useState<Task[]>([]);
-
-  const importTasks = (tasks: Task[]) => {
-    setTasks(tasks);
+  const importTasks = (taskLists: TaskListProps[]) => {
+    setTaskLists(taskLists);
+    localStorage.setItem("taskLists", JSON.stringify(taskLists));
+    toast.success("Tasks imported successfully and saved to local storage!");
   };
-
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSaving(true);
