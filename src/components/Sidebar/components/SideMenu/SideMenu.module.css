@@ -82,7 +82,7 @@
   color: var(--panel-text);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .sideMenu {
     position: sticky;
     top: 0;

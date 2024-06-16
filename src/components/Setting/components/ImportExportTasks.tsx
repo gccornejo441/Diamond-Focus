@@ -80,7 +80,8 @@ const ImportExportTasks = ({
   };
 
   return (
-    <div className={styles.importExportContainer}>
+    <div className={styles.content}>
+      <h2>Transfer Tasklists</h2>
       <div className={styles.textareaContainer}>
         <textarea
           value={jsonContent}

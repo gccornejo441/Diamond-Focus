@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import MenuItem from "./CustomMenuItem";
 import ImportExportTasks from "./ImportExportTasks";
 import { Task, TaskListProps } from "@components/Sidebar";
+import FileDrop from "@components/FileDrop/FileDrop";
 
 const options = [
   { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
@@ -170,7 +171,6 @@ const Settings = ({
       <h2>General Settings</h2>
       <form method="post" onSubmit={handleSave}>
         <div className={styles.timerSettings}>
-          {/* Timer Settings */}
           <div className={styles.timerSetting}>
             <label htmlFor="focusTimer">Focus Time (minutes):</label>
             <CustomNumberInput
@@ -337,20 +337,24 @@ const Settings = ({
             <MenuItem
               isActive={activePanel === "importExport"}
               link="#"
-              text="Transfer Tasks"
+              text="Transfer Tasklist"
               IconComponent={ExportImportButton}
               onClick={() => setActivePanel("importExport")}
             />
+            <MenuItem
+              isActive={activePanel === "fileDrop"}
+              link="#"
+              text="File Drop"
+              IconComponent={ExportImportButton}
+              onClick={() => setActivePanel("fileDrop")}
+            />
           </ul>
         </aside>
-        {activePanel === "settings" ? (
-          renderGeneralSettings()
-        ) : (
-          <div className={styles.content}>
-            <h2>Import/Export Tasks</h2>
-            <ImportExportTasks onClose={onClose} importTasks={importTasks} />
-          </div>
+        {activePanel === "settings" && renderGeneralSettings()}
+        {activePanel === "importExport" && (
+          <ImportExportTasks onClose={onClose} importTasks={importTasks} />
         )}
+        {activePanel === "fileDrop" && <FileDrop />}
       </div>
     </div>
   );

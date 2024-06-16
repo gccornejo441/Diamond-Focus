@@ -1,0 +1,58 @@
+
+.peerId {
+  font-weight: bold;
+  color: #333;
+}
+
+.input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.fileInput {
+  margin: 20px 0;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  outline: none;
+  color: white;
+  background-color: var(--button-background);
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  opacity: 0.8;
+  background-color: var(--button-background-hover);
+}
+
+.button:focus {
+  outline: 2px solid var(--alert);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
