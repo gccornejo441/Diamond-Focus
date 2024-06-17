@@ -77,7 +77,7 @@
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  min-height: 80dvh;
+  min-height: 50dvh;
   max-height: 80dvh;
 }
 

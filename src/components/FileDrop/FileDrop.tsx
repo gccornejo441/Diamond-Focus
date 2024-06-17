@@ -15,6 +15,7 @@ const FileDrop = () => {
   const [remotePeerId, setRemotePeerId] = useState<string>("");
   const [connection, setConnection] = useState<DataConnection | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [connected, setConnected] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const FileDrop = () => {
 
     peer.on("connection", (conn: DataConnection) => {
       setConnection(conn);
+      setConnected(true);
       conn.on("data", handleData);
     });
 
@@ -107,6 +109,7 @@ const FileDrop = () => {
         >
           Send File
         </button>
+        {connected && <p className={styles.connected}>Connected to peer!</p>}
       </div>
     </div>
   );
