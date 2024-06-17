@@ -5,19 +5,32 @@
   color: var(--panel-text);
   margin-bottom: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menuItem:hover {
+  background-color: var(--panel-background-hover);
 }
 
 .activeMenuItem {
-    background-color: var(--panel-background-active);
-    color: inherit;
+  background-color: var(--panel-background-active);
+  color: inherit;
 }
 
 .menuLink {
+  background: none;
+  border: none;
   display: flex;
   align-items: center;
+  width: 100%;
   text-decoration: none;
   cursor: pointer;
   color: inherit;
+  padding: 0;
+}
+
+.menuLink:focus {
+  outline: none;
 }
 
 .menuText {
@@ -28,7 +41,9 @@
 
 .menuLinkContent {
   display: flex;
+  align-items: center;
   color: inherit;
+  width: 100%;
 }
 
 .svgStyle {

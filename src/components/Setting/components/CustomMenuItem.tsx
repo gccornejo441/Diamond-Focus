@@ -3,7 +3,6 @@ import styles from "../styles/CustomMenuItem.module.css";
 
 type MenuItemProps = {
   isActive: boolean;
-  link: string;
   text: string;
   IconComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement> & { title?: string | undefined }
@@ -13,7 +12,6 @@ type MenuItemProps = {
 
 const MenuItem: React.FC<MenuItemProps> = ({
   isActive,
-  link,
   text,
   IconComponent,
   onClick,
@@ -23,12 +21,12 @@ const MenuItem: React.FC<MenuItemProps> = ({
       className={`${styles.menuItem} ${isActive ? styles.active : ""}`}
       onClick={onClick}
     >
-      <a href={link} className={styles.menuLink}>
+      <button className={styles.menuLink}>
         <span className={styles.menuLinkContent}>
           <IconComponent className={styles.svgStyle} />
           <span className={styles.menuText}>{text}</span>
         </span>
-      </a>
+      </button>
     </li>
   );
 };

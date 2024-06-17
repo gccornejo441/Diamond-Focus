@@ -5,6 +5,7 @@ import CustomThemeSelector from "./CustomThemeSelector";
 import SettingsButton from "@assets/settingsIcon.svg?react";
 import CloseButton from "@assets/closeIcon.svg?react";
 import ExportImportButton from "@assets/exportImportIcon.svg?react";
+import ShareStreamButton from "@assets/shareStreamIcon.svg?react";
 import CustomSelectDropdown from "./CustomSelectDropdown";
 import CustomNumberInput from "./CustomNumberInput";
 import CustomTextInput from "./CustomTextInput";
@@ -15,7 +16,7 @@ import { toast } from "react-toastify";
 import MenuItem from "./CustomMenuItem";
 import ImportExportTasks from "./ImportExportTasks";
 import { Task, TaskListProps } from "@components/Sidebar";
-import FileDrop from "@components/FileDrop/FileDrop";
+import ShareStream from "@components/ShareStream/ShareStream";
 
 const options = [
   { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
@@ -329,24 +330,21 @@ const Settings = ({
           <ul className={styles.menu}>
             <MenuItem
               isActive={activePanel === "settings"}
-              link="#"
               text="General"
               IconComponent={SettingsButton}
               onClick={() => setActivePanel("settings")}
             />
             <MenuItem
               isActive={activePanel === "importExport"}
-              link="#"
               text="Transfer Tasklist"
               IconComponent={ExportImportButton}
               onClick={() => setActivePanel("importExport")}
             />
             <MenuItem
-              isActive={activePanel === "fileDrop"}
-              link="#"
-              text="File Drop"
-              IconComponent={ExportImportButton}
-              onClick={() => setActivePanel("fileDrop")}
+              isActive={activePanel === "shareStream"}
+              text="Share Stream"
+              IconComponent={ShareStreamButton}
+              onClick={() => setActivePanel("shareStream")}
             />
           </ul>
         </aside>
@@ -354,7 +352,7 @@ const Settings = ({
         {activePanel === "importExport" && (
           <ImportExportTasks onClose={onClose} importTasks={importTasks} />
         )}
-        {activePanel === "fileDrop" && <FileDrop />}
+        {activePanel === "shareStream" && <ShareStream />}
       </div>
     </div>
   );
