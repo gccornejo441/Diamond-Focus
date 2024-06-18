@@ -65,12 +65,31 @@ const ShareStream = () => {
     }
   };
 
+  const handleCopyPeerId = () => {
+    navigator.clipboard.writeText(peerId).then(
+      () => {
+        console.log("Peer ID copied to clipboard");
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  };
+
+  const handlePastePeerId = async () => {
+    const text = await navigator.clipboard.readText();
+    setConnectionInput(text);
+  };
+
   return (
     <div className={settingStyles.content}>
       <div className={styles.header}>
         <h2>Share Stream</h2>
         <p>
           Your Peer ID: <span className={styles.peerId}>{peerId}</span>
+          <button className={styles.copyButton} onClick={handleCopyPeerId}>
+            Copy
+          </button>
         </p>
       </div>
       <div className={styles.inputContainer}>
@@ -81,6 +100,9 @@ const ShareStream = () => {
           value={connectionInput}
           onChange={(e) => setConnectionInput(e.target.value)}
         />
+        <button className={styles.pasteButton} onClick={handlePastePeerId}>
+          Paste
+        </button>
         <button className={styles.button} onClick={handleConnect}>
           {loading ? "Connecting..." : "Connect"}
         </button>
