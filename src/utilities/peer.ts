@@ -3,6 +3,7 @@ import Peer, { DataConnection, PeerErrorType, PeerError } from "peerjs";
 export enum DataType {
   FILE = "FILE",
   OTHER = "OTHER",
+  DISCONNECT = "DISCONNECT",
 }
 
 export interface Data {
@@ -71,6 +72,23 @@ const generateId = () => {
   return `${randomAdjective}-${randomNoun}`;
 };
 
+export const handlePeerDisconnect = (id: string) => {
+  const conn = connectionMap.get(id);
+  if (conn) {
+    const disconnectData: Data = {
+      dataType: DataType.DISCONNECT,
+      message: "User has disconnected.",
+    };
+    conn.send(disconnectData);
+    conn.close();
+    connectionMap.delete(id);
+    if (connectionMap.size === 0 && peer) {
+      peer.destroy();
+      peer = undefined;
+    }
+  }
+};
+
 export const PeerConnection = {
   getPeer: () => peer,
   startPeerSession: () =>
@@ -131,6 +149,10 @@ export const PeerConnection = {
               console.log(err);
               peer?.removeListener("error", handlePeerError);
               reject(err);
+            })
+            .on("close", function () {
+              console.log("Peer disconnected: " + id);
+              handlePeerDisconnect(id);
             });
           const handlePeerError = (err: PeerError<`${PeerErrorType}`>) => {
             if (err.type === "peer-unavailable") {
@@ -150,6 +172,10 @@ export const PeerConnection = {
       console.log("Incoming connection: " + conn.peer);
       connectionMap.set(conn.peer, conn);
       callback(conn);
+      conn.on("close", function () {
+        console.log("Peer disconnected: " + conn.peer);
+        handlePeerDisconnect(conn.peer);
+      });
     });
   },
   onConnectionDisconnected: (id: string, callback: () => void) => {

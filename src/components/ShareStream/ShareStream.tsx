@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import styles from "./ShareStream.module.css";
 import settingStyles from "../Setting/styles/Setting.module.css";
-import { PeerConnection, Data, DataType } from "../../utilities/peer";
+import {
+  PeerConnection,
+  Data,
+  DataType,
+  handlePeerDisconnect,
+} from "../../utilities/peer";
 import { toast } from "react-toastify";
 
 const ShareStream = () => {
@@ -101,6 +106,22 @@ const ShareStream = () => {
     setConnectionInput(text);
   };
 
+  const handleDisconnect = async () => {
+    handlePeerDisconnect(connectedPeerId);
+    toast(`${connectedPeerId} has disconnected`, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setConnectedPeerId("");
+    setConnectionInput("");
+    setChatHistory([]);
+  };
+
   return (
     <div className={settingStyles.content}>
       <div className={styles.header}>
@@ -173,6 +194,9 @@ const ShareStream = () => {
                   Send Message
                 </button>
               </div>
+              <button className={styles.button} onClick={handleDisconnect}>
+                Disconnect
+              </button>
               {receivedData && (
                 <div>
                   <h3>Received Data:</h3>
@@ -192,6 +216,8 @@ const ShareStream = () => {
                     receivedData.message && (
                       <p>Message: {receivedData.message}</p>
                     )}
+                  {receivedData.dataType === DataType.DISCONNECT &&
+                    receivedData.message && <p>{receivedData.message}</p>}
                 </div>
               )}
             </div>
