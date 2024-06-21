@@ -97,11 +97,11 @@ const ImportExportTasks = ({
             Paste
           </button>
         </div>
+        <pre
+          dangerouslySetInnerHTML={renderHighlightedJSON(jsonContent)}
+          className={styles.pre}
+        />
       </div>
-      <pre
-        dangerouslySetInnerHTML={renderHighlightedJSON(jsonContent)}
-        className={styles.pre}
-      />
       <div className={styles.buttonGroup}>
         <button className={styles.button} onClick={handleImport}>
           Import
