@@ -3,6 +3,7 @@ import EditListButton from "@assets/editListIcon.svg?react";
 import DeleteListButton from "@assets/deleteIcon.svg?react";
 import SettingsButton from "@assets/settingsIcon.svg?react";
 import AddListButton from "@assets/addListIcon.svg?react";
+import SignInButton from "@assets/signInIcon.svg?react";
 
 const icons = {
   "Rename list": <EditListButton />,
@@ -12,6 +13,7 @@ const icons = {
   Delete: <DeleteListButton />,
   "Toggle Task Completion": <AddListButton />, // New icon mapping
   "Set as Favorite": <AddListButton />,
+  "Sign in": <SignInButton />,
 };
 
 interface NameObject {
@@ -45,6 +47,8 @@ const IconRepository = ({ names }: IconNamesProps): ReactNode[] => {
         return icons["Toggle Task Completion"];
       case "Set as Favorite":
         return icons["Set as Favorite"];
+      case "Sign in":
+        return icons["Sign in"];
       default:
         return null;
     }

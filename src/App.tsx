@@ -41,11 +41,15 @@ function App() {
     () => ({
       Settings: () => setModalOpen(true),
       "Add list": () => setSidebarListOpen(true),
+      "Sign in": () => console.log("Sign In"),
     }),
     [setSidebarListOpen]
   );
 
-  const names = useMemo(() => [{ name: "Settings" }, { name: "Add list" }], []);
+  const names = useMemo(
+    () => [{ name: "Settings" }, { name: "Add list" }, { name: "Sign in" }],
+    []
+  );
 
   const {
     saveEdit,
@@ -97,11 +101,6 @@ function App() {
     setSidebarOpen(!isSidebarOpen);
     setAskedForTask(task!);
   };
-
-  // const handleViewTask = (task: Task | null) => {
-  //   toggleSidebar();
-  //   setAskedForTask(task!.text);
-  // };
 
   return (
     <div className={styles.App}>
