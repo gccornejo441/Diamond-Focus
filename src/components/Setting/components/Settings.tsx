@@ -18,13 +18,7 @@ import ImportExportTasks from "./ImportExportTasks";
 import { Task, TaskListProps } from "@components/Sidebar";
 import ShareStream from "@components/ShareStream/ShareStream";
 
-const options = [
-  { value: "sciFiAlarm", label: "Sci-Fi Alarm" },
-  { value: "beepWarning", label: "Space Alarm" },
-  { value: "newSubscriberAlert", label: "New Subscriber" },
-  { value: "simpAlert", label: "Simple Alert" },
-  { value: "redAlertNuclearBuzzer", label: "Red Alert Buzzer" },
-];
+const options = [{ value: "sciFiAlarm", label: "Sci-Fi Alarm" }];
 
 export interface RenderExportImportTasksProps {
   importTasks: (tasks: Task[]) => void;

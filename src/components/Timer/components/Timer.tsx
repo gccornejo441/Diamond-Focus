@@ -7,18 +7,10 @@ import styles from "../styles/Timer.module.css";
 
 import useTimerEffect from "@hooks/useTimerEffect";
 import SciFiAlarm from "@assets/sciFiAlarm.mp3";
-import BeepWarning from "@assets/beepWarning.mp3";
-import NewSubscriberAlert from "@assets/newSubscriberAlert.mp3";
-import SimpAlert from "@assets/simpAlert.mp3";
-import RedAlertNuclearBuzzer from "@assets/redAlertNuclearBuzzer.mp3";
 import { getParsedSettings } from "@components/Setting/utils/Settings";
 
 const alarmSounds = {
   sciFiAlarm: SciFiAlarm,
-  beepWarning: BeepWarning,
-  newSubscriberAlert: NewSubscriberAlert,
-  simpAlert: SimpAlert,
-  redAlertNuclearBuzzer: RedAlertNuclearBuzzer,
 };
 
 const Timer = ({
