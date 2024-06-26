@@ -4,6 +4,7 @@ import DeleteListButton from "@assets/deleteIcon.svg?react";
 import SettingsButton from "@assets/settingsIcon.svg?react";
 import AddListButton from "@assets/addListIcon.svg?react";
 import SignInButton from "@assets/signInIcon.svg?react";
+import SignOutButton from "@assets/signOutIcon.svg?react";
 
 const icons = {
   "Rename list": <EditListButton />,
@@ -11,13 +12,16 @@ const icons = {
   "Add list": <AddListButton />,
   Settings: <SettingsButton />,
   Delete: <DeleteListButton />,
-  "Toggle Task Completion": <AddListButton />, // New icon mapping
+  "Toggle Task Completion": <AddListButton />,
   "Set as Favorite": <AddListButton />,
   "Sign in": <SignInButton />,
+  "Sign out": <SignOutButton />,
 };
 
+type IconName = keyof typeof icons;
+
 interface NameObject {
-  name: string;
+  name: IconName;
 }
 
 export interface IconNamesProps {
@@ -31,27 +35,9 @@ export interface IconNamesProps {
  * @return {ReactNode[]} An array of React nodes representing the icons.
  */
 const IconRepository = ({ names }: IconNamesProps): ReactNode[] => {
-  return names.map((obj) => {
-    switch (obj.name) {
-      case "Rename list":
-        return icons["Rename list"];
-      case "Delete list":
-        return icons["Delete list"];
-      case "Add list":
-        return icons["Add list"];
-      case "Settings":
-        return icons["Settings"];
-      case "Delete":
-        return icons["Delete"];
-      case "Toggle Task Completion":
-        return icons["Toggle Task Completion"];
-      case "Set as Favorite":
-        return icons["Set as Favorite"];
-      case "Sign in":
-        return icons["Sign in"];
-      default:
-        return null;
-    }
+  return names.map((obj: NameObject) => {
+    const icon = icons[obj.name];
+    return icon ? icon : null;
   });
 };
 

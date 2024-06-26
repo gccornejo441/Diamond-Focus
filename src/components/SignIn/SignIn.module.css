@@ -1,11 +1,27 @@
 .container {
-  max-width: 400px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  background-color: var(--background-color);
+  border-radius: 10px;
+}
+
+[data-theme="dark"] .container {
+  background-color: var(--background-color-light);
+  color: var(--text-color);
+}
+
+[data-theme="high-contrast"] .container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
+
+h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 20px;
 }
 
 .form {
@@ -20,29 +36,94 @@
 .formGroup label {
   display: block;
   margin-bottom: 5px;
+  letter-spacing: 1.2px;
+  color: var(--text-color);
 }
 
 .formGroup input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid var(--panel-text);
+  border-radius: 25px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+  font-size: 1rem;
+
+  &:focus-within {
+    outline: 2px solid var(--text-color);
+  }
 }
 
-.button {
+[data-theme="dark"] .formGroup input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--panel-text);
+  border-radius: 25px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+
+  &:focus-within {
+    outline: 2px solid var(--text-color);
+  }
+}
+
+[data-theme="high-contrast"] .formGroup input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--panel-text);
+  border-radius: 25px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+
+  &:focus-within {
+    outline: 2px solid var(--text-color);
+  }
+}
+
+ .button {
   padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  background-color: var(--button-background);
+  color: var(--white);
+  border-radius: 25px;
   cursor: pointer;
+  font-size: 1rem;
+  margin: 10px 0px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    opacity: 0.8;
+    background-color: var(--button-background-hover);  
+  }
+  &:focus-within {
+    outline: 2px solid var(--text-color);
+  }
 }
 
-.button:hover {
-  background-color: #0056b3;
+[data-theme="high-contrast"] .button {
+  padding: 10px 15px;
+  background-color: var(--momochromatic-bakcground);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 10px 0px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--background-color);
+  }
+  &:focus-within {
+    outline: 2px solid var(--text-color);
+  }
 }
 
 .error {
-  color: red;
+  color: rgb(255, 93, 93);
   margin-top: 10px;
+  text-align: center;
+} 
+
+[data-theme="high-contrast"] .error {
+  color: white; 
 }

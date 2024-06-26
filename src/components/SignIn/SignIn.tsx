@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utilities/firebaseSetup";
+import { useAuth } from "../../utilities/AuthContext";
 import styles from "./SignIn.module.css";
 import { toast } from "react-toastify";
 
@@ -8,12 +7,13 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { login } = useAuth();
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast("User signed in successfully");
+      await login(email, password);
+      toast.success("User signed in successfully");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -25,10 +25,10 @@ const SignIn = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Login</h2>
+      <h2>Sign In</h2>
       <form onSubmit={handleLogin} className={styles.form}>
         <div className={styles.formGroup}>
-          <label>Email:</label>
+          <label>Email</label>
           <input
             type="email"
             value={email}
@@ -37,7 +37,7 @@ const SignIn = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label>Password:</label>
+          <label>Password</label>
           <input
             type="password"
             value={password}
@@ -45,9 +45,9 @@ const SignIn = () => {
             required
           />
         </div>
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <p className={styles.error}>Authentication Failed</p>}
         <button type="submit" className={styles.button}>
-          Login
+          Sign In
         </button>
       </form>
     </div>

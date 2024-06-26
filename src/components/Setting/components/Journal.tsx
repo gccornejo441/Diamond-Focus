@@ -11,6 +11,7 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import "highlight.js/styles/github.css";
 import styles from "../styles/Setting.module.css";
+import { useAuth } from "@utilities/AuthContext";
 
 export interface JournalProps {
   onClose: () => void;
@@ -24,20 +25,23 @@ interface Note {
 const Journal = ({ onClose }: JournalProps) => {
   const [jsonContent, setJsonContent] = useState<string>("");
   const [notes, setNotes] = useState<Note[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const fetchNotes = async () => {
-      const notesCollection = collection(db, "notes");
-      const notesSnapshot = await getDocs(notesCollection);
-      const notesList = notesSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Note[];
-      setNotes(notesList);
-    };
+    if (user) {
+      const fetchNotes = async () => {
+        const notesCollection = collection(db, `users/${user.uid}/notes`);
+        const notesSnapshot = await getDocs(notesCollection);
+        const notesList = notesSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Note[];
+        setNotes(notesList);
+      };
 
-    fetchNotes();
-  }, []);
+      fetchNotes();
+    }
+  }, [user]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
@@ -51,14 +55,19 @@ const Journal = ({ onClose }: JournalProps) => {
     }
 
     try {
-      const docRef = await addDoc(collection(db, "notes"), {
-        content: jsonContent,
-      });
-      setNotes([...notes, { id: docRef.id, content: jsonContent }]);
-      setJsonContent("");
-      toast.success("Note saved successfully");
+      if (user) {
+        const docRef = await addDoc(collection(db, `users/${user.uid}/notes`), {
+          content: jsonContent,
+        });
+        setNotes([...notes, { id: docRef.id, content: jsonContent }]);
+        setJsonContent("");
+        toast.success("Note saved successfully");
+      } else {
+        toast.error("User is not authenticated");
+      }
     } catch (e: unknown) {
       if (e instanceof Error) {
+        console.error("Error adding document: ", e); // Debug log
         toast.error("Error saving note: " + e.message);
       }
     }
@@ -66,11 +75,16 @@ const Journal = ({ onClose }: JournalProps) => {
 
   const handleDelete = async (id: string) => {
     try {
-      await deleteDoc(doc(db, "notes", id));
-      setNotes(notes.filter((note) => note.id !== id));
-      toast.success("Note deleted successfully");
+      if (user) {
+        await deleteDoc(doc(db, `users/${user.uid}/notes`, id));
+        setNotes(notes.filter((note) => note.id !== id));
+        toast.success("Note deleted successfully");
+      } else {
+        toast.error("User is not authenticated");
+      }
     } catch (e: unknown) {
       if (e instanceof Error) {
+        console.error("Error deleting document: ", e); // Debug log
         toast.error("Error deleting note: " + e.message);
       }
     }
@@ -97,6 +111,27 @@ const Journal = ({ onClose }: JournalProps) => {
         toast.error("Failed to paste: " + err.message);
       }
     );
+  };
+
+  const handleCopyNote = (content: string) => {
+    navigator.clipboard.writeText(content).then(
+      () => {
+        toast.success("Copied to clipboard!");
+      },
+      (err: Error) => {
+        toast.error("Failed to copy: " + err.message);
+      }
+    );
+  };
+
+  const handleDownloadNote = (content: string) => {
+    const element = document.createElement("a");
+    const file = new Blob([content], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = "note.txt";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   };
 
   return (
@@ -130,7 +165,13 @@ const Journal = ({ onClose }: JournalProps) => {
         {notes.map((note) => (
           <div key={note.id} className={styles.note}>
             <p>{note.content}</p>
-            <button onClick={() => handleDelete(note.id)}>Delete</button>
+            <div className={styles.noteButtons}>
+              <button onClick={() => handleCopyNote(note.content)}>Copy</button>
+              <button onClick={() => handleDownloadNote(note.content)}>
+                Download
+              </button>
+              <button onClick={() => handleDelete(note.id)}>Delete</button>
+            </div>
           </div>
         ))}
       </div>

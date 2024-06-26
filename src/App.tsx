@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SignIn from "@components/SignIn/SignIn";
 import { Popup } from "@components/Popup";
 const SETTINGS_KEY = "appSettings";
+import { useAuth } from "@utilities/AuthContext";
 
 function App() {
   const { isLoading, progress } = useLoading();
@@ -37,6 +38,7 @@ function App() {
   const [alarmName, setAlarmName] = useState<string>("");
   const [bgImg, setBgImg] = useState<string>("");
   const [theme, setTheme] = useState("default");
+  const { user, logout } = useAuth();
 
   const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
 
@@ -45,13 +47,18 @@ function App() {
       Settings: () => setModalOpen(true),
       "Add list": () => setSidebarListOpen(true),
       "Sign in": () => setSignModalOpen(true),
+      "Sign out": () => logout(),
     }),
-    [setSidebarListOpen]
+    [setSidebarListOpen, logout]
   );
 
   const names = useMemo(
-    () => [{ name: "Settings" }, { name: "Add list" }, { name: "Sign in" }],
-    []
+    () => [
+      { name: "Settings" },
+      { name: "Add list" },
+      { name: user ? "Sign out" : "Sign in" },
+    ],
+    [user]
   );
 
   const {
@@ -113,7 +120,7 @@ function App() {
         setSidebarListOpen={setSidebarListOpen}
       />
       <Popup isOpen={isSignModalOpen} onClose={() => setSignModalOpen(false)}>
-        <SignIn />
+        {user ? "hi" : <SignIn />}
       </Popup>
       {isModalOpen && (
         <Settings

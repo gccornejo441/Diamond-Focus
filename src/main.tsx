@@ -8,6 +8,7 @@ import {
   initializeDefaultSettings,
   initializeDefaultTaskList,
 } from "@components/Setting/utils/Settings";
+import { AuthProvider } from "@utilities/AuthContext.tsx";
 
 const SETTINGS_KEY = "appSettings";
 const TASK_LIST_KEY = "taskLists";
@@ -16,7 +17,9 @@ initializeDefaultSettings(SETTINGS_KEY);
 initializeDefaultTaskList(TASK_LIST_KEY);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <AuthProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </AuthProvider>
 );
