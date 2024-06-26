@@ -4,6 +4,7 @@ import GemLogo from "@assets/gemIcon.svg?react";
 import Dropdown from "@components/Dropdown/Dropdown";
 import ListMenuButton from "@assets/listMenuIcon.svg?react";
 import { Task } from "@components/Sidebar";
+import { IconName } from "@utilities/dropDownHelpers";
 
 interface SidebarProps {
   selectedTaskToView: Task | null;
@@ -75,9 +76,9 @@ const Sidebar = ({
 
   const names = useMemo(
     () => [
-      { name: "Toggle Task Completion" },
-      { name: "Set as Favorite" },
-      { name: "Delete" },
+      { name: "Toggle Task Completion" as IconName },
+      { name: "Set as Favorite" as IconName },
+      { name: "Delete" as IconName },
     ],
     []
   );

@@ -22,6 +22,7 @@ import SignIn from "@components/SignIn/SignIn";
 import { Popup } from "@components/Popup";
 const SETTINGS_KEY = "appSettings";
 import { useAuth } from "@utilities/AuthContext";
+import { IconName } from "@utilities/dropDownHelpers";
 
 function App() {
   const { isLoading, progress } = useLoading();
@@ -54,9 +55,9 @@ function App() {
 
   const names = useMemo(
     () => [
-      { name: "Settings" },
-      { name: "Add list" },
-      { name: user ? "Sign out" : "Sign in" },
+      { name: "Settings" as IconName },
+      { name: "Add list" as IconName },
+      { name: (user ? "Sign out" : "Sign in") as IconName },
     ],
     [user]
   );

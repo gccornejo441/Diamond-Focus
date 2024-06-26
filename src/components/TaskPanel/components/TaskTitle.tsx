@@ -2,6 +2,7 @@ import styles from "../styles/TaskTitle.module.css";
 import { TaskTitleProps } from "..";
 import Dropdown from "@components/Dropdown/Dropdown";
 import { useMemo } from "react";
+import { IconName } from "@utilities/dropDownHelpers";
 
 const TaskTitle = ({
   currentSelectedTaskList,
@@ -15,7 +16,7 @@ const TaskTitle = ({
     []
   );
 
-  const names = useMemo(() => [{ name: "Delete All Tasks" }], []);
+  const names = useMemo(() => [{ name: "Delete All Tasks" as IconName }], []);
 
   return (
     <div className={styles.taskTitleWrapper}>

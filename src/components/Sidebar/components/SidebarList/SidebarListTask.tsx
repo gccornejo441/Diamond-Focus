@@ -3,6 +3,7 @@ import ListMenuButton from "@assets/listMenuIcon.svg?react";
 import { TaskListTitleProps } from "../../types/SidebarTypes";
 import styles from "./SidebarList.module.css";
 import Dropdown from "@components/Dropdown/Dropdown";
+import { IconName } from "@utilities/dropDownHelpers";
 
 interface SidebarTaskListProps extends TaskListTitleProps {
   onDelete: (id: number) => void;
@@ -20,7 +21,10 @@ const SidebarTaskList = ({
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
   const outerDivRef = useRef<HTMLDivElement>(null);
-  const names = [{ name: "Rename list" }, { name: "Delete list" }];
+  const names = [
+    { name: "Rename list" as IconName },
+    { name: "Delete list" as IconName },
+  ];
 
   useEffect(() => {
     if (isEditing && inputRef.current) {

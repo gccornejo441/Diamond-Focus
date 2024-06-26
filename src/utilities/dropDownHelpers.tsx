@@ -18,9 +18,9 @@ const icons = {
   "Sign out": <SignOutButton />,
 };
 
-type IconName = keyof typeof icons;
+export type IconName = keyof typeof icons;
 
-interface NameObject {
+export interface NameObject {
   name: IconName;
 }
 

@@ -1,11 +1,11 @@
 import React, { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Dropdown.module.css";
-import IconRepository from "@utilities/dropDownHelpers";
+import IconRepository, { IconName } from "@utilities/dropDownHelpers";
 
 interface DropdownItemProps {
-  name: string;
+  name: IconName;
   icon: ReactNode;
-  onDropDownItemClick: (name: string) => void;
+  onDropDownItemClick: (name: IconName) => void;
 }
 
 const DropdownItem = ({
@@ -29,7 +29,7 @@ export interface StateHandlers {
 
 interface DropdownProps {
   stateHandlers: StateHandlers;
-  names: { name: string }[];
+  names: { name: IconName }[];
   children: ReactNode;
   className?: string;
   alignment?: "left" | "right" | "center";
@@ -64,7 +64,7 @@ const Dropdown = ({
     return () => document.removeEventListener("mousedown", handleMouseDown);
   }, [isOpen]);
 
-  const onDropdownItemClick = (name: string): void => {
+  const onDropdownItemClick = (name: IconName): void => {
     if (stateHandlers[name]) {
       stateHandlers[name](true);
       setIsOpen(false);
