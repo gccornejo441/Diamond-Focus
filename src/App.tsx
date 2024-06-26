@@ -18,11 +18,14 @@ import SideMenu from "@components/Sidebar/components/SideMenu/SideMenu";
 import { Sidebar } from "@components/Sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SignIn from "@components/SignIn/SignIn";
+import { Popup } from "@components/Popup";
 const SETTINGS_KEY = "appSettings";
 
 function App() {
   const { isLoading, progress } = useLoading();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isSignModalOpen, setSignModalOpen] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [askedForTask, setAskedForTask] = useState<Task | null>(null);
 
@@ -41,7 +44,7 @@ function App() {
     () => ({
       Settings: () => setModalOpen(true),
       "Add list": () => setSidebarListOpen(true),
-      "Sign in": () => console.log("Sign In"),
+      "Sign in": () => setSignModalOpen(true),
     }),
     [setSidebarListOpen]
   );
@@ -109,6 +112,9 @@ function App() {
         isSidebarListOpen={isSidebarListOpen}
         setSidebarListOpen={setSidebarListOpen}
       />
+      <Popup isOpen={isSignModalOpen} onClose={() => setSignModalOpen(false)}>
+        <SignIn />
+      </Popup>
       {isModalOpen && (
         <Settings
           setTaskLists={setTaskLists}

@@ -17,6 +17,8 @@ import MenuItem from "./CustomMenuItem";
 import ImportExportTasks from "./ImportExportTasks";
 import { Task, TaskListProps } from "@components/Sidebar";
 import ShareStream from "@components/ShareStream/ShareStream";
+import Journal from "../components/Journal";
+import JournalButton from "@assets/journalIcon.svg?react";
 
 const options = [{ value: "sciFiAlarm", label: "Sci-Fi Alarm" }];
 
@@ -340,6 +342,12 @@ const Settings = ({
               IconComponent={ShareStreamButton}
               onClick={() => setActivePanel("shareStream")}
             />
+            <MenuItem
+              isActive={activePanel === "journal"}
+              text="Journal"
+              IconComponent={JournalButton}
+              onClick={() => setActivePanel("journal")}
+            />
           </ul>
         </aside>
         {activePanel === "settings" && renderGeneralSettings()}
@@ -347,6 +355,7 @@ const Settings = ({
           <ImportExportTasks onClose={onClose} importTasks={importTasks} />
         )}
         {activePanel === "shareStream" && <ShareStream />}
+        {activePanel === "journal" && <Journal onClose={onClose} />}
       </div>
     </div>
   );
