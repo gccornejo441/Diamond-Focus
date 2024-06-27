@@ -121,7 +121,7 @@ function App() {
         setSidebarListOpen={setSidebarListOpen}
       />
       <Popup isOpen={isSignModalOpen} onClose={() => setSignModalOpen(false)}>
-        {user ? "hi" : <SignIn />}
+        <SignIn />
       </Popup>
       {isModalOpen && (
         <Settings

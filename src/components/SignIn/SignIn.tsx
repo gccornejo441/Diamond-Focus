@@ -3,15 +3,29 @@ import { useAuth } from "../../utilities/AuthContext";
 import styles from "./SignIn.module.css";
 import { toast } from "react-toastify";
 
+interface SignInData {
+  email: string;
+  password: string;
+}
+
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
 
-  const handleLogin = async (event: React.FormEvent) => {
+  const [signInData, setSignInData] = useState<SignInData>({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignInData({ ...signInData, [name]: value });
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
+      const { email, password } = signInData;
       await login(email, password);
       toast.success("User signed in successfully");
     } catch (error) {
@@ -26,26 +40,30 @@ const SignIn = () => {
   return (
     <div className={styles.container}>
       <h2>Sign In</h2>
-      <form onSubmit={handleLogin} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
-          <label>Email</label>
+          <label htmlFor="email">Email</label>
           <input
+            name="email"
+            id="email"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={signInData.email}
+            onChange={handleChange}
             required
           />
         </div>
         <div className={styles.formGroup}>
-          <label>Password</label>
+          <label htmlFor="password">Password</label>
           <input
+            name="password"
+            id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={signInData.password}
+            onChange={handleChange}
             required
           />
         </div>
-        {error && <p className={styles.error}>Authentication Failed</p>}
+        {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.button}>
           Sign In
         </button>
