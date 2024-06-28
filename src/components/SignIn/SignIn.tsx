@@ -8,7 +8,11 @@ interface SignInData {
   password: string;
 }
 
-const SignIn = () => {
+interface SignInProps {
+  onClose: () => void;
+}
+
+const SignIn = ({ onClose }: SignInProps) => {
   const [error, setError] = useState("");
   const { login } = useAuth();
 
@@ -28,9 +32,11 @@ const SignIn = () => {
       const { email, password } = signInData;
       await login(email, password);
       toast.success("User signed in successfully");
+      onClose();
     } catch (error) {
       if (error instanceof Error) {
-        setError(error.message);
+        setError("An unknown error occurred.");
+        console.error(error.message);
       } else {
         setError("An unknown error occurred.");
       }
