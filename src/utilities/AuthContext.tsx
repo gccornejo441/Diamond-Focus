@@ -11,6 +11,7 @@ import {
   User,
 } from "firebase/auth";
 import { auth } from "@utilities/firebaseSetup";
+import { toast } from "react-toastify";
 
 interface AuthContextType {
   user: User | null;
@@ -42,6 +43,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = async () => {
     await auth.signOut();
+    toast("See you next time.", {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   return (

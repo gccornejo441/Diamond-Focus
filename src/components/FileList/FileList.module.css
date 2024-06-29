@@ -1,0 +1,75 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="high-contrast"] .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background: var(--background-color-light);
+      color: var(--text-color);
+      border-radius: 8px;
+      box-shadow: none;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .fileList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .fileItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--background-color);
+    border-radius: 5px;
+  }
+  
+  .fileName {
+    flex: 1;
+    margin-right: 10px;
+    word-break: break-all;
+  }
+
+  .buttonGroup {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .button {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    outline: none;
+    color: white;
+    background-color: var(--button-background);
+    transition: all 0.2s ease;
+  }
+
+  .button:hover {
+    opacity: 0.8;
+    background-color: var(--button-background-hover);
+  }
+  
+  .button:focus {
+    outline: 2px solid var(--alert);
+  }
+  
+  .button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

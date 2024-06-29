@@ -31,7 +31,15 @@ const SignIn = ({ onClose }: SignInProps) => {
     try {
       const { email, password } = signInData;
       await login(email, password);
-      toast.success("User signed in successfully");
+      toast(`Welcome, ${email}!`, {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       onClose();
     } catch (error) {
       if (error instanceof Error) {

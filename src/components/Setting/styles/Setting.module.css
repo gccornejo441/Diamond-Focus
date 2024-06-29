@@ -488,3 +488,10 @@ input[type="number"]::-webkit-outer-spin-button {
 .noteButtons button:hover {
   background-color: #0056b3;
 }
+
+.uploadContainer {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
