@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 import { useAuth } from "@utilities/AuthContext";
 import { toast } from "react-toastify";
