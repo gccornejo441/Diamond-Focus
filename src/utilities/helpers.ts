@@ -1,3 +1,4 @@
+import { ToastOptions, toast } from "react-toastify";
 import { TaskListProps } from "../components/Sidebar/types/SidebarTypes";
 /**
  * Formats the given number of seconds into a string in the format "minutes:seconds".
@@ -87,4 +88,17 @@ export const initialTaskLists = (): TaskListProps[] => {
       ],
     },
   ];
+};
+
+export const Toast = (message: string, options: ToastOptions = {}) => {
+  return toast(message, {
+    position: "bottom-right",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    ...options,
+  });
 };

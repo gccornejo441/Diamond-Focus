@@ -44,7 +44,6 @@ const SignIn = ({ onClose }: SignInProps) => {
     } catch (error) {
       if (error instanceof Error) {
         setError("An unknown error occurred.");
-        console.error(error.message);
       } else {
         setError("An unknown error occurred.");
       }
