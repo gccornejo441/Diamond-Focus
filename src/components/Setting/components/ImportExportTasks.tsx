@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TaskListProps } from "@components/Sidebar";
 import hljs from "highlight.js/lib/core";
 import json from "highlight.js/lib/languages/json";
 import "highlight.js/styles/github.css";
 import styles from "../styles/Setting.module.css";
+import { Toast } from "@utilities/helpers";
 
 hljs.registerLanguage("json", json);
 
@@ -24,10 +24,10 @@ const ImportExportTasks = ({
     try {
       const parsedData = JSON.parse(jsonContent) as TaskListProps[];
       importTasks(parsedData);
-      toast.success("TaskLists imported successfully!");
+      Toast("TaskLists imported successfully!");
       onClose();
     } catch (error) {
-      toast.error("Invalid JSON format");
+      Toast("Invalid JSON format");
     }
   };
 
@@ -38,7 +38,7 @@ const ImportExportTasks = ({
       const dataStr = JSON.stringify(taskLists, null, 2);
       setJsonContent(dataStr);
     } else {
-      toast.error("No taskLists found in local storage");
+      Toast("No taskLists found in local storage");
     }
   };
 
@@ -50,10 +50,10 @@ const ImportExportTasks = ({
   const handleCopy = () => {
     navigator.clipboard.writeText(jsonContent).then(
       () => {
-        toast.success("Copied to clipboard!");
+        Toast("Copied to clipboard!");
       },
       (err) => {
-        toast.error("Failed to copy: " + err);
+        Toast("Failed to copy: " + err);
       }
     );
   };
@@ -62,10 +62,10 @@ const ImportExportTasks = ({
     navigator.clipboard.readText().then(
       (text) => {
         setJsonContent(text);
-        toast.success("Pasted from clipboard!");
+        Toast("Pasted from clipboard!");
       },
       (err) => {
-        toast.error("Failed to paste: " + err);
+        Toast("Failed to paste: " + err);
       }
     );
   };

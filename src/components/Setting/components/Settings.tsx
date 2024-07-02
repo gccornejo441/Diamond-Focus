@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Setting.module.css";
-import { ApplyBodyStyles } from "@utilities/helpers";
+import { ApplyBodyStyles, Toast } from "@utilities/helpers";
 import CustomThemeSelector from "./CustomThemeSelector";
 import SettingsButton from "@assets/settingsIcon.svg?react";
 import CloseButton from "@assets/closeIcon.svg?react";
@@ -65,7 +65,7 @@ const Settings = ({
   const importTasks = (taskLists: TaskListProps[]) => {
     setTaskLists(taskLists);
     localStorage.setItem("taskLists", JSON.stringify(taskLists));
-    toast.success("Tasks imported successfully and saved to local storage!");
+    Toast("Tasks imported successfully and saved to local storage!");
   };
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

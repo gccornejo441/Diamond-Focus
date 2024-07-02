@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { db, storage } from "@utilities/firebaseSetup";
 import {
   collection,
@@ -14,6 +13,7 @@ import "highlight.js/styles/github.css";
 import styles from "../styles/Setting.module.css";
 import { useAuth } from "@utilities/AuthContext";
 import FileList from "@components/FileList/FileList";
+import { Toast } from "@utilities/helpers";
 export interface JournalProps {
   onClose: () => void;
 }
@@ -58,7 +58,7 @@ const Journal = ({ onClose }: JournalProps) => {
 
   const handleSave = async () => {
     if (jsonContent.trim() === "") {
-      toast.error("Content cannot be empty");
+      Toast("Content cannot be empty");
       return;
     }
 
@@ -69,14 +69,14 @@ const Journal = ({ onClose }: JournalProps) => {
         });
         setNotes([...notes, { id: docRef.id, content: jsonContent }]);
         setJsonContent("");
-        toast.success("Note saved successfully");
+        Toast("Note saved successfully");
       } else {
-        toast.error("User is not authenticated");
+        Toast("User is not authenticated");
       }
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.error("Error adding document: ", e);
-        toast.error("Error saving note: " + e.message);
+        Toast("Error saving note: " + e.message);
       }
     }
   };
@@ -86,14 +86,14 @@ const Journal = ({ onClose }: JournalProps) => {
       if (user) {
         await deleteDoc(doc(db, `users/${user.uid}/notes`, id));
         setNotes(notes.filter((note) => note.id !== id));
-        toast.success("Note deleted successfully");
+        Toast("Note deleted successfully");
       } else {
-        toast.error("User is not authenticated");
+        Toast("User is not authenticated");
       }
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.error("Error deleting document: ", e);
-        toast.error("Error deleting note: " + e.message);
+        Toast("Error deleting note: " + e.message);
       }
     }
   };
@@ -101,10 +101,10 @@ const Journal = ({ onClose }: JournalProps) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(jsonContent).then(
       () => {
-        toast.success("Copied to clipboard!");
+        Toast("Copied to clipboard!");
       },
       (err: Error) => {
-        toast.error("Failed to copy: " + err.message);
+        Toast("Failed to copy: " + err.message);
       }
     );
   };
@@ -113,10 +113,10 @@ const Journal = ({ onClose }: JournalProps) => {
     navigator.clipboard.readText().then(
       (text) => {
         setJsonContent(text);
-        toast.success("Pasted from clipboard!");
+        Toast("Pasted from clipboard!");
       },
       (err: Error) => {
-        toast.error("Failed to paste: " + err.message);
+        Toast("Failed to paste: " + err.message);
       }
     );
   };
@@ -124,10 +124,10 @@ const Journal = ({ onClose }: JournalProps) => {
   const handleCopyNote = (content: string) => {
     navigator.clipboard.writeText(content).then(
       () => {
-        toast.success("Copied to clipboard!");
+        Toast("Copied to clipboard!");
       },
       (err: Error) => {
-        toast.error("Failed to copy: " + err.message);
+        Toast("Failed to copy: " + err.message);
       }
     );
   };
@@ -144,11 +144,11 @@ const Journal = ({ onClose }: JournalProps) => {
 
   const handleFileUpload = () => {
     if (!file) {
-      toast.error("No file selected");
+      Toast("No file selected");
       return;
     }
     if (!user) {
-      toast.error("User is not authenticated");
+      Toast("User is not authenticated");
       return;
     }
 
@@ -164,12 +164,12 @@ const Journal = ({ onClose }: JournalProps) => {
       },
       (error) => {
         console.error("Error uploading file: ", error);
-        toast.error("Error uploading file: " + error.message);
+        Toast("Error uploading file: " + error.message);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          toast.success("File uploaded successfully");
+          Toast("File uploaded successfully");
         });
       }
     );
@@ -220,7 +220,7 @@ const Journal = ({ onClose }: JournalProps) => {
           </div>
         ))}
       </div>
-      <FileList/>
+      <FileList />
     </div>
   );
 };
