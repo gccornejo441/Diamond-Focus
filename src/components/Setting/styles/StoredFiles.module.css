@@ -1,11 +1,18 @@
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+/* LargeContent */
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  color: var(--primary-text-color);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+[data-theme="dark"] .content,
+[data-theme="high-contrast"] .content {
+  background: var(--background-color-light);
+  color: var(--text-color);
+}
 
   [data-theme="high-contrast"] .container {
       max-width: 600px;

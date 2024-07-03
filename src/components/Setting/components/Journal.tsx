@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db, storage } from "@utilities/firebaseSetup";
+import { db } from "@utilities/firebaseSetup";
 import {
   collection,
   addDoc,
@@ -7,13 +7,12 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "react-toastify/dist/ReactToastify.css";
 import "highlight.js/styles/github.css";
 import styles from "../styles/Setting.module.css";
 import { useAuth } from "@utilities/AuthContext";
-import FileList from "@components/FileList/FileList";
 import { Toast } from "@utilities/helpers";
+
 export interface JournalProps {
   onClose: () => void;
 }
@@ -26,7 +25,6 @@ interface Note {
 const Journal = ({ onClose }: JournalProps) => {
   const [jsonContent, setJsonContent] = useState<string>("");
   const [notes, setNotes] = useState<Note[]>([]);
-  const [file, setFile] = useState<File | null>(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -48,12 +46,6 @@ const Journal = ({ onClose }: JournalProps) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
     setJsonContent(value);
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setFile(event.target.files[0]);
-    }
   };
 
   const handleSave = async () => {
@@ -142,39 +134,6 @@ const Journal = ({ onClose }: JournalProps) => {
     document.body.removeChild(element);
   };
 
-  const handleFileUpload = () => {
-    if (!file) {
-      Toast("No file selected");
-      return;
-    }
-    if (!user) {
-      Toast("User is not authenticated");
-      return;
-    }
-
-    const storageRef = ref(storage, `journal_assets/${user.uid}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-      },
-      (error) => {
-        console.error("Error uploading file: ", error);
-        Toast("Error uploading file: " + error.message);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          Toast("File uploaded successfully");
-        });
-      }
-    );
-  };
-
   return (
     <div className={styles.content}>
       <h2>Journal</h2>
@@ -193,10 +152,6 @@ const Journal = ({ onClose }: JournalProps) => {
             Paste
           </button>
         </div>
-      </div>
-      <div className={styles.uploadContainer}>
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleFileUpload}>Upload File</button>
       </div>
       <div className={styles.buttonGroup}>
         <button className={styles.button} onClick={handleSave}>
@@ -220,7 +175,6 @@ const Journal = ({ onClose }: JournalProps) => {
           </div>
         ))}
       </div>
-      <FileList />
     </div>
   );
 };

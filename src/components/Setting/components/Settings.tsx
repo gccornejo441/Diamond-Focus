@@ -19,6 +19,8 @@ import { Task, TaskListProps } from "@components/Sidebar";
 import ShareStream from "@components/ShareStream/ShareStream";
 import Journal from "../components/Journal";
 import JournalButton from "@assets/journalIcon.svg?react";
+import StoredFilesButton from "@assets/storedFilesIcon.svg?react";
+import StoredFiles from "./StoredFiles";
 
 const options = [{ value: "sciFiAlarm", label: "Sci-Fi Alarm" }];
 
@@ -348,6 +350,12 @@ const Settings = ({
               IconComponent={JournalButton}
               onClick={() => setActivePanel("journal")}
             />
+            <MenuItem
+              isActive={activePanel === "storedFiles"}
+              text="Stored Files"
+              IconComponent={StoredFilesButton}
+              onClick={() => setActivePanel("storedFiles")}
+            />
           </ul>
         </aside>
         {activePanel === "settings" && renderGeneralSettings()}
@@ -356,6 +364,7 @@ const Settings = ({
         )}
         {activePanel === "shareStream" && <ShareStream />}
         {activePanel === "journal" && <Journal onClose={onClose} />}
+        {activePanel === "storedFiles" && <StoredFiles />}
       </div>
     </div>
   );

@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useAuth } from "@utilities/AuthContext";
+import styles from "../styles/Setting.module.css";
+import { Toast } from "@utilities/helpers";
 import {
   getStorage,
   ref,
   listAll,
   getDownloadURL,
   deleteObject,
+  uploadBytesResumable,
 } from "firebase/storage";
-import { useAuth } from "@utilities/AuthContext";
-import "react-toastify/dist/ReactToastify.css";
-import styles from "./FileList.module.css";
-import { Toast } from "@utilities/helpers";
+
+import { useEffect, useState } from "react";
 
 interface FileItem {
   name: string;
@@ -17,8 +18,9 @@ interface FileItem {
   fullPath: string;
 }
 
-const FileList = () => {
+const StoredFiles = () => {
   const [files, setFiles] = useState<FileItem[]>([]);
+  const [file, setFile] = useState<File | null>(null);
   const { user } = useAuth();
   const storage = getStorage();
 
@@ -65,8 +67,47 @@ const FileList = () => {
     }
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+    }
+  };
+
+  const handleFileUpload = () => {
+    if (!file) {
+      Toast("No file selected");
+      return;
+    }
+    if (!user) {
+      Toast("User is not authenticated");
+      return;
+    }
+
+    const storageRef = ref(storage, `journal_assets/${user.uid}/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.error("Error uploading file: ", error);
+        Toast("Error uploading file: " + error.message);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          Toast("File uploaded successfully");
+        });
+      }
+    );
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.content}>
       <h2>Uploaded Files</h2>
       <ul className={styles.fileList}>
         {files.map((file) => (
@@ -89,8 +130,12 @@ const FileList = () => {
           </li>
         ))}
       </ul>
+      <div className={styles.uploadContainer}>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleFileUpload}>Upload File</button>
+      </div>
     </div>
   );
 };
 
-export default FileList;
+export default StoredFiles;

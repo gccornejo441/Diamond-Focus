@@ -450,7 +450,6 @@ input[type="number"]::-webkit-outer-spin-button {
 .notesList {
   max-height: 300px;
   overflow-y: auto;
-  border-top: 1px solid #ccc;
   padding-top: 20px;
 }
 
