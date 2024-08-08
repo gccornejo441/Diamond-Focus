@@ -403,7 +403,6 @@ input[type="number"]::-webkit-outer-spin-button {
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 550px;
   margin-top: 10px;
 }
 
