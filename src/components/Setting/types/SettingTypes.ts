@@ -9,6 +9,19 @@ interface SettingsProps {
   bgImg: string;
   alarmName: string;
   isNewTaskOnTop: boolean;
+  timerStatus: boolean;
+}
+
+interface TimerSettingsProps {
+  count: number;
+  breakDuration: number;
+  isAlertOn: boolean;
+  isAutoSwitchOn: boolean;
+  timerStatus: boolean;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+  setBreakDuration: React.Dispatch<React.SetStateAction<number>>;
+  setIsAlertOn: React.Dispatch<React.SetStateAction<boolean>>;
+  setAutoSwitchOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface SettingPanelProps extends SettingsProps {
@@ -22,6 +35,7 @@ interface SettingPanelProps extends SettingsProps {
   setTheme: React.Dispatch<React.SetStateAction<string>>;
   setAlarmName: React.Dispatch<React.SetStateAction<string>>;
   setTaskLists: React.Dispatch<React.SetStateAction<TaskListProps[]>>;
+  setTimerStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export type { SettingsProps, SettingPanelProps };
+export type { SettingsProps, SettingPanelProps, TimerSettingsProps };

@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import styles from "./App.module.css";
 import { TaskPanel } from "@components/TaskPanel";
 import { Timer } from "@components/Timer";
+import { Clock } from "@components/Clock";
 import { ApplyBodyStyles } from "@utilities/helpers";
 import Dropdown from "@components/Dropdown/Dropdown";
 import useTasks from "@hooks/useTasks";
@@ -23,6 +24,7 @@ import { Popup } from "@components/Popup";
 const SETTINGS_KEY = "appSettings";
 import { useAuth } from "@utilities/AuthContext";
 import { IconName } from "@utilities/dropDownHelpers";
+import useLocalStorageObjectState from "@hooks/useLocalStorageObjectState";
 
 function App() {
   const { isLoading, progress } = useLoading();
@@ -39,8 +41,13 @@ function App() {
   const [alarmName, setAlarmName] = useState<string>("");
   const [bgImg, setBgImg] = useState<string>("");
   const [theme, setTheme] = useState("default");
-  const { user, logout } = useAuth();
+  const [timerStatus, setTimerStatus] = useLocalStorageObjectState(
+    "appSettings",
+    "timerStatus",
+    true
+  );
 
+  const { user, logout } = useAuth();
   const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
 
   const stateHandlers = useMemo(
@@ -49,6 +56,8 @@ function App() {
       "Add list": () => setSidebarListOpen(true),
       "Sign in": () => setSignModalOpen(true),
       "Sign out": () => logout(),
+      "Timer On": () => setTimerStatus(true),
+      "Timer Off": () => setTimerStatus(false),
     }),
     [setSidebarListOpen, logout]
   );
@@ -58,8 +67,9 @@ function App() {
       { name: "Settings" as IconName },
       { name: "Add list" as IconName },
       { name: (user ? "Sign out" : "Sign in") as IconName },
+      { name: (timerStatus ? "Timer Off" : "Timer On") as IconName },
     ],
-    [user]
+    [user, timerStatus]
   );
 
   const {
@@ -93,6 +103,7 @@ function App() {
       setTheme(settings.theme);
       setBgImg(settings.bgImg);
       setAlarmName(settings.alarmName);
+      setTimerStatus(settings.timerStatus);
     }
   }, []);
 
@@ -143,6 +154,8 @@ function App() {
           count={count}
           setCount={setCount}
           onClose={() => setModalOpen(false)}
+          setTimerStatus={setTimerStatus}
+          timerStatus={timerStatus}
         />
       )}
       <div className={styles.main}>
@@ -164,14 +177,18 @@ function App() {
                 <SettingButton className={styles.svgStyle} />
               </Dropdown>
             </div>
-            <Timer
-              count={count}
-              breakDuration={breakDuration}
-              setCount={setCount}
-              setBreakDuration={setBreakDuration}
-              isAutoSwitchOn={isAutoSwitchOn}
-              isAlertOn={isAlertOn}
-            />
+            {timerStatus ? (
+              <Timer
+                count={count}
+                breakDuration={breakDuration}
+                setCount={setCount}
+                setBreakDuration={setBreakDuration}
+                isAutoSwitchOn={isAutoSwitchOn}
+                isAlertOn={isAlertOn}
+              />
+            ) : (
+              <Clock />
+            )}
             <TaskPanel
               saveEdit={saveEdit}
               toggleTaskCompletion={toggleTaskCompletion}

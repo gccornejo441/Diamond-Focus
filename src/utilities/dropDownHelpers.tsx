@@ -5,6 +5,8 @@ import SettingsButton from "@assets/settingsIcon.svg?react";
 import AddListButton from "@assets/addListIcon.svg?react";
 import SignInButton from "@assets/signInIcon.svg?react";
 import SignOutButton from "@assets/signOutIcon.svg?react";
+import TimerButton from "@assets/timerIcon.svg?react";
+import TimerOffButton from "@assets/timerOffIcon.svg?react";
 
 const icons = {
   "Rename list": <EditListButton />,
@@ -16,6 +18,8 @@ const icons = {
   "Set as Favorite": <AddListButton />,
   "Sign in": <SignInButton />,
   "Sign out": <SignOutButton />,
+  "Timer On": <TimerButton />,
+  "Timer Off": <TimerOffButton />,
 };
 
 export type IconName = keyof typeof icons;

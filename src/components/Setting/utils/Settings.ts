@@ -10,6 +10,7 @@ const defaultSettings: SettingsProps = {
   bgImg: "",
   alarmName: "sciFiAlarm.mp3",
   isNewTaskOnTop: true,
+  timerStatus: true,
 };
 
 const defaultTaskList: TaskListProps = {
@@ -105,6 +106,7 @@ function settingFormHelper(formData: FormData): SettingsProps {
     bgImg: formData.get("bgImg") as string,
     alarmName: formData.get("alarmSoundName") as string,
     isNewTaskOnTop: formData.has("newTasksOnTop"),
+    timerStatus: formData.has("timerStatus"),
   };
 }
 
