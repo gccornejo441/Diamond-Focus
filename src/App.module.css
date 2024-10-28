@@ -14,9 +14,10 @@
 
 .settingHeaderContainer {
   display: flex;
-  flex-direction: row-reverse;
   margin: 15px 10px;
-  height: 35px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
@@ -64,15 +65,16 @@
     justify-content: space-around;
   }
 
-  .settingHeaderContainer {
+  /* .settingHeaderContainer {
     display: none;
-  }
+  } */
 
   .icon {
     height: 2.5rem;
     width: 2.5rem;
   }
 }
+
 
 @media (max-width: 480px) {
   .settingHeaderContainer {
@@ -103,4 +105,73 @@
 .bodyContent {
   max-width: 768px;
   margin: 0 auto;
+}
+
+.gemIcon {
+  margin-top: auto;
+  animation: anim 3.3s infinite;
+}
+
+@keyframes anim {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.topIconSvg {
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  color: var(--panel-text);
+}
+.gemIcon {
+  margin-top: 0;
+  border-radius: 5px;
+  height: 3rem;
+  width: 3rem;
+
+  &:focus {
+    outline: 2px solid var(--text-color);
+    border-radius: 5px;
+  }
+
+  &:hover {
+    background-color: var(--background-color);
+  }
+}
+
+.gemIcon > .topIconSvg {
+  margin-top: 15px;
+  height: 2.3rem;
+  width: 2.3rem;
+}
+
+.topIconSvg {
+  color: var(--panel-background);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+[data-theme="high-contrast"] .topIconSvg,
+[data-theme="dark"] .topIconSvg {
+  color: var(--text-color);
+}
+
+
+.sideMenuButton {
+  display: block;
+}
+
+@media (min-width: 900px) {
+  .sideMenuButton {
+    display: none !important;
+  }
 }

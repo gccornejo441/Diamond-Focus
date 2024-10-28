@@ -25,7 +25,8 @@ const SETTINGS_KEY = "appSettings";
 import { useAuth } from "@utilities/AuthContext";
 import { IconName } from "@utilities/dropDownHelpers";
 import useLocalStorageObjectState from "@hooks/useLocalStorageObjectState";
-
+import ListButton from "@assets/listIcon.svg?react";
+import GemLogo from "@assets/gemIcon.svg?react";
 function App() {
   const { isLoading, progress } = useLoading();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -127,7 +128,6 @@ function App() {
   return (
     <div className={styles.App}>
       <SideMenu
-        setModalOpen={setModalOpen}
         isSidebarListOpen={isSidebarListOpen}
         setSidebarListOpen={setSidebarListOpen}
       />
@@ -169,6 +169,18 @@ function App() {
         <div className={styles.mainContent}>
           <div className={styles.bodyContent}>
             <div className={styles.settingHeaderContainer}>
+              <button
+                aria-label="Toggle Sidebar"
+                aria-controls="toggle-sidebar"
+                id="toggle-sidebar"
+                className={`${styles.sideMenuButton} controlButton`}
+                onClick={() => setSidebarListOpen(true)}
+              >
+                <ListButton className={styles.svgStyle} />
+              </button>
+              <a href="/" className={styles.gemIcon}>
+                <GemLogo aria-label="Gem Icon" className={styles.topIconSvg} />
+              </a>
               <Dropdown
                 alignment="right"
                 names={names}

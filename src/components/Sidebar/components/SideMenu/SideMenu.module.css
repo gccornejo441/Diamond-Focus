@@ -1,7 +1,6 @@
 .sideMenu {
   justify-content: space-between;
   position: fixed;
-  z-index: 0;
   top: 0;
   left: 0;
   display: flex;
@@ -29,7 +28,6 @@
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  border: none;
   height: 3rem;
   width: 3rem;
   background-color: transparent;
@@ -44,32 +42,13 @@
   animation: anim 3.3s infinite;
 }
 
-.dropdown {
-  display: none;
-}
-
-.topIcon:hover,
-.gemIcon:hover,
-.dropdown:hover {
-  background-color: transparent;
-}
-
-.topIcon:focus,
-.gemIcon:focus,
-.dropdown:focus {
-  outline: 2px solid var(--text-color);
-  offset: 2px;
-}
-
 @keyframes anim {
   0% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-10px);
   }
-
   100% {
     transform: translateY(0);
   }
@@ -78,83 +57,13 @@
 .topIconSvg {
   height: 25px;
   width: 25px;
-  background-color: transparent;
   color: var(--panel-text);
 }
 
 @media (max-width: 900px) {
-  .sideMenu {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: var(--background-color);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom-width: 1px;
-    height: 50px;
-    padding: 0.1rem 0rem;
-    width: 100%;
-  }
-
-  .sideMenu.open {
-    transform: translateY(0);
-  }
-
-  [data-theme="high-contrast"] .sideMenu {
-    border: none;
-  }
-
   .topIcon,
   .gemIcon,
-  .dropdown {
-    margin-top: 0;
-    border-radius: 5px;
-    height: 3rem;
-    width: 3rem;
-
-    &:focus {
-      outline: 2px solid var(--text-color);
-      border-radius: 5px;
-    }
-
-    &:hover {
-      background-color: var(--background-color);
-    }
-  }
-
-  .gemIcon > .topIconSvg {
-    margin-top: 15px;
-    height: 2.3rem;
-    width: 2.3rem;
-  }
-
-  .topIconSvg {
-    color: var(--panel-background);
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-
-  [data-theme="high-contrast"] .topIconSvg,
-  [data-theme="dark"] .topIconSvg {
-    color: var(--text-color);
-  }
-
-  .dropdown {
-    margin-top: 0;
-    border-radius: 5px;
-    height: 3rem;
-    width: 3rem;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: inherit;
-    padding: 0.25rem;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
-    border: none;
+  .sideMenu {
+    display: none;
   }
 }
