@@ -189,12 +189,12 @@
   width: 24px;
   cursor: grab;
   display: flex;
-  color: var(--panel-text)
+  color: var(--panel-text);
 }
 
 .dragHandle:active {
   cursor: grabbing;
-  color: var(--panel-text)
+  color: var(--panel-text);
 }
 
 .checkboxwrapper {

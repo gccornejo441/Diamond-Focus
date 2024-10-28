@@ -1,62 +1,61 @@
 .timerBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    color: var(--text-color);
-  }
-  
-  .timerFont {
-    font-size: 3rem;
-    font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
-    text-align: center;
-    color: var(--text-color);
-  }
-  
-  .timerProgressBar {
-    width: 100%;
-    height: 10px;
-    background-color: var(--scrollbar-track);
-    border-radius: 5px;
-    margin-top: 10px;
-    overflow: hidden;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  color: var(--text-color);
+}
 
-  [data-theme="default"] .timerProgressBar{
-    background-color: var(--background-color);
-  }
-  
-  [data-theme="high-contrast"] .timerProgressBar {
-    background-color: var(--background-color);
-    border: 1px solid white;
-  }
-  
-  .timerProgress {
-    height: 100%;
-    background-color: var(--scrollbar-thumb);
-    transition: width 0.5s ease-in-out;
-  }
-  
-  /* Styles for focus timer */
-  .focusTimer {
-    background-color: var(--button-background-hover);
-  }
-  
-  .focusProgress {
-    background-color: var(--scrollbar-thumb-hover);
-  }
-  
-  /* Styles for break timer */
-  .breakTimer {
-    background-color: var(--alert);
-  }
-  
-  .breakProgress {
-    background-color: var(--alert); /* Use theme color for break */
-  }
-  
-  
+.timerFont {
+  font-size: 3rem;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.timerProgressBar {
+  width: 100%;
+  height: 10px;
+  background-color: var(--scrollbar-track);
+  border-radius: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+[data-theme="default"] .timerProgressBar {
+  background-color: var(--background-color);
+}
+
+[data-theme="high-contrast"] .timerProgressBar {
+  background-color: var(--background-color);
+  border: 1px solid white;
+}
+
+.timerProgress {
+  height: 100%;
+  background-color: var(--scrollbar-thumb);
+  transition: width 0.5s ease-in-out;
+}
+
+/* Styles for focus timer */
+.focusTimer {
+  background-color: var(--button-background-hover);
+}
+
+.focusProgress {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+/* Styles for break timer */
+.breakTimer {
+  background-color: var(--alert);
+}
+
+.breakProgress {
+  background-color: var(--alert); /* Use theme color for break */
+}
+
 /*   
   .timerButton {
     background: none;

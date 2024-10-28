@@ -80,7 +80,7 @@ h2 {
   }
 }
 
- .button {
+.button {
   padding: 10px 15px;
   background-color: var(--button-background);
   color: var(--white);
@@ -92,7 +92,7 @@ h2 {
 
   &:hover {
     opacity: 0.8;
-    background-color: var(--button-background-hover);  
+    background-color: var(--button-background-hover);
   }
   &:focus-within {
     outline: 2px solid var(--text-color);
@@ -122,8 +122,8 @@ h2 {
   color: rgb(255, 93, 93);
   margin-top: 10px;
   text-align: center;
-} 
+}
 
 [data-theme="high-contrast"] .error {
-  color: white; 
+  color: white;
 }
