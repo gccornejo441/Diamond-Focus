@@ -9,6 +9,7 @@ const initSeconds = (seconds) => {
   timeRemaining = seconds;
 };
 
+/// Timer logic
 const updateTimer = () => {
   const currentTime = new Date().getTime();
   const elapsed = Math.floor((currentTime - startTimerInterval) / 1000);
@@ -23,8 +24,13 @@ const updateTimer = () => {
 };
 
 const startTimer = () => {
+  // Check if timer is already running
   if (!timerID) {
+
+    // Check if timer is paused
     startTimerInterval = new Date().getTime() - (count - timeRemaining) * 1000;
+
+    // Start timer and sets the interval to 1 second
     timerID = setInterval(() => {
       const remainingSeconds = updateTimer();
       self.postMessage(remainingSeconds);
@@ -33,6 +39,7 @@ const startTimer = () => {
 };
 
 const pauseTimer = () => {
+  // Clear the interval and set the timerID to null
   clearInterval(timerID);
   timerID = null;
 };
