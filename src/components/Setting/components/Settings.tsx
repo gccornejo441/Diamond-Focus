@@ -161,6 +161,87 @@ const Settings = ({
     onClose();
   };
 
+  const renderNotificationSettings = () => (
+    <div className={styles.content}>
+      <h2>Notification Settings</h2>
+      <div className={styles.timerSetting}>
+        <label htmlFor="isDueDateNotificationsOn">Enable Due Date Notifications:</label>
+        <div className={styles.toggleSwitch}>
+          <input
+            type="checkbox"
+            id="isDueDateNotificationsOn"
+            checked={isDueDateNotificationsOn}
+            onChange={(e) => setIsDueDateNotificationsOn(e.target.checked)}
+            className={styles.toggleInput}
+          />
+          <label htmlFor="isDueDateNotificationsOn" className={styles.toggleLabel}></label>
+        </div>
+      </div>
+
+      <div className={styles.timerSetting}>
+        <label htmlFor="defaultAlertBefore">Default Alert Timing:</label>
+        <CustomSelectDropdown
+          id="defaultAlertBefore"
+          name="defaultAlertBefore"
+          value={String(defaultAlertBefore)}
+          onChange={(e) => setDefaultAlertBefore(Number(e.target.value))}
+          disabled={!isDueDateNotificationsOn}
+          options={[
+            { value: "5", label: "5 minutes before" },
+            { value: "10", label: "10 minutes before" },
+            { value: "15", label: "15 minutes before" },
+            { value: "30", label: "30 minutes before" },
+            { value: "60", label: "1 hour before" },
+          ]}
+        />
+      </div>
+
+      <div className={styles.timerSetting}>
+        <label htmlFor="useBrowserNotifications">Browser Notifications:</label>
+        <div className={styles.toggleSwitch}>
+          <input
+            type="checkbox"
+            id="useBrowserNotifications"
+            checked={useBrowserNotifications}
+            onChange={async (e) => {
+              if (e.target.checked && "Notification" in window) {
+                const permission = await Notification.requestPermission();
+                setUseBrowserNotifications(permission === "granted");
+              } else {
+                setUseBrowserNotifications(false);
+              }
+            }}
+            className={styles.toggleInput}
+          />
+          <label htmlFor="useBrowserNotifications" className={styles.toggleLabel}></label>
+        </div>
+      </div>
+
+      <div className={styles.buttonGroup}>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => {
+            const current = localStorage.getItem("appSettings");
+            if (current) {
+              const parsed = JSON.parse(current);
+              const updated = {
+                ...parsed,
+                isDueDateNotificationsOn,
+                defaultAlertBefore,
+                useBrowserNotifications,
+              };
+              localStorage.setItem("appSettings", JSON.stringify(updated));
+              Toast("Notification settings saved!");
+            }
+          }}
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  );
+
   const renderGeneralSettings = () => (
     <div className={styles.content}>
       <h2>General Settings</h2>
@@ -266,6 +347,12 @@ const Settings = ({
               onClick={() => setActivePanel("timerSetting")}
             />
             <MenuItem
+              isActive={activePanel === "notifications"}
+              text="Notifications"
+              IconComponent={TimerButton}
+              onClick={() => setActivePanel("notifications")}
+            />
+            <MenuItem
               isActive={activePanel === "importExport"}
               text="Transfer Tasklist"
               IconComponent={ExportImportButton}
@@ -311,6 +398,7 @@ const Settings = ({
         {activePanel === "shareStream" && <ShareStream />}
         {activePanel === "journal" && <Journal onClose={onClose} />}
         {activePanel === "storedFiles" && <StoredFiles />}
+        {activePanel === "notifications" && renderNotificationSettings()}
       </div>
     </div>
   );
