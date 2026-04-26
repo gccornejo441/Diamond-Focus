@@ -8,6 +8,8 @@ export type {
   TaskListTitleProps,
   SidebarListStateProps,
   Task,
+  ReminderConfig,
+  RecurrencePattern,
 } from "./types/SidebarTypes";
 
 export { default as useSidebarListToggle } from "./hooks/useSidebarListToggle";

@@ -47,6 +47,9 @@ function App() {
     "timerStatus",
     true
   );
+  const [isDueDateNotificationsOn, setIsDueDateNotificationsOn] = useState<boolean>(true);
+  const [defaultAlertBefore, setDefaultAlertBefore] = useState<number>(15);
+  const [useBrowserNotifications, setUseBrowserNotifications] = useState<boolean>(false);
 
   const { user, logout } = useAuth();
   const { isSidebarListOpen, setSidebarListOpen } = useSidebarListToggle();
@@ -105,6 +108,9 @@ function App() {
       setBgImg(settings.bgImg);
       setAlarmName(settings.alarmName);
       setTimerStatus(settings.timerStatus);
+      setIsDueDateNotificationsOn(settings.isDueDateNotificationsOn ?? true);
+      setDefaultAlertBefore(settings.defaultAlertBefore ?? 15);
+      setUseBrowserNotifications(settings.useBrowserNotifications ?? false);
     }
   }, []);
 
@@ -156,6 +162,12 @@ function App() {
           onClose={() => setModalOpen(false)}
           setTimerStatus={setTimerStatus}
           timerStatus={timerStatus}
+          isDueDateNotificationsOn={isDueDateNotificationsOn}
+          setIsDueDateNotificationsOn={setIsDueDateNotificationsOn}
+          defaultAlertBefore={defaultAlertBefore}
+          setDefaultAlertBefore={setDefaultAlertBefore}
+          useBrowserNotifications={useBrowserNotifications}
+          setUseBrowserNotifications={setUseBrowserNotifications}
         />
       )}
       <div className={styles.main}>

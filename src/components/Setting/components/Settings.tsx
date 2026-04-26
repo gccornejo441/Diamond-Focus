@@ -50,6 +50,12 @@ const Settings = ({
   count,
   breakDuration,
   timerStatus,
+  isDueDateNotificationsOn,
+  setIsDueDateNotificationsOn,
+  defaultAlertBefore,
+  setDefaultAlertBefore,
+  useBrowserNotifications,
+  setUseBrowserNotifications,
 }: SettingPanelProps) => {
   const [tempTheme, setTempTheme] = useState<string>(theme);
   const [tempBgImg, setTempBgImg] = useState<string>(bgImg);
@@ -86,12 +92,18 @@ const Settings = ({
       count: tempCount,
       breakDuration: tempBreakDuration,
       timerStatus: timerStatus,
+      isDueDateNotificationsOn,
+      defaultAlertBefore,
+      useBrowserNotifications,
     };
 
     ApplyBodyStyles(settings.bgImg, settings.theme);
 
     setBgImg(settings.bgImg);
     setTheme(settings.theme);
+    setIsDueDateNotificationsOn(settings.isDueDateNotificationsOn);
+    setDefaultAlertBefore(settings.defaultAlertBefore);
+    setUseBrowserNotifications(settings.useBrowserNotifications);
 
     localStorage.setItem("appSettings", JSON.stringify(settings));
 

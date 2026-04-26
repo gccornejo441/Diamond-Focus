@@ -5,12 +5,23 @@ interface SidebarListProps {
   toggleSidebar: () => void;
 }
 
+type RecurrencePattern = "none" | "daily" | "weekly" | "monthly";
+
+interface ReminderConfig {
+  enabled: boolean;
+  alertBefore: number;
+  recurrence: RecurrencePattern;
+  lastNotifiedAt?: string | null;
+}
+
 interface Task {
   id: number;
   text: string;
   completed: boolean;
   favorite: boolean;
   createdAt: Date;
+  dueDate?: string | null;
+  reminder?: ReminderConfig | null;
 }
 
 interface TaskListProps {
@@ -46,4 +57,6 @@ export type {
   TaskListTitleProps,
   SidebarListStateProps,
   Task,
+  ReminderConfig,
+  RecurrencePattern,
 };

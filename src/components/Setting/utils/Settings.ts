@@ -11,6 +11,9 @@ const defaultSettings: SettingsProps = {
   alarmName: "sciFiAlarm.mp3",
   isNewTaskOnTop: true,
   timerStatus: true,
+  isDueDateNotificationsOn: true,
+  defaultAlertBefore: 15,
+  useBrowserNotifications: false,
 };
 
 const defaultTaskList: TaskListProps = {
@@ -107,6 +110,9 @@ function settingFormHelper(formData: FormData): SettingsProps {
     alarmName: formData.get("alarmSoundName") as string,
     isNewTaskOnTop: formData.has("newTasksOnTop"),
     timerStatus: formData.has("timerStatus"),
+    isDueDateNotificationsOn: formData.has("isDueDateNotificationsOn"),
+    defaultAlertBefore: parseInt(formData.get("defaultAlertBefore") as string) || 15,
+    useBrowserNotifications: formData.has("useBrowserNotifications"),
   };
 }
 

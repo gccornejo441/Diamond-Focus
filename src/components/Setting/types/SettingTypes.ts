@@ -10,6 +10,9 @@ interface SettingsProps {
   alarmName: string;
   isNewTaskOnTop: boolean;
   timerStatus: boolean;
+  isDueDateNotificationsOn: boolean;
+  defaultAlertBefore: number;
+  useBrowserNotifications: boolean;
 }
 
 interface TimerSettingsProps {
@@ -36,6 +39,9 @@ interface SettingPanelProps extends SettingsProps {
   setAlarmName: React.Dispatch<React.SetStateAction<string>>;
   setTaskLists: React.Dispatch<React.SetStateAction<TaskListProps[]>>;
   setTimerStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDueDateNotificationsOn: React.Dispatch<React.SetStateAction<boolean>>;
+  setDefaultAlertBefore: React.Dispatch<React.SetStateAction<number>>;
+  setUseBrowserNotifications: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type { SettingsProps, SettingPanelProps, TimerSettingsProps };
