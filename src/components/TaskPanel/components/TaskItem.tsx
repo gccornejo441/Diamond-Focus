@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import styles from "../styles/TaskItem.module.css";
-import { formatDistanceToNowStrict } from "date-fns";
+import { formatDistanceToNowStrict, isPast, differenceInMinutes, parseISO } from "date-fns";
 import type { FormatDistanceToNowOptions } from "date-fns";
 import { TaskComponentProps } from "../types/TaskTypes";
 import DragHandle from "@assets/dragHandleIcon.svg?react";
@@ -25,6 +25,21 @@ const TaskItem = ({
     addSuffix: true,
     includeSeconds: true,
   } as FormatDistanceToNowOptions);
+
+  const getDueDateInfo = () => {
+    if (!task.dueDate) return null;
+    const due = parseISO(task.dueDate);
+    const overdue = isPast(due);
+    const minutesUntil = differenceInMinutes(due, new Date());
+    const label = overdue
+      ? `overdue ${formatDistanceToNowStrict(due)} ago`
+      : `due ${formatDistanceToNowStrict(due, { addSuffix: true })}`;
+    const status: "overdue" | "soon" | "normal" =
+      overdue ? "overdue" : minutesUntil <= 60 ? "soon" : "normal";
+    return { label, status };
+  };
+
+  const dueDateInfo = getDueDateInfo();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(task.text);
@@ -106,6 +121,14 @@ const TaskItem = ({
             >
               {task.text}
               <span className={styles.timeStamp}>{relativeTime}</span>
+              {dueDateInfo && (
+                <span
+                  className={`${styles.dueDate} ${styles[dueDateInfo.status]}`}
+                  data-testid="due-date-indicator"
+                >
+                  {dueDateInfo.label}
+                </span>
+              )}
             </p>
           )}
         </div>

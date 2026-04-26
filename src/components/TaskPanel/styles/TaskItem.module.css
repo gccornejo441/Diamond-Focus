@@ -204,3 +204,23 @@
   width: 100%;
   overflow: hidden;
 }
+
+.dueDate {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 13px;
+  display: block;
+}
+
+.normal {
+  color: var(--panel-text);
+}
+
+.soon {
+  color: var(--yellow-800);
+}
+
+.overdue {
+  color: var(--red-400);
+}
