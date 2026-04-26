@@ -158,6 +158,85 @@ const Sidebar = ({
               )}
             </div>
           </div>
+          {selectedTaskToView?.dueDate && (
+            <div className={styles.reminderSection}>
+              <div className={styles.reminderRow}>
+                <label htmlFor="reminder-enabled">Reminder</label>
+                <div className={styles.toggleSwitch}>
+                  <input
+                    type="checkbox"
+                    id="reminder-enabled"
+                    checked={selectedTaskToView.reminder?.enabled ?? false}
+                    onChange={(e) => {
+                      if (selectedTaskToView) {
+                        updateTask(selectedTaskToView.id, {
+                          reminder: {
+                            enabled: e.target.checked,
+                            alertBefore: selectedTaskToView.reminder?.alertBefore ?? 15,
+                            recurrence: selectedTaskToView.reminder?.recurrence ?? "none",
+                            lastNotifiedAt: selectedTaskToView.reminder?.lastNotifiedAt ?? null,
+                          },
+                        });
+                      }
+                    }}
+                    className={styles.toggleInput}
+                  />
+                  <label htmlFor="reminder-enabled" className={styles.toggleLabel}></label>
+                </div>
+              </div>
+
+              {selectedTaskToView.reminder?.enabled && (
+                <>
+                  <div className={styles.reminderRow}>
+                    <label htmlFor="alert-before">Alert before</label>
+                    <select
+                      id="alert-before"
+                      value={selectedTaskToView.reminder?.alertBefore ?? 15}
+                      onChange={(e) => {
+                        if (selectedTaskToView?.reminder) {
+                          updateTask(selectedTaskToView.id, {
+                            reminder: { ...selectedTaskToView.reminder, alertBefore: Number(e.target.value) },
+                          });
+                        }
+                      }}
+                      className={styles.dueDateInput}
+                    >
+                      <option value="5">5 minutes</option>
+                      <option value="10">10 minutes</option>
+                      <option value="15">15 minutes</option>
+                      <option value="30">30 minutes</option>
+                      <option value="60">1 hour</option>
+                    </select>
+                  </div>
+
+                  <div className={styles.reminderRow}>
+                    <label htmlFor="recurrence">Repeat</label>
+                    <select
+                      id="recurrence"
+                      value={selectedTaskToView.reminder?.recurrence ?? "none"}
+                      onChange={(e) => {
+                        if (selectedTaskToView?.reminder) {
+                          updateTask(selectedTaskToView.id, {
+                            reminder: {
+                              ...selectedTaskToView.reminder,
+                              recurrence: e.target.value as "none" | "daily" | "weekly" | "monthly",
+                              lastNotifiedAt: null,
+                            },
+                          });
+                        }
+                      }}
+                      className={styles.dueDateInput}
+                    >
+                      <option value="none">None</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                    </select>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </nav>
       </div>
     </div>
