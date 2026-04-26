@@ -78,6 +78,7 @@ function App() {
 
   const {
     saveEdit,
+    updateTask,
     setAsFavorite,
     toggleTaskCompletion,
     taskLists,
@@ -234,6 +235,7 @@ function App() {
           </div>
           <Sidebar
             saveEdit={saveEdit}
+            updateTask={updateTask}
             handleDeleteAll={handleDeleteAll}
             toggleTaskCompletion={toggleTaskCompletion}
             setAsFavorite={setAsFavorite}

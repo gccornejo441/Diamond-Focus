@@ -14,6 +14,7 @@ interface SidebarProps {
   setAsFavorite: (id: number) => void;
   handleDeleteAll: (removeTask: boolean, massDelete: boolean) => void;
   saveEdit: (id: number, newText: string) => void;
+  updateTask: (id: number, updates: Partial<Task>) => void;
 }
 
 const Sidebar = ({
@@ -24,6 +25,7 @@ const Sidebar = ({
   setAsFavorite,
   handleDeleteAll,
   saveEdit,
+  updateTask,
 }: SidebarProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -117,6 +119,44 @@ const Sidebar = ({
             >
               <ListMenuButton className={styles.svgStyle} />
             </Dropdown>
+          </div>
+          <div className={styles.dueDateSection}>
+            <label className={styles.dueDateLabel}>Due Date</label>
+            <div className={styles.dueDateRow}>
+              <input
+                type="datetime-local"
+                value={
+                  selectedTaskToView?.dueDate
+                    ? new Date(selectedTaskToView.dueDate).toISOString().slice(0, 16)
+                    : ""
+                }
+                onChange={(e) => {
+                  if (selectedTaskToView) {
+                    updateTask(selectedTaskToView.id, {
+                      dueDate: e.target.value
+                        ? new Date(e.target.value).toISOString()
+                        : null,
+                    });
+                  }
+                }}
+                className={styles.dueDateInput}
+                aria-label="Edit due date"
+              />
+              {selectedTaskToView?.dueDate && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (selectedTaskToView) {
+                      updateTask(selectedTaskToView.id, { dueDate: null });
+                    }
+                  }}
+                  className={styles.clearDueDate}
+                  aria-label="Clear due date"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
         </nav>
       </div>

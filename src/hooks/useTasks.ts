@@ -126,8 +126,13 @@ const useTasks = () => {
     setTasks(updatedTasks);
   };
 
+  const updateTask = (id: number, updates: Partial<Task>) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, ...updates } : t)));
+  };
+
   return {
     saveEdit,
+    updateTask,
     setAsFavorite,
     toggleTaskCompletion,
     taskLists,
