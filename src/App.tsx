@@ -25,6 +25,7 @@ const SETTINGS_KEY = "appSettings";
 import { useAuth } from "@utilities/AuthContext";
 import { IconName } from "@utilities/dropDownHelpers";
 import useLocalStorageObjectState from "@hooks/useLocalStorageObjectState";
+import useTaskDueNotifications from "@hooks/useTaskDueNotifications";
 import ListButton from "@assets/listIcon.svg?react";
 import GemLogo from "@assets/gemIcon.svg?react";
 function App() {
@@ -95,6 +96,13 @@ function App() {
     setCurrentSelectedTaskList,
     moveTaskToList,
   } = useTasks();
+
+  const currentSettings: SettingsProps = {
+    count, breakDuration, isAlertOn, isAutoSwitchOn,
+    theme, bgImg, alarmName, isNewTaskOnTop, timerStatus,
+    isDueDateNotificationsOn, defaultAlertBefore, useBrowserNotifications,
+  };
+  useTaskDueNotifications(taskLists, currentSettings, setTaskLists);
 
   useEffect(() => {
     const settings: SettingsProps | null = getParsedSettings(SETTINGS_KEY);
