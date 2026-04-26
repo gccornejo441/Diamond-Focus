@@ -1,0 +1,35 @@
+.pickerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.dateInput {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid var(--panel-text);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.dateInput:focus {
+  border-color: var(--alert);
+}
+
+.clearButton {
+  background: none;
+  border: none;
+  color: var(--panel-text);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.clearButton:hover {
+  color: var(--red);
+}
